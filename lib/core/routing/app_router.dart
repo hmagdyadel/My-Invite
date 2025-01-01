@@ -1,13 +1,27 @@
+import 'package:app/core/routing/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/login/ui/login_screen.dart';
+import '../../features/register/ui/register_screen.dart';
+import '../../features/splash/splash_screen.dart';
+
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-   // final arguments = settings.arguments;
+    // final arguments = settings.arguments;
 
     switch (settings.name) {
+      case Routes.splashScreen:
+        return _buildRoute(const SplashScreen());
 
+      case Routes.loginScreen:
+        return _buildRoute(const LoginScreen());
+
+      case Routes.registerScreen:
+        return _buildRoute(
+          const RegisterScreen(),
+        );
       default:
         return _buildRoute(
           Scaffold(

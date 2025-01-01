@@ -27,6 +27,8 @@ class CustomPageRoute<T> extends PageRouteBuilder<T> {
           begin = const Offset(0.0, -1.0);
           break;
         case SlideDirection.bottomToTop:
+          begin = const Offset(0.0, 1.0);
+          break;
 
       }
 

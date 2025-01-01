@@ -1,49 +1,28 @@
+import 'dart:io';
 
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-
-
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-// }
-
-// Future handleForegroundMessages() async {
-//   await Firebase.initializeApp();
-//   FirebaseMessaging messaging = FirebaseMessaging.instance;
-//   await messaging.requestPermission(
-//     alert: true,
-//     announcement: false,
-//     badge: true,
-//     carPlay: false,
-//     criticalAlert: false,
-//     provisional: false,
-//     sound: true,
-//   );
-//
-//   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//     if (message.notification != null) {
-//       Get.snackbar(
-//           message.notification!.title ?? "", message.notification!.body ?? "",
-//           backgroundColor: Colors.white);
-//     }
-//   });
-// }
+import 'core/di/dependency_injection.dart';
+import 'my_invite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize AuthController before anything else
-  // Get.put(AuthController());
-  // if (!kIsWeb) {
-  //   await NotificationService().init();
-  //   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  //   handleForegroundMessages();
-  // }
-  //
-  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //     statusBarColor: bgColor, statusBarBrightness: Brightness.light));
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  setupGetIt();
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
+      saveLocale: true,
+      startLocale: Locale(Platform.localeName.split('_')[0]),
+      path: 'assets/translations',
+      fallbackLocale: Locale(Platform.localeName.split('_')[0]),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -51,34 +30,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'My Invite',
-        debugShowCheckedModeBanner: false,
-        //translations: Language(),
-        locale: const Locale('en', 'US'),
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        //home: ScanScreenWithOverlay()
-        home: const Scaffold());
+    return const MyInvite();
   }
-
-  // ThemeData themeData() {
-  //   return ThemeData(
-  //       textButtonTheme: TextButtonThemeData(
-  //           style: TextButton.styleFrom(
-  //               backgroundColor: Colors.transparent,
-  //               foregroundColor: Colors.white)),
-  //       primaryColor: primaryColor,
-  //       fontFamily: "SFPro",
-  //       textTheme: const TextTheme(
-  //         bodyLarge: TextStyle(color: Colors.black, fontFamily: "SFPro"),
-  //       ),
-  //       colorScheme: ThemeData()
-  //           .colorScheme
-  //           .copyWith(primary: primaryColor, secondary: secondaryColor),
-  //       appBarTheme:
-  //           const AppBarTheme(backgroundColor: primaryColor, elevation: 0));
-  // }
 }
