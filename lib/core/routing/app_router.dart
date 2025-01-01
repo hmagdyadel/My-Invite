@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/login/ui/login_screen.dart';
 import '../../features/register/ui/register_screen.dart';
+import '../../features/splash/on_boarding_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 class AppRouter {
@@ -21,6 +22,10 @@ class AppRouter {
       case Routes.registerScreen:
         return _buildRoute(
           const RegisterScreen(),
+        );
+      case Routes.onBoardingScreen:
+        return _buildRoute(
+          const OnBoardingScreen(),
         );
       default:
         return _buildRoute(

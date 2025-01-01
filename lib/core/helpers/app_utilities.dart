@@ -21,17 +21,15 @@ class AppUtilities {
     await _getSavedData();
   }
 
- // bool? _isLTR;
+  // bool? _isLTR;
 
   bool get isLTR {
-    return NavigationService.navigatorKey.currentContext!.locale.languageCode=="en";
+    return NavigationService.navigatorKey.currentContext!.locale.languageCode ==
+        "en";
   }
 
-
-
-
-
   String? _username;
+
   String get username => _username ?? '';
 
   set username(String value) {
@@ -39,17 +37,12 @@ class AppUtilities {
     setSavedString("username", value);
   }
 
-
-
-
-
-
-
   Future<void> clearData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.clear();
   }
+
   Future<bool> setSavedInt(String key, int value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setInt(key, value);
@@ -73,10 +66,7 @@ class AppUtilities {
   }
 
   Future<void> _getSavedData() async {
-
     _username = await getSavedString("username", '');
-
-
   }
 
   Future<int> getSavedInt(String key, int defaultVal) async {
@@ -85,13 +75,9 @@ class AppUtilities {
     return prefs.getInt(key) ?? defaultVal;
   }
 
-
   Future<String> getSavedString(String value, String defaultVal) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.reload();
     return preferences.getString(value) ?? defaultVal;
   }
-
-
-
 }
