@@ -9,7 +9,7 @@ const LinearGradient gradient1 = LinearGradient(colors: [
   primaryColor, secondaryColor
 ]);
 
-const LinearGradient gradient2 = LinearGradient(colors: [
+const LinearGradient containerGradient = LinearGradient(colors: [
   Color(0xff1AD3A4), Color(0xff3082D9)
 ]);
 

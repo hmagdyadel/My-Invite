@@ -1,7 +1,10 @@
+import 'package:app/core/di/dependency_injection.dart';
 import 'package:app/core/routing/routes.dart';
+import 'package:app/features/login/logic/login_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/login/ui/login_screen.dart';
 import '../../features/register/ui/register_screen.dart';
@@ -17,7 +20,12 @@ class AppRouter {
         return _buildRoute(const SplashScreen());
 
       case Routes.loginScreen:
-        return _buildRoute(const LoginScreen());
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<LoginCubit>(),
+            child: const LoginScreen(),
+          ),
+        );
 
       case Routes.registerScreen:
         return _buildRoute(

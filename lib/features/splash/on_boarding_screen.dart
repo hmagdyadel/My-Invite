@@ -1,11 +1,15 @@
+import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/routing/routes.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/dimensions/dimensions.dart';
 import '../../core/theming/colors.dart';
 import '../../core/widgets/change_language.dart';
+import '../../core/widgets/go_button.dart';
 import '../../generated/assets.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -15,19 +19,43 @@ class OnBoardingScreen extends StatefulWidget {
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeLocales(List<Locale>? locales) {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: bgColorOverlay,
-        width: width,
-        height: height,
+        width: width.w,
+        height: height.h,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            imageContainer(),
-            buttons(),
+            Expanded(
+              flex: 9,
+              child: imageContainer(),
+            ),
+            Expanded(
+              flex: 2,
+              child: buttons(),
+            ),
           ],
         ),
       ),
@@ -38,35 +66,44 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Stack(
       children: [
         Container(
-          width: width,
-          height: height * 0.7,
+          width: width.w,
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Assets.imagesSplashBg),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomCenter)),
+            image: DecorationImage(
+              image: AssetImage(Assets.imagesSplashBg),
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
+            ),
+          ),
           padding: EdgeInsets.all(edge * 1.5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SubTitleText(
-                text: "welcome".tr(),
+                text: tr("welcome"),  // Using tr() directly
                 color: Colors.white,
               ),
               NormalText(
-                text: "loginOrRegister".tr(),
+                text: tr("loginOrRegister"),  // Using tr() directly
                 color: Colors.white,
               )
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 50),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.7,
-          alignment: Alignment.topRight,
-          child: const LocaleDropdown(),
+        SafeArea(
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.only(top: 16, right: 24),
+              child: LocaleDropdown(
+                onLanguageChanged: () {
+                  if (mounted) {
+                    setState(() {});
+                  }
+                },
+              ),
+            ),
+          ),
         ),
       ],
     );
@@ -75,27 +112,36 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget buttons() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.3,
-      padding:  EdgeInsets.all(edge),
+      padding: EdgeInsets.all(edge),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // GoButton(
-          //     onTap: () {
-          //       Get.to(() => const LoginScreen());
-          //     },
-          //     title: "login".tr),
-          // const SizedBox(
-          //   height: 6,
-          // ),
-          // coloredButton(
-          //     bgColor: Colors.white,
-          //     textColor: bgColorOverlay,
-          //     onTap: () {
-          //       Get.to(() => const RegisterScreen());
-          //     },
-          //     title: "register".tr),
+          GoButton(
+            titleKey: tr("login"),  // Using tr() directly
+            fun: () {
+              context.pushNamed(Routes.loginScreen);
+            },
+            btColor: primaryColor,
+            textColor: Colors.white,
+            fontSize: 18,
+            gradient: true,
+          ),
+          SizedBox(
+            height: edge * 0.7,
+          ),
+          GoButton(
+            titleKey: tr("register"),  // Using tr() directly
+            fun: () {
+              context.pushNamed(Routes.registerScreen);
+            },
+            btColor: Colors.white,
+            fontSize: 18,
+          ),
+          SizedBox(
+            height: edge * 0.5,
+          ),
         ],
       ),
     );

@@ -1,34 +1,38 @@
 
+import 'package:app/core/widgets/subtitle_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../dimensions/dimensions.dart';
+
+import '../../core/dimensions/dimensions.dart';
+import '../../core/theming/colors.dart';
 
 
 class LocaleDropdown extends StatefulWidget {
-  const LocaleDropdown({super.key});
+  final VoidCallback? onLanguageChanged;
+
+  const LocaleDropdown({
+    super.key,
+    this.onLanguageChanged,
+  });
 
   @override
   State<LocaleDropdown> createState() => _LocaleDropdownState();
 }
 
 class _LocaleDropdownState extends State<LocaleDropdown> {
-
-  Locale locale = const Locale('en','US');
+  String? _languageCode;
 
   @override
-  void initState() {
-    super.initState();
-    getSelectedLocale();
-  }
-
-  getSelectedLocale() async{
-    //locale =  AppUtilities().getDeviceLanguage();
-    setState(() {
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _languageCode = context.locale.languageCode;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_languageCode == null) return const SizedBox.shrink();
+
     return InkWell(
       onTap: () {
         selectLanguage();
@@ -38,11 +42,14 @@ class _LocaleDropdownState extends State<LocaleDropdown> {
         width: 40,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image:
-                locale == const Locale('en','US') ?
-                const AssetImage("assets/images/usflag.png")
-                    : const AssetImage("assets/images/saflag.png"),
-                fit: BoxFit.cover)),
+                image: AssetImage(
+                    _languageCode == 'en'
+                        ? "assets/images/usflag.png"
+                        : "assets/images/saflag.png"
+                ),
+                fit: BoxFit.cover
+            )
+        ),
       ),
     );
   }
@@ -52,46 +59,82 @@ class _LocaleDropdownState extends State<LocaleDropdown> {
         backgroundColor: Colors.white,
         context: context,
         builder: (context) {
-          return FittedBox(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding:  EdgeInsets.all(edge),
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(edge),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(
                       onPressed: () async {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        if(locale == const Locale('en','US')) return;
-                       // await changeLocale();
-                        getSelectedLocale();
+                        final navigator = Navigator.of(context, rootNavigator: true);
+                        final setLocaleContext = context;
+
+                        await setLocaleContext.setLocale(const Locale('en'));
+
+                        if (mounted) {
+                          setState(() {
+                            _languageCode = 'en';
+                          });
+                          widget.onLanguageChanged?.call();
+                          navigator.pop();
+                        }
                       },
                       child: Row(
                         children: [
-                          Image.asset("assets/images/usflag.png", fit: BoxFit.cover, width: 24, height: 24,),
-                          const SizedBox(width: 6,),
-                          //Text("English", style: paragraph1.copyWith(color: bgColor),)
+                          Image.asset(
+                            "assets/images/usflag.png",
+                            fit: BoxFit.cover,
+                            width: 24,
+                            height: 24,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          SubTitleText(
+                            text: "English",
+                            color: bgColor,
+                          )
                         ],
                       )
                   ),
                   TextButton(
-                      onPressed: () async{
-                        Navigator.of(context, rootNavigator: true).pop();
-                        if(locale == const Locale('ar','AR')) return;
-                        //await changeLocale();
-                        getSelectedLocale();
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset("assets/images/saflag.png", fit: BoxFit.cover, width: 24, height: 24,),
-                          const SizedBox(width: 6,),
-                          //Text("عربي", style: paragraph1.copyWith(color: bgColor),)
-                        ],
-                      )
+                    onPressed: () async {
+                      final navigator = Navigator.of(context, rootNavigator: true);
+                      final setLocaleContext = context;
+                      await setLocaleContext.setLocale(const Locale('ar'));
+                      if (mounted) {
+                        setState(() {
+                          _languageCode = 'ar';
+                        });
+                        widget.onLanguageChanged?.call();
+                        navigator.pop();
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/saflag.png",
+                          fit: BoxFit.cover,
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        SubTitleText(
+                          text: "عربي",
+                          color: bgColor,
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           );
-        });
+        }
+    );
   }
 }
+
