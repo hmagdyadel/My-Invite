@@ -18,7 +18,7 @@ class DioFactory {
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut
         ..options.headers = {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": 'application/json; charset=UTF-8',
         };
 
       addDioInterceptor();

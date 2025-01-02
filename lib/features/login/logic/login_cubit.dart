@@ -20,7 +20,7 @@ class LoginCubit extends Cubit<LoginStates> {
   final TextEditingController password = TextEditingController();
   DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
-  void login({flagLogout}) async {
+  void login() async {
     try {
       emit(const LoginStates.loading());
 

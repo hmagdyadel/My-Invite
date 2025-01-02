@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/dimensions/dimensions.dart';
 import '../../../core/widgets/text_field_with_icon.dart';
 import '../logic/login_cubit.dart';
+import '../logic/login_states.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -47,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           body: Stack(
             children: [
               // Main content
-              Positioned.fill(
+              Positioned(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -64,7 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: edge * 1.5),
                   child: GoButton(
-                    fun: () {},
+                    fun: () {
+                      context.read<LoginCubit>().login();
+                    },
                     titleKey: "login_sm".tr(),
                     btColor: primaryColor,
                     textColor: Colors.white,
@@ -72,6 +76,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 18,
                   ),
                 ),
+              ),
+              BlocListener<LoginCubit, LoginStates>(
+                listenWhen: (previous, current) => previous != current,
+                listener: (context, current) {
+                  if (current is Loading) {
+                    //animatedLoaderWithTitle(context: context, title: "loging_in".tr());
+                  } else if (current is Error) {
+                    //popDialog(context);
+                    context.showErrorToast(current.message);
+                  } else if (current is Success) {
+                   // popDialog(context);
+                    context.showErrorToast('Done');
+                  }
+                  else if(current is EmptyInput){
+                  //  popDialog(context);
+                    context.showErrorToast('enter_required_fields'.tr());
+                  }
+                },
+                child: const SizedBox.shrink(),
               ),
             ],
           ),
@@ -113,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: hidePassword,
               suffix: IconButton(
                 icon: Icon(
-                  hidePassword?Icons.visibility:Icons.visibility_off_rounded,
+                  hidePassword ? Icons.visibility : Icons.visibility_off_rounded,
                   color: hidePassword ? Colors.white : primaryColor,
                 ),
                 onPressed: () {

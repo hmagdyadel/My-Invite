@@ -11,7 +11,7 @@ class LoginRepo {
 
   Future<ApiResult<LoginResponse>> login(LoginRequest loginRequestBody) async {
     try {
-      var response = await _apiService.login(loginRequestBody);
+      var response = await _apiService.login(loginRequestBody,);
       if (response.firstName == null) {
         return ApiResult.failure(response.title ?? '');
       }

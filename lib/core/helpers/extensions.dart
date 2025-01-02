@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:app/core/theming/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -100,8 +101,8 @@ extension Navigation on BuildContext {
       duration: const Duration(seconds: 2),
       flushbarPosition: FlushbarPosition.BOTTOM,
       barBlur: .1,
-      backgroundColor: Colors.redAccent,
-      borderColor: Colors.redAccent,
+      backgroundColor: bgColor,
+      borderColor: bgColor,
       margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(10),
     ).show(this);
