@@ -30,6 +30,7 @@ void animatedLoaderWithTitle({required BuildContext context, bool dismissible = 
                   child: SubTitleText(
                     text: title,
                     align: TextAlign.center,
+                    color: Colors.white,
                   ),
                 )
               ],

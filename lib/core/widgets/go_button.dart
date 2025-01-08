@@ -36,13 +36,13 @@ class GoButton extends StatelessWidget {
         }
       },
       child: Container(
-        height: hi ?? 40.h,
+        height: hi ?? 45.h,
         width: w ?? width.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient:gradient ? gradient1: null,
           color: enable ? btColor ?? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(curvy ?? curvyRadius*3),
+          borderRadius: BorderRadius.circular(curvy ?? curvyRadius*2),
         ),
         child: vertical ?? false
             ? Column(

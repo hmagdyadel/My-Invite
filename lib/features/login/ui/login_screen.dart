@@ -1,4 +1,6 @@
 import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/routing/routes.dart';
+import 'package:app/core/services/audio_service.dart';
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/go_button.dart';
 import 'package:app/core/widgets/normal_text.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/dimensions/dimensions.dart';
+import '../../../core/widgets/loaders.dart';
 import '../../../core/widgets/text_field_with_icon.dart';
 import '../logic/login_cubit.dart';
 import '../logic/login_states.dart';
@@ -81,16 +84,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 listenWhen: (previous, current) => previous != current,
                 listener: (context, current) {
                   if (current is Loading) {
-                    //animatedLoaderWithTitle(context: context, title: "loging_in".tr());
+                    animatedLoaderWithTitle(context: context, title: "logging_in".tr());
                   } else if (current is Error) {
-                    //popDialog(context);
+                    popDialog(context);
                     context.showErrorToast(current.message);
                   } else if (current is Success) {
-                   // popDialog(context);
-                    context.showErrorToast('Done');
-                  }
-                  else if(current is EmptyInput){
-                  //  popDialog(context);
+                    popDialog(context);
+                    AudioService().playAudio(
+                        src: 'sounds/audSuccess.mp3',
+                        onComplete: () {
+                          context.pushNamedAndRemoveUntil(Routes.homeScreen,
+                              predicate: false);
+                        });
+                  } else if (current is EmptyInput) {
+                      popDialog(context);
                     context.showErrorToast('enter_required_fields'.tr());
                   }
                 },
@@ -115,46 +122,50 @@ class _LoginScreenState extends State<LoginScreen> {
             topRight: Radius.circular(curvyRadius * 1.5),
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SubTitleText(text: "username".tr(), color: Colors.white, fontSize: 16),
-            SizedBox(height: edge * 0.3),
-            textFieldWithIcon(
-                controller: context.read<LoginCubit>().param,
-                icon: Icon(
-                  Icons.email_outlined,
-                  color: Colors.white,
-                ),
-                hint: "username_hint".tr()),
-            SizedBox(height: edge),
-            SubTitleText(text: "password".tr(), color: Colors.white, fontSize: 16),
-            SizedBox(height: edge * 0.3),
-            textFieldWithIcon(
-              controller: context.read<LoginCubit>().password,
-              obscureText: hidePassword,
-              suffix: IconButton(
-                icon: Icon(
-                  hidePassword ? Icons.visibility : Icons.visibility_off_rounded,
-                  color: hidePassword ? Colors.white : primaryColor,
-                ),
-                onPressed: () {
-                  setState(() {
-                    hidePassword = !hidePassword;
-                  });
-                },
-              ),
-              icon: Icon(
-                Icons.password,
-                color: Colors.white,
-              ),
-              hint: "password_hint".tr(),
-            ),
-            SizedBox(height: edge * 0.5),
-          ],
-        ),
+        child: loginInputsData(context),
       ),
+    );
+  }
+
+  Column loginInputsData(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SubTitleText(text: "username".tr(), color: Colors.white, fontSize: 16),
+        SizedBox(height: edge * 0.3),
+        textFieldWithIcon(
+            controller: context.read<LoginCubit>().param,
+            icon: Icon(
+              Icons.email_outlined,
+              color: Colors.white,
+            ),
+            hint: "username_hint".tr()),
+        SizedBox(height: edge),
+        SubTitleText(text: "password".tr(), color: Colors.white, fontSize: 16),
+        SizedBox(height: edge * 0.3),
+        textFieldWithIcon(
+          controller: context.read<LoginCubit>().password,
+          obscureText: hidePassword,
+          suffix: IconButton(
+            icon: Icon(
+              hidePassword ? Icons.visibility : Icons.visibility_off_rounded,
+              color: hidePassword ? Colors.white : primaryColor,
+            ),
+            onPressed: () {
+              setState(() {
+                hidePassword = !hidePassword;
+              });
+            },
+          ),
+          icon: Icon(
+            Icons.password,
+            color: Colors.white,
+          ),
+          hint: "password_hint".tr(),
+        ),
+        SizedBox(height: edge * 0.5),
+      ],
     );
   }
 

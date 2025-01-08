@@ -1,5 +1,6 @@
 import 'package:app/core/di/dependency_injection.dart';
 import 'package:app/core/routing/routes.dart';
+import 'package:app/features/home/ui/home_screen.dart';
 import 'package:app/features/login/logic/login_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -34,6 +35,10 @@ class AppRouter {
       case Routes.onBoardingScreen:
         return _buildRoute(
           const OnBoardingScreen(),
+        );
+      case Routes.homeScreen:
+        return _buildRoute(
+          const HomeScreen(),
         );
       default:
         return _buildRoute(

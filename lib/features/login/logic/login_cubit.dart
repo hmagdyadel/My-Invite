@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app/core/helpers/app_utilities.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,7 @@ class LoginCubit extends Cubit<LoginStates> {
       response.when(success: (response) {
         param.clear();
         password.clear();
-        AppUtilities().username = response.firstName ?? '';
+        //AppUtilities().username = response.firstName ?? '';
         emit(LoginStates.success(response));
       }, failure: (error) {
         emit(LoginStates.error(message: error.toString()));

@@ -47,7 +47,7 @@
   "user_already_exists": "This username already exists",
   "some_error": "Some error occured. Please try again",
   "username_password_not_correct": "Username or Password is not correct",
-  "loging_in": "Logging in",
+  "logging_in": "Logging in",
   "creating_account": "Creating Account",
   "start_time": "Start Date",
   "end_time": "End Date",
@@ -247,5 +247,6 @@
   "scanned_before": "Already Scanned",
   "username_hint": "Please enter your username",
   "password_hint": "Please enter your password",
-  "enter_required_fields": "Please enter required fields"
+  "enter_required_fields": "Please enter required fields",
+  "failed_to_get_profile": "Failed to get profile"
 }

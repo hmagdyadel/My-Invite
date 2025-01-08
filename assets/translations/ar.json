@@ -47,7 +47,7 @@
   "user_already_exists": "اسم المستخدم هذا موجود بالفعل",
   "some_error": "حدث بعض الخطأ. حاول مرة اخرى",
   "username_password_not_correct": "اسم المستخدم أو كلمة المرور غير صحيحة",
-  "loging_in": "تسجيل الدخول",
+  "logging_in": "تسجيل الدخول",
   "creating_account": "أنشاء حساب",
   "start_time": "وقت البدء",
   "end_time": "تاريخ الإنتهاء",
@@ -246,6 +246,7 @@
   "scanned_before": "تم مسح الكود مسبقا",
   "username_hint": "يرجى ادخال اسم المستخدم",
   "password_hint": "يرجى ادخال كلمة المرور",
-  "enter_required_fields": "يرجى ادخال جميع الحقول المطلوبة"
+  "enter_required_fields": "يرجى ادخال جميع الحقول المطلوبة",
+  "failed_to_get_profile": "فشل الحصول على الملف الشخصي"
 }
 
