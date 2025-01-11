@@ -247,6 +247,11 @@
   "username_hint": "يرجى ادخال اسم المستخدم",
   "password_hint": "يرجى ادخال كلمة المرور",
   "enter_required_fields": "يرجى ادخال جميع الحقول المطلوبة",
-  "failed_to_get_profile": "فشل الحصول على الملف الشخصي"
+  "failed_to_get_profile": "فشل الحصول على الملف الشخصي",
+  "first_name_hint": "يرجى ادخال الاسم الاول",
+  "last_name_hint": "يرجى ادخال الاسم الاخير",
+  "phone_number_hint": "يرجى ادخال رقم الهاتف",
+  "email_hint": "يرجى ادخال البريد الالكتروني",
+  "username_in_english" : "اسم المستخدم بالانجليزية"
 }
 

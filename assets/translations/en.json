@@ -248,5 +248,10 @@
   "username_hint": "Please enter your username",
   "password_hint": "Please enter your password",
   "enter_required_fields": "Please enter required fields",
-  "failed_to_get_profile": "Failed to get profile"
+  "failed_to_get_profile": "Failed to get profile",
+  "first_name_hint": "Please enter your first name",
+  "last_name_hint": "Please enter your last name",
+  "email_hint": "Please enter your email",
+  "phone_number_hint": "Please enter your phone number",
+  "username_in_english": "Username in English"
 }

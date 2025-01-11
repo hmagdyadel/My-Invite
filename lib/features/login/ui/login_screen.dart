@@ -46,7 +46,18 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: () {
                 context.pop();
               },
-              child: Icon(Icons.arrow_back_ios_new_rounded),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade100,
+                  // Explicitly set the background
+                  radius: 15,
+                  child: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: primaryColor, // Set the icon color explicitly to contrast
+                  ),
+                ),
+              ),
             ),
           ),
           body: Stack(
@@ -84,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 listenWhen: (previous, current) => previous != current,
                 listener: (context, current) {
                   if (current is Loading) {
-                    animatedLoaderWithTitle(context: context, title: "logging_in".tr());
+                    animatedLoaderWithTitle(
+                        context: context, title: "logging_in".tr());
                   } else if (current is Error) {
                     popDialog(context);
                     context.showErrorToast(current.message);
@@ -97,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               predicate: false);
                         });
                   } else if (current is EmptyInput) {
-                      popDialog(context);
+                    popDialog(context);
                     context.showErrorToast('enter_required_fields'.tr());
                   }
                 },
