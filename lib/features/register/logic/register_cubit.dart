@@ -17,13 +17,25 @@ class RegisterCubit extends Cubit<RegisterStates> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController stateController = TextEditingController();
 
-  Future<void> fetchLocations() async {
+  Future<void> register({String? country, String? city, bool? isMale}) async {
     emit(const RegisterStates.loading());
-    final result = await _registerRepo.getLocations();
-
-    result.when(
-      success: (locations) => emit(RegisterStates.success(locations)),
-      failure: (error) => emit(RegisterStates.error(message: error)),
-    );
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        phoneController.text.isEmpty ||
+        firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        usernameController.text.isEmpty || country == null || city == null) {
+      emit(const RegisterStates.emptyInput());
+    }
+    // final result = await _registerRepo.register(
+    //   email: emailController.text,
+    //   password: passwordController.text,
+    //   phone: phoneController.text,
+    //   firstName: firstNameController.text,
+    //   lastName: lastNameController.text,
+    //   username: usernameController.text,
+    //   state: stateController.text,
+    // );
+    // emit(result.fold((l) => RegisterStates.error(l), (r) => RegisterStates.success(r)));
   }
 }

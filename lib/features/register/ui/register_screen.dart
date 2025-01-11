@@ -1,11 +1,17 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/features/register/logic/register_cubit.dart';
+import 'package:app/features/register/logic/register_states.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/dimensions/dimensions.dart';
+import '../../../core/routing/routes.dart';
+import '../../../core/services/audio_service.dart';
 import '../../../core/theming/colors.dart';
+import '../../../core/widgets/go_button.dart';
+import '../../../core/widgets/loaders.dart';
 import '../../../core/widgets/normal_text.dart';
 import '../../../core/widgets/subtitle_text.dart';
 import '../../../core/widgets/text_field_with_icon.dart';
@@ -26,7 +32,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool hidePassword = true;
   var selectedCity = cities[0];
   bool isMale = true;
-
+  late FilteringTextInputFormatter englishOnlyFilter;
+  @override
+  void initState() {
+    RegExp englishOnly = RegExp(r'^[a-zA-Z0-9]+$');
+    englishOnlyFilter = FilteringTextInputFormatter.allow(englishOnly);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -121,6 +133,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phoneSection(context),
           passwordSection(context),
           addressSection(context),
+          genderSection(context),
+          SizedBox(height: edge * 2),
+          registerButton(context),
         ],
       ),
     );
@@ -182,6 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         SizedBox(height: edge * 0.3),
         textFieldWithIcon(
           controller: context.read<RegisterCubit>().usernameController,
+          formatter: [englishOnlyFilter],
           icon: Icon(
             Icons.person_outline,
             color: Colors.white,
@@ -230,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Icons.phone,
             color: Colors.white,
           ),
-          hint: "phone_number_hint".tr(),
+          hint: "phone_no_hint".tr(),
         ),
       ],
     );
@@ -289,6 +305,128 @@ class _RegisterScreenState extends State<RegisterScreen> {
             // Handle city selection
             context.read<LocationCubit>().setSelectedCity(city);
           },
+        ),
+      ],
+    );
+  }
+
+  Widget genderSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SubTitleText(
+          text: "gender".tr(),
+          color: Colors.white,
+          fontSize: 16,
+        ),
+        SizedBox(height: edge * 0.3),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                  foregroundColor:
+                      isMale ? primaryColor : Colors.white.withAlpha(5)),
+              onPressed: () {
+                setState(() {
+                  isMale = true;
+                });
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.male,
+                    color: isMale ? primaryColor : Colors.white.withAlpha(128),
+                    size: 24,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  NormalText(
+                    text: "male".tr(),
+                    color: isMale ? primaryColor : Colors.white.withAlpha(128),
+                    fontSize: 18,
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                  foregroundColor:
+                      !isMale ? Colors.pink : Colors.white.withAlpha(5)),
+              onPressed: () {
+                setState(() {
+                  isMale = false;
+                });
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.female,
+                    color: isMale ? Colors.white.withAlpha(128) : Colors.pink,
+                    size: 24,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  NormalText(
+                    text: "female".tr(),
+                    color: isMale ? Colors.white.withAlpha(128) : Colors.pink,
+                    fontSize: 18,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget registerButton(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        GoButton(
+          fun: () {
+            context.read<RegisterCubit>().register(
+                country: context
+                        .read<LocationCubit>()
+                        .selectedCountry
+                        ?.countryName ,
+                city:
+                    context.read<LocationCubit>().selectedCity?.cityName ,
+                isMale: isMale);
+          },
+          titleKey: "register_sm".tr(),
+          btColor: primaryColor,
+          textColor: Colors.white,
+          gradient: true,
+          fontSize: 18,
+        ),
+        BlocListener<RegisterCubit, RegisterStates>(
+          listenWhen: (previous, current) => previous != current,
+          listener: (context, current) {
+            if (current is Loading) {
+              animatedLoaderWithTitle(
+                  context: context, title: "creating_account".tr());
+            } else if (current is Error) {
+              popDialog(context);
+              context.showErrorToast(current.message);
+            } else if (current is Success) {
+              popDialog(context);
+              AudioService().playAudio(
+                  src: 'sounds/audSuccess.mp3',
+                  onComplete: () {
+                    context.pushNamedAndRemoveUntil(Routes.homeScreen,
+                        predicate: false);
+                  });
+            } else if (current is EmptyInput) {
+              popDialog(context);
+              context.showErrorToast('enter_required_fields'.tr());
+            }
+          },
+          child: const SizedBox.shrink(),
         ),
       ],
     );
