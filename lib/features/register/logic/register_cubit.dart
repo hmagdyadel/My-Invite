@@ -1,3 +1,4 @@
+import '../data/models/register_request.dart';
 import 'register_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,27 +16,35 @@ class RegisterCubit extends Cubit<RegisterStates> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
 
-  Future<void> register({String? country, String? city, bool? isMale}) async {
+  Future<void> register({required int cityId, required bool isMale}) async {
     emit(const RegisterStates.loading());
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
         phoneController.text.isEmpty ||
         firstNameController.text.isEmpty ||
         lastNameController.text.isEmpty ||
-        usernameController.text.isEmpty || country == null || city == null) {
+        usernameController.text.isEmpty ||
+        cityId == 0) {
       emit(const RegisterStates.emptyInput());
+      return;
     }
-    // final result = await _registerRepo.register(
-    //   email: emailController.text,
-    //   password: passwordController.text,
-    //   phone: phoneController.text,
-    //   firstName: firstNameController.text,
-    //   lastName: lastNameController.text,
-    //   username: usernameController.text,
-    //   state: stateController.text,
-    // );
-    // emit(result.fold((l) => RegisterStates.error(l), (r) => RegisterStates.success(r)));
+    RegisterRequest registerRequestBody = RegisterRequest(
+      cityId: cityId,
+      email: emailController.text,
+      firstName: firstNameController.text,
+      gender: isMale ? 'm' : 'f',
+      lastName: lastNameController.text,
+      password: passwordController.text,
+      phoneNumber: phoneController.text,
+      userName: usernameController.text,
+      role: "Gatekeeper",
+    );
+    final result = await _registerRepo.register(registerRequestBody);
+    result.when(success: (response) {
+      emit(RegisterStates.success(response));
+    }, failure: (error) {
+      emit(RegisterStates.error(message: error));
+    });
   }
 }

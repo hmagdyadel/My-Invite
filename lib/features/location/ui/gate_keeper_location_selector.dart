@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,7 @@ class GatekeeperLocationSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocationCubit, LocationStates>(
+    return BlocBuilder<LocationCubit, LocationStates<List<dynamic>>>(
       builder: (context, state) {
         final locationCubit = context.read<LocationCubit>();
 
@@ -55,7 +56,7 @@ class GatekeeperLocationSelector extends StatelessWidget {
       BuildContext context,
       List<CountryResponse> countries,
       CountryResponse? selectedCountry,
-      LocationStates state,
+      LocationStates<List<dynamic>> state,
       ) {
     return Container(
       decoration: BoxDecoration(
@@ -63,12 +64,39 @@ class GatekeeperLocationSelector extends StatelessWidget {
         color: bgColorOverlay,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: state.maybeWhen(
+      child: state.when(
+        initial: () => _buildDropdown(
+          context: context,
+          items: countries,
+          selectedValue: selectedCountry,
+          onChanged: (CountryResponse? value) {
+            if (value != null) onCountryChange(value);
+          },
+          hintText: "select_country",
+        ),
         loading: () => const SizedBox(
           height: 48,
           child: Center(
             child: CupertinoActivityIndicator(color: Colors.white),
           ),
+        ),
+        emptyInput: () => _buildDropdown(
+          context: context,
+          items: countries,
+          selectedValue: selectedCountry,
+          onChanged: (CountryResponse? value) {
+            if (value != null) onCountryChange(value);
+          },
+          hintText: "select_country",
+        ),
+        success: (_) => _buildDropdown(
+          context: context,
+          items: countries,
+          selectedValue: selectedCountry,
+          onChanged: (CountryResponse? value) {
+            if (value != null) onCountryChange(value);
+          },
+          hintText: "select_country",
         ),
         error: (message) => Center(
           child: NormalText(
@@ -76,42 +104,6 @@ class GatekeeperLocationSelector extends StatelessWidget {
             color: Colors.red,
             fontSize: 12,
           ),
-        ),
-        orElse: () => DropdownButton<CountryResponse>(
-          dropdownColor: bgColorOverlay,
-          hint: NormalText(
-            text: "select_country".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          isExpanded: true,
-          underline: const SizedBox(),
-          value: selectedCountry,
-          items: [
-            DropdownMenuItem<CountryResponse>(
-              value: null,
-              child: NormalText(
-                text: "select_country".tr(),
-                color: Colors.white,
-                fontSize: 12,
-              ),
-            ),
-            ...countries.map((country) {
-              return DropdownMenuItem<CountryResponse>(
-                value: country,
-                child: NormalText(
-                  text: country.countryName,
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              );
-            }),
-          ],
-          onChanged: (CountryResponse? value) {
-            if (value != null) {
-              onCountryChange(value);
-            }
-          },
         ),
       ),
     );
@@ -121,22 +113,48 @@ class GatekeeperLocationSelector extends StatelessWidget {
       BuildContext context,
       List<CityResponse> cities,
       CityResponse? selectedCity,
-      LocationStates state,
+      LocationStates<List<dynamic>> state,
       ) {
     final locationCubit = context.read<LocationCubit>();
+    final bool isEnabled = locationCubit.selectedCountry != null;
 
     return Container(
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: locationCubit.selectedCountry == null
-            ? bgColorOverlay.withAlpha(4)
-            : bgColorOverlay,
+        color: isEnabled ? bgColorOverlay : bgColorOverlay.withAlpha(4),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: state.maybeWhen(
+      child: state.when(
+        initial: () => _buildDropdown(
+          context: context,
+          items: cities,
+          selectedValue: selectedCity,
+          onChanged: isEnabled ? (CityResponse? value) {
+            if (value != null) onCityChange(value);
+          } : null,
+          hintText: "select_city",
+        ),
         loading: () => const Center(
           child: CupertinoActivityIndicator(color: Colors.white),
+        ),
+        emptyInput: () => _buildDropdown(
+          context: context,
+          items: cities,
+          selectedValue: selectedCity,
+          onChanged: isEnabled ? (CityResponse? value) {
+            if (value != null) onCityChange(value);
+          } : null,
+          hintText: "select_city",
+        ),
+        success: (_) => _buildDropdown(
+          context: context,
+          items: cities,
+          selectedValue: selectedCity,
+          onChanged: isEnabled ? (CityResponse? value) {
+            if (value != null) onCityChange(value);
+          } : null,
+          hintText: "select_city",
         ),
         error: (message) => Center(
           child: NormalText(
@@ -145,45 +163,51 @@ class GatekeeperLocationSelector extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-        orElse: () => DropdownButton<CityResponse>(
-          dropdownColor: bgColorOverlay,
-          hint: NormalText(
-            text: "select_city".tr(),
+      ),
+    );
+  }
+
+  Widget _buildDropdown<T>({
+    required BuildContext context,
+    required List<T> items,
+    required T? selectedValue,
+    required Function(T?)? onChanged,
+    required String hintText,
+  }) {
+    return DropdownButton<T>(
+      dropdownColor: bgColorOverlay,
+      hint: NormalText(
+        text: hintText.tr(),
+        color: Colors.white,
+        fontSize: 12,
+      ),
+      isExpanded: true,
+      underline: const SizedBox(),
+      value: selectedValue,
+      items: [
+        DropdownMenuItem<T>(
+          value: null,
+          child: NormalText(
+            text: hintText.tr(),
             color: Colors.white,
             fontSize: 12,
           ),
-          isExpanded: true,
-          underline: const SizedBox(),
-          value: selectedCity,
-          items: [
-            DropdownMenuItem<CityResponse>(
-              value: null,
-              child: NormalText(
-                text: "select_city".tr(),
-                color: Colors.white,
-                fontSize: 12,
-              ),
-            ),
-            ...cities.map((city) {
-              return DropdownMenuItem<CityResponse>(
-                value: city,
-                child: NormalText(
-                  text: city.cityName,
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              );
-            }),
-          ],
-          onChanged: locationCubit.selectedCountry == null
-              ? null
-              : (CityResponse? value) {
-            if (value != null) {
-              onCityChange(value);
-            }
-          },
         ),
-      ),
+        ...items.map((item) {
+          final String displayText = item is CountryResponse
+              ? item.countryName
+              : (item as CityResponse).cityName;
+          return DropdownMenuItem<T>(
+            value: item,
+            child: NormalText(
+              text: displayText,
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          );
+        }),
+      ],
+      onChanged: onChanged,
     );
   }
 }

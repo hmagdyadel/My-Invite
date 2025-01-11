@@ -390,12 +390,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         GoButton(
           fun: () {
             context.read<RegisterCubit>().register(
-                country: context
-                        .read<LocationCubit>()
-                        .selectedCountry
-                        ?.countryName ,
-                city:
-                    context.read<LocationCubit>().selectedCity?.cityName ,
+
+                cityId:
+                    context.read<LocationCubit>().selectedCity?.id ?? 0,
                 isMale: isMale);
           },
           titleKey: "register_sm".tr(),
