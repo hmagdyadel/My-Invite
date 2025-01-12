@@ -34,11 +34,11 @@ dependencies:
   flutter_bloc: ^8.1.6
   audioplayers: ^6.1.0
   internet_connection_checker: ^3.0.1
+  flutter_native_splash: ^2.3.13
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.3.13
   flutter_launcher_icons: ^0.13.1
 
   flutter_lints: ^5.0.0

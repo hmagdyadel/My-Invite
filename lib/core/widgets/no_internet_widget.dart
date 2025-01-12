@@ -11,7 +11,7 @@ class NoInternetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: gradient1),
+      decoration: BoxDecoration(color: bgColorOverlay),
       padding:  EdgeInsets.all(edge),
       child: Column(
         children: [
