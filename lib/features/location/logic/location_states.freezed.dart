@@ -15,75 +15,41 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$LocationStates<T> {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) =>
+mixin _$LocationStates {
+  bool get isCountryLoading => throw _privateConstructorUsedError;
+  bool get isCityLoading => throw _privateConstructorUsedError;
+  List<CountryResponse> get countries => throw _privateConstructorUsedError;
+  List<CityResponse> get cities => throw _privateConstructorUsedError;
+  CountryResponse? get selectedCountry => throw _privateConstructorUsedError;
+  CityResponse? get selectedCity => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
+
+  /// Create a copy of LocationStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LocationStatesCopyWith<LocationStates> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LocationStatesCopyWith<T, $Res> {
+abstract class $LocationStatesCopyWith<$Res> {
   factory $LocationStatesCopyWith(
-          LocationStates<T> value, $Res Function(LocationStates<T>) then) =
-      _$LocationStatesCopyWithImpl<T, $Res, LocationStates<T>>;
+          LocationStates value, $Res Function(LocationStates) then) =
+      _$LocationStatesCopyWithImpl<$Res, LocationStates>;
+  @useResult
+  $Res call(
+      {bool isCountryLoading,
+      bool isCityLoading,
+      List<CountryResponse> countries,
+      List<CityResponse> cities,
+      CountryResponse? selectedCountry,
+      CityResponse? selectedCity,
+      String? error});
 }
 
 /// @nodoc
-class _$LocationStatesCopyWithImpl<T, $Res, $Val extends LocationStates<T>>
-    implements $LocationStatesCopyWith<T, $Res> {
+class _$LocationStatesCopyWithImpl<$Res, $Val extends LocationStates>
+    implements $LocationStatesCopyWith<$Res> {
   _$LocationStatesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -93,392 +59,74 @@ class _$LocationStatesCopyWithImpl<T, $Res, $Val extends LocationStates<T>>
 
   /// Create a copy of LocationStates
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isCountryLoading = null,
+    Object? isCityLoading = null,
+    Object? countries = null,
+    Object? cities = null,
+    Object? selectedCountry = freezed,
+    Object? selectedCity = freezed,
+    Object? error = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isCountryLoading: null == isCountryLoading
+          ? _value.isCountryLoading
+          : isCountryLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCityLoading: null == isCityLoading
+          ? _value.isCityLoading
+          : isCityLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      countries: null == countries
+          ? _value.countries
+          : countries // ignore: cast_nullable_to_non_nullable
+              as List<CountryResponse>,
+      cities: null == cities
+          ? _value.cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityResponse>,
+      selectedCountry: freezed == selectedCountry
+          ? _value.selectedCountry
+          : selectedCountry // ignore: cast_nullable_to_non_nullable
+              as CountryResponse?,
+      selectedCity: freezed == selectedCity
+          ? _value.selectedCity
+          : selectedCity // ignore: cast_nullable_to_non_nullable
+              as CityResponse?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<T, $Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl<T> value, $Res Function(_$InitialImpl<T>) then) =
-      __$$InitialImplCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<T, $Res>
-    extends _$LocationStatesCopyWithImpl<T, $Res, _$InitialImpl<T>>
-    implements _$$InitialImplCopyWith<T, $Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl<T> _value, $Res Function(_$InitialImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$InitialImpl<T> implements _Initial<T> {
-  const _$InitialImpl();
-
+abstract class _$$LocationStatesImplCopyWith<$Res>
+    implements $LocationStatesCopyWith<$Res> {
+  factory _$$LocationStatesImplCopyWith(_$LocationStatesImpl value,
+          $Res Function(_$LocationStatesImpl) then) =
+      __$$LocationStatesImplCopyWithImpl<$Res>;
   @override
-  String toString() {
-    return 'LocationStates<$T>.initial()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial<T> implements LocationStates<T> {
-  const factory _Initial() = _$InitialImpl<T>;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<T, $Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl<T> value, $Res Function(_$LoadingImpl<T>) then) =
-      __$$LoadingImplCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<T, $Res>
-    extends _$LocationStatesCopyWithImpl<T, $Res, _$LoadingImpl<T>>
-    implements _$$LoadingImplCopyWith<T, $Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl<T> _value, $Res Function(_$LoadingImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$LoadingImpl<T> implements Loading<T> {
-  const _$LoadingImpl();
-
-  @override
-  String toString() {
-    return 'LocationStates<$T>.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Loading<T> implements LocationStates<T> {
-  const factory Loading() = _$LoadingImpl<T>;
-}
-
-/// @nodoc
-abstract class _$$EmptyInputImplCopyWith<T, $Res> {
-  factory _$$EmptyInputImplCopyWith(
-          _$EmptyInputImpl<T> value, $Res Function(_$EmptyInputImpl<T>) then) =
-      __$$EmptyInputImplCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$$EmptyInputImplCopyWithImpl<T, $Res>
-    extends _$LocationStatesCopyWithImpl<T, $Res, _$EmptyInputImpl<T>>
-    implements _$$EmptyInputImplCopyWith<T, $Res> {
-  __$$EmptyInputImplCopyWithImpl(
-      _$EmptyInputImpl<T> _value, $Res Function(_$EmptyInputImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$EmptyInputImpl<T> implements EmptyInput<T> {
-  const _$EmptyInputImpl();
-
-  @override
-  String toString() {
-    return 'LocationStates<$T>.emptyInput()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EmptyInputImpl<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) {
-    return emptyInput();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) {
-    return emptyInput?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (emptyInput != null) {
-      return emptyInput();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return emptyInput(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) {
-    return emptyInput?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (emptyInput != null) {
-      return emptyInput(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class EmptyInput<T> implements LocationStates<T> {
-  const factory EmptyInput() = _$EmptyInputImpl<T>;
-}
-
-/// @nodoc
-abstract class _$$SuccessImplCopyWith<T, $Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl<T> value, $Res Function(_$SuccessImpl<T>) then) =
-      __$$SuccessImplCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({T data});
+  $Res call(
+      {bool isCountryLoading,
+      bool isCityLoading,
+      List<CountryResponse> countries,
+      List<CityResponse> cities,
+      CountryResponse? selectedCountry,
+      CityResponse? selectedCity,
+      String? error});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<T, $Res>
-    extends _$LocationStatesCopyWithImpl<T, $Res, _$SuccessImpl<T>>
-    implements _$$SuccessImplCopyWith<T, $Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl<T> _value, $Res Function(_$SuccessImpl<T>) _then)
+class __$$LocationStatesImplCopyWithImpl<$Res>
+    extends _$LocationStatesCopyWithImpl<$Res, _$LocationStatesImpl>
+    implements _$$LocationStatesImplCopyWith<$Res> {
+  __$$LocationStatesImplCopyWithImpl(
+      _$LocationStatesImpl _value, $Res Function(_$LocationStatesImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of LocationStates
@@ -486,297 +134,166 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? isCountryLoading = null,
+    Object? isCityLoading = null,
+    Object? countries = null,
+    Object? cities = null,
+    Object? selectedCountry = freezed,
+    Object? selectedCity = freezed,
+    Object? error = freezed,
   }) {
-    return _then(_$SuccessImpl<T>(
-      freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as T,
+    return _then(_$LocationStatesImpl(
+      isCountryLoading: null == isCountryLoading
+          ? _value.isCountryLoading
+          : isCountryLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCityLoading: null == isCityLoading
+          ? _value.isCityLoading
+          : isCityLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      countries: null == countries
+          ? _value._countries
+          : countries // ignore: cast_nullable_to_non_nullable
+              as List<CountryResponse>,
+      cities: null == cities
+          ? _value._cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityResponse>,
+      selectedCountry: freezed == selectedCountry
+          ? _value.selectedCountry
+          : selectedCountry // ignore: cast_nullable_to_non_nullable
+              as CountryResponse?,
+      selectedCity: freezed == selectedCity
+          ? _value.selectedCity
+          : selectedCity // ignore: cast_nullable_to_non_nullable
+              as CityResponse?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SuccessImpl<T> implements Success<T> {
-  const _$SuccessImpl(this.data);
+class _$LocationStatesImpl implements _LocationStates {
+  const _$LocationStatesImpl(
+      {this.isCountryLoading = true,
+      this.isCityLoading = false,
+      final List<CountryResponse> countries = const [],
+      final List<CityResponse> cities = const [],
+      this.selectedCountry,
+      this.selectedCity,
+      this.error})
+      : _countries = countries,
+        _cities = cities;
 
   @override
-  final T data;
+  @JsonKey()
+  final bool isCountryLoading;
+  @override
+  @JsonKey()
+  final bool isCityLoading;
+  final List<CountryResponse> _countries;
+  @override
+  @JsonKey()
+  List<CountryResponse> get countries {
+    if (_countries is EqualUnmodifiableListView) return _countries;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_countries);
+  }
+
+  final List<CityResponse> _cities;
+  @override
+  @JsonKey()
+  List<CityResponse> get cities {
+    if (_cities is EqualUnmodifiableListView) return _cities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cities);
+  }
+
+  @override
+  final CountryResponse? selectedCountry;
+  @override
+  final CityResponse? selectedCity;
+  @override
+  final String? error;
 
   @override
   String toString() {
-    return 'LocationStates<$T>.success(data: $data)';
+    return 'LocationStates(isCountryLoading: $isCountryLoading, isCityLoading: $isCityLoading, countries: $countries, cities: $cities, selectedCountry: $selectedCountry, selectedCity: $selectedCity, error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
+            other is _$LocationStatesImpl &&
+            (identical(other.isCountryLoading, isCountryLoading) ||
+                other.isCountryLoading == isCountryLoading) &&
+            (identical(other.isCityLoading, isCityLoading) ||
+                other.isCityLoading == isCityLoading) &&
+            const DeepCollectionEquality()
+                .equals(other._countries, _countries) &&
+            const DeepCollectionEquality().equals(other._cities, _cities) &&
+            (identical(other.selectedCountry, selectedCountry) ||
+                other.selectedCountry == selectedCountry) &&
+            (identical(other.selectedCity, selectedCity) ||
+                other.selectedCity == selectedCity) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(
+      runtimeType,
+      isCountryLoading,
+      isCityLoading,
+      const DeepCollectionEquality().hash(_countries),
+      const DeepCollectionEquality().hash(_cities),
+      selectedCountry,
+      selectedCity,
+      error);
 
   /// Create a copy of LocationStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
-      __$$SuccessImplCopyWithImpl<T, _$SuccessImpl<T>>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) {
-    return success(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) {
-    return success?.call(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
+  _$$LocationStatesImplCopyWith<_$LocationStatesImpl> get copyWith =>
+      __$$LocationStatesImplCopyWithImpl<_$LocationStatesImpl>(
+          this, _$identity);
 }
 
-abstract class Success<T> implements LocationStates<T> {
-  const factory Success(final T data) = _$SuccessImpl<T>;
+abstract class _LocationStates implements LocationStates {
+  const factory _LocationStates(
+      {final bool isCountryLoading,
+      final bool isCityLoading,
+      final List<CountryResponse> countries,
+      final List<CityResponse> cities,
+      final CountryResponse? selectedCountry,
+      final CityResponse? selectedCity,
+      final String? error}) = _$LocationStatesImpl;
 
-  T get data;
+  @override
+  bool get isCountryLoading;
+  @override
+  bool get isCityLoading;
+  @override
+  List<CountryResponse> get countries;
+  @override
+  List<CityResponse> get cities;
+  @override
+  CountryResponse? get selectedCountry;
+  @override
+  CityResponse? get selectedCity;
+  @override
+  String? get error;
 
   /// Create a copy of LocationStates
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ErrorImplCopyWith<T, $Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl<T> value, $Res Function(_$ErrorImpl<T>) then) =
-      __$$ErrorImplCopyWithImpl<T, $Res>;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class __$$ErrorImplCopyWithImpl<T, $Res>
-    extends _$LocationStatesCopyWithImpl<T, $Res, _$ErrorImpl<T>>
-    implements _$$ErrorImplCopyWith<T, $Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl<T> _value, $Res Function(_$ErrorImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(_$ErrorImpl<T>(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ErrorImpl<T> implements Error<T> {
-  const _$ErrorImpl({required this.message});
-
-  @override
-  final String message;
-
-  @override
-  String toString() {
-    return 'LocationStates<$T>.error(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl<T> &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
-      __$$ErrorImplCopyWithImpl<T, _$ErrorImpl<T>>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() emptyInput,
-    required TResult Function(T data) success,
-    required TResult Function(String message) error,
-  }) {
-    return error(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
-    TResult? Function(String message)? error,
-  }) {
-    return error?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? emptyInput,
-    TResult Function(T data)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Error<T> implements LocationStates<T> {
-  const factory Error({required final String message}) = _$ErrorImpl<T>;
-
-  String get message;
-
-  /// Create a copy of LocationStates
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
+  _$$LocationStatesImplCopyWith<_$LocationStatesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

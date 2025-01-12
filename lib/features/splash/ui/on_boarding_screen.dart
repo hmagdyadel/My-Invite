@@ -6,11 +6,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/dimensions/dimensions.dart';
-import '../../core/theming/colors.dart';
-import '../../core/widgets/change_language.dart';
-import '../../core/widgets/go_button.dart';
-import '../../generated/assets.dart';
+import '../../../core/dimensions/dimensions.dart';
+import '../../../core/theming/colors.dart';
+import '../../../core/widgets/change_language.dart';
+import '../../../core/widgets/go_button.dart';
+import '../../../generated/assets.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});

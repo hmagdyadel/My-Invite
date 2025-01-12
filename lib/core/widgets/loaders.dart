@@ -1,4 +1,5 @@
 import 'package:app/core/theming/colors.dart';
+import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,8 +73,9 @@ void dialogWithSingleAction({required BuildContext context, required String titl
         title: SubTitleText(
           text: title,
           color: Colors.white,
+          fontSize: 20,
         ),
-        content: SubTitleText(
+        content: NormalText(
           text: msg,
           color: Colors.white,
         ),

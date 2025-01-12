@@ -1,12 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../data/models/city_response.dart';
+import '../data/models/country_response.dart';
 part 'location_states.freezed.dart';
 
 @Freezed()
-class LocationStates<T> with _$LocationStates<T> {
-  const factory LocationStates.initial() = _Initial;
-  const factory LocationStates.loading() = Loading;
-  const factory LocationStates.emptyInput() = EmptyInput;
-  const factory LocationStates.success(T data) = Success<T>;
-  const factory LocationStates.error({required String message}) = Error;
+class LocationStates with _$LocationStates {
+  const factory LocationStates({
+    @Default(true) bool isCountryLoading,
+    @Default(false) bool isCityLoading,
+    @Default([]) List<CountryResponse> countries,
+    @Default([]) List<CityResponse> cities,
+    CountryResponse? selectedCountry,
+    CityResponse? selectedCity,
+    String? error,
+  }) = _LocationStates;
 }
-

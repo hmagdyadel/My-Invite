@@ -10,8 +10,8 @@ import '../../features/login/logic/login_cubit.dart';
 import '../../features/login/ui/login_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
-import '../../features/splash/on_boarding_screen.dart';
-import '../../features/splash/splash_screen.dart';
+import '../../features/splash/ui/on_boarding_screen.dart';
+import '../../features/splash/ui/splash_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 

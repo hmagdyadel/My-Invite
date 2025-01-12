@@ -25,25 +25,41 @@ class MyInvite extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        // Use context.locale instead of direct AppUtilities
         navigatorKey: NavigationService.navigatorKey,
         builder: (context, widget) {
-          return StreamBuilder<InternetConnectionStatus>(
-            stream: InternetConnectionChecker.instance.onStatusChange,
-            builder: (context, snapshot) {
-              final isConnected = snapshot.data == InternetConnectionStatus.connected;
-
-              if (isConnected) {
+          return FutureBuilder<bool>(
+            future: InternetConnectionChecker.instance.hasConnection,
+            builder: (context, initialSnapshot) {
+              // If we're still checking the initial connection, show the regular app
+              if (!initialSnapshot.hasData) {
                 return MediaQuery(
                   data: MediaQuery.of(context).copyWith(
                     textScaler: TextScaler.noScaling,
                   ),
                   child: widget!,
                 );
-              } else {
-                // Show only the NoInternetWidget if there is no internet
-                return const NoInternetWidget();
               }
+
+              return StreamBuilder<InternetConnectionStatus>(
+                stream: InternetConnectionChecker.instance.onStatusChange,
+                initialData: initialSnapshot.data == true
+                    ? InternetConnectionStatus.connected
+                    : InternetConnectionStatus.disconnected,
+                builder: (context, snapshot) {
+                  final isConnected = snapshot.data == InternetConnectionStatus.connected;
+
+                  if (isConnected) {
+                    return MediaQuery(
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: TextScaler.noScaling,
+                      ),
+                      child: widget!,
+                    );
+                  } else {
+                    return const NoInternetWidget();
+                  }
+                },
+              );
             },
           );
         },
