@@ -21,6 +21,7 @@ class NoInternetWidget extends StatelessWidget {
             size: 200,
             color: Colors.white,
           ),
+          SizedBox(height: 50),
           SubTitleText(
             text: 'no_internet'.tr(),
             color: Colors.white,
