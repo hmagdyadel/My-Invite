@@ -71,9 +71,11 @@ void dialogWithSingleAction({required BuildContext context, required String titl
       return AlertDialog(
         title: SubTitleText(
           text: title,
+          color: Colors.white,
         ),
         content: SubTitleText(
           text: msg,
+          color: Colors.white,
         ),
         backgroundColor: Colors.black,
         actions: <Widget>[

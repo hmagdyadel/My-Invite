@@ -7,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/dimensions/dimensions.dart';
-import '../../../core/routing/routes.dart';
-import '../../../core/services/audio_service.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/widgets/go_button.dart';
 import '../../../core/widgets/loaders.dart';
@@ -33,76 +31,63 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var selectedCity = cities[0];
   bool isMale = true;
   late FilteringTextInputFormatter englishOnlyFilter;
+
   @override
   void initState() {
     RegExp englishOnly = RegExp(r'^[a-zA-Z0-9]+$');
     englishOnlyFilter = FilteringTextInputFormatter.allow(englishOnly);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Container(
-        decoration: BoxDecoration(gradient: gradient1),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                backgroundColor: Colors.transparent,
-                foregroundColor: Colors.white,
-                pinned: true,
-                expandedHeight: 200.0,
-                // Height when fully expanded
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    decoration: BoxDecoration(gradient: gradient1),
-                    child: SafeArea(
-                      child: Padding(
-                        padding: EdgeInsets.all(edge),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SubTitleText(
-                              text: "register_sm".tr(),
-                              color: Colors.white,
-                              fontSize: 32,
-                            ),
-                            NormalText(
-                              text: "register_dt".tr(),
-                              color: Colors.white,
-                              fontSize: 16,
-                              align: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                leading: GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade100,
-                      radius: 15,
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
+              pinned: true,
+              expandedHeight: 200.0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: buildFlexibleSpace(context),
               ),
-              SliverToBoxAdapter(
-                child: registerPanel(context),
+              leading: buildBackButton(context),
+            ),
+            SliverToBoxAdapter(
+              child: buildRegistrationForm(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildFlexibleSpace(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(gradient: gradient1),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(edge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SubTitleText(
+                text: "register_sm".tr(),
+                color: Colors.white,
+                fontSize: 32,
+              ),
+              NormalText(
+                text: "register_dt".tr(),
+                color: Colors.white,
+                fontSize: 16,
+                align: TextAlign.start,
               ),
             ],
           ),
@@ -111,7 +96,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget registerPanel(BuildContext context) {
+  Widget buildBackButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.pop();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: CircleAvatar(
+          backgroundColor: Colors.grey.shade100,
+          radius: 15,
+          child: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildRegistrationForm(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(edge * 1.5),
       alignment: Alignment.topCenter,
@@ -126,167 +130,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: edge,
         children: [
-          firstNameSection(context),
-          lastNameSection(context),
-          userNameSection(context),
-          emailSection(context),
-          phoneSection(context),
-          passwordSection(context),
-          addressSection(context),
-          genderSection(context),
+          buildTextFieldSection(context, "first_name", "first_name_hint", context.read<RegisterCubit>().firstNameController, Icons.person_outline),
+          buildTextFieldSection(context, "last_name", "last_name_hint", context.read<RegisterCubit>().lastNameController, Icons.person_outline),
+          buildTextFieldSection(context, "username", "username_in_english", context.read<RegisterCubit>().usernameController, Icons.person_outline, formatter: [englishOnlyFilter]),
+          buildTextFieldSection(context, "email", "email_hint", context.read<RegisterCubit>().emailController, Icons.email_outlined),
+          buildTextFieldSection(context, "phone", "phone_no_hint", context.read<RegisterCubit>().phoneController, Icons.phone),
+          buildPasswordSection(context),
+          buildAddressSection(context),
+          buildGenderSection(context),
           SizedBox(height: edge * 2),
-          registerButton(context),
+          buildRegisterButton(context),
         ],
       ),
     );
   }
 
-  Widget firstNameSection(BuildContext context) {
+  Widget buildTextFieldSection(BuildContext context, String labelKey, String hintKey, TextEditingController controller, IconData icon, {List<TextInputFormatter>? formatter}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SubTitleText(
-          text: "first_name".tr(),
+          text: labelKey.tr(),
           color: Colors.white,
           fontSize: 16,
         ),
         SizedBox(height: edge * 0.3),
         textFieldWithIcon(
-          controller: context.read<RegisterCubit>().firstNameController,
+          controller: controller,
+          formatter: formatter ?? [],
           icon: Icon(
-            Icons.person_outline,
+            icon,
             color: Colors.white,
           ),
-          hint: "first_name_hint".tr(),
+          hint: hintKey.tr(),
         ),
       ],
     );
   }
 
-  Widget lastNameSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SubTitleText(
-          text: "last_name".tr(),
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        SizedBox(height: edge * 0.3),
-        textFieldWithIcon(
-          controller: context.read<RegisterCubit>().lastNameController,
-          icon: Icon(
-            Icons.person_outline,
-            color: Colors.white,
-          ),
-          hint: "last_name_hint".tr(),
-        ),
-      ],
+  Widget buildPasswordSection(BuildContext context) {
+    return buildTextFieldSection(
+      context,
+      "password",
+      "password_hint",
+      context.read<RegisterCubit>().passwordController,
+      Icons.password,
+      formatter: [],
     );
   }
 
-  Widget userNameSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SubTitleText(
-          text: "username".tr(),
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        SizedBox(height: edge * 0.3),
-        textFieldWithIcon(
-          controller: context.read<RegisterCubit>().usernameController,
-          formatter: [englishOnlyFilter],
-          icon: Icon(
-            Icons.person_outline,
-            color: Colors.white,
-          ),
-          hint: "username_in_english".tr(),
-        ),
-      ],
-    );
-  }
-
-  Widget emailSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SubTitleText(
-          text: "email".tr(),
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        SizedBox(height: edge * 0.3),
-        textFieldWithIcon(
-          controller: context.read<RegisterCubit>().emailController,
-          icon: Icon(
-            Icons.email_outlined,
-            color: Colors.white,
-          ),
-          hint: "email_hint".tr(),
-        ),
-      ],
-    );
-  }
-
-  Widget phoneSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SubTitleText(
-          text: "phone".tr(),
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        SizedBox(height: edge * 0.3),
-        textFieldWithIcon(
-          controller: context.read<RegisterCubit>().phoneController,
-          icon: Icon(
-            Icons.phone,
-            color: Colors.white,
-          ),
-          hint: "phone_no_hint".tr(),
-        ),
-      ],
-    );
-  }
-
-  Widget passwordSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SubTitleText(
-          text: "password".tr(),
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        SizedBox(height: edge * 0.3),
-        textFieldWithIcon(
-          controller: context.read<RegisterCubit>().passwordController,
-          obscureText: hidePassword,
-          suffix: IconButton(
-            icon: Icon(
-              hidePassword ? Icons.visibility : Icons.visibility_off_rounded,
-              color: hidePassword ? Colors.white : primaryColor,
-            ),
-            onPressed: () {
-              setState(() {
-                hidePassword = !hidePassword;
-              });
-            },
-          ),
-          icon: Icon(
-            Icons.password,
-            color: Colors.white,
-          ),
-          hint: "password_hint".tr(),
-        ),
-      ],
-    );
-  }
-
-  Widget addressSection(BuildContext context) {
+  Widget buildAddressSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -298,11 +191,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         SizedBox(height: edge * 0.3),
         GatekeeperLocationSelector(
           onCountryChange: (CountryResponse country) {
-            // Handle country selection
             context.read<LocationCubit>().setSelectedCountry(country);
           },
           onCityChange: (CityResponse city) {
-            // Handle city selection
             context.read<LocationCubit>().setSelectedCity(city);
           },
         ),
@@ -310,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget genderSection(BuildContext context) {
+  Widget buildGenderSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -323,77 +214,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                  foregroundColor:
-                      isMale ? primaryColor : Colors.white.withAlpha(5)),
-              onPressed: () {
-                setState(() {
-                  isMale = true;
-                });
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.male,
-                    color: isMale ? primaryColor : Colors.white.withAlpha(128),
-                    size: 24,
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  NormalText(
-                    text: "male".tr(),
-                    color: isMale ? primaryColor : Colors.white.withAlpha(128),
-                    fontSize: 18,
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                  foregroundColor:
-                      !isMale ? Colors.pink : Colors.white.withAlpha(5)),
-              onPressed: () {
-                setState(() {
-                  isMale = false;
-                });
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.female,
-                    color: isMale ? Colors.white.withAlpha(128) : Colors.pink,
-                    size: 24,
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  NormalText(
-                    text: "female".tr(),
-                    color: isMale ? Colors.white.withAlpha(128) : Colors.pink,
-                    fontSize: 18,
-                  ),
-                ],
-              ),
-            )
+            buildGenderButton(context, Icons.male, "male", true),
+            buildGenderButton(context, Icons.female, "female", false),
           ],
         ),
       ],
     );
   }
 
-  Widget registerButton(BuildContext context) {
+  Widget buildGenderButton(BuildContext context, IconData icon, String genderKey, bool isMaleGender) {
+    return TextButton(
+      style: TextButton.styleFrom(foregroundColor: isMale == isMaleGender ? primaryColor : Colors.white.withAlpha(5)),
+      onPressed: () {
+        setState(() {
+          isMale = isMaleGender;
+        });
+      },
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: isMale == isMaleGender ? primaryColor : Colors.white.withAlpha(128),
+            size: 24,
+          ),
+          const SizedBox(width: 4),
+          NormalText(
+            text: genderKey.tr(),
+            color: isMale == isMaleGender ? primaryColor : Colors.white.withAlpha(128),
+            fontSize: 18,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildRegisterButton(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GoButton(
           fun: () {
-            context.read<RegisterCubit>().register(
-
-                cityId:
-                    context.read<LocationCubit>().selectedCity?.id ?? 0,
-                isMale: isMale);
+            if (context.read<RegisterCubit>().state is! Loading) {
+              context.read<RegisterCubit>().register(
+                cityId: context.read<LocationCubit>().selectedCity?.id ?? 0,
+                isMale: isMale,
+              );
+            }
           },
           titleKey: "register_sm".tr(),
           btColor: primaryColor,
@@ -402,23 +268,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           fontSize: 18,
         ),
         BlocListener<RegisterCubit, RegisterStates>(
-          listenWhen: (previous, current) => previous != current,
-          listener: (context, current) {
-            if (current is Loading) {
-              animatedLoaderWithTitle(
-                  context: context, title: "creating_account".tr());
-            } else if (current is Error) {
+          listener: (context, state) {
+            if (state is Loading) {
+              animatedLoaderWithTitle(context: context, title: "creating_account".tr());
+            } else if (state is Error) {
               popDialog(context);
-              context.showErrorToast(current.message);
-            } else if (current is Success) {
+              context.showErrorToast(state.message);
+            } else if (state is Success) {
               popDialog(context);
-              AudioService().playAudio(
-                  src: 'sounds/audSuccess.mp3',
-                  onComplete: () {
-                    context.pushNamedAndRemoveUntil(Routes.homeScreen,
-                        predicate: false);
-                  });
-            } else if (current is EmptyInput) {
+              dialogWithSingleAction(context: context, title: "pending_approval".tr(), msg: 'pending_approval_msg'.tr());
+            } else if (state is EmptyInput) {
               popDialog(context);
               context.showErrorToast('enter_required_fields'.tr());
             }

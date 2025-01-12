@@ -253,5 +253,9 @@
   "last_name_hint": "Please enter your last name",
   "email_hint": "Please enter your email",
   "phone_number_hint": "Please enter your phone number",
-  "username_in_english": "Username in English"
+  "username_in_english": "Username in English",
+  "register_error": "Failed to register, please try again later",
+  "invalid_email": "Invalid email address.",
+  "invalid_phone": "Phone number must contain only numbers.",
+  "username_exists_error": "This username already exists, please try again with another username"
 }
