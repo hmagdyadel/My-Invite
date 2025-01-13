@@ -112,11 +112,10 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
-  Future<void> _handleLogout(BuildContext context) async {
+  Future<void> _handleLogout() async {
     try {
-      await AppUtilities().clearData();
-      if (!mounted) return;
       context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: false);
+      await AppUtilities().clearData();
     } catch (e) {
       debugPrint('Logout error: $e');
     }
@@ -147,9 +146,15 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
           icon: AnimatedRotation(
             duration: const Duration(milliseconds: 300),
             turns: context.locale.languageCode == 'en' ? 0 : 1,
-            child: const Icon(Icons.logout, color: Colors.white),
+            child:  Transform.rotate(
+              angle: context.locale.languageCode == 'en' ? 0 : 3.14, // Rotate 180 degrees for non-English
+              child: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+            ),
           ),
-          onPressed: () => _handleLogout(context),
+          onPressed: () => _handleLogout(),
         ),
       ],
       leading: Padding(
