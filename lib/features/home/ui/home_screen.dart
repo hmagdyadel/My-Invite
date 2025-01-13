@@ -15,30 +15,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedScreen = 0;
 
-  List<Widget> screens = [];
+  List<Widget> screens = [const DashboardScreen(), const SettingsScreen()];
 
-  @override
-  void initState() {
-    super.initState();
-    makeScreens();
-  }
-
-  makeScreens() {
-    screens = [const DashboardScreen(), const SettingsScreen()];
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
       // appBar: AppBar(),
-      body: Container(),
+      body: body(),
       floatingActionButton: qrScanButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: bottomNav(),
     );
   }
-
+  Widget body() {
+    return screens[selectedScreen];
+  }
   FloatingActionButton qrScanButton() {
     if (AppUtilities().loginData.roleName == "Client") {
       return FloatingActionButton(backgroundColor: Colors.transparent, elevation: 0, onPressed: () {});
@@ -64,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       onTap: (index) {
         setState(() {
+          debugPrint("index: $index");
           selectedScreen = index;
         });
       },
