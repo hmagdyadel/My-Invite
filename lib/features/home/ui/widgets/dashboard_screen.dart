@@ -9,7 +9,7 @@ import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/change_language.dart';
-import '../../data/dashboard_action.dart';
+import '../../data/models/dashboard_action.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.person,
         gradient: gradient1,
         onTap: () {
-          //Get.to(() => const ProfileScreen());
+          context.pushNamed(Routes.profileScreen);
         },
       ),
       DashboardAction(
@@ -63,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.person,
         gradient: gradient1,
         onTap: () {
-          // Get.to(() => const ProfileScreen());
+          context.pushNamed(Routes.profileScreen);
         },
       ),
       DashboardAction(

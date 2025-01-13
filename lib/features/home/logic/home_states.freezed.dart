@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile_states.dart';
+part of 'home_states.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ProfileStates<T> {
+mixin _$HomeStates<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -75,23 +75,23 @@ mixin _$ProfileStates<T> {
 }
 
 /// @nodoc
-abstract class $ProfileStatesCopyWith<T, $Res> {
-  factory $ProfileStatesCopyWith(
-          ProfileStates<T> value, $Res Function(ProfileStates<T>) then) =
-      _$ProfileStatesCopyWithImpl<T, $Res, ProfileStates<T>>;
+abstract class $HomeStatesCopyWith<T, $Res> {
+  factory $HomeStatesCopyWith(
+          HomeStates<T> value, $Res Function(HomeStates<T>) then) =
+      _$HomeStatesCopyWithImpl<T, $Res, HomeStates<T>>;
 }
 
 /// @nodoc
-class _$ProfileStatesCopyWithImpl<T, $Res, $Val extends ProfileStates<T>>
-    implements $ProfileStatesCopyWith<T, $Res> {
-  _$ProfileStatesCopyWithImpl(this._value, this._then);
+class _$HomeStatesCopyWithImpl<T, $Res, $Val extends HomeStates<T>>
+    implements $HomeStatesCopyWith<T, $Res> {
+  _$HomeStatesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -104,13 +104,13 @@ abstract class _$$InitialImplCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<T, $Res>
-    extends _$ProfileStatesCopyWithImpl<T, $Res, _$InitialImpl<T>>
+    extends _$HomeStatesCopyWithImpl<T, $Res, _$InitialImpl<T>>
     implements _$$InitialImplCopyWith<T, $Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl<T> _value, $Res Function(_$InitialImpl<T>) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -121,7 +121,7 @@ class _$InitialImpl<T> implements _Initial<T> {
 
   @override
   String toString() {
-    return 'ProfileStates<$T>.initial()';
+    return 'HomeStates<$T>.initial()';
   }
 
   @override
@@ -214,7 +214,7 @@ class _$InitialImpl<T> implements _Initial<T> {
   }
 }
 
-abstract class _Initial<T> implements ProfileStates<T> {
+abstract class _Initial<T> implements HomeStates<T> {
   const factory _Initial() = _$InitialImpl<T>;
 }
 
@@ -227,13 +227,13 @@ abstract class _$$LoadingImplCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<T, $Res>
-    extends _$ProfileStatesCopyWithImpl<T, $Res, _$LoadingImpl<T>>
+    extends _$HomeStatesCopyWithImpl<T, $Res, _$LoadingImpl<T>>
     implements _$$LoadingImplCopyWith<T, $Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl<T> _value, $Res Function(_$LoadingImpl<T>) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -244,7 +244,7 @@ class _$LoadingImpl<T> implements Loading<T> {
 
   @override
   String toString() {
-    return 'ProfileStates<$T>.loading()';
+    return 'HomeStates<$T>.loading()';
   }
 
   @override
@@ -337,7 +337,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements ProfileStates<T> {
+abstract class Loading<T> implements HomeStates<T> {
   const factory Loading() = _$LoadingImpl<T>;
 }
 
@@ -350,13 +350,13 @@ abstract class _$$EmptyInputImplCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$EmptyInputImplCopyWithImpl<T, $Res>
-    extends _$ProfileStatesCopyWithImpl<T, $Res, _$EmptyInputImpl<T>>
+    extends _$HomeStatesCopyWithImpl<T, $Res, _$EmptyInputImpl<T>>
     implements _$$EmptyInputImplCopyWith<T, $Res> {
   __$$EmptyInputImplCopyWithImpl(
       _$EmptyInputImpl<T> _value, $Res Function(_$EmptyInputImpl<T>) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -367,7 +367,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
 
   @override
   String toString() {
-    return 'ProfileStates<$T>.emptyInput()';
+    return 'HomeStates<$T>.emptyInput()';
   }
 
   @override
@@ -460,7 +460,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   }
 }
 
-abstract class EmptyInput<T> implements ProfileStates<T> {
+abstract class EmptyInput<T> implements HomeStates<T> {
   const factory EmptyInput() = _$EmptyInputImpl<T>;
 }
 
@@ -475,13 +475,13 @@ abstract class _$$SuccessImplCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<T, $Res>
-    extends _$ProfileStatesCopyWithImpl<T, $Res, _$SuccessImpl<T>>
+    extends _$HomeStatesCopyWithImpl<T, $Res, _$SuccessImpl<T>>
     implements _$$SuccessImplCopyWith<T, $Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl<T> _value, $Res Function(_$SuccessImpl<T>) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -507,7 +507,7 @@ class _$SuccessImpl<T> implements Success<T> {
 
   @override
   String toString() {
-    return 'ProfileStates<$T>.success(data: $data)';
+    return 'HomeStates<$T>.success(data: $data)';
   }
 
   @override
@@ -522,7 +522,7 @@ class _$SuccessImpl<T> implements Success<T> {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -611,12 +611,12 @@ class _$SuccessImpl<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements ProfileStates<T> {
+abstract class Success<T> implements HomeStates<T> {
   const factory Success(final T data) = _$SuccessImpl<T>;
 
   T get data;
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
@@ -634,13 +634,13 @@ abstract class _$$ErrorImplCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<T, $Res>
-    extends _$ProfileStatesCopyWithImpl<T, $Res, _$ErrorImpl<T>>
+    extends _$HomeStatesCopyWithImpl<T, $Res, _$ErrorImpl<T>>
     implements _$$ErrorImplCopyWith<T, $Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl<T> _value, $Res Function(_$ErrorImpl<T>) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -666,7 +666,7 @@ class _$ErrorImpl<T> implements Error<T> {
 
   @override
   String toString() {
-    return 'ProfileStates<$T>.error(message: $message)';
+    return 'HomeStates<$T>.error(message: $message)';
   }
 
   @override
@@ -680,7 +680,7 @@ class _$ErrorImpl<T> implements Error<T> {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -769,12 +769,12 @@ class _$ErrorImpl<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements ProfileStates<T> {
+abstract class Error<T> implements HomeStates<T> {
   const factory Error({required final String message}) = _$ErrorImpl<T>;
 
   String get message;
 
-  /// Create a copy of ProfileStates
+  /// Create a copy of HomeStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>

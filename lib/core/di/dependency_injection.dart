@@ -1,9 +1,10 @@
-
-import 'package:app/features/location/logic/location_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/home/data/repo/home_repo.dart';
+import '../../features/home/logic/home_cubit.dart';
 import '../../features/location/data/repo/location_repo.dart';
+import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/logic/login_cubit.dart';
 import '../../features/register/data/repo/register_repo.dart';
@@ -27,4 +28,7 @@ Future<void> setupGetIt() async {
   //location
   getIt.registerLazySingleton<LocationRepo>(() => LocationRepo(getIt()));
   getIt.registerFactory<LocationCubit>(() => LocationCubit(getIt()));
+  //profile
+  getIt.registerLazySingleton<HomeRepo>(() => HomeRepo(getIt()));
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
 }

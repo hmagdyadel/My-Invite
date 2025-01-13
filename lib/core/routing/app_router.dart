@@ -1,10 +1,11 @@
-
+import 'package:app/features/home/logic/home_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/home/ui/home_screen.dart';
+import '../../features/home/ui/widgets/profile_screen.dart';
 import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/logic/login_cubit.dart';
 import '../../features/login/ui/login_screen.dart';
@@ -46,7 +47,6 @@ class AppRouter {
           ),
         );
 
-
       case Routes.onBoardingScreen:
         return _buildRoute(
           const OnBoardingScreen(),
@@ -55,6 +55,15 @@ class AppRouter {
         return _buildRoute(
           const HomeScreen(),
         );
+
+      case Routes.profileScreen:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<HomeCubit>(),
+            child: const ProfileScreen(),
+          ),
+        );
+
       default:
         return _buildRoute(
           Scaffold(
