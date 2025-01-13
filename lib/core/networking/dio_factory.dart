@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../helpers/app_utilities.dart';
+
 class DioFactory {
   /// private constructor as I don't want to allow creating an instance of this class
   DioFactory._();
@@ -8,8 +10,8 @@ class DioFactory {
   static Dio? dio;
 
   static Future<Dio> getDio() async{
-   // await AppUtilities.instance.initialize(); // Ensure data is loaded before creating Dio
-
+    await AppUtilities.instance
+        .importantInitialize(); // Ensure data is loaded before creating Dio
     Duration timeOut = const Duration(seconds: 30);
 
     if (dio == null) {

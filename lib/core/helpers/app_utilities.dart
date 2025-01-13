@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/login/data/models/login_response.dart';
 import '../services/navigation_service.dart';
 
 class AppUtilities {
@@ -21,8 +23,20 @@ class AppUtilities {
     await _getSavedData();
   }
 
-  // bool? _isLTR;
+  Future<void> importantInitialize() async {
 
+    _serverToken = await getSavedString("serverToken", '');
+  }
+  String? _serverToken;
+
+  String get serverToken {
+    return _serverToken ?? "";
+  }
+
+  set serverToken(String token) {
+    _serverToken = token;
+    setSavedString("serverToken", token);
+  }
   bool get isLTR {
     return NavigationService.navigatorKey.currentContext!.locale.languageCode ==
         "en";
@@ -60,6 +74,19 @@ class AppUtilities {
     setSavedString("isLTR", x ? 'true' : 'false');
   }
 
+  LoginResponse? _loginData = LoginResponse();
+
+  LoginResponse get loginData {
+    return _loginData!;
+  }
+
+  set loginData(LoginResponse x) {
+    serverToken = "Bearer ${x.token ?? ""}";
+    _loginData = x;
+    setSavedString("userData", jsonEncode(x.toJson()));
+    debugPrint("saved");
+  }
+
   Future<bool> setSavedString(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setString(key, value);
@@ -67,7 +94,20 @@ class AppUtilities {
 
   Future<void> _getSavedData() async {
     _username = await getSavedString("username", '');
+
+    String userData = await getSavedString('userData', '');
+    if (userData.isNotEmpty) {
+      try {
+        _loginData = LoginResponse.fromJson(jsonDecode(userData));
+      } catch (e) {
+        debugPrint("Failed to parse userData: $e");
+        _loginData = LoginResponse(); // Default value to avoid null
+      }
+    } else {
+      _loginData = LoginResponse(); // Default value if no data is saved
+    }
   }
+
 
   Future<int> getSavedInt(String key, int defaultVal) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
