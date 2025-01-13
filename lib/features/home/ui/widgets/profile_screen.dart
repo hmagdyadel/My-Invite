@@ -1,16 +1,15 @@
-import 'package:app/core/dimensions/dimensions.dart';
-import 'package:app/core/helpers/extensions.dart';
-import 'package:app/core/widgets/normal_text.dart';
-import 'package:app/core/widgets/subtitle_text.dart';
-import 'package:app/features/home/logic/home_cubit.dart';
-import 'package:app/features/home/logic/home_states.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/normal_text.dart';
+import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/profile_response.dart';
+import '../../logic/home_cubit.dart';
+import '../../logic/home_states.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,84 +18,29 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: profileAppBar(context),
+      appBar: _profileAppBar(context),
       body: BlocBuilder<HomeCubit, HomeStates>(
-          buildWhen: (previous, current) => previous != current,
-          bloc: context.read<HomeCubit>()..getProfileData(),
-          builder: (context, current) {
-            return current.when(
-              error: (error) => Center(child: NormalText(text: error)),
-              emptyInput: () => Center(
-                child: NormalText(
-                  text: 'emptyInput'.tr(),
-                ),
+        buildWhen: (previous, current) => previous != current,
+        bloc: context.read<HomeCubit>()..getProfileData(),
+        builder: (context, current) {
+          return current.when(
+            error: (error) => _buildErrorState(context, error),
+            emptyInput: () => _buildEmptyState(context),
+            initial: () => const SizedBox.shrink(),
+            loading: () => const Center(
+              child: CupertinoActivityIndicator(
+                color: Colors.white,
+                radius: 30,
               ),
-              initial: () => SizedBox.shrink(),
-              loading: () => const Center(
-                child: CupertinoActivityIndicator(
-                  color: Colors.white,
-                  radius: 30,
-                ),
-              ),
-              success: (response) => Padding(
-                padding: EdgeInsets.all(edge),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: edge,
-                    ),
-                    const Divider(
-                      height: 0,
-                      color: bgColorOverlay,
-                    ),
-                    SizedBox(
-                      height: edge,
-                    ),
-                    SubTitleText(
-                      text: '${response.firstName} ${response.lastName}',
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: edge,
-                    ),
-                    if (response.createdOn != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          NormalText(
-                            text: "member_since".tr(),
-                            color: Colors.white.withAlpha(140),
-                            align: TextAlign.center,
-                          ),
-                          NormalText(
-                            text: getDateInWords(response.createdOn ?? ""),
-                            color: Colors.white.withAlpha(140),
-                            align: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: edge,
-                          ),
-                        ],
-                      ),
-                    otherInfo(response),
-                  ],
-                ),
-              ),
-            );
-          }),
+            ),
+            success: (response) => _buildSuccessState(response),
+          );
+        },
+      ),
     );
   }
 
-  String getDateInWords(String date) {
-    List<String> months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-    var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-    DateTime dt = inputDateFormat.parse(date, true).toLocal();
-
-    return '${months[dt.month - 1]} ${dt.day}, ${dt.year}';
-  }
-
-  AppBar profileAppBar(BuildContext context) {
+  AppBar _profileAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: bgColor,
       elevation: 0,
@@ -105,124 +49,139 @@ class ProfileScreen extends StatelessWidget {
         color: Colors.white,
       ),
       centerTitle: true,
-      leading: GestureDetector(
-        onTap: () {
-          context.pop();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: CircleAvatar(
-            backgroundColor: Colors.grey.shade100,
-            radius: 15,
-            child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: secondaryColor,
-            ),
-          ),
-        ),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+        onPressed: () => Navigator.of(context).pop(),
       ),
     );
   }
 
-  Widget otherInfo(ProfileResponse profile) {
-    String address = profile.address!;
-    String city = address;
-    String country = address;
-
-    List<String> addressArr = address.split(" | ");
-    if (addressArr.length > 1) {
-      city = addressArr[1];
-      country = addressArr[0];
-    }
-
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: bgColorOverlay),
-      padding: EdgeInsets.all(edge),
+  Widget _buildErrorState(BuildContext context, String error) {
+    return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           NormalText(
-            text: "username".tr(),
-            color: Colors.white,
-            fontSize: 12,
+            text: '${"unexpected_error".tr()}:',
+            color: Colors.redAccent,
           ),
-          NormalText(
-            text: profile.userName ?? "",
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          Divider(
-            height: edge,
-            color: bgColor,
-          ),
-          NormalText(
-            text: "email".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          NormalText(
-            text: profile.email ?? "",
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          Divider(
-            height: edge,
-            color: bgColor,
-          ),
-          NormalText(
-            text: "phone".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          NormalText(
-            text: profile.primaryContactNo ?? "",
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          Divider(
-            height: edge,
-            color: bgColor,
-          ),
-          NormalText(
-            text: "country".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          NormalText(
-            text: country,
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          Divider(
-            height: edge,
-            color: bgColor,
-          ),
-          NormalText(
-            text: "city".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          NormalText(
-            text: city,
-            color: Colors.white,
-            fontSize: 16,
-          ),
-          Divider(
-            height: edge,
-            color: bgColor,
-          ),
-          NormalText(
-            text: "gender".tr(),
-            color: Colors.white,
-            fontSize: 12,
-          ),
-          NormalText(
-            text: profile.gender == "m" || profile.gender == "M" || profile.gender == null ? "male".tr() : 'female'.tr(),
-            color: Colors.white,
-            fontSize: 12,
+          ElevatedButton(
+            onPressed: () => context.read<HomeCubit>().getProfileData(),
+            child: NormalText(
+              text: 'Retry'.tr(),
+              color: Colors.white,
+            ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: NormalText(
+        text: 'emptyInput'.tr(),
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _buildSuccessState(ProfileResponse response) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(edge),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Divider(height: 1, color: bgColorOverlay),
+          SizedBox(height: edge),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SubTitleText(
+                text: '${response.firstName} ${response.lastName}',
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ],
+          ),
+          SizedBox(height: edge),
+          if (response.createdOn != null) ...[
+            NormalText(
+              text: 'member_since'.tr(),
+              color: Colors.white.withAlpha(150),
+            ),
+            NormalText(
+              text: _getDateInWords(response.createdOn ?? ""),
+              color: Colors.white,
+            ),
+            SizedBox(height: edge),
+          ],
+          _buildInfoSection(response),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoSection(ProfileResponse profile) {
+    String address = profile.address ?? '';
+    List<String> addressParts = address.split(" | ");
+    String country = addressParts.isNotEmpty ? addressParts[0] : '';
+    String city = addressParts.length > 1 ? addressParts[1] : '';
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: bgColorOverlay,
+      ),
+      padding: EdgeInsets.all(edge),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _infoRow('username'.tr(), profile.userName),
+          _infoRow('email'.tr(), profile.email),
+          _infoRow('phone'.tr(), profile.primaryContactNo),
+          _infoRow('country'.tr(), country),
+          _infoRow('city'.tr(), city),
+          _infoRow(
+            'gender'.tr(),
+            profile.gender?.toLowerCase() == 'm' ? 'male'.tr() : 'female'.tr(),
+            showDivider: false, // Disable divider for the last item
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget _infoRow(String label, String? value, {bool showDivider = true}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        NormalText(
+          text: label,
+          color: Colors.white.withAlpha(170),
+          fontSize: 12,
+        ),
+        NormalText(
+          text: value ?? '-',
+          color: Colors.white,
+          fontSize: 16,
+        ),
+        if (showDivider)
+          Divider(
+            height: edge,
+            color: bgColor.withAlpha(128),
+          ),
+      ],
+    );
+  }
+
+
+  String _getDateInWords(String date) {
+    List<String> months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    DateTime dt = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(date, true).toLocal();
+    return '${months[dt.month - 1]} ${dt.day}, ${dt.year}';
   }
 }
