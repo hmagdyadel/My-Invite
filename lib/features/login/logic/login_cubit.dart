@@ -39,6 +39,7 @@ class LoginCubit extends Cubit<LoginStates> {
         param.clear();
         password.clear();
         AppUtilities().username = response.firstName ?? '';
+        AppUtilities().loginData = response;
         emit(LoginStates.success(response));
       }, failure: (error) {
         if (error == 'unauthorized_error') {
