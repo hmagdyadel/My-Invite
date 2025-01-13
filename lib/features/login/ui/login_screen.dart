@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,  // Prevent resize when keyboard appears
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
@@ -50,70 +51,85 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.all(6),
                 child: CircleAvatar(
                   backgroundColor: Colors.grey.shade100,
-                  // Explicitly set the background
                   radius: 15,
                   child: Icon(
                     Icons.arrow_back_ios_new_rounded,
-                    color: primaryColor, // Set the icon color explicitly to contrast
+                    color: primaryColor,
                   ),
                 ),
               ),
             ),
           ),
-          body: Stack(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Main content
-              Positioned(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    titles(),
-                    loginInputTexts(context),
-                  ],
-                ),
-              ),
-              // Login button at the bottom
-              Positioned(
-                bottom: edge * 3, // Add some padding from the bottom
-                left: 0,
-                right: 0,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: edge * 1.5),
-                  child: GoButton(
-                    fun: () {
-                      context.read<LoginCubit>().login();
-                    },
-                    titleKey: "login_sm".tr(),
-                    btColor: primaryColor,
-                    textColor: Colors.white,
-                    gradient: true,
-                    fontSize: 18,
+              titles(),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(curvyRadius * 1.5),
+                      topRight: Radius.circular(curvyRadius * 1.5),
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      // Scrollable content area
+                      SingleChildScrollView(
+                        padding: EdgeInsets.all(edge * 1.5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            loginInputsData(context),
+                            // Add extra space for button
+                            SizedBox(height: edge * 7),
+                          ],
+                        ),
+                      ),
+                      // Fixed bottom button
+                      Positioned(
+                        bottom: edge * 3,
+                        left: edge * 1.5,
+                        right: edge * 1.5,
+                        child: GoButton(
+                          fun: () {
+                            context.read<LoginCubit>().login();
+                          },
+                          titleKey: "login_sm".tr(),
+                          btColor: primaryColor,
+                          textColor: Colors.white,
+                          gradient: true,
+                          fontSize: 18,
+                        ),
+                      ),
+                      BlocListener<LoginCubit, LoginStates>(
+                        listenWhen: (previous, current) => previous != current,
+                        listener: (context, current) {
+                          if (current is Loading) {
+                            animatedLoaderWithTitle(
+                                context: context, title: "logging_in".tr());
+                          } else if (current is Error) {
+                            popDialog(context);
+                            context.showErrorToast(current.message);
+                          } else if (current is Success) {
+                            popDialog(context);
+                            AudioService().playAudio(
+                                src: 'sounds/audSuccess.mp3',
+                                onComplete: () {
+                                  context.pushNamedAndRemoveUntil(Routes.homeScreen,
+                                      predicate: false);
+                                });
+                          } else if (current is EmptyInput) {
+                            popDialog(context);
+                            context.showErrorToast('enter_required_fields'.tr());
+                          }
+                        },
+                        child: const SizedBox.shrink(),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              BlocListener<LoginCubit, LoginStates>(
-                listenWhen: (previous, current) => previous != current,
-                listener: (context, current) {
-                  if (current is Loading) {
-                    animatedLoaderWithTitle(
-                        context: context, title: "logging_in".tr());
-                  } else if (current is Error) {
-                    popDialog(context);
-                    context.showErrorToast(current.message);
-                  } else if (current is Success) {
-                    popDialog(context);
-                    AudioService().playAudio(
-                        src: 'sounds/audSuccess.mp3',
-                        onComplete: () {
-                          context.pushNamedAndRemoveUntil(Routes.homeScreen,
-                              predicate: false);
-                        });
-                  } else if (current is EmptyInput) {
-                    popDialog(context);
-                    context.showErrorToast('enter_required_fields'.tr());
-                  }
-                },
-                child: const SizedBox.shrink(),
               ),
             ],
           ),
@@ -122,24 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Expanded loginInputTexts(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(edge * 1.5),
-        alignment: Alignment.topCenter,
-        decoration: const BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(curvyRadius * 1.5),
-            topRight: Radius.circular(curvyRadius * 1.5),
-          ),
-        ),
-        child: loginInputsData(context),
-      ),
-    );
-  }
-
-  Column loginInputsData(BuildContext context) {
+  Widget loginInputsData(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -176,7 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           hint: "password_hint".tr(),
         ),
-        SizedBox(height: edge * 0.5),
       ],
     );
   }

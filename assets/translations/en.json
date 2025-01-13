@@ -257,5 +257,8 @@
   "register_error": "Failed to register, please try again later",
   "invalid_email": "Invalid email address.",
   "invalid_phone": "Phone number must contain only numbers.",
-  "username_exists_error": "This username already exists, please try again with another username"
+  "username_exists_error": "This username already exists, please try again with another username",
+  "unauthorized_error": "Unauthorized access, please check your credentials and try again.",
+  "unexpected_error": "An unexpected error occurred, please try again later.",
+  "login_error": "Login failed, please try again."
 }
