@@ -1,3 +1,4 @@
+import 'package:app/core/widgets/public_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: _profileAppBar(context),
+      appBar: publicAppBar(context, 'profile'.tr()),
       body: BlocBuilder<HomeCubit, HomeStates>(
         buildWhen: (previous, current) => previous != current,
         bloc: context.read<HomeCubit>()..getProfileData(),
@@ -40,21 +41,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  AppBar _profileAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: bgColor,
-      elevation: 0,
-      title: SubTitleText(
-        text: 'profile'.tr(),
-        color: Colors.white,
-      ),
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-    );
-  }
+
 
   Widget _buildErrorState(BuildContext context, String error) {
     return Center(

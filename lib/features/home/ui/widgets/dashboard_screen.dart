@@ -95,7 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.info,
         gradient: containerGradient,
         onTap: () {
-          //Get.to(() => const EventInstructionsScreen());
+         context.pushNamed(Routes.eventInstructionsScreen);
         },
       ),
     ];

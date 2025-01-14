@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/home/ui/home_screen.dart';
+import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
 import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/logic/login_cubit.dart';
@@ -63,7 +64,10 @@ class AppRouter {
             child: const ProfileScreen(),
           ),
         );
-
+      case Routes.eventInstructionsScreen:
+        return _buildRoute(
+          const EventInstructionsScreen(),
+        );
       default:
         return _buildRoute(
           Scaffold(
