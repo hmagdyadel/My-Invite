@@ -272,5 +272,8 @@
   "event_instructions_notes": "Notes:",
   "event_instructions_note1": "In the event of issues in the system, you must contact us immediately to inform the company of this and provide guidance and technical support to fix the defect.",
   "event_instructions_note2": "On each occasion, you will be provided with the numbers of the party owners to contact them in the event of a problem with one of the visitors.",
-  "event_instructions_end": "Sincerely,\nMyInvite Management"
+  "event_instructions_end": "Sincerely,\nMyInvite Management",
+  "scan_error_max_limit": "Maximum scan limit exceeded",
+  "scan_error_scanned_before": "You have already scanned this code",
+  "scan_failed": "Scan Failed"
 }
