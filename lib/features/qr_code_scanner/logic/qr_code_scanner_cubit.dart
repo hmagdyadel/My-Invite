@@ -46,12 +46,16 @@ class QrCodeScannerCubit extends Cubit<QrCodeScannerStates> {
   }
 
   Future<void> scanQrCode(String data) async {
+    stopScan = true;
+    _scanEndTime = DateTime.now().toString();
     emit(const QrCodeScannerStates.loading());
     ScanBodyRequest scanBodyRequest = ScanBodyRequest(qrCode: data);
     final response = await _qrCodeScannerRepo.scanQrCode(scanBodyRequest);
     response.when(success: (response) {
+      stopScan = false;
       emit(QrCodeScannerStates.success(response));
     }, failure: (error) {
+      stopScan = false;
       emit(
         QrCodeScannerStates.error(
           message: error.toString(),
