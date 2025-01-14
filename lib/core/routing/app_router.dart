@@ -1,4 +1,5 @@
 import 'package:app/features/home/logic/home_cubit.dart';
+import 'package:app/features/qr_code_scanner/logic/qr_code_scanner_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import '../../features/home/ui/widgets/profile_screen.dart';
 import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/logic/login_cubit.dart';
 import '../../features/login/ui/login_screen.dart';
+import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
 import '../../features/splash/ui/on_boarding_screen.dart';
@@ -67,6 +69,13 @@ class AppRouter {
       case Routes.eventInstructionsScreen:
         return _buildRoute(
           const EventInstructionsScreen(),
+        );
+      case Routes.qrCodeScreen:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<QrCodeScannerCubit>(),
+            child: const QrCodeScannerScreen(),
+          ),
         );
       default:
         return _buildRoute(

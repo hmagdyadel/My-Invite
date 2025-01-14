@@ -7,6 +7,8 @@ import '../../features/location/data/repo/location_repo.dart';
 import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/logic/login_cubit.dart';
+import '../../features/qr_code_scanner/data/repo/qr_code_scanner_repo.dart';
+import '../../features/qr_code_scanner/logic/qr_code_scanner_cubit.dart';
 import '../../features/register/data/repo/register_repo.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../networking/api_service.dart';
@@ -31,4 +33,8 @@ Future<void> setupGetIt() async {
   //profile
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepo(getIt()));
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+
+  //Scan QR code
+  getIt.registerLazySingleton<QrCodeScannerRepo>(() => QrCodeScannerRepo(getIt()));
+  getIt.registerFactory<QrCodeScannerCubit>(() => QrCodeScannerCubit(getIt()));
 }

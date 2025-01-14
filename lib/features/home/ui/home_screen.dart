@@ -1,4 +1,6 @@
 import 'package:app/core/helpers/app_utilities.dart';
+import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/routing/routes.dart';
 import 'widgets/dashboard_screen.dart';
 import 'widgets/settings.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       shape: const CircleBorder(side: BorderSide(color: bgColor, width: 3)),
       onPressed: () async {
-        //goToScanScreen();
+        context.pushNamed(Routes.qrCodeScreen);
       },
       child: const Icon(
         Icons.qr_code,

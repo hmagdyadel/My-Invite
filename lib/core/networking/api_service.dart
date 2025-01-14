@@ -6,6 +6,8 @@ import '../../features/location/data/models/city_response.dart';
 import '../../features/location/data/models/country_response.dart';
 import '../../features/login/data/models/login_request.dart';
 import '../../features/login/data/models/login_response.dart';
+import '../../features/qr_code_scanner/data/models/scan_body_request.dart';
+import '../../features/qr_code_scanner/data/models/scan_response.dart';
 import '../../features/register/data/models/location_response.dart';
 import '../../features/register/data/models/register_request.dart';
 import 'api_constants.dart';
@@ -18,8 +20,6 @@ abstract class ApiService {
 
   @POST(ApiConstants.loginEndpoint)
   Future<LoginResponse> login(@Body() LoginRequest loginRequestBody);
-
-
 
   @GET(ApiConstants.locationsEndpoint)
   Future<List<LocationResponse>> getLocations();
@@ -35,4 +35,10 @@ abstract class ApiService {
 
   @GET(ApiConstants.clientProfileEndpoint)
   Future<ProfileResponse> getProfile(@Header('Authorization') String token);
+
+  @POST(ApiConstants.scanEndpoint)
+  Future<ScanResponse> scanQrCode(
+    @Body() ScanBodyRequest scanBodyRequest,
+    @Header('Authorization') String token,
+  );
 }
