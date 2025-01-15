@@ -14,6 +14,8 @@ import '../../features/login/ui/login_screen.dart';
 import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
+import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
+import '../../features/scan_history/ui/scan_history_screen.dart';
 import '../../features/splash/ui/on_boarding_screen.dart';
 import '../../features/splash/ui/splash_screen.dart';
 import '../di/dependency_injection.dart';
@@ -75,6 +77,13 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<QrCodeScannerCubit>(),
             child: const QrCodeScannerScreen(),
+          ),
+        );
+      case Routes.eventsHistory:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
+            child: const ScanHistoryScreen(),
           ),
         );
       default:

@@ -86,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.history_toggle_off,
         gradient: gradient1,
         onTap: () {
-          // Get.to(() => const GatekeeperEventsScreen());
+          context.pushNamed(Routes.eventsHistory);
         },
       ),
       DashboardAction(

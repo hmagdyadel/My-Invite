@@ -10,6 +10,8 @@ import '../../features/qr_code_scanner/data/models/scan_body_request.dart';
 import '../../features/qr_code_scanner/data/models/scan_response.dart';
 import '../../features/register/data/models/location_response.dart';
 import '../../features/register/data/models/register_request.dart';
+import '../../features/scan_history/data/models/gatekeeper_events_request.dart';
+import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';
@@ -39,6 +41,12 @@ abstract class ApiService {
   @POST(ApiConstants.scanEndpoint)
   Future<ScanResponse> scanQrCode(
     @Body() ScanBodyRequest scanBodyRequest,
+    @Header('Authorization') String token,
+  );
+
+  @GET(ApiConstants.gatekeeperEventsEndpoint)
+  Future<GatekeeperEventsResponse> getGatekeeperEvents(
+    @Body() GatekeeperEventsRequest gatekeeperEventsRequest,
     @Header('Authorization') String token,
   );
 }

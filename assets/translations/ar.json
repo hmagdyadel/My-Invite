@@ -275,6 +275,7 @@
   "scan_error_max_limit": "تم تجاوز الحد الأقصى لعدد الماسحات",
   "scan_error_scanned_before": "لقد قمت بمسح هذا الرمز من قبل",
   "scan_failed": "فشل في مسح الباركود",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "no_available_events": "لا يوجد حفلات متاحة"
 }
 
