@@ -4,7 +4,7 @@ part 'gatekeeper_events_response.g.dart';
 
 @JsonSerializable()
 class GatekeeperEventsResponse {
-  final List<EntityList>? entityList;
+  final List<EventsList>? entityList;
   final int? noOfPages;
 
   GatekeeperEventsResponse({this.entityList, this.noOfPages});
@@ -16,7 +16,7 @@ class GatekeeperEventsResponse {
 }
 
 @JsonSerializable()
-class EntityList {
+class EventsList {
   final String? eventTitle;
   final String? eventFrom;
   final String? eventTo;
@@ -32,7 +32,7 @@ class EntityList {
   final String? leaveTime;
   final String? attendanceTime;
 
-  EntityList({
+  EventsList({
     this.eventTitle,
     this.eventFrom,
     this.eventTo,
@@ -49,8 +49,8 @@ class EntityList {
     this.attendanceTime,
   });
 
-  factory EntityList.fromJson(Map<String, dynamic> json) =>
-      _$EntityListFromJson(json);
+  factory EventsList.fromJson(Map<String, dynamic> json) =>
+      _$EventsListFromJson(json);
 
-  Map<String, dynamic> toJson() => _$EntityListToJson(this);
+  Map<String, dynamic> toJson() => _$EventsListToJson(this);
 }

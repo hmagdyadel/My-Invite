@@ -10,7 +10,7 @@ GatekeeperEventsResponse _$GatekeeperEventsResponseFromJson(
         Map<String, dynamic> json) =>
     GatekeeperEventsResponse(
       entityList: (json['entityList'] as List<dynamic>?)
-          ?.map((e) => EntityList.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => EventsList.fromJson(e as Map<String, dynamic>))
           .toList(),
       noOfPages: (json['noOfPages'] as num?)?.toInt(),
     );
@@ -22,7 +22,7 @@ Map<String, dynamic> _$GatekeeperEventsResponseToJson(
       'noOfPages': instance.noOfPages,
     };
 
-EntityList _$EntityListFromJson(Map<String, dynamic> json) => EntityList(
+EventsList _$EventsListFromJson(Map<String, dynamic> json) => EventsList(
       eventTitle: json['eventTitle'] as String?,
       eventFrom: json['eventFrom'] as String?,
       eventTo: json['eventTo'] as String?,
@@ -39,7 +39,7 @@ EntityList _$EntityListFromJson(Map<String, dynamic> json) => EntityList(
       attendanceTime: json['attendanceTime'] as String?,
     );
 
-Map<String, dynamic> _$EntityListToJson(EntityList instance) =>
+Map<String, dynamic> _$EventsListToJson(EventsList instance) =>
     <String, dynamic>{
       'eventTitle': instance.eventTitle,
       'eventFrom': instance.eventFrom,
