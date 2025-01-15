@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBar(
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      backgroundColor: primaryColor,
+      backgroundColor: navBarBackground,
       onTap: (index) {
         setState(() {
           debugPrint("index: $index");

@@ -1,10 +1,12 @@
 import 'package:app/core/helpers/app_utilities.dart';
+import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -41,16 +43,24 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
   }
 
   Future<void> _animateLanguageChange(BuildContext context) async {
-    // Store the language code before the async gap
     final String newCode = context.locale.languageCode == 'en' ? 'ar' : 'en';
 
     await _controller.forward();
-    if (!mounted) return;  // Check if widget is still mounted
+    if (!mounted) return;
 
      AppUtilities().setLocality(newCode);
-    if (!mounted) return;  // Check again after the async operation
+    if (!mounted) return;
 
     await _controller.reverse();
+  }
+
+  Future<void> _handleLogout() async {
+    try {
+      context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: false);
+      await AppUtilities().clearData();
+    } catch (e) {
+      debugPrint('Logout error: $e');
+    }
   }
 
   @override
@@ -58,49 +68,50 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: edge,vertical: edge*0.5),
-              child: SubTitleText(
-                text: 'settings'.tr(),
-                color: Colors.white,
-                fontSize: 24,
+        child: Padding(
+          padding: EdgeInsets.all(edge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
+              const Divider(height: 24, color: bgColorOverlay),
+              SizedBox(height: edge),
+              _buildSettingsOption(
+                context: context,
+                child: _buildLanguageButton(context),
               ),
-            ),
-            const Divider(
-              height: 24,
-              color: bgColorOverlay,
-            ),
-            SizedBox(height: edge),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: edge),
-              child: Container(
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: bgColorOverlay,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    languageButton(context),
-                    const Divider(
-                      height: 0,
-                      color: bgColor,
-                    ),
-                  ],
-                ),
+              SizedBox(height: edge),
+              _buildSettingsOption(
+                context: context,
+                child: _buildLogoutButton(),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget languageButton(BuildContext context) {
+  Widget _buildHeader() {
+    return SubTitleText(
+      text: 'settings'.tr(),
+      color: Colors.white,
+      fontSize: 24,
+    );
+  }
+
+  Widget _buildSettingsOption({required BuildContext context, required Widget child}) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: bgColorOverlay,
+      ),
+      child: child,
+    );
+  }
+
+  Widget _buildLanguageButton(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -110,23 +121,54 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              FadeTransition(
+                opacity: _fadeAnimation,
+                child: NormalText(
+                  text: 'changeLanguage'.tr(),
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              FadeTransition(
+                opacity: _fadeAnimation,
+                child: SubTitleText(
+                  text: context.locale.languageCode == 'en' ? 'AR' : 'En',
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton() {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: _handleLogout,
+        child: Padding(
+          padding: EdgeInsets.all(edge),
+          child: Row(
+            children: [
               Expanded(
                 child: FadeTransition(
                   opacity: _fadeAnimation,
                   child: NormalText(
-                    text: 'changeLanguage'.tr(),
+                    text: 'logout'.tr(),
                     color: Colors.white,
                     fontSize: 18,
                     align: TextAlign.start,
                   ),
                 ),
               ),
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: SubTitleText(
-                  text: context.locale.languageCode == 'en' ? 'عربي' : 'English',
+        Transform.rotate(
+          angle: context.locale.languageCode == 'en' ? 0 : 3.14,
+                child: Icon(
+                  Icons.logout,
                   color: Colors.white,
-                  fontSize: 20,
                 ),
               ),
             ],

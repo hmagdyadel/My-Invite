@@ -1,5 +1,7 @@
+import 'package:app/core/dimensions/dimensions.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/public_appbar.dart';
+import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:app/features/qr_code_scanner/logic/qr_code_scanner_cubit.dart';
 import 'package:easy_localization/easy_localization.dart' as easy;
 import 'package:flutter/material.dart';
@@ -90,7 +92,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
             title: "qr_verified".tr(),
             message: response.message ?? "",
             correct: true,
-            color: Colors.lightGreen,
+            color: Colors.grey.shade200,
             onClose: () {
               context.read<QrCodeScannerCubit>().reloadPage();
             },
@@ -127,12 +129,14 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        padding: WidgetStateProperty.all<EdgeInsets>( EdgeInsets.all(edge*0.7)),
+        minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40)),
       ),
       onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop();
+        context.pop();
         onClose();
       },
-      child: const NormalText(
+      child: const SubTitleText(
         text: "Continue",
         color: Colors.white,
         fontSize: 16,
@@ -146,27 +150,28 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
           correct
               ? const Icon(
                   Icons.check_circle,
-                  color: Colors.blue,
-                  size: 46,
+                  color: primaryColor,
+                  size: 60,
                 )
               : const Icon(
                   Icons.cancel,
                   color: Colors.red,
-                  size: 46,
+                  size: 60,
                 ),
           const SizedBox(
             height: 12,
           ),
-          NormalText(
+          SubTitleText(
             text: title,
-            color: Colors.black,
+            color: Colors.grey.shade900,
+            fontSize: 20,
           ),
         ],
       ),
       content: NormalText(
         text: message,
-        fontSize: 14,
-        color: Colors.black,
+        fontSize: 16,
+        color: Colors.grey.shade900,
       ),
       actions: [okButton],
     );

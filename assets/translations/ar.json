@@ -16,7 +16,7 @@
   "dashboard": "الصفحة الرئيسية",
   "welcomeBack": "مرحبًا بعودتك",
   "hello": "مرحبًا",
-  "settings": "إعدادات",
+  "settings": "الإعدادات",
   "changeLanguage": "تغيير اللغة",
   "events": "المناسبات الخاصة بي",
   "profile": "حسابى",
@@ -274,6 +274,7 @@
   "event_instructions_end": "تـحــياتـنـا\nإدارة ماي انڤايت",
   "scan_error_max_limit": "تم تجاوز الحد الأقصى لعدد الماسحات",
   "scan_error_scanned_before": "لقد قمت بمسح هذا الرمز من قبل",
-  "scan_failed": "فشل في مسح الباركود"
+  "scan_failed": "فشل في مسح الباركود",
+  "logout": "تسجيل الخروج"
 }
 

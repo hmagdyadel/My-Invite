@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color bgColor = Color(0xff33364E);
 const Color bgColorOverlay = Color(0xff252A41);
+const Color navBarBackground = Color(0xff181c2f);
 const Color primaryColor = Color(0xff2175F1);
 const Color secondaryColor = Color(0xff6D42F4);
 const Color whiteSmokeColor = Color(0xffF5F5F5);
