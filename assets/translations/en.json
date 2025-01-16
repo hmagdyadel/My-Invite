@@ -131,7 +131,7 @@
   "FRI": "FRI",
   "checking_not_validated": "Dear, you can check in only on the event day",
   "checkout_not_validated": "Dear, you can check out only on the event day",
-  "no_internet": "Internet not available. Check your network and try again",
+  "no_internet": "It looks like you are offline. Please check your network and try again.",
   "pending_approval": "Pending Approval",
   "pending_approval_msg": "You have been successfully registered!. Please wait for the admin approval",
   "account_not_approved": "Account Not Approved, please contact system administrator",

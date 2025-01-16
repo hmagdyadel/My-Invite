@@ -2,9 +2,11 @@
 class Assets {
   Assets._();
 
+  static const String assetsTranslationsAr = 'assets/translations/ar.json~';
   static const String fontsSfprodisplaybold = 'assets/fonts/sfprodisplaybold.otf';
   static const String fontsSfprodisplayregular = 'assets/fonts/sfprodisplayregular.otf';
   static const String imagesAppLogo = 'assets/images/appLogo.png';
+  static const String imagesNoInternet = 'assets/images/no_internet.png';
   static const String imagesSaflag = 'assets/images/saflag.png';
   static const String imagesSplashBg = 'assets/images/SplashBg.png';
   static const String imagesUsflag = 'assets/images/usflag.png';

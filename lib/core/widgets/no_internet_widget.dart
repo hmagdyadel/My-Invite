@@ -16,11 +16,7 @@ class NoInternetWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 150),
-          Icon(
-            Icons.wifi_off,
-            size: 200,
-            color: Colors.white,
-          ),
+          Image.asset('assets/images/no_internet.png'),
           SizedBox(height: 50),
           SubTitleText(
             text: 'no_internet'.tr(),
