@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
@@ -13,6 +16,8 @@ class GatekeeperEventsRepo {
     try {
       var response = await _apiService.getGatekeeperEvents(gatekeeperEventsRequest, AppUtilities().serverToken);
       return ApiResult.success(response);
+    }on DioException{
+      return ApiResult.failure("some_error".tr());
     } catch (error) {
       return ApiResult.failure(error.toString());
     }

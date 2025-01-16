@@ -2,6 +2,7 @@ import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:app/features/scan_history/ui/widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class ScanHistoryScreen extends StatelessWidget {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage(context, "no_available_events".tr()),
             error: (error) => _buildCenteredMessage(context, error),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () =>  Center(child:  CupertinoActivityIndicator(color: Colors.white)),
             success: (response) {
               final events = response.entityList ?? [];
               return NotificationListener<ScrollNotification>(
