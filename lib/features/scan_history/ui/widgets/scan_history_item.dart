@@ -16,6 +16,10 @@ class ScanHistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine the text direction based on Arabic content
+    final isTitleArabic = textContainsLettersInArabic(event?.eventTitle ?? "");
+    final isVenueArabic = textContainsLettersInArabic(event?.eventVenue ?? "");
+
     return Container(
       padding: EdgeInsets.all(edge),
       margin: EdgeInsets.fromLTRB(edge, edge, edge, 0),
@@ -24,17 +28,16 @@ class ScanHistoryItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: textContainsLettersInArabic(event?.eventTitle ?? "") ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isTitleArabic ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         spacing: edge * 0.5,
         children: [
           SubTitleText(
             text: event?.eventCode ?? "",
             color: Colors.white,
             fontSize: 16,
-
           ),
           Row(
-            mainAxisAlignment: textContainsLettersInArabic(event?.eventTitle ?? "") ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isTitleArabic ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               SubTitleText(
                 text: event?.eventTitle ?? "",
@@ -44,9 +47,8 @@ class ScanHistoryItem extends StatelessWidget {
             ],
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: bgColorOverlay),
+            style: ElevatedButton.styleFrom(backgroundColor: navBarBackground),
             onPressed: () {
-              // here you can find the event location
               viewMap(context);
             },
             child: Padding(
@@ -64,7 +66,7 @@ class ScanHistoryItem extends StatelessWidget {
                   ),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: textContainsLettersInArabic(event?.eventVenue ?? "") ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                      crossAxisAlignment: isVenueArabic ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                       children: [
                         NormalText(
                           text: event?.eventVenue ?? "",
@@ -75,23 +77,36 @@ class ScanHistoryItem extends StatelessWidget {
                           text: event?.eventlocation ?? "",
                           color: Colors.white,
                           fontSize: 12,
-                        )
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
+          Divider(
+            color: Colors.grey.shade400,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              NormalText(text: 'start_time'.tr(), color: Colors.white),
+              NormalText(text: 'end_time'.tr(), color: Colors.white),
+            ],
+          )
         ],
       ),
     );
   }
 
+  // Utility function to check for Arabic characters
   bool textContainsLettersInArabic(String text) {
     final arabicRegExp = RegExp(r'[\u0600-\u06FF]');
     return arabicRegExp.hasMatch(text);
   }
+
+  // Function to handle map viewing
   Future viewMap(BuildContext context) async {
     if (event?.gmapCode == null) {
       context.showErrorToast("location_not_available".tr());
@@ -101,7 +116,7 @@ class ScanHistoryItem extends StatelessWidget {
     try {
       await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.platformDefault);
     } catch (e) {
-      // print(e);
+      // Handle exceptions appropriately
     }
   }
 }
