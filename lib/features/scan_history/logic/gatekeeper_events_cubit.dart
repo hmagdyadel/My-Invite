@@ -41,7 +41,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
           if (data.entityList != null && data.entityList!.isNotEmpty) {
             if (!isNextPage) _events.clear();
             _events.addAll(data.entityList!);
-            _hasMore = data.entityList!.length >= 10; // Assume 10 items per page
+            _hasMore = data.noOfPages != null && _currentPage < data.noOfPages!;
             _currentPage++;
             emit(ScanHistoryStates.success(
               GatekeeperEventsResponse(entityList: _events),
