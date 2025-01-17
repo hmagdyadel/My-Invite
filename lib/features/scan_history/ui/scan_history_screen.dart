@@ -11,13 +11,43 @@ import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
 
-class ScanHistoryScreen extends StatelessWidget {
+
+
+class ScanHistoryScreen extends StatefulWidget {
   const ScanHistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final gatekeeperCubit = context.read<GatekeeperEventsCubit>();
+  State<ScanHistoryScreen> createState() => _ScanHistoryScreenState();
+}
 
+class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
+      final cubit = context.read<GatekeeperEventsCubit>();
+      if (cubit.hasMore) {
+        cubit.getGatekeeperEvents(isNextPage: true);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColorOverlay,
       appBar: publicAppBar(
@@ -26,29 +56,35 @@ class ScanHistoryScreen extends StatelessWidget {
       ),
       body: BlocBuilder<GatekeeperEventsCubit, ScanHistoryStates>(
         buildWhen: (previous, current) => previous != current,
-        bloc: gatekeeperCubit..getGatekeeperEvents(),
+        bloc: context.read<GatekeeperEventsCubit>()..getGatekeeperEvents(),
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
-            emptyInput: () => _buildCenteredMessage(context, "no_available_events".tr()),
-            error: (error) => _buildCenteredMessage(context, error),
-            loading: () =>  Center(child:  CupertinoActivityIndicator(color: Colors.white)),
-            success: (response) {
+            emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
+            error: (error) => _buildCenteredMessage(error),
+            loading: () => const Center(
+                child: CupertinoActivityIndicator(color: Colors.white)),
+            success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
-              return NotificationListener<ScrollNotification>(
-                onNotification: (scrollInfo) {
-                  if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-                    gatekeeperCubit.getGatekeeperEvents(isNextPage: true);
+              if (events.isEmpty) {
+                return _buildCenteredMessage("no_available_events".tr());
+              }
+
+              return ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.symmetric(vertical: edge),
+                itemCount: events.length + (isLoadingMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index == events.length && isLoadingMore) {
+                    return const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: CupertinoActivityIndicator(color: Colors.white),
+                      ),
+                    );
                   }
-                  return false;
+                  return ScanHistoryItem(event: events[index]);
                 },
-                child: ListView.builder(
-                  padding:  EdgeInsets.symmetric(vertical: edge), // Adjust for AppBar
-                  itemCount: events.length,
-                  itemBuilder: (context, index) {
-                    return ScanHistoryItem(event: events[index]);
-                  },
-                ),
               );
             },
           );
@@ -57,8 +93,7 @@ class ScanHistoryScreen extends StatelessWidget {
     );
   }
 
-  /// Builds a centered text widget for messages while keeping the AppBar visible.
-  Widget _buildCenteredMessage(BuildContext context, String message) {
+  Widget _buildCenteredMessage(String message) {
     return Center(
       child: SubTitleText(
         text: message,
@@ -68,4 +103,3 @@ class ScanHistoryScreen extends StatelessWidget {
     );
   }
 }
-

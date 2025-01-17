@@ -21,7 +21,9 @@ mixin _$ScanHistoryStates<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +32,8 @@ mixin _$ScanHistoryStates<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +42,8 @@ mixin _$ScanHistoryStates<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -47,28 +51,28 @@ mixin _$ScanHistoryStates<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -140,7 +144,9 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -152,7 +158,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -164,7 +171,8 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -178,10 +186,10 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) {
     return initial(this);
   }
@@ -190,10 +198,10 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) {
     return initial?.call(this);
   }
@@ -202,10 +210,10 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -240,7 +248,7 @@ class __$$LoadingImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$LoadingImpl<T> implements Loading<T> {
+class _$LoadingImpl<T> implements _Loading<T> {
   const _$LoadingImpl();
 
   @override
@@ -263,7 +271,9 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -275,7 +285,8 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -287,7 +298,8 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -301,10 +313,10 @@ class _$LoadingImpl<T> implements Loading<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) {
     return loading(this);
   }
@@ -313,10 +325,10 @@ class _$LoadingImpl<T> implements Loading<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) {
     return loading?.call(this);
   }
@@ -325,10 +337,10 @@ class _$LoadingImpl<T> implements Loading<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -338,8 +350,8 @@ class _$LoadingImpl<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements ScanHistoryStates<T> {
-  const factory Loading() = _$LoadingImpl<T>;
+abstract class _Loading<T> implements ScanHistoryStates<T> {
+  const factory _Loading() = _$LoadingImpl<T>;
 }
 
 /// @nodoc
@@ -363,7 +375,7 @@ class __$$EmptyInputImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$EmptyInputImpl<T> implements EmptyInput<T> {
+class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   const _$EmptyInputImpl();
 
   @override
@@ -386,7 +398,9 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) {
     return emptyInput();
@@ -398,7 +412,8 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) {
     return emptyInput?.call();
@@ -410,7 +425,8 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -424,10 +440,10 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) {
     return emptyInput(this);
   }
@@ -436,10 +452,10 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) {
     return emptyInput?.call(this);
   }
@@ -448,10 +464,10 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -461,8 +477,8 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   }
 }
 
-abstract class EmptyInput<T> implements ScanHistoryStates<T> {
-  const factory EmptyInput() = _$EmptyInputImpl<T>;
+abstract class _EmptyInput<T> implements ScanHistoryStates<T> {
+  const factory _EmptyInput() = _$EmptyInputImpl<T>;
 }
 
 /// @nodoc
@@ -471,7 +487,7 @@ abstract class _$$SuccessImplCopyWith<T, $Res> {
           _$SuccessImpl<T> value, $Res Function(_$SuccessImpl<T>) then) =
       __$$SuccessImplCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({T data});
+  $Res call({GatekeeperEventsResponse response, bool isLoadingMore});
 }
 
 /// @nodoc
@@ -487,28 +503,36 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? response = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_$SuccessImpl<T>(
-      freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as T,
+      null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as GatekeeperEventsResponse,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SuccessImpl<T> implements Success<T> {
-  const _$SuccessImpl(this.data);
+class _$SuccessImpl<T> implements _Success<T> {
+  const _$SuccessImpl(this.response, {this.isLoadingMore = false});
 
   @override
-  final T data;
+  final GatekeeperEventsResponse response;
+  @override
+  @JsonKey()
+  final bool isLoadingMore;
 
   @override
   String toString() {
-    return 'ScanHistoryStates<$T>.success(data: $data)';
+    return 'ScanHistoryStates<$T>.success(response: $response, isLoadingMore: $isLoadingMore)';
   }
 
   @override
@@ -516,12 +540,14 @@ class _$SuccessImpl<T> implements Success<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
+            (identical(other.response, response) ||
+                other.response == response) &&
+            (identical(other.isLoadingMore, isLoadingMore) ||
+                other.isLoadingMore == isLoadingMore));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(runtimeType, response, isLoadingMore);
 
   /// Create a copy of ScanHistoryStates
   /// with the given fields replaced by the non-null parameter values.
@@ -537,10 +563,12 @@ class _$SuccessImpl<T> implements Success<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) {
-    return success(data);
+    return success(response, isLoadingMore);
   }
 
   @override
@@ -549,10 +577,11 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(data);
+    return success?.call(response, isLoadingMore);
   }
 
   @override
@@ -561,12 +590,13 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(data);
+      return success(response, isLoadingMore);
     }
     return orElse();
   }
@@ -575,10 +605,10 @@ class _$SuccessImpl<T> implements Success<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) {
     return success(this);
   }
@@ -587,10 +617,10 @@ class _$SuccessImpl<T> implements Success<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) {
     return success?.call(this);
   }
@@ -599,10 +629,10 @@ class _$SuccessImpl<T> implements Success<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -612,10 +642,12 @@ class _$SuccessImpl<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements ScanHistoryStates<T> {
-  const factory Success(final T data) = _$SuccessImpl<T>;
+abstract class _Success<T> implements ScanHistoryStates<T> {
+  const factory _Success(final GatekeeperEventsResponse response,
+      {final bool isLoadingMore}) = _$SuccessImpl<T>;
 
-  T get data;
+  GatekeeperEventsResponse get response;
+  bool get isLoadingMore;
 
   /// Create a copy of ScanHistoryStates
   /// with the given fields replaced by the non-null parameter values.
@@ -659,7 +691,7 @@ class __$$ErrorImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$ErrorImpl<T> implements Error<T> {
+class _$ErrorImpl<T> implements _Error<T> {
   const _$ErrorImpl({required this.message});
 
   @override
@@ -695,7 +727,9 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            GatekeeperEventsResponse response, bool isLoadingMore)
+        success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -707,7 +741,8 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -719,7 +754,8 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
+        success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -733,10 +769,10 @@ class _$ErrorImpl<T> implements Error<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Loading<T> value) loading,
+    required TResult Function(_EmptyInput<T> value) emptyInput,
+    required TResult Function(_Success<T> value) success,
+    required TResult Function(_Error<T> value) error,
   }) {
     return error(this);
   }
@@ -745,10 +781,10 @@ class _$ErrorImpl<T> implements Error<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Loading<T> value)? loading,
+    TResult? Function(_EmptyInput<T> value)? emptyInput,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Error<T> value)? error,
   }) {
     return error?.call(this);
   }
@@ -757,10 +793,10 @@ class _$ErrorImpl<T> implements Error<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Loading<T> value)? loading,
+    TResult Function(_EmptyInput<T> value)? emptyInput,
+    TResult Function(_Success<T> value)? success,
+    TResult Function(_Error<T> value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -770,8 +806,8 @@ class _$ErrorImpl<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements ScanHistoryStates<T> {
-  const factory Error({required final String message}) = _$ErrorImpl<T>;
+abstract class _Error<T> implements ScanHistoryStates<T> {
+  const factory _Error({required final String message}) = _$ErrorImpl<T>;
 
   String get message;
 
