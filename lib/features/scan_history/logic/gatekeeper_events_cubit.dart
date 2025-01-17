@@ -45,5 +45,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
 
     _isLoading = false;
   }
+
+
 }
 

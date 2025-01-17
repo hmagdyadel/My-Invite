@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/dimensions/dimensions.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
@@ -42,7 +43,7 @@ class ScanHistoryScreen extends StatelessWidget {
                   return false;
                 },
                 child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 110), // Adjust for AppBar
+                  padding:  EdgeInsets.symmetric(vertical: edge), // Adjust for AppBar
                   itemCount: events.length,
                   itemBuilder: (context, index) {
                     return ScanHistoryItem(event: events[index]);
