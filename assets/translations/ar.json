@@ -276,6 +276,7 @@
   "scan_error_scanned_before": "لقد قمت بمسح هذا الرمز من قبل",
   "scan_failed": "فشل في مسح الباركود",
   "logout": "تسجيل الخروج",
-  "no_available_events": "لا يوجد حفلات متاحة"
+  "no_available_events": "لا يوجد حفلات متاحة",
+  "event_not_attended": "لم يتم حضور هذا الحدث حتى الآن"
 }
 

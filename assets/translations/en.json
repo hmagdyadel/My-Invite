@@ -277,5 +277,6 @@
   "scan_error_scanned_before": "You have already scanned this code",
   "scan_failed": "Scan Failed",
   "logout": "Logout",
-  "no_available_events": "No available events"
+  "no_available_events": "No available events",
+  "event_not_attended": "This event has not been attended yet"
 }

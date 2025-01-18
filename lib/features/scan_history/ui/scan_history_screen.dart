@@ -1,3 +1,4 @@
+import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:app/features/scan_history/ui/widgets/scan_history_item.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/dimensions/dimensions.dart';
+import '../../../core/routing/routes.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
@@ -40,7 +42,7 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 100) {
       final cubit = context.read<GatekeeperEventsCubit>();
-      if (cubit.hasMore) {
+      if (cubit.hasMoreEvents) {
         cubit.getGatekeeperEvents(isNextPage: true);
       }
     }
@@ -70,22 +72,45 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
                 return _buildCenteredMessage("no_available_events".tr());
               }
 
-              return ListView.builder(
-                controller: _scrollController,
-                padding: EdgeInsets.symmetric(vertical: edge),
-                itemCount: events.length + (isLoadingMore ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index == events.length && isLoadingMore) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Center(
-                        child: CupertinoActivityIndicator(color: Colors.white),
-                      ),
-                    );
-                  }
-                  return ScanHistoryItem(event: events[index]);
-                },
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.symmetric(vertical: edge),
+                      itemCount: events.length + (isLoadingMore ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == events.length && isLoadingMore) {
+                          return const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Center(
+                              child: CupertinoActivityIndicator(color: Colors.white),
+                            ),
+                          );
+                        }
+                        return GestureDetector(onTap:(){
+                          if(events[index].scanned!=null&&events[index].scanned!<=0){
+                            context.showErrorToast("event_not_attended".tr());
+                          }else{
+                            debugPrint("index: ${events[index].id}");
+                            context.pushNamed(Routes.eventDetailScreen,arguments: events[index]);
+                          }
+                        },child: ScanHistoryItem(event: events[index]));
+                      },
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.all(edge*0.5),
+                  //   child: SubTitleText(
+                  //     text: "${context.read<GatekeeperEventsCubit>().currentPage-1}/${response.noOfPages ?? 1}",
+                  //     color: Colors.white,
+                  //     fontSize: 16,
+                  //     align: TextAlign.center,
+                  //   ),
+                  // ),
+                ],
               );
+
             },
           );
         },

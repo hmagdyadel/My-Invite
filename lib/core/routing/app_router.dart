@@ -14,8 +14,10 @@ import '../../features/login/ui/login_screen.dart';
 import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
+import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
 import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
 import '../../features/scan_history/ui/scan_history_screen.dart';
+import '../../features/scan_history/ui/widgets/event_history_details_screen.dart';
 import '../../features/splash/ui/on_boarding_screen.dart';
 import '../../features/splash/ui/splash_screen.dart';
 import '../di/dependency_injection.dart';
@@ -23,7 +25,7 @@ import 'routes.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-    // final arguments = settings.arguments;
+     final arguments = settings.arguments;
 
     switch (settings.name) {
       case Routes.splashScreen:
@@ -84,6 +86,14 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<GatekeeperEventsCubit>(),
             child: const ScanHistoryScreen(),
+          ),
+        );
+      case Routes.eventDetailScreen:
+        final event=arguments as EventsList;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
+            child:  EventHistoryDetailsScreen(event: event),
           ),
         );
       default:

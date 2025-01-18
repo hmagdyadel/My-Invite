@@ -47,7 +47,7 @@ class ScanHistoryItem extends StatelessWidget {
     );
   }
 
-  Container eventStatistics() {
+  Widget eventStatistics() {
     return Container(
           padding: EdgeInsets.all(edge),
           decoration: BoxDecoration(

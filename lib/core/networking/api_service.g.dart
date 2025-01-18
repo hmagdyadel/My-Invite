@@ -272,15 +272,17 @@ class _ApiService implements ApiService {
 
   @override
   Future<GatekeeperEventsResponse> getGatekeeperEvents(
-    GatekeeperEventsRequest gatekeeperEventsRequest,
+    String pageNo,
     String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{
+      r'pageNo': pageNo,
+      r'Authorization': token,
+    };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(gatekeeperEventsRequest.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<GatekeeperEventsResponse>(Options(
       method: 'GET',
       headers: _headers,
@@ -301,6 +303,48 @@ class _ApiService implements ApiService {
     late GatekeeperEventsResponse _value;
     try {
       _value = GatekeeperEventsResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<EventDetailsResponse> getEventDetails(
+    String token,
+    String eventId,
+    String pageNo,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Authorization': token,
+      r'eventId': eventId,
+      r'pageNo': pageNo,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<EventDetailsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'scanhistory',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EventDetailsResponse _value;
+    try {
+      _value = EventDetailsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

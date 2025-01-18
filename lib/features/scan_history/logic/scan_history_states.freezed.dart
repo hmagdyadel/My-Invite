@@ -21,9 +21,7 @@ mixin _$ScanHistoryStates<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -32,8 +30,7 @@ mixin _$ScanHistoryStates<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,8 +39,7 @@ mixin _$ScanHistoryStates<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -144,9 +140,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -158,8 +152,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -171,8 +164,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -271,9 +263,7 @@ class _$LoadingImpl<T> implements _Loading<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -285,8 +275,7 @@ class _$LoadingImpl<T> implements _Loading<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -298,8 +287,7 @@ class _$LoadingImpl<T> implements _Loading<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -398,9 +386,7 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) {
     return emptyInput();
@@ -412,8 +398,7 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) {
     return emptyInput?.call();
@@ -425,8 +410,7 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -487,7 +471,7 @@ abstract class _$$SuccessImplCopyWith<T, $Res> {
           _$SuccessImpl<T> value, $Res Function(_$SuccessImpl<T>) then) =
       __$$SuccessImplCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({GatekeeperEventsResponse response, bool isLoadingMore});
+  $Res call({T response, bool isLoadingMore});
 }
 
 /// @nodoc
@@ -503,14 +487,14 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = null,
+    Object? response = freezed,
     Object? isLoadingMore = null,
   }) {
     return _then(_$SuccessImpl<T>(
-      null == response
+      freezed == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as GatekeeperEventsResponse,
+              as T,
       isLoadingMore: null == isLoadingMore
           ? _value.isLoadingMore
           : isLoadingMore // ignore: cast_nullable_to_non_nullable
@@ -525,7 +509,7 @@ class _$SuccessImpl<T> implements _Success<T> {
   const _$SuccessImpl(this.response, {this.isLoadingMore = false});
 
   @override
-  final GatekeeperEventsResponse response;
+  final T response;
   @override
   @JsonKey()
   final bool isLoadingMore;
@@ -540,14 +524,14 @@ class _$SuccessImpl<T> implements _Success<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl<T> &&
-            (identical(other.response, response) ||
-                other.response == response) &&
+            const DeepCollectionEquality().equals(other.response, response) &&
             (identical(other.isLoadingMore, isLoadingMore) ||
                 other.isLoadingMore == isLoadingMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response, isLoadingMore);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(response), isLoadingMore);
 
   /// Create a copy of ScanHistoryStates
   /// with the given fields replaced by the non-null parameter values.
@@ -563,9 +547,7 @@ class _$SuccessImpl<T> implements _Success<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) {
     return success(response, isLoadingMore);
@@ -577,8 +559,7 @@ class _$SuccessImpl<T> implements _Success<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) {
     return success?.call(response, isLoadingMore);
@@ -590,8 +571,7 @@ class _$SuccessImpl<T> implements _Success<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -643,10 +623,10 @@ class _$SuccessImpl<T> implements _Success<T> {
 }
 
 abstract class _Success<T> implements ScanHistoryStates<T> {
-  const factory _Success(final GatekeeperEventsResponse response,
-      {final bool isLoadingMore}) = _$SuccessImpl<T>;
+  const factory _Success(final T response, {final bool isLoadingMore}) =
+      _$SuccessImpl<T>;
 
-  GatekeeperEventsResponse get response;
+  T get response;
   bool get isLoadingMore;
 
   /// Create a copy of ScanHistoryStates
@@ -727,9 +707,7 @@ class _$ErrorImpl<T> implements _Error<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(
-            GatekeeperEventsResponse response, bool isLoadingMore)
-        success,
+    required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -741,8 +719,7 @@ class _$ErrorImpl<T> implements _Error<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -754,8 +731,7 @@ class _$ErrorImpl<T> implements _Error<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(GatekeeperEventsResponse response, bool isLoadingMore)?
-        success,
+    TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -1,30 +1,38 @@
-import '../data/models/gatekeeper_events_request.dart';
 import '../data/models/gatekeeper_events_response.dart';
 import '../data/repo/gatekeeper_events_repo.dart';
 import 'scan_history_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/models/event_details_response.dart';
+
 class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   final GatekeeperEventsRepo _gatekeeperEventsRepo;
 
+  // For Gatekeeper Events Pagination
   final List<EventsList> _events = [];
-  int _currentPage = 1;
-  bool _isLoading = false;
-  bool _hasMore = true;
+  int _currentPageEvents = 1;
+  bool _isLoadingEvents = false;
+  bool _hasMoreEvents = true;
+
+  // For Event Details Pagination
+  final List<EventDetails> _eventDetails = [];
+  int _currentPageDetails = 1;
+  bool _isLoadingDetails = false;
+  bool _hasMoreDetails = true;
 
   GatekeeperEventsCubit(this._gatekeeperEventsRepo)
       : super(const ScanHistoryStates.initial());
 
+  /// Fetch paginated Gatekeeper Events
   Future<void> getGatekeeperEvents({bool isNextPage = false}) async {
-    if (_isLoading || (!_hasMore && isNextPage)) return;
+    if (_isLoadingEvents || (!_hasMoreEvents && isNextPage)) return;
 
-    _isLoading = true;
+    _isLoadingEvents = true;
     if (!isNextPage) {
-      _currentPage = 1;
+      _currentPageEvents = 1;
       _events.clear();
       emit(const ScanHistoryStates.loading());
     } else {
-      // For next pages, emit success state with current events and loading flag
       emit(ScanHistoryStates.success(
         GatekeeperEventsResponse(entityList: _events),
         isLoadingMore: true,
@@ -32,27 +40,25 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
     }
 
     try {
-      GatekeeperEventsRequest request =
-      GatekeeperEventsRequest(pageNo: _currentPage.toString());
-      final response = await _gatekeeperEventsRepo.getGatekeeperEvents(request);
+      final response = await _gatekeeperEventsRepo.getGatekeeperEvents( _currentPageEvents.toString());
 
       await response.when(
         success: (data) async {
           if (data.entityList != null && data.entityList!.isNotEmpty) {
             if (!isNextPage) _events.clear();
             _events.addAll(data.entityList!);
-            _hasMore = data.noOfPages != null && _currentPage < data.noOfPages!;
-            _currentPage++;
+            _hasMoreEvents =
+                data.noOfPages != null && _currentPageEvents < data.noOfPages!;
+            _currentPageEvents++;
             emit(ScanHistoryStates.success(
               GatekeeperEventsResponse(entityList: _events),
               isLoadingMore: false,
             ));
           } else {
-            _hasMore = false;
+            _hasMoreEvents = false;
             if (!isNextPage) {
               emit(const ScanHistoryStates.emptyInput());
             } else {
-              // If no more data on next page, emit current list with loading false
               emit(ScanHistoryStates.success(
                 GatekeeperEventsResponse(entityList: _events),
                 isLoadingMore: false,
@@ -64,7 +70,6 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
           if (!isNextPage) {
             emit(ScanHistoryStates.error(message: error.toString()));
           } else {
-            // On error during pagination, keep current list visible
             emit(ScanHistoryStates.success(
               GatekeeperEventsResponse(entityList: _events),
               isLoadingMore: false,
@@ -73,10 +78,74 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
         },
       );
     } finally {
-      _isLoading = false;
+      _isLoadingEvents = false;
     }
   }
 
-  bool get hasMore => _hasMore;
-}
+  /// Fetch paginated Event Details
+  Future<void> getEventDetails(String eventId,{bool isNextPage = false}) async {
+    if (_isLoadingDetails || (!_hasMoreDetails && isNextPage)) return;
 
+    _isLoadingDetails = true;
+    if (!isNextPage) {
+      _currentPageDetails = 1;
+      _eventDetails.clear();
+      emit(const ScanHistoryStates.loading());
+    } else {
+      emit(ScanHistoryStates.success(
+        EventDetailsResponse(eventDetailsList: _eventDetails),
+        isLoadingMore: true,
+      ));
+    }
+
+    try {
+
+
+      final response = await _gatekeeperEventsRepo.getEventDetails(eventId,_currentPageDetails.toString());
+
+      await response.when(
+        success: (data) async {
+          if (data.eventDetailsList != null &&
+              data.eventDetailsList!.isNotEmpty) {
+            if (!isNextPage) _eventDetails.clear();
+            _eventDetails.addAll(data.eventDetailsList!);
+            _hasMoreDetails =
+                data.noOfPages != null && _currentPageDetails < data.noOfPages!;
+            _currentPageDetails++;
+            emit(ScanHistoryStates.success(
+              EventDetailsResponse(eventDetailsList: _eventDetails),
+              isLoadingMore: false,
+            ));
+          } else {
+            _hasMoreDetails = false;
+            if (!isNextPage) {
+              emit(const ScanHistoryStates.emptyInput());
+            } else {
+              emit(ScanHistoryStates.success(
+                EventDetailsResponse(eventDetailsList: _eventDetails),
+                isLoadingMore: false,
+              ));
+            }
+          }
+        },
+        failure: (error) {
+          if (!isNextPage) {
+            emit(ScanHistoryStates.error(message: error.toString()));
+          } else {
+            emit(ScanHistoryStates.success(
+              EventDetailsResponse(eventDetailsList: _eventDetails),
+              isLoadingMore: false,
+            ));
+          }
+        },
+      );
+    } finally {
+      _isLoadingDetails = false;
+    }
+  }
+
+  // Public properties
+  bool get hasMoreEvents => _hasMoreEvents;
+
+  bool get hasMoreDetails => _hasMoreDetails;
+}
