@@ -12,7 +12,7 @@ class LocationService {
     if (!context.mounted) return _defaultPosition();
 
     // Show loading indicator at the start
-    _showLoadingDialog(context);
+    //_showLoadingDialog(context);
 
     try {
       // Check if location services are enabled

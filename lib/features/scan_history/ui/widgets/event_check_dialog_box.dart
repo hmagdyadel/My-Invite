@@ -8,6 +8,7 @@ import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
+import '../../../event_attendance/logic/event_attendance_cubit.dart';
 import '../../logic/gatekeeper_events_cubit.dart';
 import '../../logic/scan_history_states.dart';
 import 'get_gatekeeper_position.dart';
@@ -82,7 +83,7 @@ class EventCheckDialogBox extends StatelessWidget {
                     ),
                     onPressed: () async {
                       final position = await _getUserPosition(context);
-                      context.read<GatekeeperEventsCubit>().eventCheckOut(
+                      context.read<EventAttendanceCubit>().eventCheckOut(
                             eventId,
                             position,
                           );
@@ -103,12 +104,18 @@ class EventCheckDialogBox extends StatelessWidget {
           listener: (context, current) {
             current.whenOrNull(error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.pop();
+                // Pop the dialog by using Navigator
+                Navigator.of(context, rootNavigator: true).pop();
+                Navigator.of(context, rootNavigator: true)
+                    .pop(); // If you have two levels of pop
                 context.showErrorToast(error);
               });
             }, success: (response, res) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.pop();
+                // Pop the dialog by using Navigator
+                Navigator.of(context, rootNavigator: true).pop();
+                Navigator.of(context, rootNavigator: true)
+                    .pop(); // If you have two levels of pop
                 context.showErrorToast(response.toString());
               });
             });

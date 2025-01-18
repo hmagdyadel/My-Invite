@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/event_attendance/logic/event_attendance_cubit.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -101,8 +102,15 @@ class AppRouter {
         );
       case Routes.myEventsScreen:
         return _buildRoute(
-          BlocProvider(
-            create: (_) => getIt<GatekeeperEventsCubit>(),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<GatekeeperEventsCubit>(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<EventAttendanceCubit>(),
+              ),
+            ],
             child: const MyEventsScreen(),
           ),
         );

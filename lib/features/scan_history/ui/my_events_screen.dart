@@ -1,5 +1,6 @@
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
+import '../../event_attendance/logic/event_attendance_cubit.dart';
 import 'widgets/event_check_dialog_box.dart';
 import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -91,16 +92,22 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext dialogContext) {
-                                  return BlocProvider.value(
-                                    value:
-                                        BlocProvider.of<GatekeeperEventsCubit>(
-                                            context),
+                                  return MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                        value: context.read<GatekeeperEventsCubit>(),
+                                      ),
+                                      BlocProvider(
+                                        create: (_) => context.read<EventAttendanceCubit>(),
+                                      ),
+                                    ],
                                     child: EventCheckDialogBox(
                                       eventId: events[index].id.toString(),
                                     ),
                                   );
                                 },
                               );
+
                             },
                             child: ScanHistoryItem(event: events[index]));
                       },
