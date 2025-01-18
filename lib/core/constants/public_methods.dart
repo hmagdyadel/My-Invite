@@ -22,3 +22,10 @@ String getDateInWords(String date){
   return '${months[dt.month-1]} ${dt.day}, ${dt.year}';
 
 }
+
+String getDateAndTime(String date) {
+  var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+  DateTime dt = inputDateFormat.parse(date,true).toLocal();
+
+  return '${months[dt.month-1]} ${dt.day}, ${dt.year} at ${dt.hour}:${dt.minute}';
+}

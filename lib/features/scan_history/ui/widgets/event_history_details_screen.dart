@@ -1,13 +1,13 @@
-import 'package:app/core/helpers/extensions.dart';
+import 'event_details_item.dart';
+import 'scan_details_header.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
-import '../../../../core/widgets/normal_text.dart';
+
 import '../../../../core/widgets/public_appbar.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/gatekeeper_events_response.dart';
@@ -65,212 +65,31 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
                 return _buildCenteredMessage("no_available_events".tr());
               }
 
-              return Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(edge, edge, edge, 0),
-                    decoration: BoxDecoration(
-                      color: bgColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: edge * 0.5,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(edge),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              eventCodeAndTitle(),
-                              SizedBox(height: edge * 0.5),
-                              eventLocation(context),
-                            ],
-                          ),
-                        ),
-                        eventStatistics(),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.symmetric(vertical: edge),
-                      itemCount: events.length + (isLoadingMore ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == events.length && isLoadingMore) {
-                          return const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Center(
-                              child: CupertinoActivityIndicator(
-                                  color: Colors.white),
-                            ),
-                          );
-                        }
-                        return Container();
-                      },
-                    ),
-                  ),
-                ],
+              return ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.symmetric(vertical: edge),
+                itemCount: events.length + (isLoadingMore ? 2 : 1), // +2 for header and loader
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return ScanDetailsHeader(event: widget.event);
+                  }
+                  if (index == events.length + 1 && isLoadingMore) {
+                    return const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: CupertinoActivityIndicator(color: Colors.white),
+                      ),
+                    );
+                  }
+                  return EventDetailsItem(
+                    eventDetails: events[index - 1], // Adjust for header index
+                  );
+                },
               );
             },
           );
         },
       ),
-    );
-  }
-
-  Widget eventStatistics() {
-    return Container(
-      padding: EdgeInsets.all(edge),
-      decoration: BoxDecoration(
-        color: navBarBackground,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(12),
-          bottomRight: Radius.circular(12),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              NormalText(
-                text: 'scanned'.tr(),
-                color: Colors.white,
-                fontSize: 16,
-              ),
-              NormalText(
-                text: widget.event?.scanned.toString() ?? "0",
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              NormalText(
-                text: 'allocated'.tr(),
-                color: Colors.white,
-                fontSize: 16,
-              ),
-              NormalText(
-                text: widget.event?.totalAllocated.toString() ?? "0",
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              NormalText(
-                text: 'pending'.tr(),
-                color: Colors.white,
-                fontSize: 16,
-              ),
-              NormalText(
-                text: getPending(widget.event!),
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  String getPending(EventsList event) {
-    String pending = "";
-    int allocated = event.totalAllocated ?? 0;
-    int scanned = event.scanned ?? 0;
-    pending = (allocated - scanned).toString();
-    return pending;
-  }
-
-  Widget eventLocation(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: navBarBackground),
-      onPressed: () {
-        viewMap(context);
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.map,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  NormalText(
-                    text: widget.event?.eventVenue ?? "",
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  NormalText(
-                    text: widget.event?.eventlocation ?? "",
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Function to handle map viewing
-  Future viewMap(BuildContext context) async {
-    if (widget.event?.gmapCode == null) {
-      context.showErrorToast("location_not_available".tr());
-      return;
-    }
-    String googleUrl = widget.event?.gmapCode ?? "https://maps.google.com";
-    try {
-      await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.platformDefault);
-    } catch (e) {
-      // Handle exceptions appropriately
-    }
-  }
-
-  Column eventCodeAndTitle() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: edge * 0.5,
-      children: [
-        SubTitleText(
-          text: widget.event?.eventCode ?? "",
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SubTitleText(
-                text: widget.event?.eventTitle ?? "",
-                color: Colors.white,
-                fontSize: 16,
-                align: TextAlign.start,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
@@ -295,3 +114,4 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
     );
   }
 }
+
