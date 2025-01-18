@@ -16,6 +16,7 @@ import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
 import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
 import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
+import '../../features/scan_history/ui/my_events_screen.dart';
 import '../../features/scan_history/ui/scan_history_screen.dart';
 import '../../features/scan_history/ui/widgets/event_history_details_screen.dart';
 import '../../features/splash/ui/on_boarding_screen.dart';
@@ -25,7 +26,7 @@ import 'routes.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-     final arguments = settings.arguments;
+    final arguments = settings.arguments;
 
     switch (settings.name) {
       case Routes.splashScreen:
@@ -44,10 +45,12 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<
+                    RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<
+                    LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -89,11 +92,18 @@ class AppRouter {
           ),
         );
       case Routes.eventDetailScreen:
-        final event=arguments as EventsList;
+        final event = arguments as EventsList;
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<GatekeeperEventsCubit>(),
-            child:  EventHistoryDetailsScreen(event: event),
+            child: EventHistoryDetailsScreen(event: event),
+          ),
+        );
+      case Routes.myEventsScreen:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
+            child: const MyEventsScreen(),
           ),
         );
       default:

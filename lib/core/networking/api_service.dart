@@ -46,7 +46,7 @@ abstract class ApiService {
 
   @GET(ApiConstants.gatekeeperEventsEndpoint)
   Future<GatekeeperEventsResponse> getGatekeeperEvents(
-      @Header('pageNo') String pageNo,
+    @Header('pageNo') String pageNo,
     @Header('Authorization') String token,
   );
 
@@ -55,4 +55,21 @@ abstract class ApiService {
       @Header('Authorization') String token,
       @Header('eventId') String eventId,
       @Header('pageNo') String pageNo);
+
+  @GET("${ApiConstants.checkoutEndpoint}/{eventId}")
+  Future<String> eventCheckOut(
+    @Header('Authorization') String token,
+    @Header('latitude') String latitude,
+    @Header('longitude') String longitude,
+    @Path('eventId') String eventId,
+  );
+
+  @POST("${ApiConstants.checkinEndpoint}/{eventId}")
+  Future<String> eventCheckIn(
+      @Header('Authorization') String token,
+      @Header('latitude') String latitude,
+      @Header('longitude') String longitude,
+      @Path('eventId') String eventId,
+      //@Part(name: 'file') MultipartFile file,
+      );
 }

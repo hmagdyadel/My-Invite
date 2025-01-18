@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/networking/api_result.dart';
@@ -28,12 +29,39 @@ class GatekeeperEventsRepo {
   }
 
   Future<ApiResult<EventDetailsResponse>> getEventDetails(
-      String eventId,String pageNo) async {
+      String eventId, String pageNo) async {
     try {
-
       log(AppUtilities().serverToken);
       var response = await _apiService.getEventDetails(
-           AppUtilities().serverToken,eventId,pageNo);
+          AppUtilities().serverToken, eventId, pageNo);
+      return ApiResult.success(response);
+    } on DioException {
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      return ApiResult.failure(error.toString());
+    }
+  }
+
+  Future<ApiResult<String>> eventCheckOut(
+      String eventId, Position position) async {
+    try {
+      log(AppUtilities().serverToken);
+      var response = await _apiService.eventCheckOut(AppUtilities().serverToken,
+          position.latitude.toString(), position.longitude.toString(), eventId);
+      return ApiResult.success(response);
+    } on DioException {
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      return ApiResult.failure(error.toString());
+    }
+  }
+
+  Future<ApiResult<EventDetailsResponse>> eventCheckIn(
+      String eventId, String pageNo) async {
+    try {
+      log(AppUtilities().serverToken);
+      var response = await _apiService.getEventDetails(
+          AppUtilities().serverToken, eventId, pageNo);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());

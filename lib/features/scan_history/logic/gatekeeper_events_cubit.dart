@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import '../data/models/gatekeeper_events_response.dart';
 import '../data/models/event_details_response.dart';
 import '../data/repo/gatekeeper_events_repo.dart';
@@ -163,4 +164,19 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
 
   // Helper method to get current details data
   List<EventDetails> get currentDetails => _eventDetails;
+
+  void eventCheckOut(String eventId, Position position) async {
+    emit(const ScanHistoryStates.loading());
+    final response =
+        await _gatekeeperEventsRepo.eventCheckOut(eventId, position);
+    response.when(success: (response) {
+      emit(ScanHistoryStates.success(response));
+    }, failure: (error) {
+      emit(
+        ScanHistoryStates.error(
+          message: error.toString(),
+        ),
+      );
+    });
+  }
 }
