@@ -13,8 +13,8 @@ class ApiConstants {
   static const String scanEndpoint = 'scan';
   static const String scanHistoryEndpoint = 'scanhistory';
   static const String checkinEndpoint = 'events/checkin?eventid=';
-  static const String checkoutEndpoint = 'events/checkout?eventid=';
-  static const String locationsEndpoint = 'Events/Locations';
+ static const String checkoutEndpoint = 'events/checkout';
+ static const String locationsEndpoint = 'Events/Locations';
   static const String countriesEndpoint = 'Events/GetCountries';
   static const String citiesEndpoint = 'Events/GetCities';
   static const String logsEndpoint = 'ReadLogs';

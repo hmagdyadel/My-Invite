@@ -360,7 +360,7 @@ class _ApiService implements ApiService {
     String eventId,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'eventid': eventId};
     final _headers = <String, dynamic>{
       r'Authorization': token,
       r'latitude': latitude,
@@ -375,7 +375,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          'events/checkout?eventid=/${eventId}',
+          'events/checkout',
           queryParameters: queryParameters,
           data: _data,
         )

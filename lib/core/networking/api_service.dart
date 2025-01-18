@@ -56,13 +56,13 @@ abstract class ApiService {
       @Header('eventId') String eventId,
       @Header('pageNo') String pageNo);
 
-  @GET("${ApiConstants.checkoutEndpoint}/{eventId}")
+  @GET(ApiConstants.checkoutEndpoint)
   Future<String> eventCheckOut(
-    @Header('Authorization') String token,
-    @Header('latitude') String latitude,
-    @Header('longitude') String longitude,
-    @Path('eventId') String eventId,
-  );
+      @Header('Authorization') String token,
+      @Header('latitude') String latitude,
+      @Header('longitude') String longitude,
+      @Query('eventid') String eventId,
+      );
 
   @POST("${ApiConstants.checkinEndpoint}/{eventId}")
   Future<String> eventCheckIn(

@@ -280,6 +280,8 @@
   "no_available_events": "No available events",
   "event_not_attended": "This event has not been attended yet",
   "event_check": "Confirm Event Participation",
-  "event_check_hint": "Please confirm whether you are checking in or checking out of the event."
+  "event_check_hint": "Please confirm whether you are checking in or checking out of the event.",
+  "not_yet_checked": "You need to check in to this event before you can perform this action."
+
 
 }
