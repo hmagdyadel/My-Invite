@@ -62,7 +62,7 @@ class EventCheckDialogBox extends StatelessWidget {
                   fun: () async {
                     if (!_isSameDay(event)) {
                       context.pop();
-                      context.showErrorToast("can_not_check_in_or_out".tr());
+                      context.showSuccessToast("can_not_check_in_or_out".tr());
                     } else {
                       final position = await _getUserPosition(context);
                       final image = await Navigator.push(
@@ -91,7 +91,7 @@ class EventCheckDialogBox extends StatelessWidget {
                   fun: () async {
                     if (!_isSameDay(event)) {
                       context.pop();
-                      context.showErrorToast("can_not_check_in_or_out".tr());
+                      context.showSuccessToast("can_not_check_in_or_out".tr());
                     } else {
                       final position = await _getUserPosition(context);
 
