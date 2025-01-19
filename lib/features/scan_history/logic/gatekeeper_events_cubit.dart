@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import '../data/models/gatekeeper_events_response.dart';
 import '../data/models/event_details_response.dart';
 import '../data/repo/gatekeeper_events_repo.dart';
@@ -20,8 +21,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   int _totalPagesDetails = 1;
   bool _isLoadingDetails = false;
 
-  GatekeeperEventsCubit(this._gatekeeperEventsRepo)
-      : super(const ScanHistoryStates.initial());
+  GatekeeperEventsCubit(this._gatekeeperEventsRepo) : super(const ScanHistoryStates.initial());
 
   /// Reset events pagination
   void resetEventsPage() {
@@ -63,8 +63,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
       }
 
       final response = await _gatekeeperEventsRepo.getGatekeeperEvents(
-        (_currentPageEvents + 1)
-            .toString(), // Adding 1 because API expects 1-based index
+        (_currentPageEvents + 1).toString(), // Adding 1 because API expects 1-based index
       );
 
       await response.when(
@@ -100,8 +99,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   }
 
   /// Fetch paginated Event Details
-  Future<void> getEventDetails(String eventId,
-      {bool isNextPage = false}) async {
+  Future<void> getEventDetails(String eventId, {bool isNextPage = false}) async {
     // Don't proceed if already loading or trying to load next page when no more pages
     if (_isLoadingDetails || (!hasMoreDetails && isNextPage)) return;
 
@@ -121,14 +119,12 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
 
       final response = await _gatekeeperEventsRepo.getEventDetails(
         eventId,
-        (_currentPageDetails + 1)
-            .toString(), // Adding 1 because API expects 1-based index
+        (_currentPageDetails + 1).toString(), // Adding 1 because API expects 1-based index
       );
 
       await response.when(
         success: (data) async {
-          if (data.eventDetailsList != null &&
-              data.eventDetailsList!.isNotEmpty) {
+          if (data.eventDetailsList != null && data.eventDetailsList!.isNotEmpty) {
             if (_currentPageDetails == 0) {
               _eventDetails.clear();
               _totalPagesDetails = data.noOfPages ?? 1;
@@ -164,4 +160,17 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   // Helper method to get current details data
   List<EventDetails> get currentDetails => _eventDetails;
 
+  void eventCheckOut(String eventId, Position position) async {
+    emit(const ScanHistoryStates.loadingCheck());
+    final response = await _gatekeeperEventsRepo.eventCheckOut(eventId, position);
+    response.when(success: (response) {
+      emit(ScanHistoryStates.successCheck(response));
+    }, failure: (error) {
+      emit(
+        ScanHistoryStates.errorCheck(
+          message: error.toString(),
+        ),
+      );
+    });
+  }
 }

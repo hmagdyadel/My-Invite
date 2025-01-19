@@ -82,4 +82,5 @@ class GatekeeperEventsRepo {
       return ApiResult.failure(error.toString());
     }
   }
+
 }

@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/event_attendance/logic/event_attendance_cubit.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -46,12 +45,10 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<
-                    RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<
-                    LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -106,9 +103,6 @@ class AppRouter {
             providers: [
               BlocProvider(
                 create: (_) => getIt<GatekeeperEventsCubit>(),
-              ),
-              BlocProvider(
-                create: (_) => getIt<EventAttendanceCubit>(),
               ),
             ],
             child: const MyEventsScreen(),

@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../features/event_attendance/data/repo/event_attendance_repo.dart';
-import '../../features/event_attendance/logic/event_attendance_cubit.dart';
 import '../../features/home/data/repo/home_repo.dart';
 import '../../features/home/logic/home_cubit.dart';
 import '../../features/location/data/repo/location_repo.dart';
@@ -49,9 +47,4 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<GatekeeperEventsCubit>(
       () => GatekeeperEventsCubit(getIt()));
 
-  //event Attendance
-  getIt.registerLazySingleton<EventAttendanceRepo>(
-      () => EventAttendanceRepo(getIt()));
-  getIt.registerFactory<EventAttendanceCubit>(
-      () => EventAttendanceCubit(getIt()));
 }
