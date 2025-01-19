@@ -7,40 +7,13 @@ import 'package:geolocator/geolocator.dart';
 import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
-import '../models/event_details_response.dart';
-import '../models/gatekeeper_events_response.dart';
 
-class GatekeeperEventsRepo {
+
+class EventAttendanceRepo {
   final ApiService _apiService;
 
-  GatekeeperEventsRepo(this._apiService);
+  EventAttendanceRepo(this._apiService);
 
-  Future<ApiResult<GatekeeperEventsResponse>> getGatekeeperEvents(
-      String pageNo) async {
-    try {
-      var response = await _apiService.getGatekeeperEvents(
-          pageNo, AppUtilities().serverToken);
-      return ApiResult.success(response);
-    } on DioException {
-      return ApiResult.failure("some_error".tr());
-    } catch (error) {
-      return ApiResult.failure(error.toString());
-    }
-  }
-
-  Future<ApiResult<EventDetailsResponse>> getEventDetails(
-      String eventId, String pageNo) async {
-    try {
-      log(AppUtilities().serverToken);
-      var response = await _apiService.getEventDetails(
-          AppUtilities().serverToken, eventId, pageNo);
-      return ApiResult.success(response);
-    } on DioException {
-      return ApiResult.failure("some_error".tr());
-    } catch (error) {
-      return ApiResult.failure(error.toString());
-    }
-  }
 
   Future<ApiResult<String>> eventCheckOut(
       String eventId, Position position) async {
@@ -69,12 +42,16 @@ class GatekeeperEventsRepo {
     }
   }
 
-  Future<ApiResult<EventDetailsResponse>> eventCheckIn(
-      String eventId, String pageNo) async {
+  Future<ApiResult<String>> eventCheckIn(
+      String eventId, Position position) async {
     try {
       log(AppUtilities().serverToken);
-      var response = await _apiService.getEventDetails(
-          AppUtilities().serverToken, eventId, pageNo);
+      var response = await _apiService.eventCheckIn(
+        AppUtilities().serverToken,
+        position.latitude.toString(),
+        position.longitude.toString(),
+        eventId,
+      );
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());

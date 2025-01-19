@@ -8,5 +8,7 @@ class Routes {
   static const String eventInstructionsScreen = '/eventInstructionsScreen';
   static const String qrCodeScreen = '/qrCodeScreen';
   static const String eventsHistory = '/eventsHistory';
+  static const String eventDetailScreen = '/eventDetailScreen';
+  static const String myEventsScreen = '/myEventsScreen';
 
 }

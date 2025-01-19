@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/event_attendance/logic/event_attendance_cubit.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -14,8 +15,11 @@ import '../../features/login/ui/login_screen.dart';
 import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
+import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
 import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
+import '../../features/scan_history/ui/my_events_screen.dart';
 import '../../features/scan_history/ui/scan_history_screen.dart';
+import '../../features/scan_history/ui/widgets/event_history_details_screen.dart';
 import '../../features/splash/ui/on_boarding_screen.dart';
 import '../../features/splash/ui/splash_screen.dart';
 import '../di/dependency_injection.dart';
@@ -23,7 +27,7 @@ import 'routes.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
-    // final arguments = settings.arguments;
+    final arguments = settings.arguments;
 
     switch (settings.name) {
       case Routes.splashScreen:
@@ -42,10 +46,12 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<
+                    RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<
+                    LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -84,6 +90,28 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<GatekeeperEventsCubit>(),
             child: const ScanHistoryScreen(),
+          ),
+        );
+      case Routes.eventDetailScreen:
+        final event = arguments as EventsList;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
+            child: EventHistoryDetailsScreen(event: event),
+          ),
+        );
+      case Routes.myEventsScreen:
+        return _buildRoute(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<GatekeeperEventsCubit>(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<EventAttendanceCubit>(),
+              ),
+            ],
+            child: const MyEventsScreen(),
           ),
         );
       default:

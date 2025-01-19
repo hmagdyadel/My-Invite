@@ -1,28 +1,26 @@
-import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
-import 'package:app/features/scan_history/ui/widgets/scan_history_item.dart';
+import '../../event_attendance/logic/event_attendance_cubit.dart';
+import 'widgets/event_check_dialog_box.dart';
+import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/dimensions/dimensions.dart';
-import '../../../core/routing/routes.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
 
-
-
-class ScanHistoryScreen extends StatefulWidget {
-  const ScanHistoryScreen({super.key});
+class MyEventsScreen extends StatefulWidget {
+  const MyEventsScreen({super.key});
 
   @override
-  State<ScanHistoryScreen> createState() => _ScanHistoryScreenState();
+  State<MyEventsScreen> createState() => _MyEventsScreenState();
 }
 
-class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
+class _MyEventsScreenState extends State<MyEventsScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -54,7 +52,7 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
       backgroundColor: bgColorOverlay,
       appBar: publicAppBar(
         context,
-        "scan_history".tr(),
+        "events".tr(),
       ),
       body: BlocBuilder<GatekeeperEventsCubit, ScanHistoryStates>(
         buildWhen: (previous, current) => previous != current,
@@ -84,33 +82,39 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.white),
+                              child: CupertinoActivityIndicator(
+                                  color: Colors.white),
                             ),
                           );
                         }
-                        return GestureDetector(onTap:(){
-                          if(events[index].scanned!=null&&events[index].scanned!<=0){
-                            context.showErrorToast("event_not_attended".tr());
-                          }else{
-                            debugPrint("index: ${events[index].id}");
-                            context.pushNamed(Routes.eventDetailScreen,arguments: events[index]);
-                          }
-                        },child: ScanHistoryItem(event: events[index]));
+                        return GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                        value: context.read<GatekeeperEventsCubit>(),
+                                      ),
+                                      BlocProvider(
+                                        create: (_) => context.read<EventAttendanceCubit>(),
+                                      ),
+                                    ],
+                                    child: EventCheckDialogBox(
+                                      eventId: events[index].id.toString(),
+                                    ),
+                                  );
+                                },
+                              );
+
+                            },
+                            child: ScanHistoryItem(event: events[index]));
                       },
                     ),
                   ),
-                  // Padding(
-                  //   padding: EdgeInsets.all(edge*0.5),
-                  //   child: SubTitleText(
-                  //     text: "${context.read<GatekeeperEventsCubit>().currentPage-1}/${response.noOfPages ?? 1}",
-                  //     color: Colors.white,
-                  //     fontSize: 16,
-                  //     align: TextAlign.center,
-                  //   ),
-                  // ),
                 ],
               );
-
             },
           );
         },
