@@ -1,10 +1,10 @@
 import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/widgets/go_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
@@ -20,9 +20,10 @@ class EventCheckDialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GatekeeperEventsCubit, ScanHistoryStates>(
-      buildWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck,
-      listenWhen: (previous, current) => previous != current,
+      buildWhen: (previous, current) => previous != current,
+      listenWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck || current is LoadingCheck,
       builder: (context, current) {
+        debugPrint('state ${current is LoadingCheck}');
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
           title: Column(
@@ -51,40 +52,28 @@ class EventCheckDialogBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
-                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                    padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: edge, vertical: edge * 0.7)),
-                  ),
-                  onPressed: () {
+                GoButton(
+                  fun: () {
                     context.pop();
                   },
-                  child: SubTitleText(
-                    text: "check_in".tr(),
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+                  titleKey: "check_in".tr(),
+                  textColor: Colors.white,
+                  btColor: primaryColor,
+                  loading: current is LoadingCheck,
+                  loaderColor: Colors.white,
+                  w: 110,
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
-                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                    padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: edge, vertical: edge * 0.7)),
-                  ),
-                  onPressed: () async {
+                GoButton(
+                  fun: () async {
                     final position = await _getUserPosition(context);
-
-                    context.read<GatekeeperEventsCubit>().eventCheckOut(
-                          eventId,
-                          position,
-                        );
+                    context.read<GatekeeperEventsCubit>().eventCheckOut(eventId, position);
                   },
-                  child: SubTitleText(
-                    text: "check_out".tr(),
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+                  titleKey: "check_out".tr(),
+                  textColor: Colors.white,
+                  btColor: Colors.red,
+                  loading: current is LoadingCheck,
+                  loaderColor: Colors.white,
+                  w: 110,
                 ),
               ],
             ),
@@ -92,18 +81,16 @@ class EventCheckDialogBox extends StatelessWidget {
         );
       },
       listener: (context, current) {
+        debugPrint('Listener triggered for errorCheck with error: ');
         current.whenOrNull(errorCheck: (error) {
+          debugPrint('Listener triggered for errorCheck with error: $error');
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            // Pop the dialog by using Navigator
-            Navigator.of(context, rootNavigator: true).pop();
-            Navigator.of(context, rootNavigator: true).pop(); // If you have two levels of pop
+            context.pop();
             context.showErrorToast(error);
           });
         }, successCheck: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            // Pop the dialog by using Navigator
-            Navigator.of(context, rootNavigator: true).pop();
-            Navigator.of(context, rootNavigator: true).pop(); // If you have two levels of pop
+            context.pop();
             context.showErrorToast(response.toString());
           });
         });

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -52,13 +53,15 @@ class GatekeeperEventsRepo {
       );
       return ApiResult.success(response);
     } on DioException catch (dioError) {
-      // Check if the error message matches the specific condition
       if (dioError.response != null && dioError.response?.data != null && dioError.response!.data.toString().contains("This gatekeeper didn't check IN yet to this event")) {
+        debugPrint('Invalid response: ${dioError.response!.data}');
         return ApiResult.failure("not_yet_checked");
       }
-      // Return a generic error message for other cases
+      debugPrint(' response: ${dioError.response!.data}');
+
       return ApiResult.failure("some_error".tr());
     } catch (error) {
+      debugPrint(' some error: ${error.toString()}');
       return ApiResult.failure(error.toString());
     }
   }

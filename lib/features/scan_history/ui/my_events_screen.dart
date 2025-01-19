@@ -69,7 +69,6 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
               if (events.isEmpty) {
                 return _buildCenteredMessage("no_available_events".tr());
               }
-
               return Column(
                 children: [
                   Expanded(
@@ -91,14 +90,8 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext dialogContext) {
-                                  return
-
-                                    MultiBlocProvider(
-                                    providers: [
-                                      BlocProvider.value(
-                                        value: context.read<GatekeeperEventsCubit>(),
-                                      ),
-                                    ],
+                                  return BlocProvider.value(
+                                    value: context.read<GatekeeperEventsCubit>(),
                                     child: EventCheckDialogBox(
                                       eventId: events[index].id.toString(),
                                     ),
