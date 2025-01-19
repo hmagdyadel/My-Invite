@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../dimensions/dimensions.dart';
+import 'loader.dart';
 
 class GoButton extends StatelessWidget {
   const GoButton({required this.fun, required this.titleKey, this.w, this.fontWeight, this.icon, this.alignment, this.loaderColor, this.vertical, this.curvy, this.gradient = false, this.fontSize, this.loading = false, this.hi, this.btColor, this.borderColor, this.textColor, this.enable = true, super.key});
@@ -44,7 +45,9 @@ class GoButton extends StatelessWidget {
           color: enable ? btColor ?? Colors.black : Colors.black,
           borderRadius: BorderRadius.circular(curvy ?? curvyRadius*2),
         ),
-        child: vertical ?? false
+        child:  loading
+            ? Loader(size: 45.0, color: loaderColor)
+            :vertical ?? false
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

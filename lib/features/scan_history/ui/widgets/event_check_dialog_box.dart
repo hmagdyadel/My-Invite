@@ -81,9 +81,7 @@ class EventCheckDialogBox extends StatelessWidget {
         );
       },
       listener: (context, current) {
-        debugPrint('Listener triggered for errorCheck with error: ');
         current.whenOrNull(errorCheck: (error) {
-          debugPrint('Listener triggered for errorCheck with error: $error');
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.pop();
             context.showErrorToast(error);
