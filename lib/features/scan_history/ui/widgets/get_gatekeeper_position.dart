@@ -104,12 +104,12 @@ class LocationService {
     return _defaultPosition();
   }
 
-  static void _showLoadingDialog(BuildContext context) {
-    animatedLoaderWithTitle(
-      context: context,
-      title: 'getting_location'.tr(),
-    );
-  }
+  // static void _showLoadingDialog(BuildContext context) {
+  //   animatedLoaderWithTitle(
+  //     context: context,
+  //     title: 'getting_location'.tr(),
+  //   );
+  // }
 
   static void _hideLoadingDialog(BuildContext context) {
     if (Navigator.canPop(context)) {
