@@ -3,23 +3,24 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
 import '../models/event_details_response.dart';
 import '../models/gatekeeper_events_response.dart';
+import 'package:path/path.dart';
 
 class GatekeeperEventsRepo {
   final ApiService _apiService;
 
   GatekeeperEventsRepo(this._apiService);
 
-  Future<ApiResult<GatekeeperEventsResponse>> getGatekeeperEvents(
-      String pageNo) async {
+  Future<ApiResult<GatekeeperEventsResponse>> getGatekeeperEvents(String pageNo) async {
     try {
-      var response = await _apiService.getGatekeeperEvents(
-          pageNo, AppUtilities().serverToken);
+      var response = await _apiService.getGatekeeperEvents(pageNo, AppUtilities().serverToken);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());
@@ -28,12 +29,10 @@ class GatekeeperEventsRepo {
     }
   }
 
-  Future<ApiResult<EventDetailsResponse>> getEventDetails(
-      String eventId, String pageNo) async {
+  Future<ApiResult<EventDetailsResponse>> getEventDetails(String eventId, String pageNo) async {
     try {
       log(AppUtilities().serverToken);
-      var response = await _apiService.getEventDetails(
-          AppUtilities().serverToken, eventId, pageNo);
+      var response = await _apiService.getEventDetails(AppUtilities().serverToken, eventId, pageNo);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());
@@ -42,8 +41,7 @@ class GatekeeperEventsRepo {
     }
   }
 
-  Future<ApiResult<String>> eventCheckOut(
-      String eventId, Position position) async {
+  Future<ApiResult<String>> eventCheckOut(String eventId, Position position) async {
     try {
       log(AppUtilities().serverToken);
       var response = await _apiService.eventCheckOut(
@@ -55,11 +53,7 @@ class GatekeeperEventsRepo {
       return ApiResult.success(response);
     } on DioException catch (dioError) {
       // Check if the error message matches the specific condition
-      if (dioError.response != null &&
-          dioError.response?.data != null &&
-          dioError.response!.data
-              .toString()
-              .contains("This gatekeeper didn't check IN yet to this event")) {
+      if (dioError.response != null && dioError.response?.data != null && dioError.response!.data.toString().contains("This gatekeeper didn't check IN yet to this event")) {
         return ApiResult.failure("not_yet_checked");
       }
       // Return a generic error message for other cases
@@ -69,12 +63,26 @@ class GatekeeperEventsRepo {
     }
   }
 
-  Future<ApiResult<EventDetailsResponse>> eventCheckIn(
-      String eventId, String pageNo) async {
+  Future<ApiResult<String>> eventCheckIn(
+    String eventId,
+    Position position,
+    XFile? profileImage,
+  ) async {
     try {
-      log(AppUtilities().serverToken);
-      var response = await _apiService.getEventDetails(
-          AppUtilities().serverToken, eventId, pageNo);
+      MultipartFile? profileImageFile;
+      if (profileImage != null) {
+        profileImageFile = await MultipartFile.fromFile(
+          profileImage.path,
+          filename: basename(profileImage.path),
+          contentType: MediaType('image', 'jpeg'),
+        );
+      }
+      final Map<String, dynamic> formDataMap = {};
+      if (profileImageFile != null) {
+        formDataMap['file'] = profileImageFile;
+      }
+      FormData formData = FormData.fromMap(formDataMap);
+      var response = await _apiService.eventCheckIn(AppUtilities().serverToken, position.latitude.toString(), position.longitude.toString(), eventId, formData);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());
@@ -82,5 +90,4 @@ class GatekeeperEventsRepo {
       return ApiResult.failure(error.toString());
     }
   }
-
 }

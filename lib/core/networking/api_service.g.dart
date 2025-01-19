@@ -401,16 +401,17 @@ class _ApiService implements ApiService {
     String latitude,
     String longitude,
     String eventId,
+    FormData formData,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'eventId': eventId};
     final _headers = <String, dynamic>{
       r'Authorization': token,
       r'latitude': latitude,
       r'longitude': longitude,
     };
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _data = formData;
     final _options = _setStreamType<String>(Options(
       method: 'POST',
       headers: _headers,
@@ -418,7 +419,7 @@ class _ApiService implements ApiService {
     )
         .compose(
           _dio.options,
-          'events/checkin?eventid=/${eventId}',
+          'events/checkin',
           queryParameters: queryParameters,
           data: _data,
         )

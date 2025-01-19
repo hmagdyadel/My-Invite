@@ -51,25 +51,22 @@ abstract class ApiService {
   );
 
   @GET(ApiConstants.scanHistoryEndpoint)
-  Future<EventDetailsResponse> getEventDetails(
-      @Header('Authorization') String token,
-      @Header('eventId') String eventId,
-      @Header('pageNo') String pageNo);
+  Future<EventDetailsResponse> getEventDetails(@Header('Authorization') String token, @Header('eventId') String eventId, @Header('pageNo') String pageNo);
 
   @GET(ApiConstants.checkoutEndpoint)
   Future<String> eventCheckOut(
-      @Header('Authorization') String token,
-      @Header('latitude') String latitude,
-      @Header('longitude') String longitude,
-      @Query('eventid') String eventId,
-      );
+    @Header('Authorization') String token,
+    @Header('latitude') String latitude,
+    @Header('longitude') String longitude,
+    @Query('eventid') String eventId,
+  );
 
-  @POST("${ApiConstants.checkinEndpoint}/{eventId}")
+  @POST(ApiConstants.checkinEndpoint)
   Future<String> eventCheckIn(
-      @Header('Authorization') String token,
-      @Header('latitude') String latitude,
-      @Header('longitude') String longitude,
-      @Path('eventId') String eventId,
-      //@Part(name: 'file') MultipartFile file,
-      );
+    @Header('Authorization') String token,
+    @Header('latitude') String latitude,
+    @Header('longitude') String longitude,
+    @Query('eventId') String eventId,
+    @Body() FormData formData,
+  );
 }

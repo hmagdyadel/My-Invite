@@ -74,10 +74,11 @@ class EventCheckDialogBox extends StatelessWidget {
                   ),
                   onPressed: () async {
                     final position = await _getUserPosition(context);
+
                     context.read<GatekeeperEventsCubit>().eventCheckOut(
-                      eventId,
-                      position,
-                    );
+                          eventId,
+                          position,
+                        );
                   },
                   child: SubTitleText(
                     text: "check_out".tr(),
