@@ -30,6 +30,10 @@ void animatedLoaderWithTitle({required BuildContext context, bool dismissible = 
                   child: SubTitleText(
                     text: title,
                     align: TextAlign.center,
+<<<<<<< HEAD
+=======
+                    color: Colors.white,
+>>>>>>> origin/main
                   ),
                 )
               ],
@@ -70,9 +74,17 @@ void dialogWithSingleAction({required BuildContext context, required String titl
       return AlertDialog(
         title: SubTitleText(
           text: title,
+<<<<<<< HEAD
         ),
         content: SubTitleText(
           text: msg,
+=======
+          color: Colors.white,
+        ),
+        content: SubTitleText(
+          text: msg,
+          color: Colors.white,
+>>>>>>> origin/main
         ),
         backgroundColor: Colors.black,
         actions: <Widget>[

@@ -20,55 +20,79 @@ mixin _$ScanHistoryStates<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -139,9 +163,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) {
     return initial();
   }
@@ -151,9 +179,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) {
     return initial?.call();
   }
@@ -163,9 +195,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -178,10 +214,14 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) {
     return initial(this);
   }
@@ -190,10 +230,14 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) {
     return initial?.call(this);
   }
@@ -202,10 +246,14 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -220,18 +268,19 @@ abstract class _Initial<T> implements ScanHistoryStates<T> {
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<T, $Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl<T> value, $Res Function(_$LoadingImpl<T>) then) =
-      __$$LoadingImplCopyWithImpl<T, $Res>;
+abstract class _$$LoadingScanHistoryImplCopyWith<T, $Res> {
+  factory _$$LoadingScanHistoryImplCopyWith(_$LoadingScanHistoryImpl<T> value,
+          $Res Function(_$LoadingScanHistoryImpl<T>) then) =
+      __$$LoadingScanHistoryImplCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<T, $Res>
-    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$LoadingImpl<T>>
-    implements _$$LoadingImplCopyWith<T, $Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl<T> _value, $Res Function(_$LoadingImpl<T>) _then)
+class __$$LoadingScanHistoryImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res,
+        _$LoadingScanHistoryImpl<T>>
+    implements _$$LoadingScanHistoryImplCopyWith<T, $Res> {
+  __$$LoadingScanHistoryImplCopyWithImpl(_$LoadingScanHistoryImpl<T> _value,
+      $Res Function(_$LoadingScanHistoryImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of ScanHistoryStates
@@ -240,8 +289,8 @@ class __$$LoadingImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$LoadingImpl<T> implements _Loading<T> {
-  const _$LoadingImpl();
+class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
+  const _$LoadingScanHistoryImpl();
 
   @override
   String toString() {
@@ -251,7 +300,8 @@ class _$LoadingImpl<T> implements _Loading<T> {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl<T>);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingScanHistoryImpl<T>);
   }
 
   @override
@@ -262,9 +312,13 @@ class _$LoadingImpl<T> implements _Loading<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) {
     return loading();
   }
@@ -274,9 +328,13 @@ class _$LoadingImpl<T> implements _Loading<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) {
     return loading?.call();
   }
@@ -286,9 +344,13 @@ class _$LoadingImpl<T> implements _Loading<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -301,10 +363,14 @@ class _$LoadingImpl<T> implements _Loading<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) {
     return loading(this);
   }
@@ -313,10 +379,14 @@ class _$LoadingImpl<T> implements _Loading<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) {
     return loading?.call(this);
   }
@@ -325,10 +395,14 @@ class _$LoadingImpl<T> implements _Loading<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -338,23 +412,23 @@ class _$LoadingImpl<T> implements _Loading<T> {
   }
 }
 
-abstract class _Loading<T> implements ScanHistoryStates<T> {
-  const factory _Loading() = _$LoadingImpl<T>;
+abstract class LoadingScanHistory<T> implements ScanHistoryStates<T> {
+  const factory LoadingScanHistory() = _$LoadingScanHistoryImpl<T>;
 }
 
 /// @nodoc
-abstract class _$$EmptyInputImplCopyWith<T, $Res> {
-  factory _$$EmptyInputImplCopyWith(
-          _$EmptyInputImpl<T> value, $Res Function(_$EmptyInputImpl<T>) then) =
-      __$$EmptyInputImplCopyWithImpl<T, $Res>;
+abstract class _$$LoadingCheckInImplCopyWith<T, $Res> {
+  factory _$$LoadingCheckInImplCopyWith(_$LoadingCheckInImpl<T> value,
+          $Res Function(_$LoadingCheckInImpl<T>) then) =
+      __$$LoadingCheckInImplCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class __$$EmptyInputImplCopyWithImpl<T, $Res>
-    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$EmptyInputImpl<T>>
-    implements _$$EmptyInputImplCopyWith<T, $Res> {
-  __$$EmptyInputImplCopyWithImpl(
-      _$EmptyInputImpl<T> _value, $Res Function(_$EmptyInputImpl<T>) _then)
+class __$$LoadingCheckInImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$LoadingCheckInImpl<T>>
+    implements _$$LoadingCheckInImplCopyWith<T, $Res> {
+  __$$LoadingCheckInImplCopyWithImpl(_$LoadingCheckInImpl<T> _value,
+      $Res Function(_$LoadingCheckInImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of ScanHistoryStates
@@ -363,18 +437,18 @@ class __$$EmptyInputImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$EmptyInputImpl<T> implements _EmptyInput<T> {
-  const _$EmptyInputImpl();
+class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
+  const _$LoadingCheckInImpl();
 
   @override
   String toString() {
-    return 'ScanHistoryStates<$T>.emptyInput()';
+    return 'ScanHistoryStates<$T>.loadingCheckIn()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EmptyInputImpl<T>);
+        (other.runtimeType == runtimeType && other is _$LoadingCheckInImpl<T>);
   }
 
   @override
@@ -385,9 +459,311 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
+  }) {
+    return loadingCheckIn();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
+  }) {
+    return loadingCheckIn?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (loadingCheckIn != null) {
+      return loadingCheckIn();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+  }) {
+    return loadingCheckIn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+  }) {
+    return loadingCheckIn?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (loadingCheckIn != null) {
+      return loadingCheckIn(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadingCheckIn<T> implements ScanHistoryStates<T> {
+  const factory LoadingCheckIn() = _$LoadingCheckInImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$LoadingCheckOutImplCopyWith<T, $Res> {
+  factory _$$LoadingCheckOutImplCopyWith(_$LoadingCheckOutImpl<T> value,
+          $Res Function(_$LoadingCheckOutImpl<T>) then) =
+      __$$LoadingCheckOutImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$LoadingCheckOutImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$LoadingCheckOutImpl<T>>
+    implements _$$LoadingCheckOutImplCopyWith<T, $Res> {
+  __$$LoadingCheckOutImplCopyWithImpl(_$LoadingCheckOutImpl<T> _value,
+      $Res Function(_$LoadingCheckOutImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
+  const _$LoadingCheckOutImpl();
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.loadingCheckOut()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingCheckOutImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
+  }) {
+    return loadingCheckOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
+  }) {
+    return loadingCheckOut?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (loadingCheckOut != null) {
+      return loadingCheckOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+  }) {
+    return loadingCheckOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+  }) {
+    return loadingCheckOut?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (loadingCheckOut != null) {
+      return loadingCheckOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadingCheckOut<T> implements ScanHistoryStates<T> {
+  const factory LoadingCheckOut() = _$LoadingCheckOutImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$EmptyInputScanHistoryImplCopyWith<T, $Res> {
+  factory _$$EmptyInputScanHistoryImplCopyWith(
+          _$EmptyInputScanHistoryImpl<T> value,
+          $Res Function(_$EmptyInputScanHistoryImpl<T>) then) =
+      __$$EmptyInputScanHistoryImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$EmptyInputScanHistoryImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res,
+        _$EmptyInputScanHistoryImpl<T>>
+    implements _$$EmptyInputScanHistoryImplCopyWith<T, $Res> {
+  __$$EmptyInputScanHistoryImplCopyWithImpl(
+      _$EmptyInputScanHistoryImpl<T> _value,
+      $Res Function(_$EmptyInputScanHistoryImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
+  const _$EmptyInputScanHistoryImpl();
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.emptyInput()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmptyInputScanHistoryImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) {
     return emptyInput();
   }
@@ -397,9 +773,13 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) {
     return emptyInput?.call();
   }
@@ -409,9 +789,13 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -424,10 +808,14 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) {
     return emptyInput(this);
   }
@@ -436,10 +824,14 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) {
     return emptyInput?.call(this);
   }
@@ -448,10 +840,14 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -461,25 +857,26 @@ class _$EmptyInputImpl<T> implements _EmptyInput<T> {
   }
 }
 
-abstract class _EmptyInput<T> implements ScanHistoryStates<T> {
-  const factory _EmptyInput() = _$EmptyInputImpl<T>;
+abstract class EmptyInputScanHistory<T> implements ScanHistoryStates<T> {
+  const factory EmptyInputScanHistory() = _$EmptyInputScanHistoryImpl<T>;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<T, $Res> {
-  factory _$$SuccessImplCopyWith(
-          _$SuccessImpl<T> value, $Res Function(_$SuccessImpl<T>) then) =
-      __$$SuccessImplCopyWithImpl<T, $Res>;
+abstract class _$$SuccessScanHistoryImplCopyWith<T, $Res> {
+  factory _$$SuccessScanHistoryImplCopyWith(_$SuccessScanHistoryImpl<T> value,
+          $Res Function(_$SuccessScanHistoryImpl<T>) then) =
+      __$$SuccessScanHistoryImplCopyWithImpl<T, $Res>;
   @useResult
   $Res call({T response, bool isLoadingMore});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<T, $Res>
-    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$SuccessImpl<T>>
-    implements _$$SuccessImplCopyWith<T, $Res> {
-  __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl<T> _value, $Res Function(_$SuccessImpl<T>) _then)
+class __$$SuccessScanHistoryImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res,
+        _$SuccessScanHistoryImpl<T>>
+    implements _$$SuccessScanHistoryImplCopyWith<T, $Res> {
+  __$$SuccessScanHistoryImplCopyWithImpl(_$SuccessScanHistoryImpl<T> _value,
+      $Res Function(_$SuccessScanHistoryImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of ScanHistoryStates
@@ -490,7 +887,7 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
     Object? response = freezed,
     Object? isLoadingMore = null,
   }) {
-    return _then(_$SuccessImpl<T>(
+    return _then(_$SuccessScanHistoryImpl<T>(
       freezed == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
@@ -505,8 +902,8 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$SuccessImpl<T> implements _Success<T> {
-  const _$SuccessImpl(this.response, {this.isLoadingMore = false});
+class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
+  const _$SuccessScanHistoryImpl(this.response, {this.isLoadingMore = false});
 
   @override
   final T response;
@@ -523,7 +920,7 @@ class _$SuccessImpl<T> implements _Success<T> {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl<T> &&
+            other is _$SuccessScanHistoryImpl<T> &&
             const DeepCollectionEquality().equals(other.response, response) &&
             (identical(other.isLoadingMore, isLoadingMore) ||
                 other.isLoadingMore == isLoadingMore));
@@ -538,17 +935,22 @@ class _$SuccessImpl<T> implements _Success<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
-      __$$SuccessImplCopyWithImpl<T, _$SuccessImpl<T>>(this, _$identity);
+  _$$SuccessScanHistoryImplCopyWith<T, _$SuccessScanHistoryImpl<T>>
+      get copyWith => __$$SuccessScanHistoryImplCopyWithImpl<T,
+          _$SuccessScanHistoryImpl<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) {
     return success(response, isLoadingMore);
   }
@@ -558,9 +960,13 @@ class _$SuccessImpl<T> implements _Success<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) {
     return success?.call(response, isLoadingMore);
   }
@@ -570,9 +976,13 @@ class _$SuccessImpl<T> implements _Success<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -585,10 +995,14 @@ class _$SuccessImpl<T> implements _Success<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) {
     return success(this);
   }
@@ -597,10 +1011,14 @@ class _$SuccessImpl<T> implements _Success<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) {
     return success?.call(this);
   }
@@ -609,10 +1027,14 @@ class _$SuccessImpl<T> implements _Success<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -622,9 +1044,9 @@ class _$SuccessImpl<T> implements _Success<T> {
   }
 }
 
-abstract class _Success<T> implements ScanHistoryStates<T> {
-  const factory _Success(final T response, {final bool isLoadingMore}) =
-      _$SuccessImpl<T>;
+abstract class SuccessScanHistory<T> implements ScanHistoryStates<T> {
+  const factory SuccessScanHistory(final T response,
+      {final bool isLoadingMore}) = _$SuccessScanHistoryImpl<T>;
 
   T get response;
   bool get isLoadingMore;
@@ -632,25 +1054,25 @@ abstract class _Success<T> implements ScanHistoryStates<T> {
   /// Create a copy of ScanHistoryStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SuccessScanHistoryImplCopyWith<T, _$SuccessScanHistoryImpl<T>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<T, $Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl<T> value, $Res Function(_$ErrorImpl<T>) then) =
-      __$$ErrorImplCopyWithImpl<T, $Res>;
+abstract class _$$ErrorScanHistoryImplCopyWith<T, $Res> {
+  factory _$$ErrorScanHistoryImplCopyWith(_$ErrorScanHistoryImpl<T> value,
+          $Res Function(_$ErrorScanHistoryImpl<T>) then) =
+      __$$ErrorScanHistoryImplCopyWithImpl<T, $Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<T, $Res>
-    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$ErrorImpl<T>>
-    implements _$$ErrorImplCopyWith<T, $Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl<T> _value, $Res Function(_$ErrorImpl<T>) _then)
+class __$$ErrorScanHistoryImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$ErrorScanHistoryImpl<T>>
+    implements _$$ErrorScanHistoryImplCopyWith<T, $Res> {
+  __$$ErrorScanHistoryImplCopyWithImpl(_$ErrorScanHistoryImpl<T> _value,
+      $Res Function(_$ErrorScanHistoryImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of ScanHistoryStates
@@ -660,7 +1082,7 @@ class __$$ErrorImplCopyWithImpl<T, $Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$ErrorImpl<T>(
+    return _then(_$ErrorScanHistoryImpl<T>(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -671,8 +1093,8 @@ class __$$ErrorImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$ErrorImpl<T> implements _Error<T> {
-  const _$ErrorImpl({required this.message});
+class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
+  const _$ErrorScanHistoryImpl({required this.message});
 
   @override
   final String message;
@@ -686,7 +1108,7 @@ class _$ErrorImpl<T> implements _Error<T> {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl<T> &&
+            other is _$ErrorScanHistoryImpl<T> &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -698,17 +1120,22 @@ class _$ErrorImpl<T> implements _Error<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
-      __$$ErrorImplCopyWithImpl<T, _$ErrorImpl<T>>(this, _$identity);
+  _$$ErrorScanHistoryImplCopyWith<T, _$ErrorScanHistoryImpl<T>> get copyWith =>
+      __$$ErrorScanHistoryImplCopyWithImpl<T, _$ErrorScanHistoryImpl<T>>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
   }) {
     return error(message);
   }
@@ -718,9 +1145,13 @@ class _$ErrorImpl<T> implements _Error<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
   }) {
     return error?.call(message);
   }
@@ -730,9 +1161,13 @@ class _$ErrorImpl<T> implements _Error<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -745,10 +1180,14 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_EmptyInput<T> value) emptyInput,
-    required TResult Function(_Success<T> value) success,
-    required TResult Function(_Error<T> value) error,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
   }) {
     return error(this);
   }
@@ -757,10 +1196,14 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_EmptyInput<T> value)? emptyInput,
-    TResult? Function(_Success<T> value)? success,
-    TResult? Function(_Error<T> value)? error,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
   }) {
     return error?.call(this);
   }
@@ -769,10 +1212,14 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_EmptyInput<T> value)? emptyInput,
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Error<T> value)? error,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -782,14 +1229,382 @@ class _$ErrorImpl<T> implements _Error<T> {
   }
 }
 
-abstract class _Error<T> implements ScanHistoryStates<T> {
-  const factory _Error({required final String message}) = _$ErrorImpl<T>;
+abstract class ErrorScanHistory<T> implements ScanHistoryStates<T> {
+  const factory ErrorScanHistory({required final String message}) =
+      _$ErrorScanHistoryImpl<T>;
 
   String get message;
 
   /// Create a copy of ScanHistoryStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
+  _$$ErrorScanHistoryImplCopyWith<T, _$ErrorScanHistoryImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SuccessCheckImplCopyWith<T, $Res> {
+  factory _$$SuccessCheckImplCopyWith(_$SuccessCheckImpl<T> value,
+          $Res Function(_$SuccessCheckImpl<T>) then) =
+      __$$SuccessCheckImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({T data});
+}
+
+/// @nodoc
+class __$$SuccessCheckImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$SuccessCheckImpl<T>>
+    implements _$$SuccessCheckImplCopyWith<T, $Res> {
+  __$$SuccessCheckImplCopyWithImpl(
+      _$SuccessCheckImpl<T> _value, $Res Function(_$SuccessCheckImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$SuccessCheckImpl<T>(
+      freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
+  const _$SuccessCheckImpl(this.data);
+
+  @override
+  final T data;
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.successCheck(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessCheckImpl<T> &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessCheckImplCopyWith<T, _$SuccessCheckImpl<T>> get copyWith =>
+      __$$SuccessCheckImplCopyWithImpl<T, _$SuccessCheckImpl<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
+  }) {
+    return successCheck(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
+  }) {
+    return successCheck?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (successCheck != null) {
+      return successCheck(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+  }) {
+    return successCheck(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+  }) {
+    return successCheck?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (successCheck != null) {
+      return successCheck(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SuccessCheck<T> implements ScanHistoryStates<T> {
+  const factory SuccessCheck(final T data) = _$SuccessCheckImpl<T>;
+
+  T get data;
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SuccessCheckImplCopyWith<T, _$SuccessCheckImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ErrorCheckImplCopyWith<T, $Res> {
+  factory _$$ErrorCheckImplCopyWith(
+          _$ErrorCheckImpl<T> value, $Res Function(_$ErrorCheckImpl<T>) then) =
+      __$$ErrorCheckImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ErrorCheckImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$ErrorCheckImpl<T>>
+    implements _$$ErrorCheckImplCopyWith<T, $Res> {
+  __$$ErrorCheckImplCopyWithImpl(
+      _$ErrorCheckImpl<T> _value, $Res Function(_$ErrorCheckImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorCheckImpl<T>(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
+  const _$ErrorCheckImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.errorCheck(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorCheckImpl<T> &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorCheckImplCopyWith<T, _$ErrorCheckImpl<T>> get copyWith =>
+      __$$ErrorCheckImplCopyWithImpl<T, _$ErrorCheckImpl<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(String message) errorCheck,
+  }) {
+    return errorCheck(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(String message)? errorCheck,
+  }) {
+    return errorCheck?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(String message)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (errorCheck != null) {
+      return errorCheck(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+  }) {
+    return errorCheck(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+  }) {
+    return errorCheck?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    required TResult orElse(),
+  }) {
+    if (errorCheck != null) {
+      return errorCheck(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ErrorCheck<T> implements ScanHistoryStates<T> {
+  const factory ErrorCheck({required final String message}) =
+      _$ErrorCheckImpl<T>;
+
+  String get message;
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ErrorCheckImplCopyWith<T, _$ErrorCheckImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,6 +1,5 @@
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
-import '../../event_attendance/logic/event_attendance_cubit.dart';
 import 'widgets/event_check_dialog_box.dart';
 import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -37,8 +36,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 100) {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
       final cubit = context.read<GatekeeperEventsCubit>();
       if (cubit.hasMoreEvents) {
         cubit.getGatekeeperEvents(isNextPage: true);
@@ -55,21 +53,23 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
         "events".tr(),
       ),
       body: BlocBuilder<GatekeeperEventsCubit, ScanHistoryStates>(
-        buildWhen: (previous, current) => previous != current,
+        buildWhen: (previous, current) => current is EmptyInputScanHistory || current is LoadingScanHistory || current is SuccessScanHistory || current is ErrorScanHistory,
         bloc: context.read<GatekeeperEventsCubit>()..getGatekeeperEvents(),
-        builder: (context, state) {
-          return state.when(
+        builder: (context, current) {
+          return current.when(
             initial: () => const SizedBox.shrink(),
+            errorCheck: (error) => const SizedBox.shrink(),
+            successCheck: (success) => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(
-                child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
                 return _buildCenteredMessage("no_available_events".tr());
               }
-
               return Column(
                 children: [
                   Expanded(
@@ -82,8 +82,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(
-                                  color: Colors.white),
+                              child: CupertinoActivityIndicator(color: Colors.white),
                             ),
                           );
                         }
@@ -92,22 +91,14 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext dialogContext) {
-                                  return MultiBlocProvider(
-                                    providers: [
-                                      BlocProvider.value(
-                                        value: context.read<GatekeeperEventsCubit>(),
-                                      ),
-                                      BlocProvider(
-                                        create: (_) => context.read<EventAttendanceCubit>(),
-                                      ),
-                                    ],
+                                  return BlocProvider.value(
+                                    value: context.read<GatekeeperEventsCubit>(),
                                     child: EventCheckDialogBox(
-                                      eventId: events[index].id.toString(),
+                                      event: events[index],
                                     ),
                                   );
                                 },
                               );
-
                             },
                             child: ScanHistoryItem(event: events[index]));
                       },

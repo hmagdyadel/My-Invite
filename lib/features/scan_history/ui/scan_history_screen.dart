@@ -13,8 +13,6 @@ import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
 
-
-
 class ScanHistoryScreen extends StatefulWidget {
   const ScanHistoryScreen({super.key});
 
@@ -39,8 +37,7 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 100) {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
       final cubit = context.read<GatekeeperEventsCubit>();
       if (cubit.hasMoreEvents) {
         cubit.getGatekeeperEvents(isNextPage: true);
@@ -62,10 +59,13 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
+            errorCheck: (error) => const SizedBox.shrink(),
+            successCheck: (success) => const SizedBox.shrink(),
+            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(
-                child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
@@ -88,14 +88,16 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
                             ),
                           );
                         }
-                        return GestureDetector(onTap:(){
-                          if(events[index].scanned!=null&&events[index].scanned!<=0){
-                            context.showErrorToast("event_not_attended".tr());
-                          }else{
-                            debugPrint("index: ${events[index].id}");
-                            context.pushNamed(Routes.eventDetailScreen,arguments: events[index]);
-                          }
-                        },child: ScanHistoryItem(event: events[index]));
+                        return GestureDetector(
+                            onTap: () {
+                              if (events[index].scanned != null && events[index].scanned! <= 0) {
+                                context.showErrorToast("event_not_attended".tr());
+                              } else {
+                                debugPrint("index: ${events[index].id}");
+                                context.pushNamed(Routes.eventDetailScreen, arguments: events[index]);
+                              }
+                            },
+                            child: ScanHistoryItem(event: events[index]));
                       },
                     ),
                   ),
@@ -110,7 +112,6 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
                   // ),
                 ],
               );
-
             },
           );
         },
