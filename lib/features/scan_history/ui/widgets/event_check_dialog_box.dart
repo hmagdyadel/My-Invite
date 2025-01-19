@@ -92,14 +92,14 @@ class EventCheckDialogBox extends StatelessWidget {
         );
       },
       listener: (context, current) {
-        current.whenOrNull(error: (error) {
+        current.whenOrNull(errorCheck: (error) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             // Pop the dialog by using Navigator
             Navigator.of(context, rootNavigator: true).pop();
             Navigator.of(context, rootNavigator: true).pop(); // If you have two levels of pop
             context.showErrorToast(error);
           });
-        }, success: (response, res) {
+        }, successCheck: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             // Pop the dialog by using Navigator
             Navigator.of(context, rootNavigator: true).pop();
