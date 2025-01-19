@@ -6,7 +6,8 @@ part 'scan_history_states.freezed.dart';
 class ScanHistoryStates<T> with _$ScanHistoryStates<T> {
   const factory ScanHistoryStates.initial() = _Initial;
   const factory ScanHistoryStates.loading() = LoadingScanHistory;
-  const factory ScanHistoryStates.loadingCheck() = LoadingCheck;
+  const factory ScanHistoryStates.loadingCheckIn() = LoadingCheckIn;
+  const factory ScanHistoryStates.loadingCheckOut() = LoadingCheckOut;
   const factory ScanHistoryStates.emptyInput() = EmptyInputScanHistory;
   const factory ScanHistoryStates.success(
       T response, {

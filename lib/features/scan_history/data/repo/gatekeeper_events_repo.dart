@@ -86,10 +86,14 @@ class GatekeeperEventsRepo {
       }
       FormData formData = FormData.fromMap(formDataMap);
       var response = await _apiService.eventCheckIn(AppUtilities().serverToken, position.latitude.toString(), position.longitude.toString(), eventId, formData);
+
+      debugPrint('success response: $response');
       return ApiResult.success(response);
-    } on DioException {
+    } on DioException catch (dioError) {
+      debugPrint('success response: ${dioError.response!.data}');
       return ApiResult.failure("some_error".tr());
     } catch (error) {
+      debugPrint('success response: ${error.toString()}');
       return ApiResult.failure(error.toString());
     }
   }

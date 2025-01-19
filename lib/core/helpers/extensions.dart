@@ -107,35 +107,35 @@ extension Navigation on BuildContext {
       borderRadius: BorderRadius.circular(10),
     ).show(this);
   }
+
 //
-// showSuccessToast(message) {
-//   Flushbar(
-//     messageText: Row(
-//       children: [
-//         Expanded(
-//             child: NormalText(
-//               text: message,
-//               align: TextAlign.start,
-//               color: secondFontColor.getColor(),
-//             )),
-//
-//       ],
-//     ),
-//     messageColor: secondFontColor.getColor(),
-//     messageSize: 18,
-//     // titleColor: AppUI.mainColor,
-//     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-//     // maxWidth: double.infinity,
-//     isDismissible: true,
-//     duration: const Duration(seconds: 2),
-//     flushbarPosition: FlushbarPosition.BOTTOM,
-//     barBlur: .1,
-//     backgroundColor: mainBlue,
-//     borderColor: mainBlue,
-//     margin: const EdgeInsets.all(8),
-//     borderRadius: BorderRadius.circular(10),
-//   ).show(this);
-// }
+  showSuccessToast(message) {
+    Flushbar(
+      messageText: Row(
+        children: [
+          Expanded(
+              child: NormalText(
+            text: message,
+            align: TextAlign.start,
+            color: Colors.white,
+          )),
+        ],
+      ),
+      messageColor: Colors.white,
+      messageSize: 18,
+      // titleColor: AppUI.mainColor,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      // maxWidth: double.infinity,
+      isDismissible: true,
+      duration: const Duration(seconds: 2),
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      barBlur: .1,
+      backgroundColor: greenColor,
+      borderColor: greenColor,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(10),
+    ).show(this);
+  }
 }
 
 // extension NameExtension on Name {

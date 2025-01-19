@@ -63,7 +63,8 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
             loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-            loadingCheck: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
@@ -93,7 +94,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                                   return BlocProvider.value(
                                     value: context.read<GatekeeperEventsCubit>(),
                                     child: EventCheckDialogBox(
-                                      eventId: events[index].id.toString(),
+                                      event: events[index],
                                     ),
                                   );
                                 },

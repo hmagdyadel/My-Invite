@@ -161,7 +161,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   List<EventDetails> get currentDetails => _eventDetails;
 
   void eventCheckOut(String eventId, Position position) async {
-    emit(const ScanHistoryStates.loadingCheck());
+    emit(const ScanHistoryStates.loadingCheckOut());
     final response = await _gatekeeperEventsRepo.eventCheckOut(eventId, position);
     response.when(success: (response) {
       emit(ScanHistoryStates.successCheck(response));
@@ -185,7 +185,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   }
 
   void eventCheckIn(String eventId, Position position, XFile? profileImage) async {
-    emit(const ScanHistoryStates.loadingCheck());
+    emit(const ScanHistoryStates.loadingCheckIn());
     final response = await _gatekeeperEventsRepo.eventCheckIn(eventId, position, profileImage);
     response.when(success: (response) {
       emit(ScanHistoryStates.successCheck(response));

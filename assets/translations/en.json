@@ -281,7 +281,14 @@
   "event_not_attended": "This event has not been attended yet",
   "event_check": "Confirm Event Participation",
   "event_check_hint": "Please confirm whether you are checking in or checking out of the event.",
-  "not_yet_checked": "You need to check in to this event before you can perform this action."
-
-
+  "not_yet_checked": "You need to check in to this event before you can perform this action.",
+  "checkInSuccess": "You have successfully checked in. Welcome back!",
+  "checkOutSuccess": "You have successfully checked out. See you next time!",
+  "captureSuccess": "Image captured successfully!",
+  "cameraPermissionDenied": "Camera access is denied. Please enable it in settings.",
+  "cameraScreenTitle": "Camera",
+  "cameraLoading": "Initializing the camera...",
+  "cameraInitFailed": "Failed to initialize the camera. Please try again.",
+  "photoCaptureFailed": "Failed to capture the photo. Please try again.",
+  "unexpectedError": "An unexpected error occurred."
 }

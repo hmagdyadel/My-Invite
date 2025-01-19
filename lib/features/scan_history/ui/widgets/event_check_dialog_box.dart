@@ -8,22 +8,23 @@ import 'package:geolocator/geolocator.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
+import '../../data/models/gatekeeper_events_response.dart';
 import '../../logic/gatekeeper_events_cubit.dart';
 import '../../logic/scan_history_states.dart';
+import 'camera_screen.dart';
 import 'get_gatekeeper_position.dart';
 
 class EventCheckDialogBox extends StatelessWidget {
-  final String eventId;
+  final EventsList event;
 
-  const EventCheckDialogBox({super.key, required this.eventId});
+  const EventCheckDialogBox({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GatekeeperEventsCubit, ScanHistoryStates>(
       buildWhen: (previous, current) => previous != current,
-      listenWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck || current is LoadingCheck,
+      listenWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck || current is LoadingCheckOut || current is LoadingCheckIn,
       builder: (context, current) {
-        debugPrint('state ${current is LoadingCheck}');
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
           title: Column(
@@ -53,25 +54,36 @@ class EventCheckDialogBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GoButton(
-                  fun: () {
-                    context.pop();
+                  fun: () async {
+                    final position = await _getUserPosition(context);
+                    final image = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CameraScreen()),
+                    );
+                    if (image == null)
+                      return;
+                    else {
+                      context.showSuccessToast("captureSuccess".tr());
+                      context.read<GatekeeperEventsCubit>().eventCheckIn(event.id.toString(), position, image);
+                    }
                   },
                   titleKey: "check_in".tr(),
                   textColor: Colors.white,
                   btColor: primaryColor,
-                  loading: current is LoadingCheck,
+                  loading: current is LoadingCheckIn,
                   loaderColor: Colors.white,
                   w: 110,
                 ),
                 GoButton(
                   fun: () async {
                     final position = await _getUserPosition(context);
-                    context.read<GatekeeperEventsCubit>().eventCheckOut(eventId, position);
+
+                    context.read<GatekeeperEventsCubit>().eventCheckOut(event.id.toString(), position);
                   },
                   titleKey: "check_out".tr(),
                   textColor: Colors.white,
                   btColor: Colors.red,
-                  loading: current is LoadingCheck,
+                  loading: current is LoadingCheckOut,
                   loaderColor: Colors.white,
                   w: 110,
                 ),
@@ -89,7 +101,13 @@ class EventCheckDialogBox extends StatelessWidget {
         }, successCheck: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.pop();
-            context.showErrorToast(response.toString());
+            if (response.contains("In")) {
+              context.showSuccessToast("checkInSuccess".tr());
+            } else if (response.contains("Out")) {
+              context.showSuccessToast("checkOutSuccess".tr());
+            } else {
+              context.showSuccessToast(response.toString());
+            }
           });
         });
       },
