@@ -95,7 +95,7 @@ class _CameraScreenState extends State<CameraScreen> {
           });
 
           try {
-            final XFile? file = await controller.takePicture();
+            final XFile file = await controller.takePicture();
             if (!mounted) return;
 
             Navigator.of(context).pop(file);

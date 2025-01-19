@@ -60,9 +60,9 @@ class EventCheckDialogBox extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => const CameraScreen()),
                     );
-                    if (image == null)
+                    if (image == null) {
                       return;
-                    else {
+                    } else {
                       context.showSuccessToast("captureSuccess".tr());
                       context.read<GatekeeperEventsCubit>().eventCheckIn(event.id.toString(), position, image);
                     }
