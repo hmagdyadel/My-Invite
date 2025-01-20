@@ -26,6 +26,19 @@ class EventCalenderRepo {
     }
   }
 
+  Future<ApiResult<String>> reserveEvent(String eventId) async {
+    try {
+      var response = await _apiService.reserveEvent(AppUtilities().serverToken, eventId);
+      debugPrint('success: ${response.toString()}');
+      return ApiResult.success(response);
+    } on DioException catch (error) {
+      return ApiResult.failure(error.toString());
+    } catch (error) {
+      debugPrint('Error2: ${error.toString()}');
+      return ApiResult.failure("An unexpected error occurred");
+    }
+  }
+
   String _parseDioError(DioException error) {
     if (error.response != null) {
       if (error.response!.statusCode == 400 && error.response!.data is String && error.response!.data.contains("address set correctly")) {

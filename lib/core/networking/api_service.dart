@@ -73,4 +73,10 @@ abstract class ApiService {
 
   @GET(ApiConstants.calendarEventsEndpoint)
   Future<List<CalenderEventsResponse>> getEventsCalendar(@Header('Authorization') String token);
+
+  @GET(ApiConstants.reserveEventEndpoint)
+  Future<String> reserveEvent(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
+  );
 }

@@ -15,13 +15,20 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$EventCalenderStates<T> {
+mixin _$EventCalenderStates {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +37,11 @@ mixin _$EventCalenderStates<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,52 +50,61 @@ mixin _$EventCalenderStates<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EventCalenderStatesCopyWith<T, $Res> {
-  factory $EventCalenderStatesCopyWith(EventCalenderStates<T> value,
-          $Res Function(EventCalenderStates<T>) then) =
-      _$EventCalenderStatesCopyWithImpl<T, $Res, EventCalenderStates<T>>;
+abstract class $EventCalenderStatesCopyWith<$Res> {
+  factory $EventCalenderStatesCopyWith(
+          EventCalenderStates value, $Res Function(EventCalenderStates) then) =
+      _$EventCalenderStatesCopyWithImpl<$Res, EventCalenderStates>;
 }
 
 /// @nodoc
-class _$EventCalenderStatesCopyWithImpl<T, $Res,
-        $Val extends EventCalenderStates<T>>
-    implements $EventCalenderStatesCopyWith<T, $Res> {
+class _$EventCalenderStatesCopyWithImpl<$Res, $Val extends EventCalenderStates>
+    implements $EventCalenderStatesCopyWith<$Res> {
   _$EventCalenderStatesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -97,18 +117,18 @@ class _$EventCalenderStatesCopyWithImpl<T, $Res,
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<T, $Res> {
+abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-          _$InitialImpl<T> value, $Res Function(_$InitialImpl<T>) then) =
-      __$$InitialImplCopyWithImpl<T, $Res>;
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<T, $Res>
-    extends _$EventCalenderStatesCopyWithImpl<T, $Res, _$InitialImpl<T>>
-    implements _$$InitialImplCopyWith<T, $Res> {
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-      _$InitialImpl<T> _value, $Res Function(_$InitialImpl<T>) _then)
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of EventCalenderStates
@@ -117,18 +137,18 @@ class __$$InitialImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$InitialImpl<T> implements _Initial<T> {
+class _$InitialImpl implements _Initial {
   const _$InitialImpl();
 
   @override
   String toString() {
-    return 'EventCalenderStates<$T>.initial()';
+    return 'EventCalenderStates.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl<T>);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -140,7 +160,14 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -152,7 +179,11 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -164,7 +195,11 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -177,11 +212,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) {
     return initial(this);
   }
@@ -189,11 +226,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -201,11 +240,13 @@ class _$InitialImpl<T> implements _Initial<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -215,23 +256,23 @@ class _$InitialImpl<T> implements _Initial<T> {
   }
 }
 
-abstract class _Initial<T> implements EventCalenderStates<T> {
-  const factory _Initial() = _$InitialImpl<T>;
+abstract class _Initial implements EventCalenderStates {
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<T, $Res> {
+abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-          _$LoadingImpl<T> value, $Res Function(_$LoadingImpl<T>) then) =
-      __$$LoadingImplCopyWithImpl<T, $Res>;
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<T, $Res>
-    extends _$EventCalenderStatesCopyWithImpl<T, $Res, _$LoadingImpl<T>>
-    implements _$$LoadingImplCopyWith<T, $Res> {
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl<T> _value, $Res Function(_$LoadingImpl<T>) _then)
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of EventCalenderStates
@@ -240,18 +281,18 @@ class __$$LoadingImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$LoadingImpl<T> implements Loading<T> {
+class _$LoadingImpl implements Loading {
   const _$LoadingImpl();
 
   @override
   String toString() {
-    return 'EventCalenderStates<$T>.loading()';
+    return 'EventCalenderStates.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl<T>);
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -263,7 +304,14 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -275,7 +323,11 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -287,7 +339,11 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -300,11 +356,13 @@ class _$LoadingImpl<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) {
     return loading(this);
   }
@@ -312,11 +370,13 @@ class _$LoadingImpl<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -324,11 +384,13 @@ class _$LoadingImpl<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -338,23 +400,23 @@ class _$LoadingImpl<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements EventCalenderStates<T> {
-  const factory Loading() = _$LoadingImpl<T>;
+abstract class Loading implements EventCalenderStates {
+  const factory Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$EmptyInputImplCopyWith<T, $Res> {
+abstract class _$$EmptyInputImplCopyWith<$Res> {
   factory _$$EmptyInputImplCopyWith(
-          _$EmptyInputImpl<T> value, $Res Function(_$EmptyInputImpl<T>) then) =
-      __$$EmptyInputImplCopyWithImpl<T, $Res>;
+          _$EmptyInputImpl value, $Res Function(_$EmptyInputImpl) then) =
+      __$$EmptyInputImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$EmptyInputImplCopyWithImpl<T, $Res>
-    extends _$EventCalenderStatesCopyWithImpl<T, $Res, _$EmptyInputImpl<T>>
-    implements _$$EmptyInputImplCopyWith<T, $Res> {
+class __$$EmptyInputImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$EmptyInputImpl>
+    implements _$$EmptyInputImplCopyWith<$Res> {
   __$$EmptyInputImplCopyWithImpl(
-      _$EmptyInputImpl<T> _value, $Res Function(_$EmptyInputImpl<T>) _then)
+      _$EmptyInputImpl _value, $Res Function(_$EmptyInputImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of EventCalenderStates
@@ -363,18 +425,18 @@ class __$$EmptyInputImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$EmptyInputImpl<T> implements EmptyInput<T> {
+class _$EmptyInputImpl implements EmptyInput {
   const _$EmptyInputImpl();
 
   @override
   String toString() {
-    return 'EventCalenderStates<$T>.emptyInput()';
+    return 'EventCalenderStates.emptyInput()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EmptyInputImpl<T>);
+        (other.runtimeType == runtimeType && other is _$EmptyInputImpl);
   }
 
   @override
@@ -386,7 +448,14 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) {
     return emptyInput();
@@ -398,7 +467,11 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) {
     return emptyInput?.call();
@@ -410,7 +483,11 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -423,11 +500,13 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) {
     return emptyInput(this);
   }
@@ -435,11 +514,13 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) {
     return emptyInput?.call(this);
   }
@@ -447,11 +528,13 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -461,25 +544,29 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
   }
 }
 
-abstract class EmptyInput<T> implements EventCalenderStates<T> {
-  const factory EmptyInput() = _$EmptyInputImpl<T>;
+abstract class EmptyInput implements EventCalenderStates {
+  const factory EmptyInput() = _$EmptyInputImpl;
 }
 
 /// @nodoc
-abstract class _$$SuccessImplCopyWith<T, $Res> {
+abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
-          _$SuccessImpl<T> value, $Res Function(_$SuccessImpl<T>) then) =
-      __$$SuccessImplCopyWithImpl<T, $Res>;
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({T data});
+  $Res call(
+      {List<CalenderEventsResponse> events,
+      DateTime selectedDay,
+      DateTime? focusedDay,
+      List<CalenderEventsResponse>? selectedEvents});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<T, $Res>
-    extends _$EventCalenderStatesCopyWithImpl<T, $Res, _$SuccessImpl<T>>
-    implements _$$SuccessImplCopyWith<T, $Res> {
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
-      _$SuccessImpl<T> _value, $Res Function(_$SuccessImpl<T>) _then)
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of EventCalenderStates
@@ -487,49 +574,99 @@ class __$$SuccessImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? events = null,
+    Object? selectedDay = null,
+    Object? focusedDay = freezed,
+    Object? selectedEvents = freezed,
   }) {
-    return _then(_$SuccessImpl<T>(
-      freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as T,
+    return _then(_$SuccessImpl(
+      events: null == events
+          ? _value._events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<CalenderEventsResponse>,
+      selectedDay: null == selectedDay
+          ? _value.selectedDay
+          : selectedDay // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      focusedDay: freezed == focusedDay
+          ? _value.focusedDay
+          : focusedDay // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      selectedEvents: freezed == selectedEvents
+          ? _value._selectedEvents
+          : selectedEvents // ignore: cast_nullable_to_non_nullable
+              as List<CalenderEventsResponse>?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SuccessImpl<T> implements Success<T> {
-  const _$SuccessImpl(this.data);
+class _$SuccessImpl implements Success {
+  const _$SuccessImpl(
+      {required final List<CalenderEventsResponse> events,
+      required this.selectedDay,
+      this.focusedDay,
+      final List<CalenderEventsResponse>? selectedEvents})
+      : _events = events,
+        _selectedEvents = selectedEvents;
+
+  final List<CalenderEventsResponse> _events;
+  @override
+  List<CalenderEventsResponse> get events {
+    if (_events is EqualUnmodifiableListView) return _events;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_events);
+  }
 
   @override
-  final T data;
+  final DateTime selectedDay;
+  @override
+  final DateTime? focusedDay;
+  final List<CalenderEventsResponse>? _selectedEvents;
+  @override
+  List<CalenderEventsResponse>? get selectedEvents {
+    final value = _selectedEvents;
+    if (value == null) return null;
+    if (_selectedEvents is EqualUnmodifiableListView) return _selectedEvents;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'EventCalenderStates<$T>.success(data: $data)';
+    return 'EventCalenderStates.success(events: $events, selectedDay: $selectedDay, focusedDay: $focusedDay, selectedEvents: $selectedEvents)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
+            other is _$SuccessImpl &&
+            const DeepCollectionEquality().equals(other._events, _events) &&
+            (identical(other.selectedDay, selectedDay) ||
+                other.selectedDay == selectedDay) &&
+            (identical(other.focusedDay, focusedDay) ||
+                other.focusedDay == focusedDay) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedEvents, _selectedEvents));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_events),
+      selectedDay,
+      focusedDay,
+      const DeepCollectionEquality().hash(_selectedEvents));
 
   /// Create a copy of EventCalenderStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
-      __$$SuccessImplCopyWithImpl<T, _$SuccessImpl<T>>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -537,10 +674,17 @@ class _$SuccessImpl<T> implements Success<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) {
-    return success(data);
+    return success(events, selectedDay, focusedDay, selectedEvents);
   }
 
   @override
@@ -549,10 +693,14 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(data);
+    return success?.call(events, selectedDay, focusedDay, selectedEvents);
   }
 
   @override
@@ -561,12 +709,16 @@ class _$SuccessImpl<T> implements Success<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(data);
+      return success(events, selectedDay, focusedDay, selectedEvents);
     }
     return orElse();
   }
@@ -574,11 +726,13 @@ class _$SuccessImpl<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) {
     return success(this);
   }
@@ -586,11 +740,13 @@ class _$SuccessImpl<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -598,11 +754,13 @@ class _$SuccessImpl<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -612,33 +770,184 @@ class _$SuccessImpl<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements EventCalenderStates<T> {
-  const factory Success(final T data) = _$SuccessImpl<T>;
+abstract class Success implements EventCalenderStates {
+  const factory Success(
+      {required final List<CalenderEventsResponse> events,
+      required final DateTime selectedDay,
+      final DateTime? focusedDay,
+      final List<CalenderEventsResponse>? selectedEvents}) = _$SuccessImpl;
 
-  T get data;
+  List<CalenderEventsResponse> get events;
+  DateTime get selectedDay;
+  DateTime? get focusedDay;
+  List<CalenderEventsResponse>? get selectedEvents;
 
   /// Create a copy of EventCalenderStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<T, _$SuccessImpl<T>> get copyWith =>
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<T, $Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl<T> value, $Res Function(_$ErrorImpl<T>) then) =
-      __$$ErrorImplCopyWithImpl<T, $Res>;
+abstract class _$$ReservationLoadingImplCopyWith<$Res> {
+  factory _$$ReservationLoadingImplCopyWith(_$ReservationLoadingImpl value,
+          $Res Function(_$ReservationLoadingImpl) then) =
+      __$$ReservationLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ReservationLoadingImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$ReservationLoadingImpl>
+    implements _$$ReservationLoadingImplCopyWith<$Res> {
+  __$$ReservationLoadingImplCopyWithImpl(_$ReservationLoadingImpl _value,
+      $Res Function(_$ReservationLoadingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ReservationLoadingImpl implements ReservationLoading {
+  const _$ReservationLoadingImpl();
+
+  @override
+  String toString() {
+    return 'EventCalenderStates.reservationLoading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ReservationLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() emptyInput,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) error,
+  }) {
+    return reservationLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? emptyInput,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? error,
+  }) {
+    return reservationLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? emptyInput,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (reservationLoading != null) {
+      return reservationLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
+  }) {
+    return reservationLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
+  }) {
+    return reservationLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (reservationLoading != null) {
+      return reservationLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationLoading implements EventCalenderStates {
+  const factory ReservationLoading() = _$ReservationLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$ReservationSuccessImplCopyWith<$Res> {
+  factory _$$ReservationSuccessImplCopyWith(_$ReservationSuccessImpl value,
+          $Res Function(_$ReservationSuccessImpl) then) =
+      __$$ReservationSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<T, $Res>
-    extends _$EventCalenderStatesCopyWithImpl<T, $Res, _$ErrorImpl<T>>
-    implements _$$ErrorImplCopyWith<T, $Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl<T> _value, $Res Function(_$ErrorImpl<T>) _then)
+class __$$ReservationSuccessImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$ReservationSuccessImpl>
+    implements _$$ReservationSuccessImplCopyWith<$Res> {
+  __$$ReservationSuccessImplCopyWithImpl(_$ReservationSuccessImpl _value,
+      $Res Function(_$ReservationSuccessImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of EventCalenderStates
@@ -648,8 +957,8 @@ class __$$ErrorImplCopyWithImpl<T, $Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$ErrorImpl<T>(
-      message: null == message
+    return _then(_$ReservationSuccessImpl(
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -659,22 +968,22 @@ class __$$ErrorImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$ErrorImpl<T> implements Error<T> {
-  const _$ErrorImpl({required this.message});
+class _$ReservationSuccessImpl implements ReservationSuccess {
+  const _$ReservationSuccessImpl(this.message);
 
   @override
   final String message;
 
   @override
   String toString() {
-    return 'EventCalenderStates<$T>.error(message: $message)';
+    return 'EventCalenderStates.reservationSuccess(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl<T> &&
+            other is _$ReservationSuccessImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -686,8 +995,9 @@ class _$ErrorImpl<T> implements Error<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
-      __$$ErrorImplCopyWithImpl<T, _$ErrorImpl<T>>(this, _$identity);
+  _$$ReservationSuccessImplCopyWith<_$ReservationSuccessImpl> get copyWith =>
+      __$$ReservationSuccessImplCopyWithImpl<_$ReservationSuccessImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -695,7 +1005,194 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() emptyInput,
-    required TResult Function(T data) success,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) error,
+  }) {
+    return reservationSuccess(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? emptyInput,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? error,
+  }) {
+    return reservationSuccess?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? emptyInput,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (reservationSuccess != null) {
+      return reservationSuccess(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
+  }) {
+    return reservationSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
+  }) {
+    return reservationSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (reservationSuccess != null) {
+      return reservationSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationSuccess implements EventCalenderStates {
+  const factory ReservationSuccess(final String message) =
+      _$ReservationSuccessImpl;
+
+  String get message;
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ReservationSuccessImplCopyWith<_$ReservationSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorImpl implements Error {
+  const _$ErrorImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'EventCalenderStates.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() emptyInput,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -707,7 +1204,11 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? emptyInput,
-    TResult? Function(T data)? success,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -719,7 +1220,11 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? emptyInput,
-    TResult Function(T data)? success,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -732,11 +1237,13 @@ class _$ErrorImpl<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(EmptyInput<T> value) emptyInput,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(Error value) error,
   }) {
     return error(this);
   }
@@ -744,11 +1251,13 @@ class _$ErrorImpl<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(Loading<T> value)? loading,
-    TResult? Function(EmptyInput<T> value)? emptyInput,
-    TResult? Function(Success<T> value)? success,
-    TResult? Function(Error<T> value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(Error value)? error,
   }) {
     return error?.call(this);
   }
@@ -756,11 +1265,13 @@ class _$ErrorImpl<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(EmptyInput<T> value)? emptyInput,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -770,14 +1281,14 @@ class _$ErrorImpl<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements EventCalenderStates<T> {
-  const factory Error({required final String message}) = _$ErrorImpl<T>;
+abstract class Error implements EventCalenderStates {
+  const factory Error({required final String message}) = _$ErrorImpl;
 
   String get message;
 
   /// Create a copy of EventCalenderStates
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
