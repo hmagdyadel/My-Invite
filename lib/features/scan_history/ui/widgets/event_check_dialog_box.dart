@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../../../core/constants/public_methods.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
@@ -23,7 +24,11 @@ class EventCheckDialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<GatekeeperEventsCubit, ScanHistoryStates>(
       buildWhen: (previous, current) => previous != current,
-      listenWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck || current is LoadingCheckOut || current is LoadingCheckIn,
+      listenWhen: (previous, current) =>
+          current is ErrorCheck ||
+          current is SuccessCheck ||
+          current is LoadingCheckOut ||
+          current is LoadingCheckIn,
       builder: (context, current) {
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
@@ -55,16 +60,24 @@ class EventCheckDialogBox extends StatelessWidget {
               children: [
                 GoButton(
                   fun: () async {
-                    final position = await _getUserPosition(context);
-                    final image = await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const CameraScreen()),
-                    );
-                    if (image == null) {
-                      return;
+                    if (!_isSameDay(event)) {
+                      context.pop();
+                      context.showSuccessToast("can_not_check_in_or_out".tr());
                     } else {
-                      context.showSuccessToast("captureSuccess".tr());
-                      context.read<GatekeeperEventsCubit>().eventCheckIn(event.id.toString(), position, image);
+                      final position = await _getUserPosition(context);
+                      final image = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CameraScreen()),
+                      );
+                      if (image == null) {
+                        return;
+                      } else {
+                        context.showSuccessToast("captureSuccess".tr());
+                        context
+                            .read<GatekeeperEventsCubit>()
+                            .eventCheckIn(event.id.toString(), position, image);
+                      }
                     }
                   },
                   titleKey: "check_in".tr(),
@@ -76,9 +89,16 @@ class EventCheckDialogBox extends StatelessWidget {
                 ),
                 GoButton(
                   fun: () async {
-                    final position = await _getUserPosition(context);
+                    if (!_isSameDay(event)) {
+                      context.pop();
+                      context.showSuccessToast("can_not_check_in_or_out".tr());
+                    } else {
+                      final position = await _getUserPosition(context);
 
-                    context.read<GatekeeperEventsCubit>().eventCheckOut(event.id.toString(), position);
+                      context
+                          .read<GatekeeperEventsCubit>()
+                          .eventCheckOut(event.id.toString(), position);
+                    }
                   },
                   titleKey: "check_out".tr(),
                   textColor: Colors.white,
@@ -114,10 +134,25 @@ class EventCheckDialogBox extends StatelessWidget {
     );
   }
 
+  bool _isSameDay(EventsList event) {
+    bool canCheck = canCheckinCheckout(event);
+    return canCheck;
+  }
+
   Future<Position> _getUserPosition(BuildContext context) async {
     final position = await LocationService.getPosition(context);
     if (position.latitude == -1 || position.longitude == -1) {
-      return Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, headingAccuracy: 0, speed: 0, speedAccuracy: 0);
+      return Position(
+          longitude: 0,
+          latitude: 0,
+          timestamp: DateTime.now(),
+          accuracy: 0,
+          altitude: 0,
+          altitudeAccuracy: 0,
+          heading: 0,
+          headingAccuracy: 0,
+          speed: 0,
+          speedAccuracy: 0);
     }
     return position;
   }

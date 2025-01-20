@@ -127,7 +127,7 @@ extension Navigation on BuildContext {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       // maxWidth: double.infinity,
       isDismissible: true,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 2500),
       flushbarPosition: FlushbarPosition.BOTTOM,
       barBlur: .1,
       backgroundColor: greenColor,

@@ -290,5 +290,6 @@
   "cameraLoading": "Initializing the camera...",
   "cameraInitFailed": "Failed to initialize the camera. Please try again.",
   "photoCaptureFailed": "Failed to capture the photo. Please try again.",
-  "unexpectedError": "An unexpected error occurred."
+  "unexpectedError": "An unexpected error occurred.",
+  "can_not_check_in_or_out": "You cannot check in or out because the event date is not today."
 }
