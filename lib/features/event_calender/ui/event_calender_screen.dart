@@ -1,3 +1,4 @@
+import 'package:app/core/helpers/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,12 @@ class EventCalenderScreen extends StatelessWidget {
             loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             success: (success) => const SizedBox.shrink(),
-            error: (error) => _buildCenteredMessage(error),
+            error: (error) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.showErrorToast(error);
+              });
+              return _buildCenteredMessage(error);
+            },
           );
         },
       ),

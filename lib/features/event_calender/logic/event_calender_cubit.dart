@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/models/calender_events.dart';
@@ -12,19 +13,27 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
   void getEventsCalendar() async {
     emit(const EventCalenderStates.loading());
     final response = await _eventCalenderRepo.getEventsCalendar();
-    response.when(success: (response) {
-      List<CalenderEventsResponse> calenderEvents = response;
-      if (calenderEvents.isEmpty) {
-        emit(const EventCalenderStates.emptyInput());
-        return;
-      }
-      emit(EventCalenderStates.success(response));
-    }, failure: (error) {
-      emit(
-        EventCalenderStates.error(
-          message: error.toString(),
-        ),
-      );
-    });
+    response.when(
+      success: (response) {
+        List<CalenderEventsResponse> calenderEvents = response;
+        if (calenderEvents.isEmpty) {
+          emit(const EventCalenderStates.emptyInput());
+          return;
+        }
+        emit(EventCalenderStates.success(response));
+      },
+      failure: (error) {
+        if (error == "location_is_not_set_correctly") {
+          emit(EventCalenderStates.error(message: "location_is_not_set_correctly".tr()));
+        } else {
+          emit(
+            EventCalenderStates.error(
+              message: error.toString(),
+            ),
+          );
+        }
+
+      },
+    );
   }
 }

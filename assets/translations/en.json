@@ -291,5 +291,6 @@
   "cameraInitFailed": "Failed to initialize the camera. Please try again.",
   "photoCaptureFailed": "Failed to capture the photo. Please try again.",
   "unexpectedError": "An unexpected error occurred.",
-  "can_not_check_in_or_out": "You cannot check in or out because the event date is not today."
+  "can_not_check_in_or_out": "You cannot check in or out because the event date is not today.",
+  "location_is_not_set_correctly": "Your location is not set correctly. Please contact our IT support team to update your location details in your profile."
 }
