@@ -21,27 +21,54 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void initialization() async {
-    await AppUtilities().initialize();
+    try {
+      // Initialize app utilities
+      await AppUtilities().initialize();
 
-    FlutterNativeSplash.remove();
+      // Remove native splash screen
+      FlutterNativeSplash.remove();
 
-    if (mounted) {
-      try {
-        final expirationStr = AppUtilities().loginData.expiration;
+      if (!mounted) return;
 
-        if (expirationStr != null) {
-          DateTime expirationDate = DateTime.parse(expirationStr);
+      // Get expiration date from login data
+      final expirationStr = AppUtilities().loginData.expiration;
 
-          final nextRoute = expirationDate.isAfter(DateTime.now())
-              ? Routes.onBoardingScreen // If expiration is in the future, go to onboarding
-              : Routes.homeScreen; // If expired, go to home screen
+      // Determine which screen to navigate to
+      String nextRoute;
 
-          context.pushReplacementNamed(nextRoute);
-        } else {
-          context.pushReplacementNamed(Routes.onBoardingScreen); // Or whatever is appropriate
+      if (expirationStr == null) {
+        // If no expiration date exists, go to onboarding
+        nextRoute = Routes.onBoardingScreen;
+      } else {
+        try {
+          final expirationDate = DateTime.parse(expirationStr);
+          final now = DateTime.now();
+
+          // If expiration date is in the future, go to home
+          // If expired or in the past, go to onboarding
+          nextRoute = expirationDate.isAfter(now)
+              ? Routes.homeScreen
+              : Routes.onBoardingScreen;
+
+          debugPrint('Expiration date: $expirationDate');
+          debugPrint('Current date: $now');
+          debugPrint('Navigating to: $nextRoute');
+        } catch (e) {
+          debugPrint('Error parsing expiration date: $e');
+          // If there's an error parsing the date, default to onboarding
+          nextRoute = Routes.onBoardingScreen;
         }
-      } catch (e) {
-        debugPrint("Error parsing expiration date: $e");
+      }
+
+      // Navigate to the determined route
+      if (mounted) {
+        context.pushReplacementNamed(nextRoute);
+      }
+    } catch (e) {
+      debugPrint('Error during initialization: $e');
+      // In case of any error, default to onboarding
+      if (mounted) {
+        context.pushReplacementNamed(Routes.onBoardingScreen);
       }
     }
   }
