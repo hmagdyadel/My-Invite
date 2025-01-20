@@ -10,5 +10,6 @@ class Routes {
   static const String eventsHistory = '/eventsHistory';
   static const String eventDetailScreen = '/eventDetailScreen';
   static const String myEventsScreen = '/myEventsScreen';
+  static const String eventsCalendar = '/eventsCalendar';
 
 }

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/event_calender/logic/event_calender_cubit.dart';
+import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -99,13 +101,17 @@ class AppRouter {
         );
       case Routes.myEventsScreen:
         return _buildRoute(
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) => getIt<GatekeeperEventsCubit>(),
-              ),
-            ],
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
             child: const MyEventsScreen(),
+          ),
+        );
+
+      case Routes.eventsCalendar:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<EventCalenderCubit>(),
+            child: const EventCalenderScreen(),
           ),
         );
       default:

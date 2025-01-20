@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
 import '../../features/location/data/models/country_response.dart';
@@ -69,4 +70,7 @@ abstract class ApiService {
     @Query('eventId') String eventId,
     @Body() FormData formData,
   );
+
+  @GET(ApiConstants.calendarEventsEndpoint)
+  Future<List<CalenderEventsResponse>> getEventsCalendar(@Header('Authorization') String token);
 }

@@ -78,7 +78,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.calendar_month,
         gradient: gradient4,
         onTap: () {
-          //Get.to(() => const EventsCalendarScreen());
+          context.pushNamed(Routes.eventsCalendar);
         },
       ),
       DashboardAction(
