@@ -36,9 +36,10 @@ class LoginCubit extends Cubit<LoginStates> {
         deviceId: await getUniqueDeviceId(),
       ));
       response.when(success: (response) {
+        AppUtilities().username = param.text;
+        AppUtilities().password = password.text;
         param.clear();
         password.clear();
-        AppUtilities().username = response.firstName ?? '';
         AppUtilities().loginData = response;
         emit(LoginStates.success(response));
       }, failure: (error) {

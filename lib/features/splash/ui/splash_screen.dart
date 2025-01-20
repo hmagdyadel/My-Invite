@@ -21,20 +21,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void initialization() async {
-    // This is where you can initialize the resources needed by your app while
-    // the splash screen is displayed
     await AppUtilities().initialize();
 
-    // After initialization, remove the native splash screen
     FlutterNativeSplash.remove();
 
-    // Navigate to the appropriate screen
     if (mounted) {
-      final nextRoute = AppUtilities().username.isEmpty
-          ? Routes.onBoardingScreen
-          : Routes.homeScreen;
+      try {
+        final expirationStr = AppUtilities().loginData.expiration;
 
-      context.pushReplacementNamed(nextRoute);
+        if (expirationStr != null) {
+          DateTime expirationDate = DateTime.parse(expirationStr);
+
+          final nextRoute = expirationDate.isAfter(DateTime.now())
+              ? Routes.onBoardingScreen // If expiration is in the future, go to onboarding
+              : Routes.homeScreen; // If expired, go to home screen
+
+          context.pushReplacementNamed(nextRoute);
+        } else {
+          context.pushReplacementNamed(Routes.onBoardingScreen); // Or whatever is appropriate
+        }
+      } catch (e) {
+        debugPrint("Error parsing expiration date: $e");
+      }
     }
   }
 

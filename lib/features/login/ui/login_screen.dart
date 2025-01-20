@@ -1,3 +1,4 @@
+import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
 import 'package:app/core/services/audio_service.dart';
@@ -25,7 +26,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
-
+@override
+  void initState() {
+  context.read<LoginCubit>().param.text = AppUtilities().username;
+  context.read<LoginCubit>().password.text = AppUtilities().password;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -146,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SubTitleText(text: "username".tr(), color: Colors.white, fontSize: 16),
         SizedBox(height: edge * 0.3),
         textFieldWithIcon(
+
             controller: context.read<LoginCubit>().param,
             icon: Icon(
               Icons.email_outlined,
