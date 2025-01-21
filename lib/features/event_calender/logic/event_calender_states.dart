@@ -16,5 +16,6 @@ class EventCalenderStates with _$EventCalenderStates {
   }) = Success;
   const factory EventCalenderStates.reservationLoading() = ReservationLoading;
   const factory EventCalenderStates.reservationSuccess(String message) = ReservationSuccess;
+  const factory EventCalenderStates.errorReservation({required String message}) = ErrorReservation;
   const factory EventCalenderStates.error({required String message}) = Error;
 }

@@ -1,4 +1,3 @@
-// Import required packages and local files for the calendar functionality
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/features/event_calender/ui/widgets/calender_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,19 +28,25 @@ class EventCalenderScreen extends StatelessWidget {
           return state.when(
             initial: () => initialCalender(context),
             loading: () => initialCalender(context),
+            errorReservation: (error) => initialCalender(context),
             emptyInput: () {
-              // Show error toast after frame is rendered
+              // Show error toast after frame is rendered and get events to reserve it
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.showErrorToast("no_available_events".tr());
               });
               return initialCalender(context);
             },
-            success: (events, selectedDay, focusedDay, selectedEvents) => CalenderView(
-              events: events,
-              selectedDay: selectedDay,
-              focusedDay: focusedDay,
-              selectedEvents: selectedEvents,
-            ),
+            success: (events, selectedDay, focusedDay, selectedEvents) {
+              return BlocProvider.value(
+                value: context.read<EventCalenderCubit>(),
+                child: CalenderView(
+                  events: events,
+                  selectedDay: selectedDay,
+                  focusedDay: focusedDay,
+                  selectedEvents: selectedEvents,
+                ),
+              );
+            },
             reservationLoading: () => initialCalender(context),
             reservationSuccess: (message) => initialCalender(context),
             error: (error) {
@@ -58,13 +63,14 @@ class EventCalenderScreen extends StatelessWidget {
 
   /// Creates initial calendar view with empty events
   Widget initialCalender(BuildContext context) {
-    return CalenderView(
-      events: [], // Empty events list for initial/loading states
-      selectedDay: DateTime.now(),
-      focusedDay: DateTime.now(),
-      selectedEvents: [],
+    return BlocProvider.value(
+      value: context.read<EventCalenderCubit>(),
+      child: CalenderView(
+        events: [], // Empty events list for initial/loading states
+        selectedDay: DateTime.now(),
+        focusedDay: DateTime.now(),
+        selectedEvents: [],
+      ),
     );
   }
-
-
 }

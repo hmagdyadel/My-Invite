@@ -42,13 +42,13 @@ class CalenderView extends StatelessWidget {
             margin: EdgeInsets.all(edge),
             padding: EdgeInsets.all(edge),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey.shade300,
               borderRadius: BorderRadius.circular(edge * 1.5),
             ),
             // TableCalendar widget configuration
             child: TableCalendar(
               firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
+              lastDay: DateTime.utc(2040, 3, 14),
               focusedDay: focusedDay ?? DateTime.now(),
               selectedDayPredicate: (day) => isSameDay(selectedDay, day),
               eventLoader: (day) => _getEventsForDay(events, day),
@@ -165,10 +165,12 @@ class CalenderView extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
       ),
-      builder: (context) => EventsBottomSheet(
+      builder: (context) {
+        return EventsBottomSheet(
         selectedDate: selectedDate,
         events: events,
-      ),
+      );
+      },
     );
   }
 }

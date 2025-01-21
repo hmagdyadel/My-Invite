@@ -1,5 +1,7 @@
+import 'package:app/core/widgets/normal_text.dart';
+import 'package:app/core/widgets/subtitle_text.dart';
+import 'package:app/features/event_calender/ui/widgets/reserve_event_dialog_box.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,29 +37,36 @@ class EventCard extends StatelessWidget {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () => _showReservationDialog(context),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return BlocProvider.value(
+                  value: context.read<EventCalenderCubit>(),
+                  child: ReservationDialogBox(
+                    eventTitle: event.eventTitle ?? "",
+                    eventId: event.id.toString(),
+                  ),
+                );
+              },
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Event title
-                Text(
-                  event.eventTitle ?? "",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                SubTitleText(
+                  text: event.eventTitle ?? "",
+                  color: Colors.white,
+                  fontSize: 16,
                 ),
                 const SizedBox(height: 8),
-                // Event venue
-                Text(
-                  event.eventVenue ?? "",
-                  style: const TextStyle(color: Colors.white70),
+                NormalText(
+                  text: event.eventVenue ?? "",
+                  color: Colors.white70,
                 ),
                 const SizedBox(height: 8),
-                // Event time range
                 _buildEventTimes(),
               ],
             ),
@@ -67,10 +76,17 @@ class EventCard extends StatelessWidget {
     );
   }
 
-  /// Builds the event time display widget
   Widget _buildEventTimes() {
-    final eventFrom = DateTime.parse(event.eventFrom ?? "");
-    final eventTo = DateTime.parse(event.eventTo ?? "");
+    if (event.eventFrom == null || event.eventTo == null) return const SizedBox.shrink();
+
+    final eventFrom = DateTime.parse(event.eventFrom!);
+    final eventTo = DateTime.parse(event.eventTo!);
+
+    // Check if both times are midnight (00:00:00)
+    final bothMidnight = eventFrom.hour == 0 && eventFrom.minute == 0 && eventTo.hour == 0 && eventTo.minute == 0;
+
+    // If both times are midnight, don't show the time row
+    if (bothMidnight) return const SizedBox.shrink();
 
     return Row(
       children: [
@@ -81,30 +97,6 @@ class EventCard extends StatelessWidget {
           style: TextStyle(color: color),
         ),
       ],
-    );
-  }
-
-  /// Shows reservation confirmation dialog
-  void _showReservationDialog(BuildContext context) {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text("Reserve ${event.eventTitle}"),
-        content: const Text("Would you like to reserve this event?"),
-        actions: [
-          CupertinoDialogAction(
-            child: const Text("Yes"),
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<EventCalenderCubit>().reserveEvent();
-            },
-          ),
-          CupertinoDialogAction(
-            child: const Text("No"),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
     );
   }
 }

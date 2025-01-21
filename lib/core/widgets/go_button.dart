@@ -27,7 +27,6 @@ class GoButton extends StatelessWidget {
   final bool gradient;
   final Widget? icon;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -41,39 +40,39 @@ class GoButton extends StatelessWidget {
         width: w ?? width.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          gradient:gradient ? gradient1: null,
+          gradient: gradient ? gradient1 : null,
           color: enable ? btColor ?? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(curvy ?? curvyRadius*2),
+          borderRadius: BorderRadius.circular(curvy ?? curvyRadius * 2),
         ),
-        child:  loading
-            ? Loader(size: 45.0, color: loaderColor)
-            :vertical ?? false
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  icon ?? const SizedBox.shrink(),
-                  if (icon != null) const SizedBox(height: 5),
-                  SubTitleText(
-                    text: titleKey,
-                    color: textColor ?? Colors.black,
-                    fontSize: fontSize ?? 16,
+        child: loading
+            ? Loader(size: 35.0, color: loaderColor)
+            : vertical ?? false
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      icon ?? const SizedBox.shrink(),
+                      if (icon != null) const SizedBox(height: 5),
+                      SubTitleText(
+                        text: titleKey,
+                        color: textColor ?? Colors.black,
+                        fontSize: fontSize ?? 16,
+                      )
+                    ],
                   )
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  icon ?? const SizedBox.shrink(),
-                  if (icon != null) const SizedBox(width: 2),
-                  SubTitleText(
-                    text: titleKey,
-                    color: textColor ?? Colors.black,
-                    fontSize: fontSize ?? 16,
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      icon ?? const SizedBox.shrink(),
+                      if (icon != null) const SizedBox(width: 2),
+                      SubTitleText(
+                        text: titleKey,
+                        color: textColor ?? Colors.black,
+                        fontSize: fontSize ?? 16,
+                      ),
+                    ],
                   ),
-                ],
-              ),
       ),
     );
   }

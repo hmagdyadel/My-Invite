@@ -30,18 +30,15 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     );
   }
 
-  void reserveEvent() async {
-    emit(const EventCalenderStates.loading());
-    final response = await _eventCalenderRepo.reserveEvent("500");
+  void reserveEvent(String eventId) async {
+    emit(const EventCalenderStates.reservationLoading());
+    final response = await _eventCalenderRepo.reserveEvent(eventId);
     response.when(
       success: (response) {
-        if (response.isEmpty) {
-          emit(const EventCalenderStates.emptyInput());
-          return;
-        }
+
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
       },
-      failure: (error) => emit(EventCalenderStates.error(message: error.toString())),
+      failure: (error) => emit(EventCalenderStates.errorReservation(message: error.toString())),
     );
   }
 

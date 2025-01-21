@@ -29,6 +29,7 @@ mixin _$EventCalenderStates {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ mixin _$EventCalenderStates {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ mixin _$EventCalenderStates {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -67,6 +70,7 @@ mixin _$EventCalenderStates {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +82,7 @@ mixin _$EventCalenderStates {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -89,6 +94,7 @@ mixin _$EventCalenderStates {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
@@ -168,6 +174,7 @@ class _$InitialImpl implements _Initial {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -184,6 +191,7 @@ class _$InitialImpl implements _Initial {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -200,6 +208,7 @@ class _$InitialImpl implements _Initial {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -218,6 +227,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return initial(this);
@@ -232,6 +242,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return initial?.call(this);
@@ -246,6 +257,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -312,6 +324,7 @@ class _$LoadingImpl implements Loading {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -328,6 +341,7 @@ class _$LoadingImpl implements Loading {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -344,6 +358,7 @@ class _$LoadingImpl implements Loading {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -362,6 +377,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return loading(this);
@@ -376,6 +392,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return loading?.call(this);
@@ -390,6 +407,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -456,6 +474,7 @@ class _$EmptyInputImpl implements EmptyInput {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return emptyInput();
@@ -472,6 +491,7 @@ class _$EmptyInputImpl implements EmptyInput {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return emptyInput?.call();
@@ -488,6 +508,7 @@ class _$EmptyInputImpl implements EmptyInput {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -506,6 +527,7 @@ class _$EmptyInputImpl implements EmptyInput {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return emptyInput(this);
@@ -520,6 +542,7 @@ class _$EmptyInputImpl implements EmptyInput {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return emptyInput?.call(this);
@@ -534,6 +557,7 @@ class _$EmptyInputImpl implements EmptyInput {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -682,6 +706,7 @@ class _$SuccessImpl implements Success {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return success(events, selectedDay, focusedDay, selectedEvents);
@@ -698,6 +723,7 @@ class _$SuccessImpl implements Success {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return success?.call(events, selectedDay, focusedDay, selectedEvents);
@@ -714,6 +740,7 @@ class _$SuccessImpl implements Success {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -732,6 +759,7 @@ class _$SuccessImpl implements Success {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return success(this);
@@ -746,6 +774,7 @@ class _$SuccessImpl implements Success {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return success?.call(this);
@@ -760,6 +789,7 @@ class _$SuccessImpl implements Success {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -841,6 +871,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return reservationLoading();
@@ -857,6 +888,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return reservationLoading?.call();
@@ -873,6 +905,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -891,6 +924,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return reservationLoading(this);
@@ -905,6 +939,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return reservationLoading?.call(this);
@@ -919,6 +954,7 @@ class _$ReservationLoadingImpl implements ReservationLoading {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -1013,6 +1049,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return reservationSuccess(message);
@@ -1029,6 +1066,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return reservationSuccess?.call(message);
@@ -1045,6 +1083,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -1063,6 +1102,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return reservationSuccess(this);
@@ -1077,6 +1117,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return reservationSuccess?.call(this);
@@ -1091,6 +1132,7 @@ class _$ReservationSuccessImpl implements ReservationSuccess {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -1111,6 +1153,193 @@ abstract class ReservationSuccess implements EventCalenderStates {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReservationSuccessImplCopyWith<_$ReservationSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ErrorReservationImplCopyWith<$Res> {
+  factory _$$ErrorReservationImplCopyWith(_$ErrorReservationImpl value,
+          $Res Function(_$ErrorReservationImpl) then) =
+      __$$ErrorReservationImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ErrorReservationImplCopyWithImpl<$Res>
+    extends _$EventCalenderStatesCopyWithImpl<$Res, _$ErrorReservationImpl>
+    implements _$$ErrorReservationImplCopyWith<$Res> {
+  __$$ErrorReservationImplCopyWithImpl(_$ErrorReservationImpl _value,
+      $Res Function(_$ErrorReservationImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorReservationImpl(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorReservationImpl implements ErrorReservation {
+  const _$ErrorReservationImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'EventCalenderStates.errorReservation(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorReservationImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorReservationImplCopyWith<_$ErrorReservationImpl> get copyWith =>
+      __$$ErrorReservationImplCopyWithImpl<_$ErrorReservationImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() emptyInput,
+    required TResult Function(
+            List<CalenderEventsResponse> events,
+            DateTime selectedDay,
+            DateTime? focusedDay,
+            List<CalenderEventsResponse>? selectedEvents)
+        success,
+    required TResult Function() reservationLoading,
+    required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
+    required TResult Function(String message) error,
+  }) {
+    return errorReservation(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? emptyInput,
+    TResult? Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult? Function()? reservationLoading,
+    TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
+    TResult? Function(String message)? error,
+  }) {
+    return errorReservation?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? emptyInput,
+    TResult Function(List<CalenderEventsResponse> events, DateTime selectedDay,
+            DateTime? focusedDay, List<CalenderEventsResponse>? selectedEvents)?
+        success,
+    TResult Function()? reservationLoading,
+    TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (errorReservation != null) {
+      return errorReservation(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(EmptyInput value) emptyInput,
+    required TResult Function(Success value) success,
+    required TResult Function(ReservationLoading value) reservationLoading,
+    required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
+    required TResult Function(Error value) error,
+  }) {
+    return errorReservation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(EmptyInput value)? emptyInput,
+    TResult? Function(Success value)? success,
+    TResult? Function(ReservationLoading value)? reservationLoading,
+    TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
+    TResult? Function(Error value)? error,
+  }) {
+    return errorReservation?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(EmptyInput value)? emptyInput,
+    TResult Function(Success value)? success,
+    TResult Function(ReservationLoading value)? reservationLoading,
+    TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (errorReservation != null) {
+      return errorReservation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ErrorReservation implements EventCalenderStates {
+  const factory ErrorReservation({required final String message}) =
+      _$ErrorReservationImpl;
+
+  String get message;
+
+  /// Create a copy of EventCalenderStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ErrorReservationImplCopyWith<_$ErrorReservationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1193,6 +1422,7 @@ class _$ErrorImpl implements Error {
         success,
     required TResult Function() reservationLoading,
     required TResult Function(String message) reservationSuccess,
+    required TResult Function(String message) errorReservation,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -1209,6 +1439,7 @@ class _$ErrorImpl implements Error {
         success,
     TResult? Function()? reservationLoading,
     TResult? Function(String message)? reservationSuccess,
+    TResult? Function(String message)? errorReservation,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -1225,6 +1456,7 @@ class _$ErrorImpl implements Error {
         success,
     TResult Function()? reservationLoading,
     TResult Function(String message)? reservationSuccess,
+    TResult Function(String message)? errorReservation,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -1243,6 +1475,7 @@ class _$ErrorImpl implements Error {
     required TResult Function(Success value) success,
     required TResult Function(ReservationLoading value) reservationLoading,
     required TResult Function(ReservationSuccess value) reservationSuccess,
+    required TResult Function(ErrorReservation value) errorReservation,
     required TResult Function(Error value) error,
   }) {
     return error(this);
@@ -1257,6 +1490,7 @@ class _$ErrorImpl implements Error {
     TResult? Function(Success value)? success,
     TResult? Function(ReservationLoading value)? reservationLoading,
     TResult? Function(ReservationSuccess value)? reservationSuccess,
+    TResult? Function(ErrorReservation value)? errorReservation,
     TResult? Function(Error value)? error,
   }) {
     return error?.call(this);
@@ -1271,6 +1505,7 @@ class _$ErrorImpl implements Error {
     TResult Function(Success value)? success,
     TResult Function(ReservationLoading value)? reservationLoading,
     TResult Function(ReservationSuccess value)? reservationSuccess,
+    TResult Function(ErrorReservation value)? errorReservation,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
