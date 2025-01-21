@@ -1,3 +1,5 @@
+import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/routing/routes.dart';
 import 'package:app/features/client_events_screen/ui/widgets/client_event_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +10,7 @@ import '../../../core/dimensions/dimensions.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../../../core/widgets/subtitle_text.dart';
-import '../../scan_history/ui/widgets/event_check_dialog_box.dart';
+import '../data/models/client_event_response.dart';
 import '../logic/client_events_cubit.dart';
 import '../logic/client_events_states.dart';
 
@@ -81,17 +83,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
                         }
                         return GestureDetector(
                           onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext dialogContext) {
-                                return BlocProvider.value(
-                                  value: context.read<ClientEventsCubit>(),
-                                  child: EventCheckDialogBox(
-                                    event: events[index],
-                                  ),
-                                );
-                              },
-                            );
+                            showEventBottomSheet(events[index]);
                           },
                           child: ClientEventItem(
                             event: events[index],
@@ -105,6 +97,78 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
             },
           );
         },
+      ),
+    );
+  }
+
+  void showEventBottomSheet(ClientEventDetails? event) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: bgColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          constraints: BoxConstraints(
+            maxHeight: height * 0.75,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildBottomSheetOption(
+                text: "attendance_info".tr(),
+                onTap: () {
+                  context.pop();
+                  context.pushNamed(Routes.clientEventsDetailsScreen, arguments: event);
+                },
+              ),
+              SizedBox(height: edge * 0.5),
+              buildBottomSheetOption(
+                text: "show_message_status".tr(),
+                onTap: () {
+                  context.pop();
+                  context.pushNamed(Routes.clientEventsDetailsScreen, arguments: event);
+                },
+              ),
+              SizedBox(height: edge * 0.5),
+              buildBottomSheetOption(
+                  text: "cancel".tr(),
+                  onTap: () {
+                    context.pop();
+                  },
+                  color: Colors.red),
+              SizedBox(height: edge),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildBottomSheetOption({
+    required String text,
+    required VoidCallback onTap,
+    Color? color, // Optional color parameter
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: edge * 0.5, horizontal: edge),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: color ?? navBarBackground, // Use the passed color or fallback to bgColor
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: SubTitleText(
+          text: text,
+          color: Colors.white,
+          fontSize: 18,
+        ),
       ),
     );
   }

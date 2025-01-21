@@ -5,8 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/client_events_screen/data/models/client_event_response.dart';
 import '../../features/client_events_screen/logic/client_events_cubit.dart';
 import '../../features/client_events_screen/ui/client_events_screen.dart';
+import '../../features/client_events_screen/ui/widgets/client_event_details_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
@@ -118,6 +120,14 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClientEventsCubit>(),
             child: const ClientEventsScreen(),
+          ),
+        );
+      case Routes.clientEventsDetailsScreen:
+        final event = arguments as ClientEventDetails;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientEventsCubit>(),
+            child: ClientEventDetailsScreen(clientEventDetailsItem: event),
           ),
         );
       default:
