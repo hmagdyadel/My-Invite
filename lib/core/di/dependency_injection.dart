@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/client_events_screen/data/repo/client_events_repo.dart';
+import '../../features/client_events_screen/logic/client_events_cubit.dart';
 import '../../features/event_calender/data/repo/event_calender_repo.dart';
 import '../../features/event_calender/logic/event_calender_cubit.dart';
 import '../../features/home/data/repo/home_repo.dart';
@@ -39,20 +41,18 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
 
   //Scan QR code
-  getIt.registerLazySingleton<QrCodeScannerRepo>(
-      () => QrCodeScannerRepo(getIt()));
+  getIt.registerLazySingleton<QrCodeScannerRepo>(() => QrCodeScannerRepo(getIt()));
   getIt.registerFactory<QrCodeScannerCubit>(() => QrCodeScannerCubit(getIt()));
 
   //Scan History
-  getIt.registerLazySingleton<GatekeeperEventsRepo>(
-      () => GatekeeperEventsRepo(getIt()));
-  getIt.registerFactory<GatekeeperEventsCubit>(
-      () => GatekeeperEventsCubit(getIt()));
+  getIt.registerLazySingleton<GatekeeperEventsRepo>(() => GatekeeperEventsRepo(getIt()));
+  getIt.registerFactory<GatekeeperEventsCubit>(() => GatekeeperEventsCubit(getIt()));
 
   //Calender Events
-  getIt.registerLazySingleton<EventCalenderRepo>(
-          () => EventCalenderRepo(getIt()));
-  getIt.registerFactory<EventCalenderCubit>(
-          () => EventCalenderCubit(getIt()));
+  getIt.registerLazySingleton<EventCalenderRepo>(() => EventCalenderRepo(getIt()));
+  getIt.registerFactory<EventCalenderCubit>(() => EventCalenderCubit(getIt()));
 
+  //Client Events
+  getIt.registerLazySingleton<ClientEventsRepo>(() => ClientEventsRepo(getIt()));
+  getIt.registerFactory<ClientEventsCubit>(() => ClientEventsCubit(getIt()));
 }
