@@ -49,7 +49,7 @@
   "username_password_not_correct": "اسم المستخدم أو كلمة المرور غير صحيحة",
   "logging_in": "تسجيل الدخول",
   "creating_account": "إنشاء حساب",
-  "start_time": "وقت البدء",
+  "start_time": "تاريخ البدء",
   "end_time": "تاريخ الإنتهاء",
   "noOfMembers": "عدد الدعوات",
   "response": "رد الضيف",

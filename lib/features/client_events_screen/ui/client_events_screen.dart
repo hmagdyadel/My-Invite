@@ -1,3 +1,4 @@
+import 'package:app/features/client_events_screen/ui/widgets/client_event_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import '../../../core/theming/colors.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../../../core/widgets/subtitle_text.dart';
 import '../../scan_history/ui/widgets/event_check_dialog_box.dart';
-import '../../scan_history/ui/widgets/scan_history_item.dart';
 import '../logic/client_events_cubit.dart';
 import '../logic/client_events_states.dart';
 
@@ -59,7 +59,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
             error: (error) => _buildCenteredMessage(error),
             loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
             success: (response, isLoadingMore) {
-              final events = response.entityList ?? [];
+              final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
                 return _buildCenteredMessage("no_available_events".tr());
               }
@@ -80,20 +80,23 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
                           );
                         }
                         return GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext dialogContext) {
-                                  return BlocProvider.value(
-                                    value: context.read<ClientEventsCubit>(),
-                                    child: EventCheckDialogBox(
-                                      event: events[index],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: ScanHistoryItem(event: events[index]));
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext dialogContext) {
+                                return BlocProvider.value(
+                                  value: context.read<ClientEventsCubit>(),
+                                  child: EventCheckDialogBox(
+                                    event: events[index],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: ClientEventItem(
+                            event: events[index],
+                          ),
+                        );
                       },
                     ),
                   ),

@@ -5,10 +5,14 @@ import '../../features/scan_history/data/models/gatekeeper_events_response.dart'
 List<String> months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 String getDateInWords(String date) {
-  var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-  DateTime dt = inputDateFormat.parse(date, true).toLocal();
+  // Parse the input date string into a DateTime object
+  final inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+  final DateTime dt = inputDateFormat.parse(date, true).toLocal();
 
-  return '${months[dt.month - 1]} ${dt.day}, ${dt.year}';
+  // Use the DateFormat class for a cleaner approach to getting the month name
+  final formattedDate = DateFormat('MMM d, y').format(dt);
+
+  return formattedDate;
 }
 
 String getDateAndTime(String date) {
@@ -50,3 +54,15 @@ bool canCheckinCheckout(EventsList event) {
 
   return result;
 }
+
+String getTimeInAMPM(String date) {
+  // Parse the input date string into a DateTime object
+  final inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+  final DateTime dt = inputDateFormat.parse(date, true).toLocal();
+
+  // Format the time in 12-hour clock with AM/PM
+  final formattedTime = DateFormat('h:mm a').format(dt);
+
+  return formattedTime;
+}
+

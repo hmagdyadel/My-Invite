@@ -172,12 +172,9 @@ class ScanHistoryItem extends StatelessWidget {
           children: [
             NormalText(text: getDateInWords(event?.eventFrom ?? ""), color: Colors.white),
             Expanded(
-              child: Transform.rotate(
-                angle: context.locale.languageCode == 'en' ? 0 : 3.14,
-                child: Icon(
-                  Icons.arrow_right_alt,
-                  color: Colors.white,
-                ),
+              child: Icon(
+                Icons.arrow_right_alt,
+                color: Colors.white,
               ),
             ),
             NormalText(text: getDateInWords(event?.eventTo ?? ""), color: Colors.white),
