@@ -6,6 +6,9 @@ class ClientEventsStates<T> with _$ClientEventsStates<T>{
   const factory ClientEventsStates.initial()=_Initial;
   const factory ClientEventsStates.loading()=Loading;
   const factory ClientEventsStates.emptyInput()=EmptyInput;
-  const factory ClientEventsStates.success(T data)=Success<T>;
+  const factory ClientEventsStates.success(
+      T response, {
+        @Default(false) bool isLoadingMore,
+      }) = SuccessClientEvents;
   const factory ClientEventsStates.error({required String message})=Error;
 }

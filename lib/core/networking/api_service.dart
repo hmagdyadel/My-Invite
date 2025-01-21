@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../features/client_events_screen/data/models/client_event_response.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
@@ -78,5 +79,11 @@ abstract class ApiService {
   Future<String> reserveEvent(
     @Header('Authorization') String token,
     @Query('eventid') String eventId,
+  );
+
+  @GET(ApiConstants.clientEvents)
+  Future<ClientEventResponse> getClientEvents(
+    @Header('pageNo') String pageNo,
+    @Header('Authorization') String token,
   );
 }

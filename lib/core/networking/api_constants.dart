@@ -1,6 +1,6 @@
 class ApiConstants {
-//static const String apiBaseUrl = "https://api.myinvite.me/";
- static const String apiBaseUrl = "https://api-uat.myinvite.me/";
+static const String apiBaseUrl = "https://api.myinvite.me/";
+// static const String apiBaseUrl = "https://api-uat.myinvite.me/";
 
   static const String registerEndpoint = 'auth/register';
   static const String loginEndpoint = 'auth';
