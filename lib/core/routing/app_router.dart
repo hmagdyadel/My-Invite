@@ -12,6 +12,7 @@ import '../../features/client_events/ui/client_events_screen.dart';
 import '../../features/client_events/ui/widgets/client_event_details.dart';
 import '../../features/client_events/ui/widgets/client_guest_details_screen.dart';
 import '../../features/client_events/ui/widgets/client_messages_status_screen.dart';
+import '../../features/client_statistics/logic/client_statistics_cubit.dart';
 import '../../features/client_statistics/ui/client_statistics_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
@@ -156,7 +157,7 @@ class AppRouter {
       case Routes.clientStatisticsScreen:
         return _buildRoute(
           BlocProvider(
-            create: (_) => getIt<ClientEventsCubit>(),
+            create: (_) => getIt<ClientStatisticsCubit>(),
             child: const ClientStatisticsScreen(),
           ),
         );
