@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../features/client_events_screen/data/models/client_event_details_response.dart';
 import '../../features/client_events_screen/data/models/client_event_response.dart';
+import '../../features/client_events_screen/data/models/client_messages_status_response.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
@@ -104,6 +105,13 @@ abstract class ApiService {
 
   @GET(ApiConstants.clientEventDetailsEndpoint)
   Future<ClientEventDetailsResponse> getClientEventDetails(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+  );
+
+  @GET(ApiConstants.messageStatusEndpoint)
+  Future<ClientMessagesStatusResponse> getClientMessagesStatus(
     @Header('Authorization') String token,
     @Header('pageNo') String pageNo,
     @Query('eventId') String eventId,

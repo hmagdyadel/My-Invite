@@ -132,7 +132,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
                 text: "show_message_status".tr(),
                 onTap: () {
                   context.pop();
-                  context.pushNamed(Routes.clientEventsDetailsScreen, arguments: event);
+                  context.pushNamed(Routes.clientMessagesStatusScreen, arguments: event?.id.toString());
                 },
               ),
               SizedBox(height: edge * 0.5),

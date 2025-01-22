@@ -13,5 +13,7 @@ class Routes {
   static const String eventsCalendar = '/eventsCalendar';
   static const String clientEvents = '/clientEvents';
   static const String clientEventsDetailsScreen = '/clientEventsDetailsScreen';
+  static const String clientMessagesStatusScreen = '/clientMessagesStatusScreen';
+  static const String clientGuestDetailsScreen = '/clientGuestDetailsScreen';
 
 }

@@ -6,6 +6,7 @@ import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
 import '../models/client_event_details_response.dart';
 import '../models/client_event_response.dart';
+import '../models/client_messages_status_response.dart';
 
 class ClientEventsRepo {
   final ApiService _apiService;
@@ -26,6 +27,17 @@ class ClientEventsRepo {
   Future<ApiResult<ClientEventDetailsResponse>> getClientEventDetails(String eventId, String pageNo) async {
     try {
       var response = await _apiService.getClientEventDetails(AppUtilities().serverToken, pageNo, eventId);
+      return ApiResult.success(response);
+    } on DioException {
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      return ApiResult.failure(error.toString());
+    }
+  }
+
+  Future<ApiResult<ClientMessagesStatusResponse>> getClientMessagesStatus(String eventId, String pageNo) async {
+    try {
+      var response = await _apiService.getClientMessagesStatus(AppUtilities().serverToken, pageNo, eventId);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());
