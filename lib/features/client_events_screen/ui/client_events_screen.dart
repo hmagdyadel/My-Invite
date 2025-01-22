@@ -102,6 +102,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
   }
 
   void showEventBottomSheet(ClientEventDetails? event) {
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

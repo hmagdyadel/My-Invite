@@ -24,24 +24,21 @@ class LoginRepo {
       return ApiResult.success(response);
 
     } on DioException catch (e) {
-      // Handle DioError (e.g., bad response with 401 status code)
       debugPrint('DioError: ${e.message}');
 
       // If DioError has a response (e.g., HTTP error with details)
       if (e.response != null) {
         final errorResponse = e.response?.data;
-        // Check if errorResponse has specific fields and handle accordingly
+
         if (errorResponse is Map<String, dynamic>) {
-
           final errorTitle = errorResponse['title'];
-          final statusCode = e.response?.statusCode;
 
-          // Map specific error codes to custom error messages
-          if (statusCode == 401) {
+          // Check specifically for "Unauthorized" in the title
+          if (errorTitle == "Unauthorized") {
             return ApiResult.failure("unauthorized_error");
           }
 
-          // Add more conditions based on API behavior
+          // Return the error title or fallback to login_error
           return ApiResult.failure(errorTitle ?? "login_error");
         }
 
