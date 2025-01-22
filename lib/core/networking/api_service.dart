@@ -116,4 +116,12 @@ abstract class ApiService {
     @Header('pageNo') String pageNo,
     @Query('eventId') String eventId,
   );
+
+  @GET(ApiConstants.searchMessageStatusEndpoint)
+  Future<ClientMessagesStatusResponse> searchEventMessageStatus(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
 }

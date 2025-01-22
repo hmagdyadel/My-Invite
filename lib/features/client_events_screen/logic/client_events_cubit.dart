@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter/material.dart';
 import '../../../core/networking/api_result.dart';
 import '../data/models/client_event_details_response.dart';
 import '../data/models/client_event_response.dart';
@@ -28,11 +28,25 @@ class PaginationHandler<T> {
 class ClientEventsCubit extends Cubit<ClientEventsStates> {
   final ClientEventsRepo _clientEventsRepo;
 
+  // Pagination handlers for different types of data
   final _eventsHandler = PaginationHandler<ClientEventDetails>();
   final _eventDetailsHandler = PaginationHandler<ClientEventDetailsList>();
   final _messagesHandler = PaginationHandler<ClientMessagesStatusDetails>();
 
+  // Search controller and state
+  TextEditingController searchController = TextEditingController(text: "");
+  String _lastSearchQuery = "";
+  bool _isSearching = false;
+
   ClientEventsCubit(this._clientEventsRepo) : super(const ClientEventsStates.initial());
+
+  /// Clear search and reset state
+  void clearSearch() {
+    searchController.clear();
+    _lastSearchQuery = "";
+    _isSearching = false;
+    _messagesHandler.reset();
+  }
 
   /// Generic method to handle paginated API calls
   Future<void> _handlePaginatedRequest<T, R>({
@@ -91,6 +105,38 @@ class ClientEventsCubit extends Cubit<ClientEventsStates> {
     }
   }
 
+  /// Search messages status with pagination
+  Future<void> searchMessageStatus({
+    required String eventId,
+    required String searchQuery,
+    bool isNextPage = false,
+  }) async {
+    if (searchQuery.isEmpty) {
+      clearSearch();
+      getClientMessagesStatus(eventId);
+      return;
+    }
+
+    _lastSearchQuery = searchQuery;
+    _isSearching = true;
+
+    await _handlePaginatedRequest<ClientMessagesStatusDetails, ClientMessagesStatusResponse>(
+      handler: _messagesHandler,
+      apiCall: (page) => _clientEventsRepo.searchEventMessageStatus(
+        eventId,
+        page,
+        searchQuery,
+      ),
+      getItems: (response) => (response as ClientMessagesStatusResponse).clientMessagesDetailsList ?? [],
+      getPages: (response) => (response as ClientMessagesStatusResponse).noOfPages ?? 1,
+      createResponse: (items, totalPages) => ClientMessagesStatusResponse(
+        clientMessagesDetailsList: List<ClientMessagesStatusDetails>.from(items),
+        noOfPages: totalPages,
+      ),
+      isNextPage: isNextPage,
+    );
+  }
+
   /// Fetch paginated Client Events
   Future<void> getClientEvents({bool isNextPage = false}) async {
     await _handlePaginatedRequest<ClientEventDetails, ClientEventResponse>(
@@ -123,6 +169,11 @@ class ClientEventsCubit extends Cubit<ClientEventsStates> {
 
   /// Fetch paginated Client Messages Status
   Future<void> getClientMessagesStatus(String eventId, {bool isNextPage = false}) async {
+    if (!isNextPage) {
+      _isSearching = false;
+      _lastSearchQuery = "";
+    }
+
     await _handlePaginatedRequest<ClientMessagesStatusDetails, ClientMessagesStatusResponse>(
       handler: _messagesHandler,
       apiCall: (page) => _clientEventsRepo.getClientMessagesStatus(eventId, page),
@@ -136,8 +187,10 @@ class ClientEventsCubit extends Cubit<ClientEventsStates> {
     );
   }
 
-  // Public getters for pagination state
+  // Public getters for state information
   bool get hasMoreEvents => _eventsHandler.hasMore;
   bool get hasMoreDetails => _eventDetailsHandler.hasMore;
   bool get hasMoreMessages => _messagesHandler.hasMore;
+  bool get isSearching => _isSearching;
+  String get lastSearchQuery => _lastSearchQuery;
 }

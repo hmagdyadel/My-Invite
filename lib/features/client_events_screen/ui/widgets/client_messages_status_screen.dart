@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/widgets/normal_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +12,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/public_appbar.dart';
 import '../../../../core/widgets/subtitle_text.dart';
+import '../../../../core/widgets/text_field_with_icon.dart';
 import '../../logic/client_events_cubit.dart';
 import '../../logic/client_events_states.dart';
 import 'client_messages_status_item.dart';
@@ -24,10 +28,12 @@ class ClientMessagesStatusScreen extends StatefulWidget {
 
 class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen> {
   final _scrollController = ScrollController();
+  Timer? _debounceTimer;
 
   @override
   void initState() {
     super.initState();
+    _setupSearchListener();
     _scrollController.addListener(_scrollListener);
   }
 
@@ -35,7 +41,23 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
   void dispose() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
+  }
+
+  void _setupSearchListener() {
+    final cubit = context.read<ClientEventsCubit>();
+    cubit.searchController.addListener(() {
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          cubit.searchMessageStatus(
+            eventId: widget.eventId,
+            searchQuery: cubit.searchController.text.trim(),
+          );
+        }
+      });
+    });
   }
 
   void _scrollListener() {
@@ -63,47 +85,102 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
           buildWhen: (previous, current) => current != previous,
           bloc: context.read<ClientEventsCubit>()..getClientMessagesStatus(widget.eventId),
           builder: (context, state) {
-            return state.when(
-              initial: () => const SizedBox.shrink(),
-              emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
-              error: (error) => _buildCenteredMessage(error),
-              loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-              success: (response, isLoadingMore) {
-                final events = response.clientMessagesDetailsList ?? [];
-                if (events.isEmpty) {
-                  return _buildCenteredMessage("no_available_events".tr());
-                }
+            // Always show search field at top with content below
+            return Column(
+              children: [
+                // Search field always visible
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
+                  child: searchField(),
+                ),
 
-                return ListView.builder(
-                  controller: _scrollController,
-                  padding: EdgeInsets.symmetric(vertical: edge),
-                  itemCount: events.length + (isLoadingMore ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    // Show loading indicator at the bottom
-                    if (isLoadingMore && index == events.length) {
-                      return const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                          child: CupertinoActivityIndicator(color: Colors.white),
-                        ),
+                // Content area
+                Expanded(
+                  child: state.when(
+                    initial: () => const SizedBox.shrink(),
+                    loading: () => const Center(
+                        child: CupertinoActivityIndicator(color: Colors.white)
+                    ),
+                    emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
+                    error: (error) => _buildCenteredMessage(error),
+                    success: (response, isLoadingMore) {
+                      final events = response.clientMessagesDetailsList ?? [];
+
+                      if (events.isEmpty) {
+                        return _buildCenteredMessage("no_available_events".tr());
+                      }
+
+                      return ListView.builder(
+                        controller: _scrollController,
+                        padding: EdgeInsets.zero, // Remove padding since search field is outside
+                        itemCount: events.length + (isLoadingMore ? 1 : 0),
+                        itemBuilder: (context, index) {
+                          // Show loading indicator at the bottom
+                          if (index == events.length && isLoadingMore) {
+                            return const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Center(
+                                child: CupertinoActivityIndicator(color: Colors.white),
+                              ),
+                            );
+                          }
+
+                          // Show event items
+                          return GestureDetector(
+                            onTap: () {
+                              context.pushNamed(Routes.clientGuestDetailsScreen,
+                                  arguments: events[index]
+                              );
+                            },
+                            child: ClientMessagesStatusItem(
+                              clientMessagesStatusDetails: events[index],
+                            ),
+                          );
+                        },
                       );
-                    }
-
-                    // Show event items
-                    return GestureDetector(
-                      onTap: () {
-                        context.pushNamed(Routes.clientGuestDetailsScreen, arguments: events[index]);
-                      },
-                      child: ClientMessagesStatusItem(
-                        clientMessagesStatusDetails: events[index],
-                      ),
-                    );
-                  },
-                );
-              },
+                    },
+                  ),
+                ),
+              ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget searchField() {
+    final cubit = context.read<ClientEventsCubit>();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: textFieldWithIcon(
+              icon: const Icon(Icons.search, color: Colors.white),
+              hint: "name/phone number".tr(),
+              controller: cubit.searchController,
+            ),
+          ),
+          const SizedBox(width: 6),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              backgroundColor: primaryColor,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              cubit.clearSearch();
+              cubit.getClientMessagesStatus(widget.eventId);
+            },
+            child: NormalText(
+              text: "clear".tr(),
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
     );
   }

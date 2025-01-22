@@ -45,4 +45,15 @@ class ClientEventsRepo {
       return ApiResult.failure(error.toString());
     }
   }
+
+  Future<ApiResult<ClientMessagesStatusResponse>> searchEventMessageStatus(String eventId, String pageNo, String searchValue) async {
+    try {
+      var response = await _apiService.searchEventMessageStatus(AppUtilities().serverToken, pageNo, eventId, searchValue);
+      return ApiResult.success(response);
+    } on DioException {
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      return ApiResult.failure(error.toString());
+    }
+  }
 }
