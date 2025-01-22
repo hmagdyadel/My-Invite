@@ -48,13 +48,25 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
   void _setupSearchListener() {
     final cubit = context.read<ClientEventsCubit>();
     cubit.searchController.addListener(() {
+      // Cancel any existing timer
       _debounceTimer?.cancel();
-      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+
+      // Start a new timer for 1.5 seconds
+      _debounceTimer = Timer(const Duration(milliseconds: 1500), () {
         if (mounted) {
-          cubit.searchMessageStatus(
-            eventId: widget.eventId,
-            searchQuery: cubit.searchController.text.trim(),
-          );
+          final searchQuery = cubit.searchController.text.trim();
+
+          // Only make API call if there's something to search
+          if (searchQuery.isNotEmpty) {
+            cubit.searchMessageStatus(
+              eventId: widget.eventId,
+              searchQuery: searchQuery,
+            );
+          } else {
+            // If search is empty, return to normal list
+            cubit.clearSearch();
+            cubit.getClientMessagesStatus(widget.eventId);
+          }
         }
       });
     });
@@ -98,9 +110,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                 Expanded(
                   child: state.when(
                     initial: () => const SizedBox.shrink(),
-                    loading: () => const Center(
-                        child: CupertinoActivityIndicator(color: Colors.white)
-                    ),
+                    loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
                     emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
                     error: (error) => _buildCenteredMessage(error),
                     success: (response, isLoadingMore) {
@@ -128,9 +138,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                           // Show event items
                           return GestureDetector(
                             onTap: () {
-                              context.pushNamed(Routes.clientGuestDetailsScreen,
-                                  arguments: events[index]
-                              );
+                              context.pushNamed(Routes.clientGuestDetailsScreen, arguments: events[index]);
                             },
                             child: ClientMessagesStatusItem(
                               clientMessagesStatusDetails: events[index],
@@ -157,7 +165,16 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
         children: [
           Expanded(
             child: textFieldWithIcon(
-              icon: const Icon(Icons.search, color: Colors.white),
+              icon: _debounceTimer?.isActive ?? false
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.search, color: Colors.white),
               hint: "name/phone number".tr(),
               controller: cubit.searchController,
             ),
@@ -172,6 +189,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
               foregroundColor: Colors.white,
             ),
             onPressed: () {
+              _debounceTimer?.cancel(); // Cancel any pending search
               cubit.clearSearch();
               cubit.getClientMessagesStatus(widget.eventId);
             },
