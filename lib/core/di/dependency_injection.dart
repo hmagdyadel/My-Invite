@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../features/client_events_screen/data/repo/client_events_repo.dart';
-import '../../features/client_events_screen/logic/client_events_cubit.dart';
+import '../../features/client_events/data/repo/client_events_repo.dart';
+import '../../features/client_events/logic/client_events_cubit.dart';
+
 import '../../features/event_calender/data/repo/event_calender_repo.dart';
 import '../../features/event_calender/logic/event_calender_cubit.dart';
 import '../../features/home/data/repo/home_repo.dart';

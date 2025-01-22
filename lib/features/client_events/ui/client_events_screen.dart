@@ -1,6 +1,7 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
-import 'package:app/features/client_events_screen/ui/widgets/client_event_item.dart';
+import 'widgets/client_event_item.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,6 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
   }
 
   void showEventBottomSheet(ClientEventDetails? event) {
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
