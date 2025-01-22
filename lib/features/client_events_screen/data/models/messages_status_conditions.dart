@@ -40,17 +40,13 @@ class MessagesStatusConditions {
           return _translateResponse(data.response, "no_data_res");
         }
         if (data.whatsappMessageId != null) {
-          return data.textDelivered == false && data.textRead == false
-              ? "message_cant_be_received".tr()
-              : "no_answer_yet".tr();
+          return data.textDelivered == false && data.textRead == false ? "message_cant_be_received".tr() : "no_answer_yet".tr();
         }
         return "no_answer_yet".tr();
       }
       return _translateResponse(data.response, "no_data_res");
     }
-    return data.response == "Message Processed Successfully"
-        ? (data.textFailed == true ? "cant_receive_message_due_to_whatsapp_policy".tr() : "processing_the_invitation".tr())
-        : _translateResponse(data.response, "no_data_res");
+    return data.response == "Message Processed Successfully" ? (data.textFailed == true ? "cant_receive_message_due_to_whatsapp_policy".tr() : "processing_the_invitation".tr()) : _translateResponse(data.response, "no_data_res");
   }
 
   String getInvitationStatus(model.ClientMessagesStatusDetails data) {
@@ -138,8 +134,6 @@ class MessagesStatusConditions {
       return "N/A";
     }
     DateTime? dt = DateTime.tryParse(data.waresponseTime!);
-    return dt != null
-        ? '${dt.year}-${dt.month}-${dt.day}     ${dt.hour}:${dt.minute}:${dt.second}'
-        : data.waresponseTime!;
+    return dt != null ? '${dt.year}-${dt.month}-${dt.day}     ${dt.hour}:${dt.minute}:${dt.second}' : data.waresponseTime!;
   }
 }
