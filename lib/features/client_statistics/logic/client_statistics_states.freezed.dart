@@ -23,6 +23,7 @@ mixin _$ClientStatisticsStates<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$ClientStatisticsStates<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$ClientStatisticsStates<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +54,7 @@ mixin _$ClientStatisticsStates<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$ClientStatisticsStates<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +74,7 @@ mixin _$ClientStatisticsStates<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -142,6 +148,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) {
     return initial();
   }
@@ -154,6 +161,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) {
     return initial?.call();
   }
@@ -166,6 +174,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -182,6 +191,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) {
     return initial(this);
   }
@@ -194,6 +204,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) {
     return initial?.call(this);
   }
@@ -206,6 +217,7 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -265,6 +277,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) {
     return loading();
   }
@@ -277,6 +290,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) {
     return loading?.call();
   }
@@ -289,6 +303,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -305,6 +320,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) {
     return loading(this);
   }
@@ -317,6 +333,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) {
     return loading?.call(this);
   }
@@ -329,6 +346,7 @@ class _$LoadingImpl<T> implements Loading<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -388,6 +406,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) {
     return emptyInput();
   }
@@ -400,6 +419,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) {
     return emptyInput?.call();
   }
@@ -412,6 +432,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -428,6 +449,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) {
     return emptyInput(this);
   }
@@ -440,6 +462,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) {
     return emptyInput?.call(this);
   }
@@ -452,6 +475,7 @@ class _$EmptyInputImpl<T> implements EmptyInput<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -554,6 +578,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) {
     return success(response, isLoadingMore);
   }
@@ -566,6 +591,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) {
     return success?.call(response, isLoadingMore);
   }
@@ -578,6 +604,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -594,6 +621,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) {
     return success(this);
   }
@@ -606,6 +634,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) {
     return success?.call(this);
   }
@@ -618,6 +647,7 @@ class _$SuccessClientStatisticsImpl<T> implements SuccessClientStatistics<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -714,6 +744,7 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
   }) {
     return error(message);
   }
@@ -726,6 +757,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
   }) {
     return error?.call(message);
   }
@@ -738,6 +770,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -754,6 +787,7 @@ class _$ErrorImpl<T> implements Error<T> {
     required TResult Function(EmptyInput<T> value) emptyInput,
     required TResult Function(SuccessClientStatistics<T> value) success,
     required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
   }) {
     return error(this);
   }
@@ -766,6 +800,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult? Function(EmptyInput<T> value)? emptyInput,
     TResult? Function(SuccessClientStatistics<T> value)? success,
     TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
   }) {
     return error?.call(this);
   }
@@ -778,6 +813,7 @@ class _$ErrorImpl<T> implements Error<T> {
     TResult Function(EmptyInput<T> value)? emptyInput,
     TResult Function(SuccessClientStatistics<T> value)? success,
     TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -796,5 +832,172 @@ abstract class Error<T> implements ClientStatisticsStates<T> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SuccessFetchDataImplCopyWith<T, $Res> {
+  factory _$$SuccessFetchDataImplCopyWith(_$SuccessFetchDataImpl<T> value,
+          $Res Function(_$SuccessFetchDataImpl<T>) then) =
+      __$$SuccessFetchDataImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({T data});
+}
+
+/// @nodoc
+class __$$SuccessFetchDataImplCopyWithImpl<T, $Res>
+    extends _$ClientStatisticsStatesCopyWithImpl<T, $Res,
+        _$SuccessFetchDataImpl<T>>
+    implements _$$SuccessFetchDataImplCopyWith<T, $Res> {
+  __$$SuccessFetchDataImplCopyWithImpl(_$SuccessFetchDataImpl<T> _value,
+      $Res Function(_$SuccessFetchDataImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ClientStatisticsStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$SuccessFetchDataImpl<T>(
+      freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessFetchDataImpl<T> implements SuccessFetchData<T> {
+  const _$SuccessFetchDataImpl(this.data);
+
+  @override
+  final T data;
+
+  @override
+  String toString() {
+    return 'ClientStatisticsStates<$T>.successFetchData(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessFetchDataImpl<T> &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  /// Create a copy of ClientStatisticsStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessFetchDataImplCopyWith<T, _$SuccessFetchDataImpl<T>> get copyWith =>
+      __$$SuccessFetchDataImplCopyWithImpl<T, _$SuccessFetchDataImpl<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successFetchData,
+  }) {
+    return successFetchData(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successFetchData,
+  }) {
+    return successFetchData?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successFetchData,
+    required TResult orElse(),
+  }) {
+    if (successFetchData != null) {
+      return successFetchData(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(Loading<T> value) loading,
+    required TResult Function(EmptyInput<T> value) emptyInput,
+    required TResult Function(SuccessClientStatistics<T> value) success,
+    required TResult Function(Error<T> value) error,
+    required TResult Function(SuccessFetchData<T> value) successFetchData,
+  }) {
+    return successFetchData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(Loading<T> value)? loading,
+    TResult? Function(EmptyInput<T> value)? emptyInput,
+    TResult? Function(SuccessClientStatistics<T> value)? success,
+    TResult? Function(Error<T> value)? error,
+    TResult? Function(SuccessFetchData<T> value)? successFetchData,
+  }) {
+    return successFetchData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(EmptyInput<T> value)? emptyInput,
+    TResult Function(SuccessClientStatistics<T> value)? success,
+    TResult Function(Error<T> value)? error,
+    TResult Function(SuccessFetchData<T> value)? successFetchData,
+    required TResult orElse(),
+  }) {
+    if (successFetchData != null) {
+      return successFetchData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SuccessFetchData<T> implements ClientStatisticsStates<T> {
+  const factory SuccessFetchData(final T data) = _$SuccessFetchDataImpl<T>;
+
+  T get data;
+
+  /// Create a copy of ClientStatisticsStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SuccessFetchDataImplCopyWith<T, _$SuccessFetchDataImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

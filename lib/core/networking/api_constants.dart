@@ -33,7 +33,7 @@ class ApiConstants {
   static const String guestsCardsSentEndpoint = 'Client/GetSentCardGuests?eventId=';
   static const String guestsCardsFailedEndpoint = 'Client/GetFailedCardGuests?eventId=';
   static const String guestsCardsNotSent = 'Client/GetNotSentCardGuests?eventId=';
-  static const String allMessageStatisticsEndpoint = 'Client/getmessagesstatisticsinfo?eventId=';
+  static const String allMessageStatisticsEndpoint = 'Client/getmessagesstatisticsinfo';
 }
 
 class ApiErrors {

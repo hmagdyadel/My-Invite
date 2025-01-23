@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/networking/api_result.dart';
 import '../../client_events/data/models/client_event_response.dart';
+import '../data/models/client_messages_statistics_response.dart';
 import '../data/repo/client_statistics_repo.dart';
 import 'client_statistics_states.dart';
 
@@ -28,6 +29,25 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
 
   ClientStatisticsCubit(this._clientStatisticsRepo) : super(const ClientStatisticsStates.initial());
   final _eventsHandler = PaginationHandler<ClientEventDetails>();
+
+  void getClientMessageStatistics(String eventId) async {
+    emit(const ClientStatisticsStates.loading());
+    final response = await _clientStatisticsRepo.getClientMessageStatistics(eventId);
+    response.when(
+      success: (response) {
+        final ClientMessagesStatisticsResponse events = response;
+
+        // Extract all message statistics
+        final messageTypes = [events.confirmationMessages, events.cardMessages, events.eventLocationMessages, events.reminderMessages, events.congratulationMessages];
+
+        // Check if any message type has meaningful data
+        bool hasData = messageTypes.any((messageType) => messageType != null && (messageType.readNumber ?? 0) + (messageType.deliverdNumber ?? 0) + (messageType.sentNumber ?? 0) + (messageType.failedNumber ?? 0) + (messageType.notSentNumber ?? 0) > 0);
+
+        hasData ? emit(ClientStatisticsStates.successFetchData(response)) : emit(const ClientStatisticsStates.emptyInput());
+      },
+      failure: (error) => emit(ClientStatisticsStates.error(message: error.toString())),
+    );
+  }
 
   /// Generic method to handle paginated API calls
   Future<void> _handlePaginatedRequest<T, R>({

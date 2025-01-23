@@ -5,6 +5,7 @@ import '../../features/client_events/data/models/client_event_details_response.d
 import '../../features/client_events/data/models/client_event_response.dart';
 import '../../features/client_events/data/models/client_messages_status_response.dart';
 
+import '../../features/client_statistics/data/models/client_messages_statistics_response.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
@@ -124,5 +125,11 @@ abstract class ApiService {
     @Header('pageNo') String pageNo,
     @Query('eventId') String eventId,
     @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.allMessageStatisticsEndpoint)
+  Future<ClientMessagesStatisticsResponse> getClientMessageStatistics(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
   );
 }

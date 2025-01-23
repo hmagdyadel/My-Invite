@@ -60,6 +60,7 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
             loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            successFetchData: (success) => Container(),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
@@ -138,8 +139,9 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
               buildBottomSheetOption(
                 text: "all_message_statistics".tr(),
                 onTap: () {
+                  debugPrint('Event ID: ${event?.id.toString()}');
                   context.pop();
-                  context.pushNamed(Routes.clientMessagesStatusScreen, arguments: event?.id.toString());
+                  context.pushNamed(Routes.clientMessagesStatisticsScreen, arguments: event?.id.toString());
                 },
               ),
               SizedBox(height: edge * 0.5),

@@ -16,5 +16,6 @@ class Routes {
   static const String clientMessagesStatusScreen = '/clientMessagesStatusScreen';
   static const String clientGuestDetailsScreen = '/clientGuestDetailsScreen';
   static const String clientStatisticsScreen = '/clientStatisticsScreen';
+  static const String clientMessagesStatisticsScreen = '/clientMessagesStatisticsScreen';
 
 }

@@ -11,4 +11,5 @@ class ClientStatisticsStates<T> with _$ClientStatisticsStates<T>{
         @Default(false) bool isLoadingMore,
       }) = SuccessClientStatistics;
   const factory ClientStatisticsStates.error({required String message})=Error;
+  const factory ClientStatisticsStates.successFetchData(T data)=SuccessFetchData<T>;
 }
