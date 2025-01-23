@@ -1,11 +1,25 @@
+import 'package:app/core/theming/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/bar_chart_model.dart';
 import '../../data/models/client_messages_statistics_response.dart';
+
+class AppConstants {
+  static const double chartAspectRatio = 1.4;
+  static const double barWidth = 20;
+  static const double legendCircleSize = 10;
+  static const double legendTextFontSize = 12;
+  static const double titleFontSize = 18;
+  static const double axisTitleFontSize = 10;
+  static const EdgeInsets chartPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 16);
+  static const EdgeInsets containerPadding = EdgeInsets.all(16);
+  static const double spacing = 16;
+}
+
+
 
 class MessagesStatisticsChart extends StatelessWidget {
   final String title;
@@ -16,10 +30,13 @@ class MessagesStatisticsChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      padding: AppConstants.chartPadding,
       child: Container(
-        decoration: BoxDecoration(color: bgColorOverlay, borderRadius: BorderRadius.circular(16)),
-        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: navBarBackground,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        padding: AppConstants.containerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -28,14 +45,14 @@ class MessagesStatisticsChart extends StatelessWidget {
               children: [
                 SubTitleText(
                   text: title,
-                  fontSize: 18,
-                  color: Colors.white,
+                  fontSize: AppConstants.titleFontSize,
+                  color: whiteTextColor,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppConstants.spacing),
             _buildBarChart(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppConstants.spacing),
             _buildChartLegends(),
           ],
         ),
@@ -45,7 +62,7 @@ class MessagesStatisticsChart extends StatelessWidget {
 
   Widget _buildBarChart() {
     return AspectRatio(
-      aspectRatio: 1.4,
+      aspectRatio: AppConstants.chartAspectRatio,
       child: BarChart(_buildBarChartData()),
     );
   }
@@ -68,22 +85,46 @@ class MessagesStatisticsChart extends StatelessWidget {
         tooltipPadding: EdgeInsets.zero,
         getTooltipItem: (group, _, rod, __) => BarTooltipItem(
           rod.toY.round().toString(),
-          const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          const TextStyle(color: whiteTextColor, fontWeight: FontWeight.bold),
         ),
       ),
     );
   }
 
   List<BarChartGroupData> _buildBarGroups() {
-    final chartData = [
-      BarChartModel(value: (details.readNumber ?? 0).toDouble(), title: "read_number".tr(), color: primaryColor),
-      BarChartModel(value: (details.deliverdNumber ?? 0).toDouble(), title: "delivered_number".tr(), color: secondaryColor),
-      BarChartModel(value: (details.sentNumber ?? 0).toDouble(), title: "sent_number".tr(), color: Colors.red),
-      BarChartModel(value: (details.failedNumber ?? 0).toDouble(), title: "failed_number".tr(), color: Colors.yellowAccent),
-      BarChartModel(value: (details.notSentNumber ?? 0).toDouble(), title: "not_sent_number".tr(), color: Colors.purple),
-    ];
+    final chartData = _generateChartData();
+    return chartData.asMap().entries.map((entry) {
+      final index = entry.key;
+      final data = entry.value;
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: data.value,
+            color: data.color,
+            width: AppConstants.barWidth,
+          ),
+        ],
+      );
+    }).toList();
+  }
 
-    return List.generate(chartData.length, (index) => BarChartGroupData(x: index, barRods: [BarChartRodData(toY: chartData[index].value, color: chartData[index].color, width: 20)]));
+  List<BarChartModel> _generateChartData() {
+    return [
+      _createBarChartModel(details.readNumber, "read_number".tr(), primaryColor),
+      _createBarChartModel(details.deliverdNumber, "delivered_number".tr(), secondaryColor),
+      _createBarChartModel(details.sentNumber, "sent_number".tr(), errorColor),
+      _createBarChartModel(details.failedNumber, "failed_number".tr(), Colors.yellowAccent),
+      _createBarChartModel(details.notSentNumber, "not_sent_number".tr(), Colors.purple),
+    ];
+  }
+
+  BarChartModel _createBarChartModel(int? value, String title, Color color) {
+    return BarChartModel(
+      value: value?.toDouble() ?? 0.0,
+      title: title,
+      color: color,
+    );
   }
 
   FlTitlesData _buildTitlesData() {
@@ -97,7 +138,7 @@ class MessagesStatisticsChart extends StatelessWidget {
           showTitles: true,
           getTitlesWidget: (value, meta) => Text(
             value.toInt().toString(),
-            style: const TextStyle(color: Colors.white, fontSize: 10),
+            style: const TextStyle(color: whiteTextColor, fontSize: AppConstants.axisTitleFontSize),
           ),
           reservedSize: 40,
         ),
@@ -106,19 +147,22 @@ class MessagesStatisticsChart extends StatelessWidget {
   }
 
   Widget _buildChartLegends() {
-    final legendData = [
-      Legend("read_number".tr(), primaryColor),
-      Legend("delivered_number".tr(), secondaryColor),
-      Legend("sent_number".tr(), Colors.red),
-      Legend("failed_number".tr(), Colors.yellowAccent),
-      Legend("not_sent_number".tr(), Colors.purple),
-    ];
-
+    final legendData = _generateLegendData();
     return Wrap(
-      spacing: 16,
+      spacing: AppConstants.spacing,
       runSpacing: 8,
       children: legendData.map((legend) => _buildLegendItem(legend.name, legend.color)).toList(),
     );
+  }
+
+  List<Legend> _generateLegendData() {
+    return [
+      Legend("read_number".tr(), primaryColor),
+      Legend("delivered_number".tr(), secondaryColor),
+      Legend("sent_number".tr(), errorColor),
+      Legend("failed_number".tr(), Colors.yellowAccent),
+      Legend("not_sent_number".tr(), Colors.purple),
+    ];
   }
 
   Widget _buildLegendItem(String name, Color color) {
@@ -126,8 +170,8 @@ class MessagesStatisticsChart extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 10,
-          height: 10,
+          width: AppConstants.legendCircleSize,
+          height: AppConstants.legendCircleSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: color,
@@ -137,8 +181,8 @@ class MessagesStatisticsChart extends StatelessWidget {
         Text(
           name,
           style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
+            color: whiteTextColor,
+            fontSize: AppConstants.legendTextFontSize,
           ),
         ),
       ],
