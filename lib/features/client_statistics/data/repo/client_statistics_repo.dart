@@ -5,6 +5,7 @@ import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/networking/api_service.dart';
 import '../../../client_events/data/models/client_event_response.dart';
+import '../models/client_confirmation_service_response.dart';
 import '../models/client_messages_statistics_response.dart';
 
 class ClientStatisticsRepo {
@@ -25,7 +26,18 @@ class ClientStatisticsRepo {
 
   Future<ApiResult<ClientMessagesStatisticsResponse>> getClientMessageStatistics(String eventId) async {
     try {
-      var response = await _apiService.getClientMessageStatistics( AppUtilities().serverToken,eventId);
+      var response = await _apiService.getClientMessageStatistics(AppUtilities().serverToken, eventId);
+      return ApiResult.success(response);
+    } on DioException {
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      return ApiResult.failure(error.toString());
+    }
+  }
+
+  Future<ApiResult<ClientConfirmationServiceResponse>> getClientConfirmationService(String eventId) async {
+    try {
+      var response = await _apiService.getClientConfirmationService(AppUtilities().serverToken, eventId);
       return ApiResult.success(response);
     } on DioException {
       return ApiResult.failure("some_error".tr());

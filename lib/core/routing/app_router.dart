@@ -14,7 +14,8 @@ import '../../features/client_events/ui/widgets/client_guest_details_screen.dart
 import '../../features/client_events/ui/widgets/client_messages_status_screen.dart';
 import '../../features/client_statistics/logic/client_statistics_cubit.dart';
 import '../../features/client_statistics/ui/client_statistics_screen.dart';
-import '../../features/client_statistics/ui/widgets/client_messages_statistics_screen.dart';
+import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_confirmation_services_screen.dart';
+import '../../features/client_statistics/ui/widgets/client_messages/client_messages_statistics_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
@@ -169,6 +170,14 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
             child: ClientMessagesStatisticsScreen(eventId: eventId),
+          ),
+        );
+      case Routes.clientConfirmationServicesScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: ClientConfirmationServicesScreen(eventId: eventId),
           ),
         );
       default:

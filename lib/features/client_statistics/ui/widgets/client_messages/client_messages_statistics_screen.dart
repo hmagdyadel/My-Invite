@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/theming/colors.dart';
-import '../../../../core/widgets/public_appbar.dart';
-import '../../../../core/widgets/subtitle_text.dart';
-import '../../data/models/client_messages_statistics_response.dart';
-import '../../logic/client_statistics_cubit.dart';
-import '../../logic/client_statistics_states.dart';
+import '../../../../../core/theming/colors.dart';
+import '../../../../../core/widgets/public_appbar.dart';
+import '../../../../../core/widgets/subtitle_text.dart';
+import '../../../data/models/client_messages_statistics_response.dart';
+import '../../../logic/client_statistics_cubit.dart';
+import '../../../logic/client_statistics_states.dart';
 import 'messages_statistics_item.dart';
 
 class ClientMessagesStatisticsScreen extends StatelessWidget {

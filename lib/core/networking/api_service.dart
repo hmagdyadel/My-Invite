@@ -5,6 +5,7 @@ import '../../features/client_events/data/models/client_event_details_response.d
 import '../../features/client_events/data/models/client_event_response.dart';
 import '../../features/client_events/data/models/client_messages_status_response.dart';
 
+import '../../features/client_statistics/data/models/client_confirmation_service_response.dart';
 import '../../features/client_statistics/data/models/client_messages_statistics_response.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
@@ -129,6 +130,12 @@ abstract class ApiService {
 
   @GET(ApiConstants.allMessageStatisticsEndpoint)
   Future<ClientMessagesStatisticsResponse> getClientMessageStatistics(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
+  );
+
+  @GET(ApiConstants.confirmationServiceEndpoint)
+  Future<ClientConfirmationServiceResponse> getClientConfirmationService(
     @Header('Authorization') String token,
     @Query('eventid') String eventId,
   );

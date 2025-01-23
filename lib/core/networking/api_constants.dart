@@ -21,7 +21,7 @@ class ApiConstants {
   static const String logsEndpoint = 'ReadLogs';
   static const String messageStatusEndpoint = 'Client/getguestmessagestatus';
   static const String searchMessageStatusEndpoint = 'Client/searchguestmessagestatus';
-  static const String confirmationServiceEndpoint = 'Client/getguestconfirmationstatisticsinfo?eventId=';
+  static const String confirmationServiceEndpoint = 'Client/getguestconfirmationstatisticsinfo';
   static const String acceptedGuestsEndpoint = 'Client/GetAcceptedGuests?eventId=';
   static const String declinedGuestsEndpoint = 'Client/GetDeclinedGuests?eventId=';
   static const String notAnsweredGuestsEndpoint = 'Client/GetNoAnswerGuests?eventId=';

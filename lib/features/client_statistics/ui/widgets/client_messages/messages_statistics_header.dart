@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/subtitle_text.dart';
-import '../../../../core/dimensions/dimensions.dart';
+import '../../../../../core/widgets/subtitle_text.dart';
+import '../../../../../core/dimensions/dimensions.dart';
 
 class MessagesStatisticsHeader extends StatelessWidget {
   final String title;

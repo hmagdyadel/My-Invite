@@ -124,7 +124,7 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
                 text: "confirmation_service".tr(),
                 onTap: () {
                   context.pop();
-                  context.pushNamed(Routes.clientEventsDetailsScreen, arguments: event);
+                  context.pushNamed(Routes.clientConfirmationServicesScreen, arguments: event?.id.toString());
                 },
               ),
               SizedBox(height: edge * 0.5),

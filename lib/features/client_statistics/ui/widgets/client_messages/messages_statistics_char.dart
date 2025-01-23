@@ -3,9 +3,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../core/widgets/subtitle_text.dart';
-import '../../data/models/bar_chart_model.dart';
-import '../../data/models/client_messages_statistics_response.dart';
+import '../../../../../core/widgets/subtitle_text.dart';
+import '../../../data/models/bar_chart_model.dart';
+import '../../../data/models/client_messages_statistics_response.dart';
 
 class AppConstants {
   static const double chartAspectRatio = 1.4;

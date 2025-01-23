@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/networking/api_result.dart';
 import '../../client_events/data/models/client_event_response.dart';
+import '../data/models/client_confirmation_service_response.dart';
 import '../data/models/client_messages_statistics_response.dart';
 import '../data/repo/client_statistics_repo.dart';
 import 'client_statistics_states.dart';
@@ -44,6 +45,23 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
         bool hasData = messageTypes.any((messageType) => messageType != null && (messageType.readNumber ?? 0) + (messageType.deliverdNumber ?? 0) + (messageType.sentNumber ?? 0) + (messageType.failedNumber ?? 0) + (messageType.notSentNumber ?? 0) > 0);
 
         hasData ? emit(ClientStatisticsStates.successFetchData(response)) : emit(const ClientStatisticsStates.emptyInput());
+      },
+      failure: (error) => emit(ClientStatisticsStates.error(message: error.toString())),
+    );
+  }
+
+  void getClientConfirmationService(String eventId) async {
+    emit(const ClientStatisticsStates.loading());
+    final response = await _clientStatisticsRepo.getClientConfirmationService(eventId);
+    response.when(
+      success: (response) {
+        final ClientConfirmationServiceResponse events = response;
+
+        if (events.acceptedGuestsNumber != null || events.attendedGuestsNumber != null || events.declienedGuestsNumber != null || events.failedGuestsNumber != null || events.notSentGuestsNumber != null || events.totalGuestsNumber != null || events.totalGuestsNumber != null) {
+          emit(ClientStatisticsStates.successFetchData(response));
+        } else {
+          emit(const ClientStatisticsStates.emptyInput());
+        }
       },
       failure: (error) => emit(ClientStatisticsStates.error(message: error.toString())),
     );
