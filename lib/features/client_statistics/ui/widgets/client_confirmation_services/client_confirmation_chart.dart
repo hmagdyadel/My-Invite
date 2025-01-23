@@ -6,13 +6,13 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/widgets/subtitle_text.dart';
 import '../../../data/models/bar_chart_model.dart';
-import '../../../data/models/client_messages_statistics_response.dart';
+import '../../../data/models/client_confirmation_service_response.dart';
 
-class MessagesStatisticsChart extends StatelessWidget {
-  final String title;
-  final ClientMessagesStatisticsDetails details;
+class ClientConfirmationChart extends StatelessWidget {
 
-  const MessagesStatisticsChart({super.key, required this.title, required this.details});
+  final ClientConfirmationServiceResponse details;
+
+  const ClientConfirmationChart({super.key, required this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class MessagesStatisticsChart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SubTitleText(
-                  text: title,
+                  text: "statistics".tr(),
                   fontSize: titleFontSize,
                   color: whiteTextColor,
                 ),
@@ -98,11 +98,13 @@ class MessagesStatisticsChart extends StatelessWidget {
 
   List<BarChartModel> _generateChartData() {
     return [
-      _createBarChartModel(details.readNumber, "read_number".tr(), primaryColor),
-      _createBarChartModel(details.deliverdNumber, "delivered_number".tr(), secondaryColor),
-      _createBarChartModel(details.sentNumber, "sent_number".tr(), errorColor),
-      _createBarChartModel(details.failedNumber, "failed_number".tr(), Colors.yellowAccent),
-      _createBarChartModel(details.notSentNumber, "not_sent_number".tr(), Colors.purple),
+      _createBarChartModel(details.totalGuestsNumber, "total_guests".tr(), primaryColor),
+      _createBarChartModel(details.acceptedGuestsNumber, "total_accepted_guests".tr(), secondaryColor),
+      _createBarChartModel(details.declienedGuestsNumber, "total_declined_guests".tr(), errorColor),
+      _createBarChartModel(details.noAnswerGuestsNumber, "total_not_answered_guests".tr(), Colors.yellowAccent),
+      _createBarChartModel(details.failedGuestsNumber, "total_failed_guests".tr(), Colors.purple),
+      _createBarChartModel(details.notSentGuestsNumber, "total_not_sent_guests".tr(), Colors.green),
+      _createBarChartModel(details.attendedGuestsNumber, "total_attended_guests".tr(), Colors.cyan),
     ];
   }
 
@@ -144,11 +146,13 @@ class MessagesStatisticsChart extends StatelessWidget {
 
   List<Legend> _generateLegendData() {
     return [
-      Legend("read_number".tr(), primaryColor),
-      Legend("delivered_number".tr(), secondaryColor),
-      Legend("sent_number".tr(), errorColor),
-      Legend("failed_number".tr(), Colors.yellowAccent),
-      Legend("not_sent_number".tr(), Colors.purple),
+      Legend("total_guests".tr(), primaryColor),
+      Legend("total_accepted_guests".tr(), secondaryColor),
+      Legend("total_declined_guests".tr(), errorColor),
+      Legend("total_not_answered_guests".tr(), Colors.yellowAccent),
+      Legend("total_failed_guests".tr(), Colors.purple),
+      Legend("total_not_sent_guests".tr(), Colors.green),
+      Legend("total_attended_guests".tr(), Colors.cyan),
     ];
   }
 

@@ -9,6 +9,7 @@ AppBar publicAppBar(BuildContext context,String title) {
     title: SubTitleText(
       text: title,
       color: Colors.white,
+      fontSize: 20,
     ),
     centerTitle: true,
     leading: IconButton(

@@ -11,6 +11,7 @@ import '../../../../../core/widgets/subtitle_text.dart';
 import '../../../data/models/client_confirmation_service_response.dart';
 import '../../../logic/client_statistics_cubit.dart';
 import '../../../logic/client_statistics_states.dart';
+import 'client_confirmation_chart.dart';
 
 class ClientConfirmationServicesScreen extends StatelessWidget {
   final String eventId;
@@ -39,7 +40,7 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: [
-                        _buildItemRow("type".tr(), "number".tr(),isHeader: false),
+                        _buildItemRow("type".tr(), "number".tr(), isHeader: false),
                         _buildItemRow("total_guests".tr(), events.totalGuestsNumber.toString()),
                         _buildItemRow("total_accepted_guests".tr(), events.acceptedGuestsNumber.toString()),
                         _buildItemRow("total_declined_guests".tr(), events.declienedGuestsNumber.toString()),
@@ -47,6 +48,7 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                         _buildItemRow("total_failed_guests".tr(), events.failedGuestsNumber.toString()),
                         _buildItemRow("total_not_sent_guests".tr(), events.notSentGuestsNumber.toString()),
                         _buildItemRow("total_attended_guests".tr(), events.attendedGuestsNumber.toString()),
+                        ClientConfirmationChart(details: events),
                       ],
                     ),
                   ),
@@ -60,20 +62,21 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemRow(String type, String number,{bool isHeader=true}) {
+  Widget _buildItemRow(String type, String number, {bool isHeader = true}) {
     return Container(
-      padding:  EdgeInsets.symmetric(horizontal: edge, vertical: edge),
+      padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
       margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),
       decoration: BoxDecoration(color: navBarBackground.withAlpha(128), borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
           _buildRowItem(type, flex: 3),
           _buildRowItem(number),
-          if(isHeader)
+          if (isHeader)
             Icon(
               Icons.chevron_right,
               color: whiteTextColor,
-            )else
+            )
+          else
             Icon(
               Icons.chevron_right,
               color: Colors.transparent,
@@ -89,30 +92,6 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
       child: NormalText(
         text: text,
         color: whiteTextColor,
-        align: TextAlign.start,
-      ),
-    );
-  }
-
-  Widget _buildTableHeader(String type, String number, {Color backgroundColor = bgColor}) {
-    return Container(
-      color: backgroundColor,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      child: Row(
-        children: [
-          _buildHeaderCell(type, flex: 2),
-          _buildHeaderCell(number),
-        ],
-      ),
-    );
-  }
-
-  Expanded _buildHeaderCell(String text, {int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: NormalText(
-        text: text,
-        color: Colors.white.withAlpha(180),
         align: TextAlign.start,
       ),
     );
