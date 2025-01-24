@@ -60,7 +60,8 @@
   "confirm_reserve": "Are you sure you want to reserve this event?",
   "reserving_event": "Reserving Event",
   "event_reserved": "Event Reserved",
-  "event_reserved_text": "Event Reserved Successfully",
+  "event_reserved_text": "The event has been successfully booked! We’re excited to have you join. Make sure to save the details, and enjoy the experience.",
+  "event_reservation_error_text": "Sorry, an error occurred while booking the event. Please try again later or contact support for assistance.",
   "unique_family": "Unique Family",
   "cannot_checkin": "You cannot checking in to this event yet",
   "scan": "Scan",
@@ -77,7 +78,7 @@
   "checked_out": "Checked out",
   "check_out_successful": "Checked out successfully from this event",
   "invalid_credentials": "Invalid Credentials",
-  "event_calendar_instructions": "Dates with available events are hightlighted. Tap on a date to show events on that specific date. Swipe the calendar to see next month",
+  "event_calendar_instructions": "Dates with available events are hightlighted. Tap on a date to show events on that specific date. Swipe the calendar to see next month.",
   "0": "0",
   "1": "1",
   "2": "2",
@@ -291,5 +292,8 @@
   "cameraInitFailed": "Failed to initialize the camera. Please try again.",
   "photoCaptureFailed": "Failed to capture the photo. Please try again.",
   "unexpectedError": "An unexpected error occurred.",
-  "can_not_check_in_or_out": "You cannot check in or out because the event date is not today."
+  "can_not_check_in_or_out": "You cannot check in or out because the event date is not today.",
+  "location_is_not_set_correctly": "Your location is not set correctly. Please contact our IT support team to update your location details in your profile.",
+  "clear": "Clear",
+  "see_details": "See Details"
 }

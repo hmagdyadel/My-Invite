@@ -5,6 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/client_events/data/models/client_event_response.dart';
+import '../../features/client_events/data/models/client_messages_status_response.dart';
+import '../../features/client_events/logic/client_events_cubit.dart';
+import '../../features/client_events/ui/client_events_screen.dart';
+import '../../features/client_events/ui/widgets/client_event_details.dart';
+import '../../features/client_events/ui/widgets/client_guest_details_screen.dart';
+import '../../features/client_events/ui/widgets/client_messages_status_screen.dart';
+import '../../features/client_statistics/logic/client_statistics_cubit.dart';
+import '../../features/client_statistics/ui/client_statistics_screen.dart';
+import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_confirmation_services_screen.dart';
+import '../../features/client_statistics/ui/widgets/client_messages/client_messages_statistics_screen.dart';
+import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -99,13 +111,73 @@ class AppRouter {
         );
       case Routes.myEventsScreen:
         return _buildRoute(
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) => getIt<GatekeeperEventsCubit>(),
-              ),
-            ],
+          BlocProvider(
+            create: (_) => getIt<GatekeeperEventsCubit>(),
             child: const MyEventsScreen(),
+          ),
+        );
+
+      case Routes.eventsCalendar:
+        return _buildRoute(
+          const EventCalenderScreen(),
+        );
+
+      case Routes.clientEvents:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientEventsCubit>(),
+            child: const ClientEventsScreen(),
+          ),
+        );
+      case Routes.clientEventsDetailsScreen:
+        final event = arguments as ClientEventDetails;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientEventsCubit>(),
+            child: ClientEventDetailsScreen(clientEventDetailsItem: event),
+          ),
+        );
+
+      case Routes.clientMessagesStatusScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientEventsCubit>(),
+            child: ClientMessagesStatusScreen(eventId: eventId),
+          ),
+        );
+
+      case Routes.clientGuestDetailsScreen:
+        final clientMessagesStatusDetails = arguments as ClientMessagesStatusDetails;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientEventsCubit>(),
+            child: ClientGuestDetailsScreen(clientMessagesStatusDetails: clientMessagesStatusDetails),
+          ),
+        );
+
+      case Routes.clientStatisticsScreen:
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: const ClientStatisticsScreen(),
+          ),
+        );
+
+      case Routes.clientMessagesStatisticsScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: ClientMessagesStatisticsScreen(eventId: eventId),
+          ),
+        );
+      case Routes.clientConfirmationServicesScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: ClientConfirmationServicesScreen(eventId: eventId),
           ),
         );
       default:

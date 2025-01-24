@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.event,
         gradient: containerGradient,
         onTap: () {
-          //Get.to(() => const ClientEventsScreen());
+          context.pushNamed(Routes.clientEvents);
         },
       ),
       DashboardAction(
@@ -51,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.bar_chart,
         gradient: gradient3,
         onTap: () {
-          //Get.to(() => const ClientEventStatisticsScreen());
+          context.pushNamed(Routes.clientStatisticsScreen);
         },
       ),
     ];
@@ -78,7 +78,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.calendar_month,
         gradient: gradient4,
         onTap: () {
-          //Get.to(() => const EventsCalendarScreen());
+          context.pushNamed(Routes.eventsCalendar);
         },
       ),
       DashboardAction(

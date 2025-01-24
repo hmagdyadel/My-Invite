@@ -24,9 +24,9 @@ class AppUtilities {
   }
 
   Future<void> importantInitialize() async {
-
     _serverToken = await getSavedString("serverToken", '');
   }
+
   String? _serverToken;
 
   String get serverToken {
@@ -37,9 +37,9 @@ class AppUtilities {
     _serverToken = token;
     setSavedString("serverToken", token);
   }
+
   bool get isLTR {
-    return NavigationService.navigatorKey.currentContext!.locale.languageCode ==
-        "en";
+    return NavigationService.navigatorKey.currentContext!.locale.languageCode == "en";
   }
 
   String? _username;
@@ -51,10 +51,20 @@ class AppUtilities {
     setSavedString("username", value);
   }
 
+  String? _password;
+
+  String get password => _password ?? '';
+
+  set password(String value) {
+    _password = value;
+    setSavedString("password", value);
+  }
+
   Future<void> clearData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.clear();
+    await prefs.remove("serverToken");
+    await prefs.remove("userData");
   }
 
   Future<bool> setSavedInt(String key, int value) async {
@@ -94,6 +104,7 @@ class AppUtilities {
 
   Future<void> _getSavedData() async {
     _username = await getSavedString("username", '');
+    _password = await getSavedString("password", '');
 
     String userData = await getSavedString('userData', '');
     if (userData.isNotEmpty) {
@@ -107,7 +118,6 @@ class AppUtilities {
       _loginData = LoginResponse(); // Default value if no data is saved
     }
   }
-
 
   Future<int> getSavedInt(String key, int defaultVal) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

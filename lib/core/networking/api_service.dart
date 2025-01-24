@@ -1,6 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../features/client_events/data/models/client_event_details_response.dart';
+import '../../features/client_events/data/models/client_event_response.dart';
+import '../../features/client_events/data/models/client_messages_status_response.dart';
+
+import '../../features/client_statistics/data/models/client_confirmation_service_response.dart';
+import '../../features/client_statistics/data/models/client_messages_statistics_response.dart';
+import '../../features/event_calender/data/models/calender_events.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
 import '../../features/location/data/models/country_response.dart';
@@ -21,7 +28,9 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
   @POST(ApiConstants.loginEndpoint)
-  Future<LoginResponse> login(@Body() LoginRequest loginRequestBody);
+  Future<LoginResponse> login(
+    @Body() LoginRequest loginRequestBody,
+  );
 
   @GET(ApiConstants.locationsEndpoint)
   Future<List<LocationResponse>> getLocations();
@@ -30,13 +39,19 @@ abstract class ApiService {
   Future<List<CountryResponse>> getCountries();
 
   @GET("${ApiConstants.citiesEndpoint}/{countryId}")
-  Future<List<CityResponse>> getCities(@Path("countryId") int countryId);
+  Future<List<CityResponse>> getCities(
+    @Path("countryId") int countryId,
+  );
 
   @POST(ApiConstants.registerEndpoint)
-  Future<String> register(@Body() RegisterRequest registerRequestBody);
+  Future<String> register(
+    @Body() RegisterRequest registerRequestBody,
+  );
 
   @GET(ApiConstants.clientProfileEndpoint)
-  Future<ProfileResponse> getProfile(@Header('Authorization') String token);
+  Future<ProfileResponse> getProfile(
+    @Header('Authorization') String token,
+  );
 
   @POST(ApiConstants.scanEndpoint)
   Future<ScanResponse> scanQrCode(
@@ -51,7 +66,11 @@ abstract class ApiService {
   );
 
   @GET(ApiConstants.scanHistoryEndpoint)
-  Future<EventDetailsResponse> getEventDetails(@Header('Authorization') String token, @Header('eventId') String eventId, @Header('pageNo') String pageNo);
+  Future<EventDetailsResponse> getEventDetails(
+    @Header('Authorization') String token,
+    @Header('eventId') String eventId,
+    @Header('pageNo') String pageNo,
+  );
 
   @GET(ApiConstants.checkoutEndpoint)
   Future<String> eventCheckOut(
@@ -68,5 +87,56 @@ abstract class ApiService {
     @Header('longitude') String longitude,
     @Query('eventId') String eventId,
     @Body() FormData formData,
+  );
+
+  @GET(ApiConstants.calendarEventsEndpoint)
+  Future<List<CalenderEventsResponse>> getEventsCalendar(
+    @Header('Authorization') String token,
+  );
+
+  @GET(ApiConstants.reserveEventEndpoint)
+  Future<String> reserveEvent(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
+  );
+
+  @GET(ApiConstants.clientEvents)
+  Future<ClientEventResponse> getClientEvents(
+    @Header('pageNo') String pageNo,
+    @Header('Authorization') String token,
+  );
+
+  @GET(ApiConstants.clientEventDetailsEndpoint)
+  Future<ClientEventDetailsResponse> getClientEventDetails(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+  );
+
+  @GET(ApiConstants.messageStatusEndpoint)
+  Future<ClientMessagesStatusResponse> getClientMessagesStatus(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+  );
+
+  @GET(ApiConstants.searchMessageStatusEndpoint)
+  Future<ClientMessagesStatusResponse> searchEventMessageStatus(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.allMessageStatisticsEndpoint)
+  Future<ClientMessagesStatisticsResponse> getClientMessageStatistics(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
+  );
+
+  @GET(ApiConstants.confirmationServiceEndpoint)
+  Future<ClientConfirmationServiceResponse> getClientConfirmationService(
+    @Header('Authorization') String token,
+    @Query('eventid') String eventId,
   );
 }

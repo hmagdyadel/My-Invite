@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../theming/colors.dart';
 
-Widget textFieldWithIcon({Color bgColor = bgColorOverlay, required Icon icon, required String hint, required TextEditingController controller, double height = 45, Widget suffix = const SizedBox(), bool obscureText = false, List<TextInputFormatter>? formatter, TextInputType inputType = TextInputType.text}) {
+Widget textFieldWithIcon({Color bgColor = bgColorOverlay, required Widget icon, required String hint, required TextEditingController controller, double height = 45, Widget suffix = const SizedBox(), bool obscureText = false, List<TextInputFormatter>? formatter, TextInputType inputType = TextInputType.text}) {
   return Container(
     height: height,
     decoration: BoxDecoration(

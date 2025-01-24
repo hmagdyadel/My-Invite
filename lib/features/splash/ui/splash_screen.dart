@@ -21,20 +21,55 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void initialization() async {
-    // This is where you can initialize the resources needed by your app while
-    // the splash screen is displayed
-    await AppUtilities().initialize();
+    try {
+      // Initialize app utilities
+      await AppUtilities().initialize();
 
-    // After initialization, remove the native splash screen
-    FlutterNativeSplash.remove();
+      // Remove native splash screen
+      FlutterNativeSplash.remove();
 
-    // Navigate to the appropriate screen
-    if (mounted) {
-      final nextRoute = AppUtilities().username.isEmpty
-          ? Routes.onBoardingScreen
-          : Routes.homeScreen;
+      if (!mounted) return;
 
-      context.pushReplacementNamed(nextRoute);
+      // Get expiration date from login data
+      final expirationStr = AppUtilities().loginData.expiration;
+
+      // Determine which screen to navigate to
+      String nextRoute;
+
+      if (expirationStr == null) {
+        // If no expiration date exists, go to onboarding
+        nextRoute = Routes.onBoardingScreen;
+      } else {
+        try {
+          final expirationDate = DateTime.parse(expirationStr);
+          final now = DateTime.now();
+
+          // If expiration date is in the future, go to home
+          // If expired or in the past, go to onboarding
+          nextRoute = expirationDate.isAfter(now)
+              ? Routes.homeScreen
+              : Routes.onBoardingScreen;
+
+          debugPrint('Expiration date: $expirationDate');
+          debugPrint('Current date: $now');
+          debugPrint('Navigating to: $nextRoute');
+        } catch (e) {
+          debugPrint('Error parsing expiration date: $e');
+          // If there's an error parsing the date, default to onboarding
+          nextRoute = Routes.onBoardingScreen;
+        }
+      }
+
+      // Navigate to the determined route
+      if (mounted) {
+        context.pushReplacementNamed(nextRoute);
+      }
+    } catch (e) {
+      debugPrint('Error during initialization: $e');
+      // In case of any error, default to onboarding
+      if (mounted) {
+        context.pushReplacementNamed(Routes.onBoardingScreen);
+      }
     }
   }
 

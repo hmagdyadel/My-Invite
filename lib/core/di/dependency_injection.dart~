@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/event_attendance/data/repo/event_attendance_repo.dart';
+import '../../features/event_attendance/logic/event_attendance_cubit.dart';
 import '../../features/home/data/repo/home_repo.dart';
 import '../../features/home/logic/home_cubit.dart';
 import '../../features/location/data/repo/location_repo.dart';
@@ -11,6 +13,8 @@ import '../../features/qr_code_scanner/data/repo/qr_code_scanner_repo.dart';
 import '../../features/qr_code_scanner/logic/qr_code_scanner_cubit.dart';
 import '../../features/register/data/repo/register_repo.dart';
 import '../../features/register/logic/register_cubit.dart';
+import '../../features/scan_history/data/repo/gatekeeper_events_repo.dart';
+import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
 import '../networking/api_service.dart';
 import '../networking/dio_factory.dart';
 
@@ -35,6 +39,19 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
 
   //Scan QR code
-  getIt.registerLazySingleton<QrCodeScannerRepo>(() => QrCodeScannerRepo(getIt()));
+  getIt.registerLazySingleton<QrCodeScannerRepo>(
+      () => QrCodeScannerRepo(getIt()));
   getIt.registerFactory<QrCodeScannerCubit>(() => QrCodeScannerCubit(getIt()));
+
+  //Scan History
+  getIt.registerLazySingleton<GatekeeperEventsRepo>(
+      () => GatekeeperEventsRepo(getIt()));
+  getIt.registerFactory<GatekeeperEventsCubit>(
+      () => GatekeeperEventsCubit(getIt()));
+
+  //event Attendance
+  getIt.registerLazySingleton<EventAttendanceRepo>(
+      () => EventAttendanceRepo(getIt()));
+  getIt.registerFactory<EventAttendanceCubit>(
+      () => EventAttendanceCubit(getIt()));
 }
