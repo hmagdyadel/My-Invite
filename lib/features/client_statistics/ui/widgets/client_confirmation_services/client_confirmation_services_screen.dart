@@ -1,4 +1,6 @@
 import 'package:app/core/dimensions/dimensions.dart';
+import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/routing/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import '../../../../../core/widgets/normal_text.dart';
 import '../../../../../core/widgets/public_appbar.dart';
 import '../../../../../core/widgets/subtitle_text.dart';
 import '../../../data/models/client_confirmation_service_response.dart';
+import '../../../data/models/guest_type_list.dart';
 import '../../../logic/client_statistics_cubit.dart';
 import '../../../logic/client_statistics_states.dart';
 import 'client_confirmation_chart.dart';
@@ -25,13 +28,15 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
       appBar: publicAppBar(context, "confirmation_service".tr()),
       body: BlocBuilder<ClientStatisticsCubit, ClientStatisticsStates>(
         buildWhen: (previous, current) => current != previous,
-        bloc: context.read<ClientStatisticsCubit>()..getClientConfirmationService(eventId),
+        bloc: context.read<ClientStatisticsCubit>()
+          ..getClientConfirmationService(eventId),
         builder: (context, current) {
           return current.when(
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(
+                child: CupertinoActivityIndicator(color: Colors.white)),
             successFetchData: (success) {
               final ClientConfirmationServiceResponse events = success;
               return Column(
@@ -40,14 +45,51 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                   Expanded(
                     child: ListView(
                       children: [
-                        _buildItemRow("type".tr(), "number".tr(), isHeader: false),
-                        _buildItemRow("total_guests".tr(), events.totalGuestsNumber.toString()),
-                        _buildItemRow("total_accepted_guests".tr(), events.acceptedGuestsNumber.toString()),
-                        _buildItemRow("total_declined_guests".tr(), events.declienedGuestsNumber.toString()),
-                        _buildItemRow("total_not_answered_guests".tr(), events.noAnswerGuestsNumber.toString()),
-                        _buildItemRow("total_failed_guests".tr(), events.failedGuestsNumber.toString()),
-                        _buildItemRow("total_not_sent_guests".tr(), events.notSentGuestsNumber.toString()),
-                        _buildItemRow("total_attended_guests".tr(), events.attendedGuestsNumber.toString()),
+                        _buildItemRow(context, "type".tr(), "number".tr(),
+                            isHeader: false),
+                        _buildItemRow(
+                          context,
+                          "total_guests".tr(),
+                          events.totalGuestsNumber.toString(),
+                          type: GuestListType.allGuests,
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_accepted_guests".tr(),
+                          events.acceptedGuestsNumber.toString(),
+                          type: GuestListType.acceptedGuests,
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_declined_guests".tr(),
+                          events.declienedGuestsNumber.toString(),
+                          type: GuestListType.declinedGuests,
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_not_answered_guests".tr(),
+                          events.noAnswerGuestsNumber.toString(),
+                          type: GuestListType.notAnsweredGuests,
+
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_failed_guests".tr(),
+                          events.failedGuestsNumber.toString(),
+                          type: GuestListType.failedGuests,
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_not_sent_guests".tr(),
+                          events.notSentGuestsNumber.toString(),
+                          type: GuestListType.notSentGuests,
+                        ),
+                        _buildItemRow(
+                          context,
+                          "total_attended_guests".tr(),
+                          events.attendedGuestsNumber.toString(),
+                          type: GuestListType.notSentGuests,
+                        ),
                         ClientConfirmationChart(details: events),
                       ],
                     ),
@@ -62,26 +104,43 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItemRow(String type, String number, {bool isHeader = true}) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),
-      decoration: BoxDecoration(color: navBarBackground.withAlpha(128), borderRadius: BorderRadius.circular(12)),
-      child: Row(
-        children: [
-          _buildRowItem(type, flex: 3),
-          _buildRowItem(number),
-          if (isHeader)
-            Icon(
-              Icons.chevron_right,
-              color: whiteTextColor,
-            )
-          else
-            Icon(
-              Icons.chevron_right,
-              color: Colors.transparent,
-            )
-        ],
+  Widget _buildItemRow(BuildContext context, String title, String number,
+      {bool isHeader = true, GuestListType? type, String eventId = ""}) {
+    return GestureDetector(
+      onTap: !isHeader
+          ? null
+          : () {
+              context.pushNamed(
+                Routes.clientMessageStatus,
+                arguments: {
+                  'eventId': eventId,
+                  'type': type,
+                  'title': guestListTypeToString(type!),
+                },
+              );
+            },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),
+        decoration: BoxDecoration(
+            color: navBarBackground.withAlpha(128),
+            borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          children: [
+            _buildRowItem(title, flex: 3),
+            _buildRowItem(number),
+            if (isHeader)
+              Icon(
+                Icons.chevron_right,
+                color: whiteTextColor,
+              )
+            else
+              Icon(
+                Icons.chevron_right,
+                color: Colors.transparent,
+              )
+          ],
+        ),
       ),
     );
   }
