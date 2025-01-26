@@ -12,9 +12,11 @@ import '../../features/client_events/ui/client_events_screen.dart';
 import '../../features/client_events/ui/widgets/client_event_details.dart';
 import '../../features/client_events/ui/widgets/client_guest_details_screen.dart';
 import '../../features/client_events/ui/widgets/client_messages_status_screen.dart';
+import '../../features/client_statistics/data/models/guest_type_list.dart';
 import '../../features/client_statistics/logic/client_statistics_cubit.dart';
 import '../../features/client_statistics/ui/client_statistics_screen.dart';
 import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_confirmation_services_screen.dart';
+import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_message_status.dart';
 import '../../features/client_statistics/ui/widgets/client_messages/client_messages_statistics_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
@@ -57,10 +59,12 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<
+                    RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<
+                    LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -148,11 +152,13 @@ class AppRouter {
         );
 
       case Routes.clientGuestDetailsScreen:
-        final clientMessagesStatusDetails = arguments as ClientMessagesStatusDetails;
+        final clientMessagesStatusDetails =
+            arguments as ClientMessagesStatusDetails;
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<ClientEventsCubit>(),
-            child: ClientGuestDetailsScreen(clientMessagesStatusDetails: clientMessagesStatusDetails),
+            child: ClientGuestDetailsScreen(
+                clientMessagesStatusDetails: clientMessagesStatusDetails),
           ),
         );
 
@@ -178,6 +184,17 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
             child: ClientConfirmationServicesScreen(eventId: eventId),
+          ),
+        );
+        case Routes.clientMessageStatus:
+        final args = arguments as Map<String, dynamic>;
+        final eventId = args['eventId'] as String;
+        final type = args['type'] as GuestListType;
+        final title = args['title'] as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: ClientMessageStatus(eventId: eventId, type: type,title: title),
           ),
         );
       default:

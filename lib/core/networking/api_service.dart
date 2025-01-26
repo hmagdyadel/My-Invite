@@ -139,4 +139,84 @@ abstract class ApiService {
     @Header('Authorization') String token,
     @Query('eventid') String eventId,
   );
+
+  @GET(ApiConstants.acceptedGuestsEndpoint)
+  Future<ClientMessagesStatusResponse> getAcceptedGuests(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.declinedGuestsEndpoint)
+  Future<ClientMessagesStatusResponse> getDeclinedGuests(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.notAnsweredGuestsEndpoint)
+  Future<ClientMessagesStatusResponse> getNotAnsweredGuests(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.failedGuestsEndpoint)
+  Future<ClientMessagesStatusResponse> getFailedGuests(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.notSentGuestsEndpoint)
+  Future<ClientMessagesStatusResponse> getNotSentGuests(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.guestsCardsReadEndpoint)
+  Future<ClientMessagesStatusResponse> getGuestsCardsRead(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.guestsCardsReceivedEndpoint)
+  Future<ClientMessagesStatusResponse> getGuestsReceivedCards(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.guestsCardsSentEndpoint)
+  Future<ClientMessagesStatusResponse> getGuestsCardsSent(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.guestsCardsFailedEndpoint)
+  Future<ClientMessagesStatusResponse> getGuestsCardsFailedToSend(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
+
+  @GET(ApiConstants.guestsCardsNotSent)
+  Future<ClientMessagesStatusResponse> getGuestsCardsNotSent(
+    @Header('Authorization') String token,
+    @Header('pageNo') String pageNo,
+    @Query('eventId') String eventId,
+    @Query('searchValue') String searchValue,
+  );
 }
