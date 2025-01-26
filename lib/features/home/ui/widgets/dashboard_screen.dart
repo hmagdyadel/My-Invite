@@ -4,10 +4,11 @@ import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart' as permission;
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
-import '../../../../core/services/notification_service.dart';
+import '../../../../core/services/notification_service_2.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
@@ -103,19 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.info,
         gradient: containerGradient,
         onTap: () async {
-          await NotificationService().scheduleNotification(
-            id: 1,
-            scheduledTime: DateTime.now().add(Duration(hours: 2)),
-            title: 'Test Notification',
-            body: 'This is a test',
-          );
-
-// Schedule event notifications
-          await NotificationService().scheduleEventNotifications(
-            eventId: 123,
-            eventStart: DateTime.parse('2024-02-15 14:22:00'),
-            eventTitle: 'Important Meeting',
-          );
+          testNotificationScheduling();
         },
       ),
     ];
@@ -132,6 +121,13 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
+  void testNotificationScheduling() async{
+
+   await permission.Permission.notification.request();
+   await permission.Permission.scheduleExactAlarm.request();
+    DateTime selectedTime = DateTime.now().add(const Duration(seconds: 15)); // For testing purposes
+    NotificationService2().zonedScheduleNotification("JJKJKK",selectedTime,"sadsa");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +147,6 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
       ),
     );
   }
-
 
   Widget _buildHeader() {
     final userData = AppUtilities().loginData;
