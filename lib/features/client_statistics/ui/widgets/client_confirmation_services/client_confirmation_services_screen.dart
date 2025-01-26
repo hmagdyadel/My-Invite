@@ -52,24 +52,28 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                           "total_guests".tr(),
                           events.totalGuestsNumber.toString(),
                           type: GuestListType.allGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_accepted_guests".tr(),
                           events.acceptedGuestsNumber.toString(),
                           type: GuestListType.acceptedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_declined_guests".tr(),
                           events.declienedGuestsNumber.toString(),
                           type: GuestListType.declinedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_not_answered_guests".tr(),
                           events.noAnswerGuestsNumber.toString(),
                           type: GuestListType.notAnsweredGuests,
+                            eventId: eventId
 
                         ),
                         _buildItemRow(
@@ -77,18 +81,21 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                           "total_failed_guests".tr(),
                           events.failedGuestsNumber.toString(),
                           type: GuestListType.failedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_not_sent_guests".tr(),
                           events.notSentGuestsNumber.toString(),
                           type: GuestListType.notSentGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_attended_guests".tr(),
                           events.attendedGuestsNumber.toString(),
-                          type: GuestListType.notSentGuests,
+                          type: GuestListType.guestsReadCards,
+                          eventId: eventId
                         ),
                         ClientConfirmationChart(details: events),
                       ],

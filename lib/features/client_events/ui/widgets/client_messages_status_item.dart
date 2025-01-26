@@ -70,10 +70,13 @@ class ClientMessagesStatusItem extends StatelessWidget {
                       fontSize: 18,
                     ),
                     SizedBox(width: 10),
-                    SubTitleText(
-                      text: MessagesStatusConditions().getResponseStatus(clientMessagesStatusDetails),
-                      color: Colors.white,
-                      fontSize: 18,
+                    Expanded(
+                      child: SubTitleText(
+                        text: MessagesStatusConditions().getResponseStatus(clientMessagesStatusDetails),
+                        color: Colors.white,
+                        fontSize: 16,
+                        align: TextAlign.start,
+                      ),
                     ),
                   ],
                 ),

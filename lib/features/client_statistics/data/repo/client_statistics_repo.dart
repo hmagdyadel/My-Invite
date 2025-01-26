@@ -87,7 +87,11 @@ class ClientStatisticsRepo {
       } else if (type == GuestListType.guestsReceivedCards) {
         response = await _apiService.getGuestsReceivedCards(
             AppUtilities().serverToken, pageNo, eventId, searchValue);
-      } else {
+      } else if(type == GuestListType.allGuests) {
+        response = await _apiService.getClientMessagesStatus(
+            AppUtilities().serverToken, pageNo, eventId);
+      }
+      else{
         response = await _apiService.getGuestsCardsFailedToSend(
             AppUtilities().serverToken, pageNo, eventId, searchValue);
       }
