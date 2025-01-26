@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
+import '../../../../core/services/notification_service.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
@@ -94,7 +95,27 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.info,
         gradient: containerGradient,
         onTap: () {
-         context.pushNamed(Routes.eventInstructionsScreen);
+          context.pushNamed(Routes.eventInstructionsScreen);
+        },
+      ),
+      DashboardAction(
+        text: "Test Notifications",
+        icon: Icons.info,
+        gradient: containerGradient,
+        onTap: () async {
+          await NotificationService().scheduleNotification(
+            id: 1,
+            scheduledTime: DateTime.now().add(Duration(hours: 2)),
+            title: 'Test Notification',
+            body: 'This is a test',
+          );
+
+// Schedule event notifications
+          await NotificationService().scheduleEventNotifications(
+            eventId: 123,
+            eventStart: DateTime.parse('2024-02-15 14:22:00'),
+            eventTitle: 'Important Meeting',
+          );
         },
       ),
     ];
@@ -111,20 +132,12 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
-  // Future<void> _handleLogout() async {
-  //   try {
-  //     context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: false);
-  //     await AppUtilities().clearData();
-  //   } catch (e) {
-  //     debugPrint('Logout error: $e');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-     // appBar: _buildAppBar(context),
+      // appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,36 +152,6 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     );
   }
 
-  // AppBar _buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     backgroundColor: bgColor,
-  //     elevation: 0,
-  //     actions: [
-  //       IconButton(
-  //         icon: AnimatedRotation(
-  //           duration: const Duration(milliseconds: 300),
-  //           turns: context.locale.languageCode == 'en' ? 0 : 1,
-  //           child:  Transform.rotate(
-  //             angle: context.locale.languageCode == 'en' ? 0 : 3.14, // Rotate 180 degrees for non-English
-  //             child: const Icon(
-  //               Icons.logout,
-  //               color: Colors.white,
-  //             ),
-  //           ),
-  //         ),
-  //         onPressed: () => _handleLogout(),
-  //       ),
-  //     ],
-  //     leading: Padding(
-  //       padding: EdgeInsets.all(edge * 0.5),
-  //       child: LocaleDropdown(
-  //         onLanguageChanged: () {
-  //           if (mounted) setState(() {});
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildHeader() {
     final userData = AppUtilities().loginData;

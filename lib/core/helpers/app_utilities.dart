@@ -51,6 +51,15 @@ class AppUtilities {
     setSavedString("username", value);
   }
 
+  bool? _notifications;
+
+  bool get notifications => _notifications ?? false;
+
+  set notifications(bool value) {
+    _notifications = value;
+    setSavedBool("notifications", value);
+  }
+
   String? _password;
 
   String get password => _password ?? '';
@@ -102,9 +111,15 @@ class AppUtilities {
     return await prefs.setString(key, value);
   }
 
+  Future<bool> setSavedBool(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setBool(key, value);
+  }
+
   Future<void> _getSavedData() async {
     _username = await getSavedString("username", '');
     _password = await getSavedString("password", '');
+    _notifications = await getSavedBool("notifications", false);
 
     String userData = await getSavedString('userData', '');
     if (userData.isNotEmpty) {
@@ -129,5 +144,10 @@ class AppUtilities {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.reload();
     return preferences.getString(value) ?? defaultVal;
+  }
+  Future<bool> getSavedBool(String value, bool defaultVal) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.reload();
+    return preferences.getBool(value) ?? defaultVal;
   }
 }

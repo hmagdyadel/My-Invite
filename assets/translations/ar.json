@@ -294,6 +294,10 @@
   "can_not_check_in_or_out": "لا يمكنك تسجيل الدخول أو الخروج لأن تاريخ الحدث ليس اليوم.",
   "location_is_not_set_correctly": "الموقع الخاص بك غير مضبوط بشكل صحيح. يرجى التواصل مع فريق دعم تقنية المعلومات لتحديث تفاصيل موقعك في ملفك الشخصي.",
   "clear": "مسح",
-  "see_details": "رؤية التفاصيل"
+  "see_details": "رؤية التفاصيل",
+  "notification_title": "تذكير بالحدث",
+  "event_five_days_reminder": "حدث {eventTitle} سيبدأ خلال 5 أيام",
+  "event_two_days_reminder": "حدث {eventTitle} سيبدأ خلال يومين",
+  "event_today_reminder": "حدثك {eventTitle} اليوم"
 }
 
