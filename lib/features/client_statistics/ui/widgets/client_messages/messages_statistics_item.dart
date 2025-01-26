@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models/client_messages_statistics_response.dart';
-import 'messages_statistics_char.dart';
+import 'messages_statistics_chart.dart';
 import 'messages_statistics_header.dart';
 import 'messages_statistics_table.dart';
 

@@ -18,6 +18,7 @@ import '../../features/client_statistics/ui/client_statistics_screen.dart';
 import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_confirmation_services_screen.dart';
 import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_message_status.dart';
 import '../../features/client_statistics/ui/widgets/client_messages/client_messages_statistics_screen.dart';
+import '../../features/client_statistics/ui/widgets/sent_cards_services/sent_cards_services_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
@@ -195,6 +196,14 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
             child: ClientMessageStatus(eventId: eventId, type: type,title: title),
+          ),
+        );
+      case Routes.sentCardsServicesScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: SentCardsServicesScreen(eventId: eventId),
           ),
         );
       default:

@@ -36,7 +36,7 @@ class ApiConstants {
   static const String guestsCardsNotSent = 'Client/GetNotSentCardGuests';
   static const String allMessageStatisticsEndpoint = 'Client/getmessagesstatisticsinfo';
 
-  static const String cardSendingServiceEndpoint = 'Client/getguestcardstatisticsinfo?eventId=';
+  static const String cardSendingServiceEndpoint = 'Client/getguestcardstatisticsinfo';
 
 }
 

@@ -56,6 +56,17 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
     );
   }
 
+  void getSentCardsServices(String eventId) async {
+    emit(const ClientStatisticsStates.loading());
+    final response = await _clientStatisticsRepo.getSentCardsServices(eventId);
+    response.when(
+      success: (response) {
+       emit(ClientStatisticsStates.successFetchData(response));
+      },
+      failure: (error) => emit(ClientStatisticsStates.error(message: error.toString())),
+    );
+  }
+
   void getClientConfirmationService(String eventId) async {
     emit(const ClientStatisticsStates.loading());
     final response = await _clientStatisticsRepo.getClientConfirmationService(eventId);
