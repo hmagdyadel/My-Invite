@@ -299,6 +299,7 @@
   "event_five_days_reminder": "حدث {} سيبدأ خلال 5 أيام",
   "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
   "event_today_reminder": "حدثك {} اليوم",
-  "no_available_details": "لا يوجد تفاصيل متاحة"
+  "no_available_details": "لا يوجد تفاصيل متاحة",
+  "already_reserved_an_event": "لقد قمت بحجز فعالية بالفعل في نفس اليوم."
 }
 

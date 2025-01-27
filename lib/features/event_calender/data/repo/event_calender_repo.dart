@@ -32,6 +32,9 @@ class EventCalenderRepo {
       debugPrint('success: ${response.toString()}');
       return ApiResult.success(response);
     } on DioException catch (error) {
+      if(error.response!.data.contains(" on the same day")) {
+        return ApiResult.failure(error.response!.data);
+      }
       return ApiResult.failure(error.toString());
     } catch (error) {
       debugPrint('Error2: ${error.toString()}');

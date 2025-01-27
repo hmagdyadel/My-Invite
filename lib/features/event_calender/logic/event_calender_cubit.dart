@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/models/calender_events.dart';
@@ -38,7 +39,12 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
 
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
       },
-      failure: (error) => emit(EventCalenderStates.errorReservation(message: error.toString())),
+      failure: (error) {
+        if(error.contains(" on the same day")) {
+          emit( EventCalenderStates.errorReservation(message: "already_reserved_an_event".tr()));
+        }
+        emit(EventCalenderStates.errorReservation(message: error.toString()));
+      },
     );
   }
 
