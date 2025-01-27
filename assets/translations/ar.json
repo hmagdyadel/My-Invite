@@ -296,8 +296,8 @@
   "clear": "مسح",
   "see_details": "رؤية التفاصيل",
   "notification_title": "تذكير بالحدث",
-  "event_five_days_reminder": "حدث {eventTitle} سيبدأ خلال 5 أيام",
-  "event_two_days_reminder": "حدث {eventTitle} سيبدأ خلال يومين",
-  "event_today_reminder": "حدثك {eventTitle} اليوم"
+  "event_five_days_reminder": "حدث {} سيبدأ خلال 5 أيام",
+  "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
+  "event_today_reminder": "حدثك {} اليوم"
 }
 

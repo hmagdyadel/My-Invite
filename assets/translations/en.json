@@ -297,7 +297,7 @@
   "clear": "Clear",
   "see_details": "See Details",
   "notification_title": "Event Reminder",
-  "event_five_days_reminder": "Event {eventTitle} is coming up in 5 days",
-  "event_two_days_reminder": "Event {eventTitle} is coming up in 2 days",
-  "event_today_reminder": "Your event {eventTitle} is today"
+  "event_five_days_reminder": "Event {} is coming up in 5 days",
+  "event_two_days_reminder": "Event {} is coming up in 2 days",
+  "event_today_reminder": "Your event {} is today"
 }
