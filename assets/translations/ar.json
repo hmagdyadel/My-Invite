@@ -298,6 +298,7 @@
   "notification_title": "تذكير بالحدث",
   "event_five_days_reminder": "حدث {} سيبدأ خلال 5 أيام",
   "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
-  "event_today_reminder": "حدثك {} اليوم"
+  "event_today_reminder": "حدثك {} اليوم",
+  "no_available_details": "لا يوجد تفاصيل متاحة"
 }
 

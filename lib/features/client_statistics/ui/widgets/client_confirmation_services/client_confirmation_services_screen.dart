@@ -113,11 +113,13 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
 
   Widget _buildItemRow(BuildContext context, String title, String number,
       {bool isHeader = true, GuestListType? type, String eventId = ""}) {
+    // Ensure the number is parsed safely
+    final int parsedNumber = int.tryParse(number) ?? 0;
     return GestureDetector(
-      onTap: !isHeader
-          ? null
-          : () {
-              context.pushNamed(
+      onTap: isHeader
+          ?  () {
+        if(parsedNumber > 0) {
+          context.pushNamed(
                 Routes.clientMessageStatus,
                 arguments: {
                   'eventId': eventId,
@@ -125,7 +127,10 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                   'title': guestListTypeToString(type!),
                 },
               );
-            },
+        }else{
+          context.showSuccessToast('no_available_details'.tr());
+        }
+            }:null,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),

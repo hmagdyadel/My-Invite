@@ -48,7 +48,7 @@ class SentCardsServicesScreen extends StatelessWidget {
                         _buildItemRow(context, "total_guests_received_cards".tr(), events.deliveredGuestsNumber.toString(), type: GuestListType.guestsReceivedCards, eventId: eventId),
                         _buildItemRow(context, "total_guests_cards_failed".tr(), events.failedGuestsNumber.toString(), type: GuestListType.guestsCardsFailed, eventId: eventId),
                         _buildItemRow(context, "total_guests_cards_not_sent".tr(), events.notSentGuestsNumber.toString(), type: GuestListType.guestsCardsNotSent, eventId: eventId),
-                        _buildItemRow(context, "total_guests_attended".tr(), events.attendedGuestsNumber.toString(), type: GuestListType.failedGuests, eventId: eventId,isHeader: false),
+                        _buildItemRow(context, "total_guests_attended".tr(), events.attendedGuestsNumber.toString(), type: GuestListType.failedGuests, eventId: eventId),
                         SentCardsServicesChart(details: events),
                       ],
                     ),
@@ -64,19 +64,25 @@ class SentCardsServicesScreen extends StatelessWidget {
   }
 
   Widget _buildItemRow(BuildContext context, String title, String number, {bool isHeader = true, GuestListType? type, String eventId = ""}) {
+    // Ensure the number is parsed safely
+    final int parsedNumber = int.tryParse(number) ?? 0;
     return GestureDetector(
-      onTap: !isHeader
-          ? null
-          : () {
-              context.pushNamed(
-                Routes.clientMessageStatus,
-                arguments: {
-                  'eventId': eventId,
-                  'type': type,
-                  'title': guestListTypeToString(type!),
-                },
-              );
-            },
+      onTap: isHeader
+          ? () {
+              if(parsedNumber > 0) {
+                context.pushNamed(
+                  Routes.clientMessageStatus,
+                  arguments: {
+                    'eventId': eventId,
+                    'type': type,
+                    'title': guestListTypeToString(type!),
+                  },
+                );
+              }else {
+                context.showSuccessToast('no_available_details'.tr());
+              }
+            }
+          : null,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),
