@@ -85,8 +85,8 @@ class ReservationDialogBox extends StatelessWidget {
           });
         }, reservationSuccess: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.pop();
             NotificationScheduler().scheduleNotifications(event: event);
+            context.pop();
             context.showSuccessToast("event_reserved_text".tr());
           });
         });
