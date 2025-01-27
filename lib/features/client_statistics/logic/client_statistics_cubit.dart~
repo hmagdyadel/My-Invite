@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter/material.dart';
 import '../../../core/networking/api_result.dart';
 import '../../client_events/data/models/client_event_response.dart';
+import '../../client_events/data/models/client_messages_status_response.dart';
 import '../data/models/client_confirmation_service_response.dart';
 import '../data/models/client_messages_statistics_response.dart';
+import '../data/models/guest_type_list.dart';
 import '../data/repo/client_statistics_repo.dart';
 import 'client_statistics_states.dart';
 
@@ -30,6 +32,10 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
 
   ClientStatisticsCubit(this._clientStatisticsRepo) : super(const ClientStatisticsStates.initial());
   final _eventsHandler = PaginationHandler<ClientEventDetails>();
+  TextEditingController searchController = TextEditingController(text: "");
+  final _messagesHandler = PaginationHandler<ClientMessagesStatusDetails>();
+  String _lastSearchQuery = "";
+  bool _isSearching = false;
 
   void getClientMessageStatistics(String eventId) async {
     emit(const ClientStatisticsStates.loading());
@@ -58,9 +64,9 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
         final ClientConfirmationServiceResponse events = response;
 
         if (events.acceptedGuestsNumber != null || events.attendedGuestsNumber != null || events.declienedGuestsNumber != null || events.failedGuestsNumber != null || events.notSentGuestsNumber != null || events.totalGuestsNumber != null || events.totalGuestsNumber != null) {
-          emit(const ClientStatisticsStates.emptyInput());
-        } else {
           emit(ClientStatisticsStates.successFetchData(response));
+        } else {
+          emit(const ClientStatisticsStates.emptyInput());
         }
       },
       failure: (error) => emit(ClientStatisticsStates.error(message: error.toString())),
@@ -136,6 +142,67 @@ class ClientStatisticsCubit extends Cubit<ClientStatisticsStates> {
     );
   }
 
+  /// Fetch paginated Client Messages Status
+  Future<void> getClientMessagesStatus(String eventId, GuestListType type, {bool isNextPage = false}) async {
+    if (!isNextPage) {
+      _isSearching = false;
+      _lastSearchQuery = "";
+    }
+
+    await _handlePaginatedRequest<ClientMessagesStatusDetails, ClientMessagesStatusResponse>(
+      handler: _messagesHandler,
+      apiCall: (page) => _clientStatisticsRepo.getClientMessagesStatusDetails(eventId, page, _lastSearchQuery, type),
+      getItems: (response) => (response as ClientMessagesStatusResponse).clientMessagesDetailsList ?? [],
+      getPages: (response) => (response as ClientMessagesStatusResponse).noOfPages ?? 1,
+      createResponse: (items, totalPages) => ClientMessagesStatusResponse(clientMessagesDetailsList: List<ClientMessagesStatusDetails>.from(items), noOfPages: totalPages),
+      isNextPage: isNextPage,
+    );
+  }
+
+  Future<void> searchMessageStatus({
+    required String eventId,
+    required String searchQuery,
+    required GuestListType type,
+    bool isNextPage = false,
+  }) async {
+    if (searchQuery.isEmpty) {
+      clearSearch();
+      getClientMessagesStatus(eventId, type);
+      return;
+    }
+
+    // Update search-related states
+    _lastSearchQuery = searchQuery;
+    _isSearching = true;
+
+    // Reset pagination handler if not loading next page
+    if (!isNextPage) {
+      _messagesHandler.reset();
+    }
+
+    // Use the same pagination handler method with search query
+    await _handlePaginatedRequest<ClientMessagesStatusDetails, ClientMessagesStatusResponse>(
+      handler: _messagesHandler,
+      apiCall: (page) => _clientStatisticsRepo.getClientMessagesStatusDetails(eventId, page, searchQuery, type),
+      getItems: (response) => (response as ClientMessagesStatusResponse).clientMessagesDetailsList ?? [],
+      getPages: (response) => (response as ClientMessagesStatusResponse).noOfPages ?? 1,
+      createResponse: (items, totalPages) => ClientMessagesStatusResponse(clientMessagesDetailsList: List<ClientMessagesStatusDetails>.from(items), noOfPages: totalPages),
+      isNextPage: isNextPage,
+    );
+  }
+
+  /// Clear search and reset state
+  void clearSearch() {
+    searchController.clear();
+    _lastSearchQuery = "";
+    _isSearching = false;
+    _messagesHandler.reset();
+  }
+
   // Public getters for state information
   bool get hasMoreEvents => _eventsHandler.hasMore;
+
+  bool get isSearching => _isSearching;
+
+  bool get hasMoreMessages => _messagesHandler.hasMore;
 }
