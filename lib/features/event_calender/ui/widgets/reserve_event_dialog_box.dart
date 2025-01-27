@@ -3,18 +3,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/services/notification_scheduler.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/go_button.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
+import '../../data/models/calender_events.dart';
 import '../../logic/event_calender_cubit.dart';
 import '../../logic/event_calender_states.dart';
 
 class ReservationDialogBox extends StatelessWidget {
-  final String eventTitle;
-  final String eventId;
+  final CalenderEventsResponse event;
 
-  const ReservationDialogBox({super.key, required this.eventTitle, required this.eventId});
+  const ReservationDialogBox({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class ReservationDialogBox extends StatelessWidget {
                 height: 12,
               ),
               SubTitleText(
-                text: "${"reserve".tr()}\n $eventTitle",
+                text: "${"reserve".tr()}\n ${event.eventTitle}",
                 color: Colors.grey.shade900,
                 fontSize: 20,
               ),
@@ -53,7 +54,7 @@ class ReservationDialogBox extends StatelessWidget {
                 GoButton(
                   fun: () {
                     //context.pop();
-                    context.read<EventCalenderCubit>().reserveEvent(eventId);
+                    context.read<EventCalenderCubit>().reserveEvent(event.id.toString());
                   },
                   titleKey: "yes".tr(),
                   textColor: Colors.white,
@@ -85,6 +86,7 @@ class ReservationDialogBox extends StatelessWidget {
         }, reservationSuccess: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.pop();
+            NotificationScheduler().scheduleNotifications(event: event);
             context.showSuccessToast("event_reserved_text".tr());
           });
         });
