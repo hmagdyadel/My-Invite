@@ -1,6 +1,5 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/dimensions/dimensions.dart';
 import '../../../core/helpers/app_utilities.dart';
@@ -20,42 +19,38 @@ class _SplashScreenState extends State<SplashScreen> {
     initialization();
   }
 
+  /// Initialization logic for the splash screen.
   void initialization() async {
     try {
-      // Initialize app utilities
-      await AppUtilities().initialize();
+      // Simulate a loading delay (e.g., for logo animation or splash duration)
+      await Future.delayed(const Duration(seconds: 3));
 
-      // Remove native splash screen
-      FlutterNativeSplash.remove();
+      // Initialize app utilities (e.g., load user data, settings, etc.)
+      await AppUtilities().initialize();
 
       if (!mounted) return;
 
-      // Get expiration date from login data
+      // Determine the next route based on the user's data
       final expirationStr = AppUtilities().loginData.expiration;
-
-      // Determine which screen to navigate to
       String nextRoute;
 
       if (expirationStr == null) {
-        // If no expiration date exists, go to onboarding
+        // No expiration date? Navigate to onboarding screen.
         nextRoute = Routes.onBoardingScreen;
       } else {
         try {
           final expirationDate = DateTime.parse(expirationStr);
           final now = DateTime.now();
 
-          // If expiration date is in the future, go to home
-          // If expired or in the past, go to onboarding
-          nextRoute = expirationDate.isAfter(now)
-              ? Routes.homeScreen
-              : Routes.onBoardingScreen;
+          // If expiration date is in the future, go to home screen.
+          // If expired or invalid, navigate to onboarding.
+          nextRoute = expirationDate.isAfter(now) ? Routes.homeScreen : Routes.onBoardingScreen;
 
           debugPrint('Expiration date: $expirationDate');
           debugPrint('Current date: $now');
           debugPrint('Navigating to: $nextRoute');
         } catch (e) {
           debugPrint('Error parsing expiration date: $e');
-          // If there's an error parsing the date, default to onboarding
           nextRoute = Routes.onBoardingScreen;
         }
       }
@@ -66,7 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     } catch (e) {
       debugPrint('Error during initialization: $e');
-      // In case of any error, default to onboarding
       if (mounted) {
         context.pushReplacementNamed(Routes.onBoardingScreen);
       }
@@ -76,12 +70,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff162d2b),
+      backgroundColor: const Color(0xff162d2b), // Splash background color
       body: Center(
         child: Image.asset(
-          Assets.imagesAppLogo,
-          width: width,
-          height: height,
+          Assets.imagesAppLogo, // Path to your app logo
+          width: width, // Adjust size as needed
+          height: height, // Adjust size as needed
           fit: BoxFit.contain,
         ),
       ),
