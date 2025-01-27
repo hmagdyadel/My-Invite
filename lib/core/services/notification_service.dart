@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -23,6 +25,26 @@ class NotificationService {
     playSound: true,
     icon: '@mipmap/launcher_icon',
   );
+
+  final DarwinNotificationDetails _iOSNotificationDetails =
+  const DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
+
+  Future<void> requestIOSPermissions() async {
+    if (Platform.isIOS) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
+  }
 
   Future<void> init() async {
     // Initialize timezones
@@ -58,6 +80,8 @@ class NotificationService {
         importance: Importance.high,
       ),
     );
+    // Request iOS permissions
+    await requestIOSPermissions();
   }
 
   String _getLocalizedNotificationMessage(String eventTitle, NotificationType type) {
@@ -85,6 +109,7 @@ class NotificationService {
       // Create notification details
       final NotificationDetails notificationDetails = NotificationDetails(
         android: _androidNotificationDetails,
+        iOS: _iOSNotificationDetails,
       );
       final localizedTitle = 'notification_title'.tr();
       final localizedBody = _getLocalizedNotificationMessage(title, type);
@@ -109,9 +134,7 @@ class NotificationService {
     required DateTime eventStart,
     required String eventTitle,
   }) async {
-    // Schedule notifications 48 and 24 hours before event
-    // final oneDay = eventStart.subtract(const Duration(days: 1));
-    //final twoDay = eventStart.subtract(const Duration(days: 2));
+
 
     await scheduleNotification(
       id: eventId,
@@ -119,21 +142,21 @@ class NotificationService {
       title: eventTitle,
       type: NotificationType.today,
     );
-    // final oneDayBefore = eventStart.subtract(const Duration(days: 1));
-    // await scheduleNotification(
-    //   id: Random().nextInt(100000),
-    //   scheduledTime: oneDayBefore,
-    //   title: eventTitle,
-    //   type: NotificationType.twoDays,
-    // );
-    //
-    // final twoDaysBefore = eventStart.subtract(const Duration(days: 2));
-    // await scheduleNotification(
-    //   id: Random().nextInt(100000),
-    //   scheduledTime: twoDaysBefore,
-    //   title: eventTitle,
-    //   type: NotificationType.twoDays,
-    // );
+    final oneDayBefore = eventStart.subtract(const Duration(days: 1));
+    await scheduleNotification(
+      id: eventId,
+      scheduledTime: oneDayBefore,
+      title: eventTitle,
+      type: NotificationType.twoDays,
+    );
+
+    final twoDaysBefore = eventStart.subtract(const Duration(days: 2));
+    await scheduleNotification(
+      id: eventId,
+      scheduledTime: twoDaysBefore,
+      title: eventTitle,
+      type: NotificationType.twoDays,
+    );
   }
 
   Future<void> cancelNotification(int id) async {
