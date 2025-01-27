@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart' as permission;
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
-import '../../../../core/services/notification_service.dart';
+import '../../../../core/services/notification_scheduler.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
@@ -126,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
    await permission.Permission.notification.request();
    await permission.Permission.scheduleExactAlarm.request();
     DateTime selectedTime = DateTime.now().add(const Duration(seconds: 15)); // For testing purposes
-    NotificationService().scheduleEventNotifications(eventId: 123,eventStart: selectedTime,eventTitle: "Hello World");
+   NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
   }
 
   @override

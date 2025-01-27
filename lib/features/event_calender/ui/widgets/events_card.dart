@@ -44,8 +44,7 @@ class EventCard extends StatelessWidget {
                 return BlocProvider.value(
                   value: context.read<EventCalenderCubit>(),
                   child: ReservationDialogBox(
-                    eventTitle: event.eventTitle ?? "",
-                    eventId: event.id.toString(),
+                    event: event,
                   ),
                 );
               },
