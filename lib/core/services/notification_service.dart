@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -26,23 +25,27 @@ class NotificationService {
     icon: '@mipmap/launcher_icon',
   );
 
-  final DarwinNotificationDetails _iOSNotificationDetails =
-  const DarwinNotificationDetails(
+  final DarwinNotificationDetails _iOSNotificationDetails = const DarwinNotificationDetails(
     presentAlert: true,
     presentBadge: true,
     presentSound: true,
   );
 
-  Future<void> requestIOSPermissions() async {
+  Future<bool> checkAndRequestNotificationPermissions() async {
     if (Platform.isIOS) {
-      await flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
+      final settings = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+            critical: true,
+            // For critical notifications
+            provisional: true, // For provisional notifications
+          );
+      return settings ?? false;
+    } else {
+      // For Android
+      final granted = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
+      return granted ?? false;
     }
   }
 
@@ -81,7 +84,7 @@ class NotificationService {
       ),
     );
     // Request iOS permissions
-    await requestIOSPermissions();
+    await checkAndRequestNotificationPermissions();
   }
 
   String _getLocalizedNotificationMessage(String eventTitle, NotificationType type) {
@@ -134,8 +137,6 @@ class NotificationService {
     required DateTime eventStart,
     required String eventTitle,
   }) async {
-
-
     await scheduleNotification(
       id: eventId,
       scheduledTime: eventStart,
