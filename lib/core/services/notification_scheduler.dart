@@ -1,68 +1,50 @@
 import 'package:app/core/helpers/app_utilities.dart';
-import 'package:flutter/material.dart';
+
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../helpers/time_zone.dart';
 import 'notification_service.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-/// A class responsible for scheduling notifications for calendar events.
-/// This class interacts with the [NotificationService] to schedule notifications
-/// at specific times or for specific events.
 class NotificationScheduler {
-  /// Schedules a test notification at a specific date and time.
-  ///
-  /// Parameters:
-  /// - `dateTime`: The date and time at which the notification should be scheduled.
-  ///
-  /// This method is primarily used for testing notification functionality.
-  Future<void> scheduleNotificationsAtSpecificTime(DateTime dateTime) async {
+  Future scheduleNotificationsAtSpecificTime(DateTime dateTime) async {
     try {
-      // Initialize the timezone database
       await TimeZone().initializeTimeZone();
-
-      // Schedule a test notification using the NotificationService
       await NotificationService().scheduleEventNotifications(
-        eventId: 150, // Test event ID
-        eventStart: tz.TZDateTime.from(dateTime, tz.local), // Convert to timezone-aware datetime
-        eventTitle: 'Test Local Notification', // Test event title
+        eventId: 1,
+        eventStart: tz.TZDateTime.from(dateTime, tz.local),
+        eventTitle: 'Test Local Notification',
       );
     } catch (e) {
-      // Log any errors that occur during scheduling
-      debugPrint('Error: $e');
+      // debugPrint('Error: $e');
     }
   }
 
-  /// Schedules notifications for a calendar event.
-  ///
-  /// Parameters:
-  /// - `event`: The calendar event for which notifications should be scheduled.
-  ///
-  /// This method schedules a notification for the event's start time.
-  /// Notifications are only scheduled if the user has allowed notifications in the app settings.
-  Future<void> scheduleNotifications({required CalenderEventsResponse event}) async {
-    // Check if notifications are allowed in the app settings
+  Future scheduleNotifications({required CalenderEventsResponse event}) async {
     bool notificationsAllowed = AppUtilities().notifications;
-    if (notificationsAllowed == false) return; // Exit if notifications are not allowed
+    if (notificationsAllowed == false) return;
 
     try {
-      // Initialize the timezone database
       await TimeZone().initializeTimeZone();
 
-      // Parse the event start time from the event data
       DateTime eventStart = DateTime.parse(event.eventFrom ?? "");
 
-      // Convert the event start time to a timezone-aware datetime
       final tzEventStart = tz.TZDateTime.from(eventStart, tz.local);
+      final oneDayBefore = tzEventStart.subtract(const Duration(days: 1));
+      final twoDayBefore = tzEventStart.subtract(const Duration(days: 2));
 
-      // Schedule a notification for the event's start time
       await NotificationService().scheduleEventNotifications(
-        eventId: event.id!, // Event ID
-        eventStart: tzEventStart, // Scheduled time
-        eventTitle: event.eventTitle ?? "Event Due", // Event title
+        eventId: event.id!,
+        eventStart: oneDayBefore,
+        eventTitle: event.eventTitle ?? "Event Due",
+      );
+
+      await NotificationService().scheduleEventNotifications(
+        eventId: int.parse('${event.id}02020'),
+        eventStart: twoDayBefore,
+        eventTitle: event.eventTitle ?? "Event Due",
       );
     } catch (e) {
-      // Log any errors that occur during scheduling
-      debugPrint('Error: $e');
+      // debugPrint('Error: $e');
     }
   }
 }
