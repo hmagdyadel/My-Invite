@@ -32,25 +32,22 @@ class NotificationService {
     icon: '@mipmap/launcher_icon', // Notification icon
   );
 
-  /// iOS-specific notification details.
-  final DarwinNotificationDetails _iOSNotificationDetails = const DarwinNotificationDetails(
-    presentAlert: true, // Show alert
-    presentBadge: true, // Show badge
-    presentSound: true, // Play sound
-  );
-
   /// Checks and requests notification permissions from the user.
   /// Returns `true` if permissions are granted, otherwise `false`.
   Future<bool> checkAndRequestNotificationPermissions() async {
     if (Platform.isIOS) {
       // Request permissions for iOS
       final settings = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-        alert: true, // Allow alerts
-        badge: true, // Allow badges
-        sound: true, // Allow sounds
-        critical: true, // Allow critical notifications
-        provisional: true, // Allow provisional notifications
-      );
+            alert: true,
+            // Allow alerts
+            badge: true,
+            // Allow badges
+            sound: true,
+            // Allow sounds
+            critical: true,
+            // Allow critical notifications
+            provisional: true, // Allow provisional notifications
+          );
       return settings ?? false;
     } else {
       // Request permissions for Android
@@ -73,9 +70,15 @@ class NotificationService {
 
     // iOS initialization settings
     const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: true,
+      requestSoundPermission: true,
+      // Changed to true
+      requestBadgePermission: true,
+      // Changed to true
+      requestAlertPermission: false,
+      // Changed to false - we'll request it explicitly
+      defaultPresentAlert: true,
+      defaultPresentBadge: true,
+      defaultPresentSound: true,
     );
 
     // Combined initialization settings for both platforms
@@ -134,9 +137,21 @@ class NotificationService {
       final tzDateTime = tz.TZDateTime.from(scheduledTime, tz.local);
 
       // Create notification details for both platforms
+      /// iOS-specific notification details.
+      // Add iOS-specific notification details
+      final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        sound: 'default',
+        // Add this
+        badgeNumber: 1,
+        // Add this
+        threadIdentifier: id.toString(), // Add this for grouping
+      );
       final NotificationDetails notificationDetails = NotificationDetails(
         android: _androidNotificationDetails,
-        iOS: _iOSNotificationDetails,
+        iOS: iOSPlatformChannelSpecifics,
       );
 
       // Localize the notification title and body
