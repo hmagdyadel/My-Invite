@@ -36,25 +36,28 @@ class NotificationService {
   /// Returns `true` if permissions are granted, otherwise `false`.
   Future<bool> checkAndRequestNotificationPermissions() async {
     if (Platform.isIOS) {
-      // Request permissions for iOS
-      final settings = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-            alert: true,
-            // Allow alerts
-            badge: true,
-            // Allow badges
-            sound: true,
-            // Allow sounds
-            critical: true,
-            // Allow critical notifications
-            provisional: true, // Allow provisional notifications
-          );
-      return settings ?? false;
+      try {
+        final settings = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
+              alert: true,
+              badge: true,
+              sound: true,
+              critical: true,
+              provisional: false, // Change to false for explicit permission request
+            );
+        // Log the permission status
+        debugPrint('iOS notification permissions status: $settings');
+        return settings ?? false;
+      } catch (e) {
+        debugPrint('Error requesting iOS notification permissions: $e');
+        return false;
+      }
     } else {
       // Request permissions for Android
       final granted = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
       return granted ?? false;
     }
   }
+
 
   /// Initializes the notification service.
   /// This includes setting up timezones, initializing notification settings,
@@ -70,12 +73,12 @@ class NotificationService {
 
     // iOS initialization settings
     const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings(
-      requestSoundPermission: true,
-      // Changed to true
-      requestBadgePermission: true,
-      // Changed to true
+      requestSoundPermission: false,
+      // Change to false - we'll request it in checkAndRequestNotificationPermissions
+      requestBadgePermission: false,
+      // Change to false - we'll request it in checkAndRequestNotificationPermissions
       requestAlertPermission: false,
-      // Changed to false - we'll request it explicitly
+      // Already false - good
       defaultPresentAlert: true,
       defaultPresentBadge: true,
       defaultPresentSound: true,
@@ -144,10 +147,11 @@ class NotificationService {
         presentBadge: true,
         presentSound: true,
         sound: 'default',
-        // Add this
         badgeNumber: 1,
+        threadIdentifier: id.toString(),
+        interruptionLevel: InterruptionLevel.active,
         // Add this
-        threadIdentifier: id.toString(), // Add this for grouping
+        categoryIdentifier: 'event_reminder', // Add this
       );
       final NotificationDetails notificationDetails = NotificationDetails(
         android: _androidNotificationDetails,
@@ -195,18 +199,18 @@ class NotificationService {
     );
 
     // Schedule a notification for one day before the event
-    final oneDayBefore = eventStart.subtract(const Duration(days: 1));
+    final fiveDayBefore = eventStart.subtract(const Duration(days: 5));
     await scheduleNotification(
-      id: eventId,
-      scheduledTime: oneDayBefore,
+      id: eventId+1,
+      scheduledTime: fiveDayBefore,
       title: eventTitle,
-      type: NotificationType.twoDays,
+      type: NotificationType.fiveDays,
     );
 
     // Schedule a notification for two days before the event
     final twoDaysBefore = eventStart.subtract(const Duration(days: 2));
     await scheduleNotification(
-      id: eventId,
+      id: eventId+2,
       scheduledTime: twoDaysBefore,
       title: eventTitle,
       type: NotificationType.twoDays,

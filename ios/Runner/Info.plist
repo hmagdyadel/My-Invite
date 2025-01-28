@@ -32,24 +32,20 @@
 		<string>This app needs microphone access to record videos</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs photo gallery access select pictures</string>
+		<key>NSUserNotificationUsageDescription</key>
+        <string>We need to send you notifications for important updates and reminders</string>
+        <key>NSUserNotificationsUsageDescription</key>
+        <string>We need to send you notifications for important updates and reminders</string>
 
-		<!-- Updated and new notification-related permissions -->
-		<key>NSUserNotificationsUsageDescription</key>
-		<string>We need to send you notifications about your upcoming events</string>
-		<key>NSCalendarsUsageDescription</key>
-		<string>We need calendar access to schedule event notifications</string>
 
 		<!-- Background modes configuration -->
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
-			<string>remote-notification</string>
+            <string>notification</string>
 			<string>processing</string>
+			<string>remote-notification</string>
 		</array>
-
-		<!-- Notification settings -->
-		<key>NSUserNotificationAlertStyle</key>
-		<string>alert</string>
 
 		<!-- App Transport Security -->
 		<key>NSAppTransportSecurity</key>
@@ -84,14 +80,5 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 
-		<!-- Critical alert settings -->
-		<key>UNAuthorizationOptions</key>
-		<array>
-			<string>alert</string>
-			<string>badge</string>
-			<string>sound</string>
-			<string>criticalAlert</string>
-			<string>provisional</string>
-		</array>
 	</dict>
 </plist>
