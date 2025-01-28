@@ -1,6 +1,5 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
-import 'package:app/core/services/notification_service.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -128,7 +127,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
    await permission.Permission.scheduleExactAlarm.request();
     DateTime selectedTime = DateTime.now().add(const Duration(seconds: 15)); // For testing purposes
    NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
-   NotificationService().showInstantNotification(title: "Test Notification", body: "This is a test notification.");
+   //NotificationService().showInstantNotification(title: "Test Notification", body: "This is a test notification.");
   }
 
   @override
