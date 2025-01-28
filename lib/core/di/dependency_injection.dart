@@ -8,6 +8,8 @@ import '../../features/client_statistics/data/repo/client_statistics_repo.dart';
 import '../../features/client_statistics/logic/client_statistics_cubit.dart';
 import '../../features/event_calender/data/repo/event_calender_repo.dart';
 import '../../features/event_calender/logic/event_calender_cubit.dart';
+import '../../features/events_scan_history/data/repo/gatekeeper_events_repo.dart';
+import '../../features/events_scan_history/logic/gatekeeper_events_cubit.dart';
 import '../../features/home/data/repo/home_repo.dart';
 import '../../features/home/logic/home_cubit.dart';
 import '../../features/location/data/repo/location_repo.dart';
@@ -18,8 +20,7 @@ import '../../features/qr_code_scanner/data/repo/qr_code_scanner_repo.dart';
 import '../../features/qr_code_scanner/logic/qr_code_scanner_cubit.dart';
 import '../../features/register/data/repo/register_repo.dart';
 import '../../features/register/logic/register_cubit.dart';
-import '../../features/scan_history/data/repo/gatekeeper_events_repo.dart';
-import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
+
 import '../networking/api_service.dart';
 import '../networking/dio_factory.dart';
 

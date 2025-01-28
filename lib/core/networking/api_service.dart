@@ -9,6 +9,8 @@ import '../../features/client_statistics/data/models/client_confirmation_service
 import '../../features/client_statistics/data/models/client_messages_statistics_response.dart';
 import '../../features/client_statistics/data/models/sent_cards_services_response.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
+import '../../features/events_scan_history/data/models/event_details_response.dart';
+import '../../features/events_scan_history/data/models/gatekeeper_events_response.dart';
 import '../../features/home/data/models/profile_response.dart';
 import '../../features/location/data/models/city_response.dart';
 import '../../features/location/data/models/country_response.dart';
@@ -18,8 +20,7 @@ import '../../features/qr_code_scanner/data/models/scan_body_request.dart';
 import '../../features/qr_code_scanner/data/models/scan_response.dart';
 import '../../features/register/data/models/location_response.dart';
 import '../../features/register/data/models/register_request.dart';
-import '../../features/scan_history/data/models/event_details_response.dart';
-import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
+
 import 'api_constants.dart';
 
 part 'api_service.g.dart';

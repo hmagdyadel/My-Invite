@@ -1,7 +1,7 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
-import 'package:app/features/scan_history/ui/widgets/scan_history_item.dart';
+import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -224,6 +224,13 @@ class NotificationService {
     );
   }
 
+  /// Get all pending (scheduled) notifications
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async {
+    final List<PendingNotificationRequest> pendingNotifications =
+    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotifications;
+  }
+
   /// Cancels a specific notification by its ID.
   Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);

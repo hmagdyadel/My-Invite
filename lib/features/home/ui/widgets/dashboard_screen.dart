@@ -121,13 +121,11 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
-  void testNotificationScheduling() async{
-
-   await permission.Permission.notification.request();
-   await permission.Permission.scheduleExactAlarm.request();
+  void testNotificationScheduling() async {
+    await permission.Permission.notification.request();
+    await permission.Permission.scheduleExactAlarm.request();
     DateTime selectedTime = DateTime.now().add(const Duration(seconds: 15)); // For testing purposes
-   NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
-   //NotificationService().showInstantNotification(title: "Test Notification", body: "This is a test notification.");
+    NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
   }
 
   @override

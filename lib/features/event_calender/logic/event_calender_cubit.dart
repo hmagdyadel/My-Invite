@@ -11,6 +11,14 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
 
   EventCalenderCubit(this._eventCalenderRepo) : super(const EventCalenderStates.initial());
 
+  CalenderEventsResponse? _calenderEventsResponse;
+
+  CalenderEventsResponse get calenderEventsResponse => _calenderEventsResponse ?? CalenderEventsResponse();
+
+  set calenderEventsResponse(CalenderEventsResponse event) {
+    _calenderEventsResponse = event;
+  }
+
   void getEventsCalendar() async {
     emit(const EventCalenderStates.loading());
     final response = await _eventCalenderRepo.getEventsCalendar();
@@ -36,12 +44,11 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     final response = await _eventCalenderRepo.reserveEvent(eventId);
     response.when(
       success: (response) {
-
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
       },
       failure: (error) {
-        if(error.contains(" on the same day")) {
-          emit( EventCalenderStates.errorReservation(message: "already_reserved_an_event".tr()));
+        if (error.contains(" on the same day")) {
+          emit(EventCalenderStates.errorReservation(message: "already_reserved_an_event".tr()));
         }
         emit(EventCalenderStates.errorReservation(message: error.toString()));
       },
@@ -66,11 +73,11 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     }).toList();
   }
 
-  // Future<void> reserveEvent(CalenderEventsResponse event) async {
-  //   emit(const EventCalenderStates.reservationLoading());
-  //   // Implement your reservation logic here
-  //   // Similar to old reserveEvent method
-  //   emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
-  //   getEventsCalendar(); // Refresh events after reservation
-  // }
+// Future<void> reserveEvent(CalenderEventsResponse event) async {
+//   emit(const EventCalenderStates.reservationLoading());
+//   // Implement your reservation logic here
+//   // Similar to old reserveEvent method
+//   emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
+//   getEventsCalendar(); // Refresh events after reservation
+// }
 }

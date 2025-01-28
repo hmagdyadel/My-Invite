@@ -53,16 +53,17 @@ class CalenderView extends StatelessWidget {
               focusedDay: focusedDay ?? DateTime.now(),
               selectedDayPredicate: (day) => isSameDay(selectedDay, day),
               eventLoader: (day) => _getEventsForDay(events, day),
-              onDaySelected: (selectedDay, focusedDay)async {
+              onDaySelected: (selectedDay, focusedDay) async {
                 if (events.isNotEmpty) {
                   // Update selected day in state
                   context.read<EventCalenderCubit>().onDaySelected(selectedDay, focusedDay);
                   // Show bottom sheet with day's events
-                  CalenderEventsResponse selectedEvent=await _showDayEventsInModalSheet(
+                  CalenderEventsResponse selectedEvent = await _showDayEventsInModalSheet(
                     context,
                     selectedDay,
                     _getEventsForDay(events, selectedDay),
                   );
+                  context.read<EventCalenderCubit>().calenderEventsResponse = selectedEvent;
                   showDialog(
                     context: context,
                     builder: (BuildContext dialogContext) {
@@ -169,8 +170,8 @@ class CalenderView extends StatelessWidget {
     BuildContext context,
     DateTime selectedDate,
     List<CalenderEventsResponse> events,
-  )async {
-   var selectedEvent=await showModalBottomSheet(
+  ) async {
+    var selectedEvent = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: bgColor,
@@ -179,11 +180,11 @@ class CalenderView extends StatelessWidget {
       ),
       builder: (context) {
         return EventsBottomSheet(
-        selectedDate: selectedDate,
-        events: events,
-      );
+          selectedDate: selectedDate,
+          events: events,
+        );
       },
     );
-   return selectedEvent;
+    return selectedEvent;
   }
 }

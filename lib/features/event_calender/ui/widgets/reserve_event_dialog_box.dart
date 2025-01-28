@@ -76,22 +76,7 @@ class ReservationDialogBox extends StatelessWidget {
           ],
         );
       },
-      // listener: (context, current) {
-      //   current.whenOrNull(errorReservation: (error) {
-      //     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //
-      //      // context.showErrorToast("event_reservation_error_text".tr());
-      //       context.pop();
-      //     });
-      //   }, reservationSuccess: (response) {
-      //     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //       NotificationScheduler().scheduleNotifications(event: event);
-      //
-      //       //context.showSuccessToast("event_reserved_text".tr());
-      //       context.pop();
-      //     });
-      //   });
-      // },
+
     );
   }
 }
