@@ -18,8 +18,6 @@
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
 		<string>1.6.12</string>
-		<key>CFBundleSignature</key>
-		<string>????</string>
 		<key>CFBundleVersion</key>
 		<string>11</string>
 		<key>LSRequiresIPhoneOS</key>
@@ -32,10 +30,8 @@
 		<string>This app needs microphone access to record videos</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs photo gallery access select pictures</string>
-		<key>NSLocalNotificationUsageDescription</key>
-        <string>We need to send you notifications for important updates and reminders</string>
-
-
+		<key>NSRemoteNotificationUsageDescription</key>
+		<string>We need to send you notifications for important updates and reminders</string>
 
 		<!-- Background modes configuration -->
 		<key>UIBackgroundModes</key>
@@ -48,7 +44,7 @@
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
-			<true/>
+			<false/>
 		</dict>
 
 		<key>UILaunchStoryboardName</key>
@@ -76,6 +72,5 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
-
 	</dict>
 </plist>
