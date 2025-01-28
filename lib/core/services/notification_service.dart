@@ -58,7 +58,6 @@ class NotificationService {
     }
   }
 
-
   /// Initializes the notification service.
   /// This includes setting up timezones, initializing notification settings,
   /// and creating notification channels (for Android).
@@ -179,6 +178,14 @@ class NotificationService {
     }
   }
 
+  Future<void> showInstantNotification({required String title, required String body}) async {
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: AndroidNotificationDetails("channel_id", "channel_name", importance: Importance.high, priority: Priority.high),
+      iOS: DarwinNotificationDetails(),
+    );
+    await flutterLocalNotificationsPlugin.show(0, title, body, notificationDetails);
+  }
+
   /// Schedules multiple notifications for an event (today, one day before, and two days before).
   ///
   /// Parameters:
@@ -201,7 +208,7 @@ class NotificationService {
     // Schedule a notification for one day before the event
     final fiveDayBefore = eventStart.subtract(const Duration(days: 5));
     await scheduleNotification(
-      id: eventId+1,
+      id: eventId + 1,
       scheduledTime: fiveDayBefore,
       title: eventTitle,
       type: NotificationType.fiveDays,
@@ -210,7 +217,7 @@ class NotificationService {
     // Schedule a notification for two days before the event
     final twoDaysBefore = eventStart.subtract(const Duration(days: 2));
     await scheduleNotification(
-      id: eventId+2,
+      id: eventId + 2,
       scheduledTime: twoDaysBefore,
       title: eventTitle,
       type: NotificationType.twoDays,
