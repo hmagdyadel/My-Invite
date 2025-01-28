@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/notification_scheduler.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/go_button.dart';
 import '../../../../core/widgets/normal_text.dart';
@@ -19,9 +18,8 @@ class ReservationDialogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<EventCalenderCubit, EventCalenderStates>(
+    return BlocBuilder<EventCalenderCubit, EventCalenderStates>(
       buildWhen: (previous, current) => previous != current,
-      listenWhen: (previous, current) => current is ReservationLoading || current is ReservationSuccess || current is ErrorReservation,
       builder: (context, current) {
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
@@ -53,8 +51,9 @@ class ReservationDialogBox extends StatelessWidget {
               children: [
                 GoButton(
                   fun: () {
-                    //context.pop();
+
                     context.read<EventCalenderCubit>().reserveEvent(event.id.toString());
+                    context.pop();
                   },
                   titleKey: "yes".tr(),
                   textColor: Colors.white,
@@ -77,20 +76,22 @@ class ReservationDialogBox extends StatelessWidget {
           ],
         );
       },
-      listener: (context, current) {
-        current.whenOrNull(errorReservation: (error) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.pop();
-            context.showErrorToast("event_reservation_error_text".tr());
-          });
-        }, reservationSuccess: (response) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            NotificationScheduler().scheduleNotifications(event: event);
-            context.pop();
-            context.showSuccessToast("event_reserved_text".tr());
-          });
-        });
-      },
+      // listener: (context, current) {
+      //   current.whenOrNull(errorReservation: (error) {
+      //     WidgetsBinding.instance.addPostFrameCallback((_) {
+      //
+      //      // context.showErrorToast("event_reservation_error_text".tr());
+      //       context.pop();
+      //     });
+      //   }, reservationSuccess: (response) {
+      //     WidgetsBinding.instance.addPostFrameCallback((_) {
+      //       NotificationScheduler().scheduleNotifications(event: event);
+      //
+      //       //context.showSuccessToast("event_reserved_text".tr());
+      //       context.pop();
+      //     });
+      //   });
+      // },
     );
   }
 }

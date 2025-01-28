@@ -1,3 +1,4 @@
+import 'package:app/features/event_calender/ui/widgets/reserve_event_dialog_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,15 +53,26 @@ class CalenderView extends StatelessWidget {
               focusedDay: focusedDay ?? DateTime.now(),
               selectedDayPredicate: (day) => isSameDay(selectedDay, day),
               eventLoader: (day) => _getEventsForDay(events, day),
-              onDaySelected: (selectedDay, focusedDay) {
+              onDaySelected: (selectedDay, focusedDay)async {
                 if (events.isNotEmpty) {
                   // Update selected day in state
                   context.read<EventCalenderCubit>().onDaySelected(selectedDay, focusedDay);
                   // Show bottom sheet with day's events
-                  _showDayEventsInModalSheet(
+                  CalenderEventsResponse selectedEvent=await _showDayEventsInModalSheet(
                     context,
                     selectedDay,
                     _getEventsForDay(events, selectedDay),
+                  );
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return BlocProvider.value(
+                        value: context.read<EventCalenderCubit>(),
+                        child: ReservationDialogBox(
+                          event: selectedEvent,
+                        ),
+                      );
+                    },
                   );
                 }
               },
@@ -153,12 +165,12 @@ class CalenderView extends StatelessWidget {
   }
 
   /// Shows bottom sheet with events for selected day
-  void _showDayEventsInModalSheet(
+  Future<CalenderEventsResponse> _showDayEventsInModalSheet(
     BuildContext context,
     DateTime selectedDate,
     List<CalenderEventsResponse> events,
-  ) {
-    showModalBottomSheet(
+  )async {
+   var selectedEvent=await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: bgColor,
@@ -172,5 +184,6 @@ class CalenderView extends StatelessWidget {
       );
       },
     );
+   return selectedEvent;
   }
 }

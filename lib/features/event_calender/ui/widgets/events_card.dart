@@ -38,17 +38,9 @@ class EventCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return BlocProvider.value(
-                  value: context.read<EventCalenderCubit>(),
-                  child: ReservationDialogBox(
-                    event: event,
-                  ),
-                );
-              },
-            );
+            Navigator.pop(context,event);
+
+
           },
           child: Padding(
             padding: const EdgeInsets.all(16),

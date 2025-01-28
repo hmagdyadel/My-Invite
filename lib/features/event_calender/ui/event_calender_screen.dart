@@ -28,7 +28,15 @@ class EventCalenderScreen extends StatelessWidget {
           return state.when(
             initial: () => initialCalender(context),
             loading: () => initialCalender(context),
-            errorReservation: (error) => initialCalender(context),
+            errorReservation: (error) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                context.showErrorToast(error);
+                //context.pop();
+              });
+              return initialCalender(context);
+
+            },
             emptyInput: () {
               // Show error toast after frame is rendered and get events to reserve it
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,7 +56,15 @@ class EventCalenderScreen extends StatelessWidget {
               );
             },
             reservationLoading: () => initialCalender(context),
-            reservationSuccess: (message) => initialCalender(context),
+            reservationSuccess: (message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      context.showSuccessToast("event_reserved_text".tr());
+
+        });
+              return initialCalender(context);
+
+            },
             error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.showErrorToast(error);
