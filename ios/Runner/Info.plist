@@ -32,18 +32,15 @@
 		<string>This app needs microphone access to record videos</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs photo gallery access select pictures</string>
-		<key>NSUserNotificationUsageDescription</key>
+		<key>NSLocalNotificationUsageDescription</key>
         <string>We need to send you notifications for important updates and reminders</string>
-        <key>NSUserNotificationsUsageDescription</key>
-        <string>We need to send you notifications for important updates and reminders</string>
+
 
 
 		<!-- Background modes configuration -->
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
-            <string>notification</string>
-			<string>processing</string>
 			<string>remote-notification</string>
 		</array>
 
