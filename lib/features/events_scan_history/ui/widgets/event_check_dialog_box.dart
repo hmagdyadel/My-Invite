@@ -60,10 +60,10 @@ class EventCheckDialogBox extends StatelessWidget {
               children: [
                 GoButton(
                   fun: () async {
-                    if (!_isSameDay(event)) {
-                      context.pop();
-                      context.showSuccessToast("can_not_check_in_or_out".tr());
-                    } else {
+                    // if (!_isSameDay(event)) {
+                    //   context.pop();
+                    //   context.showSuccessToast("can_not_check_in_or_out".tr());
+                    // } else {
                       final position = await _getUserPosition(context);
                       final image = await Navigator.push(
                         context,
@@ -78,7 +78,7 @@ class EventCheckDialogBox extends StatelessWidget {
                             .read<GatekeeperEventsCubit>()
                             .eventCheckIn(event.id.toString(), position, image);
                       }
-                    }
+                    //}
                   },
                   titleKey: "check_in".tr(),
                   textColor: Colors.white,
@@ -89,16 +89,16 @@ class EventCheckDialogBox extends StatelessWidget {
                 ),
                 GoButton(
                   fun: () async {
-                    if (!_isSameDay(event)) {
-                      context.pop();
-                      context.showSuccessToast("can_not_check_in_or_out".tr());
-                    } else {
+                    // if (!_isSameDay(event)) {
+                    //   context.pop();
+                    //   context.showSuccessToast("can_not_check_in_or_out".tr());
+                    // } else {
                       final position = await _getUserPosition(context);
 
                       context
                           .read<GatekeeperEventsCubit>()
                           .eventCheckOut(event.id.toString(), position);
-                    }
+                   // }
                   },
                   titleKey: "check_out".tr(),
                   textColor: Colors.white,

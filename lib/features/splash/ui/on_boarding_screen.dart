@@ -80,7 +80,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> with WidgetsBinding
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SubTitleText(
-                text: tr("welcome"),  // Using tr() directly
+                text: "hello".tr(),  // Using tr() directly
                 color: Colors.white,
               ),
               NormalText(
