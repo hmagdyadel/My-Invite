@@ -120,8 +120,12 @@ class EventCheckDialogBox extends StatelessWidget {
           });
         }, successCheck: (response) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            print(" befiprtee $response");
             context.pop();
+
+            print('after $response');
             if (response.contains("In")) {
+              context.pop();
               context.showSuccessToast("checkInSuccess".tr());
             } else if (response.contains("Out")) {
               context.showSuccessToast("checkOutSuccess".tr());

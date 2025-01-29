@@ -96,9 +96,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
           try {
             final XFile file = await controller.takePicture();
-            if (!mounted) return;
 
-            Navigator.of(context).pop(file);
+
+           Navigator.pop(context, file);
           } catch (e) {
             _handleCameraError(e, message: "photoCaptureFailed".tr());
           } finally {
