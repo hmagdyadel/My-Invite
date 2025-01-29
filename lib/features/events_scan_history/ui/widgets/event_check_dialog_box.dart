@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/widgets/go_button.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -24,11 +26,7 @@ class EventCheckDialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<GatekeeperEventsCubit, ScanHistoryStates>(
       buildWhen: (previous, current) => previous != current,
-      listenWhen: (previous, current) =>
-          current is ErrorCheck ||
-          current is SuccessCheck ||
-          current is LoadingCheckOut ||
-          current is LoadingCheckIn,
+      listenWhen: (previous, current) => current is ErrorCheck || current is SuccessCheck || current is LoadingCheckOut || current is LoadingCheckIn,
       builder: (context, current) {
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
@@ -39,9 +37,7 @@ class EventCheckDialogBox extends StatelessWidget {
                 color: primaryColor,
                 size: 60,
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               SubTitleText(
                 text: "event_check".tr(),
                 color: Colors.grey.shade900,
@@ -58,106 +54,122 @@ class EventCheckDialogBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GoButton(
-                  fun: () async {
-                    // if (!_isSameDay(event)) {
-                    //   context.pop();
-                    //   context.showSuccessToast("can_not_check_in_or_out".tr());
-                    // } else {
-                      final position = await _getUserPosition(context);
-                      final image = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CameraScreen()),
-                      );
-                      if (image == null) {
-                        return;
-                      } else {
-                        context.showSuccessToast("captureSuccess".tr());
-                        context
-                            .read<GatekeeperEventsCubit>()
-                            .eventCheckIn(event.id.toString(), position, image);
-                      }
-                    //}
-                  },
-                  titleKey: "check_in".tr(),
-                  textColor: Colors.white,
-                  btColor: primaryColor,
-                  loading: current is LoadingCheckIn,
-                  loaderColor: Colors.white,
-                  w: 110,
-                ),
-                GoButton(
-                  fun: () async {
-                    // if (!_isSameDay(event)) {
-                    //   context.pop();
-                    //   context.showSuccessToast("can_not_check_in_or_out".tr());
-                    // } else {
-                      final position = await _getUserPosition(context);
-
-                      context
-                          .read<GatekeeperEventsCubit>()
-                          .eventCheckOut(event.id.toString(), position);
-                   // }
-                  },
-                  titleKey: "check_out".tr(),
-                  textColor: Colors.white,
-                  btColor: Colors.red,
-                  loading: current is LoadingCheckOut,
-                  loaderColor: Colors.white,
-                  w: 110,
-                ),
+                _buildCheckInButton(context, current),
+                _buildCheckOutButton(context, current),
               ],
             ),
           ],
         );
       },
       listener: (context, current) {
-        current.whenOrNull(errorCheck: (error) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.pop();
-            context.showErrorToast(error);
-          });
-        }, successCheck: (response) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            print(" befiprtee $response");
-            context.pop();
-
-            print('after $response');
-            if (response.contains("In")) {
+        current.whenOrNull(
+          errorCheck: (error) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
               context.pop();
-              context.showSuccessToast("checkInSuccess".tr());
-            } else if (response.contains("Out")) {
-              context.showSuccessToast("checkOutSuccess".tr());
-            } else {
-              context.showSuccessToast(response.toString());
-            }
-          });
-        });
+              context.showErrorToast(error);
+            });
+          },
+          successCheck: (response) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.pop();
+              _handleSuccessResponse(context, response);
+            });
+          },
+        );
       },
     );
   }
 
+  Widget _buildCheckInButton(BuildContext context, ScanHistoryStates current) {
+    return GoButton(
+      fun: () async {
+        if (!_isSameDay(event)) {
+          context.pop();
+          context.showSuccessToast("can_not_check_in_or_out".tr());
+        } else {
+          final position = await _getUserPosition(context);
+          if (position.latitude == -1 || position.longitude == -1) {
+            context.pop();
+            return;
+          }
+          final image = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CameraScreen()),
+          );
+          if (image == null) {
+            return;
+          } else {
+            context.showSuccessToast("captureSuccess".tr());
+            context.read<GatekeeperEventsCubit>().eventCheckIn(event.id.toString(), position, image);
+          }
+        }
+      },
+      titleKey: "check_in".tr(),
+      textColor: Colors.white,
+      btColor: primaryColor,
+      loading: current is LoadingCheckIn,
+      loaderColor: Colors.white,
+      w: 110,
+    );
+  }
+
+  Widget _buildCheckOutButton(BuildContext context, ScanHistoryStates current) {
+    return GoButton(
+      fun: () async {
+        if (!_isSameDay(event)) {
+          context.pop();
+          context.showSuccessToast("can_not_check_in_or_out".tr());
+        } else {
+          final position = await _getUserPosition(context);
+          if (position.latitude == -1 || position.longitude == -1) {
+            context.pop();
+            return;
+          }
+          context.read<GatekeeperEventsCubit>().eventCheckOut(event.id.toString(), position);
+        }
+      },
+      titleKey: "check_out".tr(),
+      textColor: Colors.white,
+      btColor: Colors.red,
+      loading: current is LoadingCheckOut,
+      loaderColor: Colors.white,
+      w: 110,
+    );
+  }
+
   bool _isSameDay(EventsList event) {
-    bool canCheck = canCheckinCheckout(event);
-    return canCheck;
+    return canCheckinCheckout(event);
   }
 
   Future<Position> _getUserPosition(BuildContext context) async {
     final position = await LocationService.getPosition(context);
     if (position.latitude == -1 || position.longitude == -1) {
       return Position(
-          longitude: 0,
-          latitude: 0,
-          timestamp: DateTime.now(),
-          accuracy: 0,
-          altitude: 0,
-          altitudeAccuracy: 0,
-          heading: 0,
-          headingAccuracy: 0,
-          speed: 0,
-          speedAccuracy: 0);
+        longitude: 0,
+        latitude: 0,
+        timestamp: DateTime.now(),
+        accuracy: 0,
+        altitude: 0,
+        altitudeAccuracy: 0,
+        heading: 0,
+        headingAccuracy: 0,
+        speed: 0,
+        speedAccuracy: 0,
+      );
     }
     return position;
+  }
+
+  void _handleSuccessResponse(BuildContext context, String response) {
+    if (response.contains("In")) {
+      if (Platform.isIOS) {
+        context.pop();
+      }
+      context.showSuccessToast("checkInSuccess".tr());
+    } else if (response.contains("Out")) {
+      context.showSuccessToast("checkOutSuccess".tr());
+    } else {
+      context.showSuccessToast(response.toString());
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/public_appbar.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -65,10 +66,11 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("cameraScreenTitle".tr()),
-        backgroundColor: navBarBackground,
+      appBar: publicAppBar(
+        context,
+        "cameraScreenTitle".tr(),
       ),
+
       body: initialized
           ? SizedBox(
         height: MediaQuery.of(context).size.height,

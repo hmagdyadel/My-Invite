@@ -52,7 +52,7 @@ class LocationService {
       await _showErrorDialog(
         context,
         'error'.tr(),
-        'location_fetch_failed'.tr(),
+        'location_not_available'.tr(),
         'retry'.tr(),
       );
       return _defaultPosition();
