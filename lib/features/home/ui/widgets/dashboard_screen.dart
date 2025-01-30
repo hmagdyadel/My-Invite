@@ -4,11 +4,13 @@ import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart' as permission;
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:permission_handler/permission_handler.dart' as permission;
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
-import '../../../../core/services/notification_scheduler.dart';
+//import '../../../../core/services/notification_scheduler.dart';
+//import '../../../../core/services/notification_service.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
@@ -99,14 +101,22 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
           context.pushNamed(Routes.eventInstructionsScreen);
         },
       ),
-      DashboardAction(
-        text: "Test Notifications",
-        icon: Icons.info,
-        gradient: containerGradient,
-        onTap: () async {
-          testNotificationScheduling();
-        },
-      ),
+      // DashboardAction(
+      //   text: "Test Notifications",
+      //   icon: Icons.info,
+      //   gradient: containerGradient,
+      //   onTap: () async {
+      //     testNotificationScheduling();
+      //   },
+      // ),
+      // DashboardAction(
+      //   text: "List Notifications",
+      //   icon: Icons.info,
+      //   gradient: containerGradient,
+      //   onTap: () async {
+      //     listPendingNotifications();
+      //   },
+      // ),
     ];
   }
 
@@ -121,18 +131,50 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
-  void testNotificationScheduling() async {
-    await permission.Permission.notification.request();
-    await permission.Permission.scheduleExactAlarm.request();
-    DateTime selectedTime = DateTime.now().add(const Duration(seconds: 15)); // For testing purposes
-    NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
-  }
+  // void testNotificationScheduling() async {
+  //   await permission.Permission.notification.request();
+  //   await permission.Permission.scheduleExactAlarm.request();
+  //   DateTime selectedTime = DateTime.now().add(const Duration(days: 6)); // For testing purposes
+  //   NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
+  // }
+  //
+  // Future<void> listPendingNotifications() async {
+  //   try {
+  //     // Check permissions first
+  //     final notificationStatus = await permission.Permission.notification.status;
+  //     final alarmStatus = await permission.Permission.scheduleExactAlarm.status;
+  //
+  //     debugPrint('Notification permission status: $notificationStatus');
+  //     debugPrint('Exact alarm permission status: $alarmStatus');
+  //
+  //     final List<PendingNotificationRequest> pendingNotifications =
+  //     await NotificationService().getPendingNotifications();
+  //
+  //     debugPrint('Retrieved pending notifications. Count: ${pendingNotifications.length}');
+  //
+  //     if (pendingNotifications.isEmpty) {
+  //       debugPrint("No pending notifications found.");
+  //       return;
+  //     }
+  //
+  //     for (var notification in pendingNotifications) {
+  //       debugPrint("----------------------------------------");
+  //       debugPrint("Notification ID: ${notification.id}");
+  //       debugPrint("Title: ${notification.title}");
+  //       debugPrint("Body: ${notification.body}");
+  //       debugPrint("Payload: ${notification.payload}");
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error checking notifications: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: bgColor,
-      // appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

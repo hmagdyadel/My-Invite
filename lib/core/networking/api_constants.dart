@@ -1,5 +1,5 @@
 class ApiConstants {
-  //static const String apiBaseUrl = "https://api.myinvite.me/";
+ // static const String apiBaseUrl = "https://api.myinvite.me/";
 
 static const String apiBaseUrl = "https://api-uat.myinvite.me/";
 

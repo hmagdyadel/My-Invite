@@ -51,7 +51,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColorOverlay,
-      appBar: publicAppBar(context, "events_calendar".tr()),
+      appBar: publicAppBar(context, "events".tr(),),
       body: BlocBuilder<ClientEventsCubit, ClientEventsStates>(
         buildWhen: (previous, current) => current != previous,
         bloc: context.read<ClientEventsCubit>()..getClientEvents(),
