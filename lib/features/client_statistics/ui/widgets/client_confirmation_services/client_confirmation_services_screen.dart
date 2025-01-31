@@ -52,24 +52,28 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                           "total_guests".tr(),
                           events.totalGuestsNumber.toString(),
                           type: GuestListType.allGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_accepted_guests".tr(),
                           events.acceptedGuestsNumber.toString(),
                           type: GuestListType.acceptedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_declined_guests".tr(),
                           events.declienedGuestsNumber.toString(),
                           type: GuestListType.declinedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_not_answered_guests".tr(),
                           events.noAnswerGuestsNumber.toString(),
                           type: GuestListType.notAnsweredGuests,
+                            eventId: eventId
 
                         ),
                         _buildItemRow(
@@ -77,18 +81,21 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                           "total_failed_guests".tr(),
                           events.failedGuestsNumber.toString(),
                           type: GuestListType.failedGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_not_sent_guests".tr(),
                           events.notSentGuestsNumber.toString(),
                           type: GuestListType.notSentGuests,
+                            eventId: eventId
                         ),
                         _buildItemRow(
                           context,
                           "total_attended_guests".tr(),
                           events.attendedGuestsNumber.toString(),
-                          type: GuestListType.notSentGuests,
+                          type: GuestListType.guestsReadCards,
+                          eventId: eventId
                         ),
                         ClientConfirmationChart(details: events),
                       ],
@@ -106,11 +113,13 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
 
   Widget _buildItemRow(BuildContext context, String title, String number,
       {bool isHeader = true, GuestListType? type, String eventId = ""}) {
+    // Ensure the number is parsed safely
+    final int parsedNumber = int.tryParse(number) ?? 0;
     return GestureDetector(
-      onTap: !isHeader
-          ? null
-          : () {
-              context.pushNamed(
+      onTap: isHeader
+          ?  () {
+        if(parsedNumber > 0) {
+          context.pushNamed(
                 Routes.clientMessageStatus,
                 arguments: {
                   'eventId': eventId,
@@ -118,7 +127,10 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
                   'title': guestListTypeToString(type!),
                 },
               );
-            },
+        }else{
+          context.showSuccessToast('no_available_details'.tr());
+        }
+            }:null,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: edge * 0.5),

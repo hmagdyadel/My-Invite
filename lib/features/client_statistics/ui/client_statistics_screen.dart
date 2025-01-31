@@ -132,7 +132,7 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
                 text: "card_sending_service".tr(),
                 onTap: () {
                   context.pop();
-                  context.pushNamed(Routes.clientMessagesStatusScreen, arguments: event?.id.toString());
+                  context.pushNamed(Routes.sentCardsServicesScreen, arguments: event?.id.toString());
                 },
               ),
               SizedBox(height: edge * 0.5),

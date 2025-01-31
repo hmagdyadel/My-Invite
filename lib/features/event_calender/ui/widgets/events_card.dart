@@ -1,13 +1,10 @@
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
-import 'package:app/features/event_calender/ui/widgets/reserve_event_dialog_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../data/models/calender_events.dart';
-import '../../logic/event_calender_cubit.dart';
 
 /// Card widget to display individual event details
 class EventCard extends StatelessWidget {
@@ -38,18 +35,9 @@ class EventCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return BlocProvider.value(
-                  value: context.read<EventCalenderCubit>(),
-                  child: ReservationDialogBox(
-                    eventTitle: event.eventTitle ?? "",
-                    eventId: event.id.toString(),
-                  ),
-                );
-              },
-            );
+            Navigator.pop(context,event);
+
+
           },
           child: Padding(
             padding: const EdgeInsets.all(16),

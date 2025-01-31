@@ -18,7 +18,13 @@ import '../../features/client_statistics/ui/client_statistics_screen.dart';
 import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_confirmation_services_screen.dart';
 import '../../features/client_statistics/ui/widgets/client_confirmation_services/client_message_status.dart';
 import '../../features/client_statistics/ui/widgets/client_messages/client_messages_statistics_screen.dart';
+import '../../features/client_statistics/ui/widgets/sent_cards_services/sent_cards_services_screen.dart';
 import '../../features/event_calender/ui/event_calender_screen.dart';
+import '../../features/events_scan_history/data/models/gatekeeper_events_response.dart';
+import '../../features/events_scan_history/logic/gatekeeper_events_cubit.dart';
+import '../../features/events_scan_history/ui/my_events_screen.dart';
+import '../../features/events_scan_history/ui/scan_history_screen.dart';
+import '../../features/events_scan_history/ui/widgets/event_history_details_screen.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
@@ -28,11 +34,7 @@ import '../../features/login/ui/login_screen.dart';
 import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
-import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
-import '../../features/scan_history/logic/gatekeeper_events_cubit.dart';
-import '../../features/scan_history/ui/my_events_screen.dart';
-import '../../features/scan_history/ui/scan_history_screen.dart';
-import '../../features/scan_history/ui/widgets/event_history_details_screen.dart';
+
 import '../../features/splash/ui/on_boarding_screen.dart';
 import '../../features/splash/ui/splash_screen.dart';
 import '../di/dependency_injection.dart';
@@ -195,6 +197,14 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
             child: ClientMessageStatus(eventId: eventId, type: type,title: title),
+          ),
+        );
+      case Routes.sentCardsServicesScreen:
+        final eventId = arguments as String;
+        return _buildRoute(
+          BlocProvider(
+            create: (_) => getIt<ClientStatisticsCubit>(),
+            child: SentCardsServicesScreen(eventId: eventId),
           ),
         );
       default:

@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../features/scan_history/data/models/gatekeeper_events_response.dart';
+import '../../features/events_scan_history/data/models/gatekeeper_events_response.dart';
 
 List<String> months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
@@ -65,4 +65,3 @@ String getTimeInAMPM(String date) {
 
   return formattedTime;
 }
-

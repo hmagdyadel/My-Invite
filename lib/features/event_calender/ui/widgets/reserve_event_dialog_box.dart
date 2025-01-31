@@ -7,20 +7,19 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/go_button.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
+import '../../data/models/calender_events.dart';
 import '../../logic/event_calender_cubit.dart';
 import '../../logic/event_calender_states.dart';
 
 class ReservationDialogBox extends StatelessWidget {
-  final String eventTitle;
-  final String eventId;
+  final CalenderEventsResponse event;
 
-  const ReservationDialogBox({super.key, required this.eventTitle, required this.eventId});
+  const ReservationDialogBox({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<EventCalenderCubit, EventCalenderStates>(
+    return BlocBuilder<EventCalenderCubit, EventCalenderStates>(
       buildWhen: (previous, current) => previous != current,
-      listenWhen: (previous, current) => current is ReservationLoading || current is ReservationSuccess || current is ErrorReservation,
       builder: (context, current) {
         return AlertDialog(
           backgroundColor: Colors.grey.shade200,
@@ -35,7 +34,7 @@ class ReservationDialogBox extends StatelessWidget {
                 height: 12,
               ),
               SubTitleText(
-                text: "${"reserve".tr()}\n $eventTitle",
+                text: "${"reserve".tr()}\n ${event.eventTitle}",
                 color: Colors.grey.shade900,
                 fontSize: 20,
               ),
@@ -52,8 +51,9 @@ class ReservationDialogBox extends StatelessWidget {
               children: [
                 GoButton(
                   fun: () {
-                    //context.pop();
-                    context.read<EventCalenderCubit>().reserveEvent(eventId);
+
+                    context.read<EventCalenderCubit>().reserveEvent(event.id.toString());
+                    context.pop();
                   },
                   titleKey: "yes".tr(),
                   textColor: Colors.white,
@@ -76,19 +76,7 @@ class ReservationDialogBox extends StatelessWidget {
           ],
         );
       },
-      listener: (context, current) {
-        current.whenOrNull(errorReservation: (error) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.pop();
-            context.showErrorToast("event_reservation_error_text".tr());
-          });
-        }, reservationSuccess: (response) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.pop();
-            context.showSuccessToast("event_reserved_text".tr());
-          });
-        });
-      },
+
     );
   }
 }

@@ -26,12 +26,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
-@override
+
+  @override
   void initState() {
-  context.read<LoginCubit>().param.text = AppUtilities().username;
-  context.read<LoginCubit>().password.text = AppUtilities().password;
+    context.read<LoginCubit>().param.text = AppUtilities().username;
+    context.read<LoginCubit>().password.text = AppUtilities().password;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -45,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
-          resizeToAvoidBottomInset: false,  // Prevent resize when keyboard appears
+          resizeToAvoidBottomInset: false,
+          // Prevent resize when keyboard appears
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
@@ -113,18 +116,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         listenWhen: (previous, current) => previous != current,
                         listener: (context, current) {
                           if (current is Loading) {
-                            animatedLoaderWithTitle(
-                                context: context, title: "logging_in".tr());
+                            animatedLoaderWithTitle(context: context, title: "logging_in".tr());
                           } else if (current is Error) {
                             popDialog(context);
                             context.showErrorToast(current.message);
                           } else if (current is Success) {
                             popDialog(context);
+                            context.pushNamedAndRemoveUntil(Routes.homeScreen, predicate: false);
                             AudioService().playAudio(
                                 src: 'sounds/audSuccess.mp3',
                                 onComplete: () {
-                                  context.pushNamedAndRemoveUntil(Routes.homeScreen,
-                                      predicate: false);
+                                  debugPrint('audio played');
                                 });
                           } else if (current is EmptyInput) {
                             popDialog(context);
@@ -152,7 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
         SubTitleText(text: "username".tr(), color: Colors.white, fontSize: 16),
         SizedBox(height: edge * 0.3),
         textFieldWithIcon(
-
             controller: context.read<LoginCubit>().param,
             icon: Icon(
               Icons.email_outlined,

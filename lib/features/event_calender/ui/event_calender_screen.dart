@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/services/notification_scheduler.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../logic/event_calender_cubit.dart';
@@ -28,7 +29,13 @@ class EventCalenderScreen extends StatelessWidget {
           return state.when(
             initial: () => initialCalender(context),
             loading: () => initialCalender(context),
-            errorReservation: (error) => initialCalender(context),
+            errorReservation: (error) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.showErrorToast(error);
+                //context.pop();
+              });
+              return initialCalender(context);
+            },
             emptyInput: () {
               // Show error toast after frame is rendered and get events to reserve it
               WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,7 +55,20 @@ class EventCalenderScreen extends StatelessWidget {
               );
             },
             reservationLoading: () => initialCalender(context),
-            reservationSuccess: (message) => initialCalender(context),
+            reservationSuccess: (message) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if(context.read<EventCalenderCubit>().calenderEventsResponse.id != null) {
+                  NotificationScheduler().scheduleNotifications(event: context
+                      .read<EventCalenderCubit>()
+                      .calenderEventsResponse);
+                }
+                else{
+                  debugPrint("Failed to schedule notification");
+                }
+                context.showSuccessToast("event_reserved_text".tr());
+              });
+              return initialCalender(context);
+            },
             error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 context.showErrorToast(error);

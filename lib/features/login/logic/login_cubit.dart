@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/helpers/app_utilities.dart';
 import '../data/models/login_request.dart';
-import '../data/models/login_response.dart';
 import '../data/repo/login_repo.dart';
 import 'login_states.dart';
 
@@ -15,7 +14,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   LoginCubit(this._loginRepo) : super(const LoginStates.initial());
 
-  LoginResponse? loginResponse;
+  //LoginResponse? loginResponse;
 
   final TextEditingController param = TextEditingController();
   final TextEditingController password = TextEditingController();

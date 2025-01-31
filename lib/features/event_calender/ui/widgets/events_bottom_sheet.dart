@@ -29,7 +29,7 @@ class EventsBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SubTitleText(
-              text: "${"events_only".tr()} - ${DateFormat('dd MMMM yyyy').format(selectedDate)}",
+              text: "${"events_only".tr()} - ${DateFormat('E dd/M/yyyy').format(selectedDate)}",
               color: Colors.white70,
               fontSize: 18,
             ),

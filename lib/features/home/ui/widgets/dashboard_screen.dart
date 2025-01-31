@@ -4,9 +4,13 @@ import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:permission_handler/permission_handler.dart' as permission;
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
+//import '../../../../core/services/notification_scheduler.dart';
+//import '../../../../core/services/notification_service.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
@@ -94,9 +98,25 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.info,
         gradient: containerGradient,
         onTap: () {
-         context.pushNamed(Routes.eventInstructionsScreen);
+          context.pushNamed(Routes.eventInstructionsScreen);
         },
       ),
+      // DashboardAction(
+      //   text: "Test Notifications",
+      //   icon: Icons.info,
+      //   gradient: containerGradient,
+      //   onTap: () async {
+      //     testNotificationScheduling();
+      //   },
+      // ),
+      // DashboardAction(
+      //   text: "List Notifications",
+      //   icon: Icons.info,
+      //   gradient: containerGradient,
+      //   onTap: () async {
+      //     listPendingNotifications();
+      //   },
+      // ),
     ];
   }
 
@@ -111,20 +131,50 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) setState(() {});
   }
 
-  // Future<void> _handleLogout() async {
+  // void testNotificationScheduling() async {
+  //   await permission.Permission.notification.request();
+  //   await permission.Permission.scheduleExactAlarm.request();
+  //   DateTime selectedTime = DateTime.now().add(const Duration(days: 6)); // For testing purposes
+  //   NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
+  // }
+  //
+  // Future<void> listPendingNotifications() async {
   //   try {
-  //     context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: false);
-  //     await AppUtilities().clearData();
+  //     // Check permissions first
+  //     final notificationStatus = await permission.Permission.notification.status;
+  //     final alarmStatus = await permission.Permission.scheduleExactAlarm.status;
+  //
+  //     debugPrint('Notification permission status: $notificationStatus');
+  //     debugPrint('Exact alarm permission status: $alarmStatus');
+  //
+  //     final List<PendingNotificationRequest> pendingNotifications =
+  //     await NotificationService().getPendingNotifications();
+  //
+  //     debugPrint('Retrieved pending notifications. Count: ${pendingNotifications.length}');
+  //
+  //     if (pendingNotifications.isEmpty) {
+  //       debugPrint("No pending notifications found.");
+  //       return;
+  //     }
+  //
+  //     for (var notification in pendingNotifications) {
+  //       debugPrint("----------------------------------------");
+  //       debugPrint("Notification ID: ${notification.id}");
+  //       debugPrint("Title: ${notification.title}");
+  //       debugPrint("Body: ${notification.body}");
+  //       debugPrint("Payload: ${notification.payload}");
+  //     }
   //   } catch (e) {
-  //     debugPrint('Logout error: $e');
+  //     debugPrint('Error checking notifications: $e');
   //   }
   // }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: bgColor,
-     // appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,37 +188,6 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
       ),
     );
   }
-
-  // AppBar _buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     backgroundColor: bgColor,
-  //     elevation: 0,
-  //     actions: [
-  //       IconButton(
-  //         icon: AnimatedRotation(
-  //           duration: const Duration(milliseconds: 300),
-  //           turns: context.locale.languageCode == 'en' ? 0 : 1,
-  //           child:  Transform.rotate(
-  //             angle: context.locale.languageCode == 'en' ? 0 : 3.14, // Rotate 180 degrees for non-English
-  //             child: const Icon(
-  //               Icons.logout,
-  //               color: Colors.white,
-  //             ),
-  //           ),
-  //         ),
-  //         onPressed: () => _handleLogout(),
-  //       ),
-  //     ],
-  //     leading: Padding(
-  //       padding: EdgeInsets.all(edge * 0.5),
-  //       child: LocaleDropdown(
-  //         onLanguageChanged: () {
-  //           if (mounted) setState(() {});
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildHeader() {
     final userData = AppUtilities().loginData;

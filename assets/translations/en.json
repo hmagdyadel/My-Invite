@@ -1,5 +1,4 @@
 {
-  "welcome": "Welcome",
   "loginOrRegister": "Login or Register to Continue",
   "login": "Login To Account",
   "register": "Create An Account",
@@ -248,8 +247,8 @@
   "scanned_before": "Already Scanned",
   "username_hint": "Please enter your username",
   "password_hint": "Please enter your password",
-  "enter_required_fields": "Please enter required fields",
-  "failed_to_get_profile": "Failed to get profile",
+  "enter_required_fields":  "Please fill in all required fields.",
+  "failed_to_get_profile": "Failed to get profile data",
   "first_name_hint": "Please enter your first name",
   "last_name_hint": "Please enter your last name",
   "email_hint": "Please enter your email",
@@ -259,7 +258,7 @@
   "invalid_email": "Invalid email address.",
   "invalid_phone": "Phone number must contain only numbers.",
   "username_exists_error": "This username already exists, please try again with another username",
-  "unauthorized_error": "Unauthorized access, please check your credentials and try again.",
+  "unauthorized_error": "Unable to access the system. Please verify your username and password, then attempt to log in again.",
   "unexpected_error": "An unexpected error occurred, please try again later.",
   "login_error": "Login failed, please try again.",
   "event_instructions_heading": "Dear Supervisor",
@@ -295,5 +294,11 @@
   "can_not_check_in_or_out": "You cannot check in or out because the event date is not today.",
   "location_is_not_set_correctly": "Your location is not set correctly. Please contact our IT support team to update your location details in your profile.",
   "clear": "Clear",
-  "see_details": "See Details"
+  "see_details": "See Details",
+  "notification_title": "Event Reminder",
+  "event_five_days_reminder": "Event {} is coming up in 5 days",
+  "event_two_days_reminder": "Event {} is coming up in 2 days",
+  "event_today_reminder": "Your event {} is today",
+  "no_available_details": "No available details",
+  "already_reserved_an_event": "You have already reserved an event on the same day."
 }

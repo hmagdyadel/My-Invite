@@ -80,7 +80,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> with WidgetsBinding
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SubTitleText(
-                text: tr("welcome"),  // Using tr() directly
+                text: "hello".tr(),  // Using tr() directly
                 color: Colors.white,
               ),
               NormalText(
@@ -112,7 +112,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> with WidgetsBinding
   Widget buttons() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(edge),
+      padding: EdgeInsets.symmetric(horizontal: edge,vertical: edge*0.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
