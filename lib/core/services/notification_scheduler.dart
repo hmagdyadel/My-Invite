@@ -1,4 +1,3 @@
-import 'package:app/core/helpers/app_utilities.dart';
 import 'package:flutter/material.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../helpers/time_zone.dart';
@@ -40,9 +39,9 @@ class NotificationScheduler {
   /// This method schedules a notification for the event's start time.
   /// Notifications are only scheduled if the user has allowed notifications in the app settings.
   Future<void> scheduleNotifications({required CalenderEventsResponse event}) async {
-    // Check if notifications are allowed in the app settings
-    bool notificationsAllowed = AppUtilities().notifications;
-    if (notificationsAllowed == false) return; // Exit if notifications are not allowed
+    // // Check if notifications are allowed in the app settings
+    // bool notificationsAllowed = AppUtilities().notifications;
+    // if (notificationsAllowed == false) return; // Exit if notifications are not allowed
 
     try {
       // Initialize the timezone database
