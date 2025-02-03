@@ -36,7 +36,6 @@ Future handleForegroundMessages() async {
     }
   });
   messaging.getToken().then((onValue){
-    print('on value is $onValue');
   });
 }
 
