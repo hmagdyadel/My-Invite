@@ -83,7 +83,7 @@ class ScanHistoryItem extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 16,
               ),
-              NormalText(
+             event?.totalAllocated == null ? NormalText(text: "0", color: Colors.white, fontSize: 16,) : NormalText(
                 text: event?.totalAllocated.toString() ?? "0",
                 color: Colors.white,
                 fontSize: 16,

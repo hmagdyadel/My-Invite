@@ -1,6 +1,10 @@
 import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../logic/home_cubit.dart';
+import '../logic/home_states.dart';
 import 'widgets/dashboard_screen.dart';
 import 'widgets/settings.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +26,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgColor,
-      // appBar: AppBar(),
-      body: body(),
-      floatingActionButton: qrScanButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: bottomNav(),
+    return BlocBuilder<HomeCubit, HomeStates>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: bgColor,
+          // appBar: AppBar(),
+          body: body(),
+          floatingActionButton: qrScanButton(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: bottomNav(),
+        );
+      },
     );
   }
+
   Widget body() {
     return screens[selectedScreen];
   }
+
   FloatingActionButton qrScanButton() {
     if (AppUtilities().loginData.roleName == "Client") {
       return FloatingActionButton(backgroundColor: Colors.transparent, elevation: 0, onPressed: () {});

@@ -65,7 +65,7 @@
   "cannot_checkin": "لا يمكنك تسجيل الدخول إلى هذه المناسبة بعد",
   "scan": "مسح",
   "wait": "انتظر من فضلك",
-  "close": "يغلق",
+  "close": "إغلاق",
   "qr_verified": "تم التحقق من QR",
   "invalid_qrcode": "غير صالح MYINVITE QRCode",
   "no_data": "لاتوجد بيانات",

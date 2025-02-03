@@ -61,12 +61,10 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<
-                    RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<
-                    LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -79,7 +77,10 @@ class AppRouter {
         );
       case Routes.homeScreen:
         return _buildRoute(
-          const HomeScreen(),
+          BlocProvider(
+            create: (_) => getIt<HomeCubit>(),
+            child: const HomeScreen(), // RegisterCubit for handling registration
+          ),
         );
 
       case Routes.profileScreen:
@@ -154,13 +155,11 @@ class AppRouter {
         );
 
       case Routes.clientGuestDetailsScreen:
-        final clientMessagesStatusDetails =
-            arguments as ClientMessagesStatusDetails;
+        final clientMessagesStatusDetails = arguments as ClientMessagesStatusDetails;
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<ClientEventsCubit>(),
-            child: ClientGuestDetailsScreen(
-                clientMessagesStatusDetails: clientMessagesStatusDetails),
+            child: ClientGuestDetailsScreen(clientMessagesStatusDetails: clientMessagesStatusDetails),
           ),
         );
 
@@ -188,7 +187,7 @@ class AppRouter {
             child: ClientConfirmationServicesScreen(eventId: eventId),
           ),
         );
-        case Routes.clientMessageStatus:
+      case Routes.clientMessageStatus:
         final args = arguments as Map<String, dynamic>;
         final eventId = args['eventId'] as String;
         final type = args['type'] as GuestListType;
@@ -196,7 +195,7 @@ class AppRouter {
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
-            child: ClientMessageStatus(eventId: eventId, type: type,title: title),
+            child: ClientMessageStatus(eventId: eventId, type: type, title: title),
           ),
         );
       case Routes.sentCardsServicesScreen:

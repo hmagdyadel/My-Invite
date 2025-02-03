@@ -21,7 +21,7 @@ class NotificationScheduler {
 
       // Schedule a test notification using the NotificationService
       await NotificationService().scheduleEventNotifications(
-        eventId: 150, // Test event ID
+        eventId: 160, // Test event ID
         eventStart: tz.TZDateTime.from(dateTime, tz.local), // Convert to timezone-aware datetime
         eventTitle: 'Test Local Notification', // Test event title
       );

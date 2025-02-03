@@ -197,31 +197,42 @@ class NotificationService {
     required DateTime eventStart,
     required String eventTitle,
   }) async {
+    // Set notification time to 8 AM on the event day
+    final eventDay8AM = DateTime(
+      eventStart.year,
+      eventStart.month,
+      eventStart.day,
+      8, // Hour (24-hour format)
+      0,  // Minute
+      0,  // Second
+    );
+debugPrint(eventDay8AM.toString());
     // Schedule a notification for the event day
     await scheduleNotification(
       id: eventId,
-      scheduledTime: eventStart,
+      scheduledTime: eventDay8AM,
       title: eventTitle,
       type: NotificationType.today,
     );
 
     // Schedule a notification for one day before the event
-    final fiveDayBefore = eventStart.subtract(const Duration(days: 5));
+    final fiveDayBefore = eventDay8AM.subtract(const Duration(days: 5));
     await scheduleNotification(
       id: eventId + 1,
       scheduledTime: fiveDayBefore,
       title: eventTitle,
       type: NotificationType.fiveDays,
     );
-
+    debugPrint(eventDay8AM.toString());
     // Schedule a notification for two days before the event
-    final twoDaysBefore = eventStart.subtract(const Duration(days: 2));
+    final twoDaysBefore = eventDay8AM.subtract(const Duration(days: 2));
     await scheduleNotification(
       id: eventId + 2,
       scheduledTime: twoDaysBefore,
       title: eventTitle,
       type: NotificationType.twoDays,
     );
+    debugPrint(eventDay8AM.toString());
   }
 
   /// Get all pending (scheduled) notifications

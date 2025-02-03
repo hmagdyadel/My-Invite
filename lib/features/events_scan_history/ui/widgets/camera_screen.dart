@@ -14,25 +14,42 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late CameraController controller;
+  CameraController? controller;  // Make nullable
   bool initialized = false;
   bool isTakingPicture = false;
+  List<CameraDescription> cameras = [];
+  int selectedCameraIndex = 0;
 
-  Future<void> _initializeCameraController() async {
+  Future<void> _initializeCameraController([int? cameraIndex]) async {
     try {
-      final cameras = await availableCameras();
-      final frontCamera = cameras.firstWhere(
-            (camera) => camera.lensDirection == CameraLensDirection.front,
-        orElse: () => cameras.first,
-      );
+      // Get available cameras if not already fetched
+      if (cameras.isEmpty) {
+        cameras = await availableCameras();
+      }
 
+      // Use provided index or default to front camera
+      if (cameraIndex != null) {
+        selectedCameraIndex = cameraIndex;
+      } else {
+        selectedCameraIndex = cameras.indexWhere(
+              (camera) => camera.lensDirection == CameraLensDirection.front,
+        );
+        if (selectedCameraIndex == -1) selectedCameraIndex = 0;
+      }
+
+      // Dispose previous controller if exists
+      if (controller != null) {
+        await controller!.dispose();
+      }
+
+      // Create and initialize new controller
       controller = CameraController(
-        frontCamera,
+        cameras[selectedCameraIndex],
         ResolutionPreset.max,
       );
 
-      await controller.initialize();
-      await controller.lockCaptureOrientation(DeviceOrientation.portraitDown); // Lock to portrait
+      await controller!.initialize();
+      await controller!.lockCaptureOrientation(DeviceOrientation.portraitDown);
 
       if (!mounted) return;
       setState(() {
@@ -41,6 +58,15 @@ class _CameraScreenState extends State<CameraScreen> {
     } catch (e) {
       _handleCameraError(e, message: "cameraInitFailed".tr());
     }
+  }
+
+  void _switchCamera() async {
+    setState(() {
+      initialized = false;
+    });
+
+    final nextIndex = (selectedCameraIndex + 1) % cameras.length;
+    await _initializeCameraController(nextIndex);
   }
 
   void _handleCameraError(Object error, {String? message}) {
@@ -57,7 +83,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    controller.dispose();
+    controller?.dispose();  // Safe disposal with null check
     super.dispose();
   }
 
@@ -68,44 +94,62 @@ class _CameraScreenState extends State<CameraScreen> {
         context,
         "cameraScreenTitle".tr(),
       ),
-      body: initialized
+      body: initialized && controller != null  // Add null check
           ? Stack(
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: RotatedBox(
-              quarterTurns: controller.description.sensorOrientation == 270 ? 1 : 3,
-              child: CameraPreview(controller),
+              quarterTurns: controller!.description.sensorOrientation == 270 ? 1 : 3,
+              child: CameraPreview(controller!),
             ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
-              child: FloatingActionButton(
-                backgroundColor: navBarBackground,
-                onPressed: isTakingPicture
-                    ? null
-                    : () async {
-                  setState(() {
-                    isTakingPicture = true;
-                  });
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Switch Camera Button
+                  if (cameras.length > 1)
+                    FloatingActionButton(
+                      heroTag: 'switchCamera',
+                      backgroundColor: navBarBackground,
+                      onPressed: initialized ? _switchCamera : null,
+                      child: const Icon(
+                        Icons.flip_camera_ios_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  // Take Picture Button
+                  FloatingActionButton(
+                    heroTag: 'takePhoto',
+                    backgroundColor: navBarBackground,
+                    onPressed: isTakingPicture
+                        ? null
+                        : () async {
+                      setState(() {
+                        isTakingPicture = true;
+                      });
 
-                  try {
-                    final XFile file = await controller.takePicture();
-                    Navigator.pop(context, file);
-                  } catch (e) {
-                    _handleCameraError(e, message: "photoCaptureFailed".tr());
-                  } finally {
-                    setState(() {
-                      isTakingPicture = false;
-                    });
-                  }
-                },
-                child: isTakingPicture
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Icon(Icons.camera, color: Colors.white),
+                      try {
+                        final XFile file = await controller!.takePicture();
+                        Navigator.pop(context, file);
+                      } catch (e) {
+                        _handleCameraError(e, message: "photoCaptureFailed".tr());
+                      } finally {
+                        setState(() {
+                          isTakingPicture = false;
+                        });
+                      }
+                    },
+                    child: isTakingPicture
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Icon(Icons.camera, color: Colors.white),
+                  ),
+                ],
               ),
             ),
           ),

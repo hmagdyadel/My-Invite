@@ -51,6 +51,15 @@ class AppUtilities {
     setSavedString("username", value);
   }
 
+  String? _subscriptionTopic;
+
+  String get subscriptionTopic => _subscriptionTopic ?? '';
+
+  set subscriptionTopic(String value) {
+    _subscriptionTopic = value;
+    setSavedString("subscriptionTopic", value);
+  }
+
   bool? _notifications;
 
   bool get notifications => _notifications ?? false;
@@ -120,6 +129,7 @@ class AppUtilities {
     _username = await getSavedString("username", '');
     _password = await getSavedString("password", '');
     _notifications = await getSavedBool("notifications", false);
+    _subscriptionTopic = await getSavedString("subscriptionTopic", '');
 
     String userData = await getSavedString('userData', '');
     if (userData.isNotEmpty) {

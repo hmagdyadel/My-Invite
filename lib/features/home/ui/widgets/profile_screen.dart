@@ -53,7 +53,9 @@ class ProfileScreen extends StatelessWidget {
             color: Colors.redAccent,
           ),
           ElevatedButton(
-            onPressed: () => context.read<HomeCubit>().getProfileData(),
+            onPressed: () {
+             // context.read<HomeCubit>().getProfileData();
+            },
             child: NormalText(
               text: 'Retry'.tr(),
               color: Colors.white,
