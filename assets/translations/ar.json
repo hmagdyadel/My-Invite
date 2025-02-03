@@ -299,6 +299,8 @@
   "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
   "event_today_reminder": "حدثك {} اليوم",
   "no_available_details": "لا يوجد تفاصيل متاحة",
-  "already_reserved_an_event": "لقد قمت بحجز فعالية بالفعل في نفس اليوم."
+  "already_reserved_an_event": "لقد قمت بحجز فعالية بالفعل في نفس اليوم.",
+  "already_checked_in": "لقد قمت بتسجيل الدخول إلى هذا الحدث بالفعل",
+  "must_check_in_first": "يجب عليك تسجيل الدخول أولاً قبل تسجيل الخروج"
 }
 

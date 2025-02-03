@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../../core/constants/public_methods.dart';
+import '../../../../core/helpers/app_utilities.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
@@ -29,6 +30,20 @@ class EventCheckDialogBox extends StatefulWidget {
 
 class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   bool _isProcessing = false;
+  static const String _checkInStatusKey = 'event_check_in_status_';
+
+  Future<bool> _hasCheckedIn(String eventId) async {
+    final status = await AppUtilities.instance.getSavedBool(_checkInStatusKey + eventId, false);
+    return status;
+  }
+
+  Future<void> _markAsCheckedIn(String eventId) async {
+    await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, true);
+  }
+
+  Future<void> _markAsCheckedOut(String eventId) async {
+    await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,18 +113,32 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   }) {
     final bool isLoading = isCheckIn ? state is LoadingCheckIn : state is LoadingCheckOut;
 
-    return GoButton(
-      fun: () {
-        if (!_isProcessing) {
-          _handleCheckAction(context, isCheckIn);
-        }
+    return FutureBuilder<bool>(
+      future: _hasCheckedIn(widget.event.id.toString()),
+      builder: (context, snapshot) {
+        final bool hasCheckedIn = snapshot.data ?? false;
+        final bool shouldDisableCheckIn = isCheckIn && hasCheckedIn;
+        final bool shouldDisableCheckOut = !isCheckIn && !hasCheckedIn;
+
+        return GoButton(
+          fun: () {
+            if (shouldDisableCheckIn) {
+              context.showErrorToast("already_checked_in".tr());
+
+            } else if (shouldDisableCheckOut) {
+              context.showErrorToast("must_check_in_first".tr());
+            } else if (!_isProcessing) {
+              _handleCheckAction(context, isCheckIn);
+            }
+          },
+          titleKey: isCheckIn ? "check_in".tr() : "check_out".tr(),
+          textColor: Colors.white,
+          btColor: isCheckIn ? primaryColor : Colors.red,
+          loading: isLoading,
+          loaderColor: Colors.white,
+          w: 110,
+        );
       },
-      titleKey: isCheckIn ? "check_in".tr() : "check_out".tr(),
-      textColor: Colors.white,
-      btColor: isCheckIn ? primaryColor : Colors.red,
-      loading: isLoading,
-      loaderColor: Colors.white,
-      w: 110,
     );
   }
 
@@ -119,10 +148,10 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     setState(() => _isProcessing = true);
 
     try {
-      if (!_isWithinEventTimeWindow(widget.event)) {
-        _showOutsideTimeWindowError(context);
-        return;
-      }
+      // if (!_isWithinEventTimeWindow(widget.event)) {
+      //   _showOutsideTimeWindowError(context);
+      //   return;
+      // }
 
       final position = await _getValidatedPosition(context);
       if (position == null) return;
@@ -166,6 +195,14 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   }
 
   Future<void> _processCheckIn(BuildContext context, Position position) async {
+    final hasCheckedIn = await _hasCheckedIn(widget.event.id.toString());
+    if (hasCheckedIn) {
+      if (mounted) {
+        context.showErrorToast("already_checked_in".tr());
+        context.pop();
+      }
+      return;
+    }
 
     final image = await Navigator.push<XFile>(
       context,
@@ -179,15 +216,26 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
             position,
             image,
           );
+      await _markAsCheckedIn(widget.event.id.toString());
     }
   }
 
   Future<void> _processCheckOut(BuildContext context, Position position) async {
+    final hasCheckedIn = await _hasCheckedIn(widget.event.id.toString());
+    if (!hasCheckedIn) {
+      if (mounted) {
+        context.showErrorToast("must_check_in_first".tr());
+        context.pop();
+      }
+      return;
+    }
+
     if (!mounted) return;
     context.read<GatekeeperEventsCubit>().eventCheckOut(
           widget.event.id.toString(),
           position,
         );
+    await _markAsCheckedOut(widget.event.id.toString());
   }
 
   void _handleStateChanges(BuildContext context, ScanHistoryStates state) {
