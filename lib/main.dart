@@ -18,7 +18,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future handleForegroundMessages() async {
-  await Firebase.initializeApp();
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
@@ -36,11 +36,19 @@ Future handleForegroundMessages() async {
     }
   });
   messaging.getToken().then((onValue){
+    print("getToken $onValue");
+  }).onError((error,trace){
+    messaging.getAPNSToken().then((onValue){
+      print("apnsToken $onValue");
+    });
   });
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
   await EasyLocalization.ensureInitialized();
   await NotificationService().init();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
