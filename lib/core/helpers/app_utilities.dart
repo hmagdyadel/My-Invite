@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../features/login/data/models/login_response.dart';
 import '../services/navigation_service.dart';
 
@@ -22,6 +22,8 @@ class AppUtilities {
   Future<void> initialize() async {
     await _getSavedData();
   }
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+
 
   Future<void> importantInitialize() async {
     _serverToken = await getSavedString("serverToken", '');
@@ -52,7 +54,6 @@ class AppUtilities {
   }
 
   String? _subscriptionTopic;
-
   String get subscriptionTopic => _subscriptionTopic ?? '';
 
   set subscriptionTopic(String value) {
@@ -61,7 +62,6 @@ class AppUtilities {
   }
 
   bool? _notifications;
-
   bool get notifications => _notifications ?? false;
 
   set notifications(bool value) {
@@ -70,7 +70,6 @@ class AppUtilities {
   }
 
   String? _password;
-
   String get password => _password ?? '';
 
   set password(String value) {
@@ -79,16 +78,11 @@ class AppUtilities {
   }
 
   Future<void> clearData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.remove("serverToken");
-    await prefs.remove("userData");
+    _storage.delete(key: "serverToken");
+    _storage.delete(key: "userData");
   }
 
-  Future<bool> setSavedInt(String key, int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await prefs.setInt(key, value);
-  }
 
   void setLocality(String code) async {
     NavigationService.navigatorKey.currentContext?.setLocale(Locale(code));
@@ -116,14 +110,27 @@ class AppUtilities {
   }
 
   Future<bool> setSavedString(String key, String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await prefs.setString(key, value);
+    await _storage.write(key: key, value: value);
+    return true; // SecureStorage does not return a success boolean
   }
 
   Future<bool> setSavedBool(String key, bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await prefs.setBool(key, value);
+    await _storage.write(key: key, value: value.toString());
+    return true; // SecureStorage does not return a success boolean
   }
+
+
+
+
+  Future<String> getSavedString(String key, String defaultVal) async {
+    final value = await _storage.read(key: key);
+    return value ?? defaultVal;
+  }
+  Future<bool> getSavedBool(String key, bool defaultVal) async {
+    final value = await _storage.read(key: key);
+    return value == 'true' ? true : defaultVal;
+  }
+
 
   Future<void> _getSavedData() async {
     _username = await getSavedString("username", '');
@@ -142,22 +149,5 @@ class AppUtilities {
     } else {
       _loginData = LoginResponse(); // Default value if no data is saved
     }
-  }
-
-  Future<int> getSavedInt(String key, int defaultVal) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.reload();
-    return prefs.getInt(key) ?? defaultVal;
-  }
-
-  Future<String> getSavedString(String value, String defaultVal) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.reload();
-    return preferences.getString(value) ?? defaultVal;
-  }
-  Future<bool> getSavedBool(String value, bool defaultVal) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.reload();
-    return preferences.getBool(value) ?? defaultVal;
   }
 }
