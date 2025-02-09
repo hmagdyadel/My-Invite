@@ -311,5 +311,6 @@
   "invalid_first_name": "First name should only contain alphabetic characters.",
   "invalid_last_name": "Last name should only contain alphabetic characters.",
   "phone_number_invalid_format": "Phone number must contain only numbers.",
-  "phone_number_too_short": "Phone number must be at least 6 digits long."
+  "phone_number_too_short": "Phone number must be at least 6 digits long.",
+  "correct": "Correct"
 }

@@ -93,61 +93,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
-  Widget buildFlexibleSpace(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(gradient: gradient1),
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(edge),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SubTitleText(
-                text: "register_sm".tr(),
-                color: Colors.white,
-                fontSize: 32,
-              ),
-              NormalText(
-                text: "register_dt".tr(),
-                color: Colors.white,
-                fontSize: 16,
-                align: TextAlign.start,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildBackButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.pop();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(6),
-        child: CircleAvatar(
-          backgroundColor: Colors.grey.shade100,
-          radius: 15,
-          child: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: primaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget buildRegistrationForm(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(edge * 1.5),
       alignment: Alignment.topCenter,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(curvyRadius * 1.5),
           topRight: Radius.circular(curvyRadius * 1.5),
         ),
@@ -244,6 +196,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+  Widget buildFlexibleSpace(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(gradient: gradient1),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(edge),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SubTitleText(
+                text: "register_sm".tr(),
+                color: Colors.white,
+                fontSize: 32,
+              ),
+              NormalText(
+                text: "register_dt".tr(),
+                color: Colors.white,
+                fontSize: 16,
+                align: TextAlign.start,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildBackButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.pop();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: CircleAvatar(
+          backgroundColor: Colors.grey.shade100,
+          radius: 15,
+          child: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
 
   Widget buildTextFieldWithConditions(
       BuildContext context, {
@@ -317,7 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              "Correct: ${conditionMessages[entry.key]?.tr()}",
+                              "${"correct".tr()}: ${conditionMessages[entry.key]?.tr()}",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.green,
@@ -337,6 +336,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ],
     );
   }
+
 
   Widget buildPasswordSection(BuildContext context) {
     return buildTextFieldWithConditions(
