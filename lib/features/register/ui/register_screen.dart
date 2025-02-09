@@ -163,9 +163,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             controller: context.read<RegisterCubit>().firstNameController,
             icon: Icons.person_outline,
             focusNode: focusNodes['firstName']!,
-            condition: (text) =>
-            text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
-            conditionMessage: "invalid_first_name",
+            conditions: {
+              "invalid_first_name": (text) =>
+              text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
+            },
+            conditionMessages: {
+              "invalid_first_name": "invalid_first_name",
+            },
           ),
           buildTextFieldWithConditions(
             context,
@@ -174,9 +178,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             controller: context.read<RegisterCubit>().lastNameController,
             icon: Icons.person_outline,
             focusNode: focusNodes['lastName']!,
-            condition: (text) =>
-            text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
-            conditionMessage: "invalid_last_name",
+            conditions: {
+              "invalid_last_name": (text) =>
+              text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
+            },
+            conditionMessages: {
+              "invalid_last_name": "invalid_last_name",
+            },
           ),
           buildTextFieldWithConditions(
             context,
@@ -186,8 +194,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             icon: Icons.person_outline,
             formatter: [englishOnlyFilter],
             focusNode: focusNodes['username']!,
-            condition: (text) => text.isNotEmpty,
-            conditionMessage: "username_in_english",
+            conditions: {
+              "username_in_english": (text) => text.isNotEmpty,
+            },
+            conditionMessages: {
+              "username_in_english": "username_in_english",
+            },
           ),
           buildTextFieldWithConditions(
             context,
@@ -196,9 +208,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             controller: context.read<RegisterCubit>().emailController,
             icon: Icons.email_outlined,
             focusNode: focusNodes['email']!,
-            condition: (text) =>
-            text.isNotEmpty && context.read<RegisterCubit>().isValidEmail(text),
-            conditionMessage: "invalid_email",
+            conditions: {
+              "invalid_email": (text) =>
+              text.isNotEmpty && context.read<RegisterCubit>().isValidEmail(text),
+            },
+            conditionMessages: {
+              "invalid_email": "invalid_email",
+            },
           ),
           buildTextFieldWithConditions(
             context,
@@ -207,11 +223,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
             controller: context.read<RegisterCubit>().phoneController,
             icon: Icons.phone,
             focusNode: focusNodes['phone']!,
-            condition: (text) =>
-            text.isNotEmpty &&
-                context.read<RegisterCubit>().isValidPhoneNumber(text) &&
-                text.length >= 6,
-            conditionMessage: "phone_number_too_short",
+            conditions: {
+              "phone_number_invalid_format": (text) =>
+              text.isNotEmpty && context.read<RegisterCubit>().isValidPhoneFormat(text),
+              "phone_number_too_short": (text) =>
+              text.isNotEmpty && text.length >= 6,
+            },
+            conditionMessages: {
+              "phone_number_invalid_format": "phone_number_invalid_format",
+              "phone_number_too_short": "phone_number_too_short",
+            },
           ),
           buildPasswordSection(context),
           buildConfirmPasswordSection(context),
@@ -232,8 +253,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         required IconData icon,
         List<TextInputFormatter>? formatter,
         required FocusNode focusNode,
-        required bool Function(String) condition,
-        required String conditionMessage,
+        required Map<String, bool Function(String)> conditions,
+        required Map<String, String> conditionMessages,
       }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,51 +278,59 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ValueListenableBuilder(
           valueListenable: controller,
           builder: (context, TextEditingValue value, _) {
-            final text = value.text; // Extract the text property
-            final isValid = condition(text);
+            final text = value.text;
             final showConditionRow =
-                focusNode.hasFocus || (!isValid && text.isNotEmpty);
+                focusNode.hasFocus || text.isNotEmpty; // Show row if focused or has input
 
             if (showConditionRow) {
-              return Row(
+              return Column(
                 children: [
-                  CircleAvatar(
-                    radius: 4,
-                    backgroundColor: isValid ? Colors.green : Colors.red,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      isValid
-                          ? "Correct: ${conditionMessage.tr()}"
-                          : conditionMessage.tr(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isValid ? Colors.green : Colors.red,
+                  for (var entry in conditions.entries)
+                    if (!entry.value(text) && text.isNotEmpty) ...[
+                      // Show red row for invalid conditions
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 4,
+                            backgroundColor: Colors.red,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              conditionMessages[entry.key]?.tr() ?? "",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ],
-              );
-            } else if (!isValid && text.isNotEmpty) {
-              return Row(
-                children: [
-                  CircleAvatar(
-                    radius: 4,
-                    backgroundColor: Colors.red,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    conditionMessage.tr(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.red,
-                    ),
-                  ),
+                    ] else if (focusNode.hasFocus && text.isNotEmpty && entry.value(text)) ...[
+                      // Show green row for valid conditions while focused
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 4,
+                            backgroundColor: Colors.green,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              "Correct: ${conditionMessages[entry.key]?.tr()}",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]
                 ],
               );
             } else {
-              return const SizedBox.shrink();
+              return const SizedBox.shrink(); // Hide all rows when not focused and valid
             }
           },
         ),
@@ -317,8 +346,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       controller: context.read<RegisterCubit>().passwordController,
       icon: Icons.password,
       focusNode: focusNodes['password']!,
-      condition: (text) => text.isNotEmpty && text.length >= 6,
-      conditionMessage: "password_too_short",
+      conditions: {
+        "password_too_short": (text) =>
+        text.isNotEmpty && text.length >= 6,
+      },
+      conditionMessages: {
+        "password_too_short": "password_too_short",
+      },
     );
   }
 
@@ -330,9 +364,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       controller: context.read<RegisterCubit>().confirmPasswordController,
       icon: Icons.password,
       focusNode: focusNodes['confirmPassword']!,
-      condition: (text) =>
-      text == context.read<RegisterCubit>().passwordController.text,
-      conditionMessage: "passwords_do_not_match",
+      conditions: {
+        "passwords_do_not_match": (text) =>
+        text.isNotEmpty && text == context.read<RegisterCubit>().passwordController.text,
+      },
+      conditionMessages: {
+        "passwords_do_not_match": "passwords_do_not_match",
+      },
     );
   }
 
