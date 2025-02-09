@@ -45,6 +45,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
       return; // Error messages are already emitted
     }
 
+    // Trim spaces from username
+    final trimmedUsername = usernameController.text.trim();
+
     // Construct the register request
     RegisterRequest registerRequestBody = RegisterRequest(
       cityId: cityId,
@@ -54,7 +57,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       lastName: lastNameController.text,
       password: passwordController.text,
       phoneNumber: phoneController.text,
-      userName: usernameController.text,
+      userName: trimmedUsername,
       role: "Gatekeeper",
     );
 
@@ -76,12 +79,15 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
   // Helper function to check for empty fields
   bool _hasEmptyFields(int cityId) {
+    // Trim spaces from username
+    final trimmedUsername = usernameController.text.trim();
+
     return emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
         phoneController.text.isEmpty ||
         firstNameController.text.isEmpty ||
         lastNameController.text.isEmpty ||
-        usernameController.text.isEmpty ||
+        trimmedUsername.isEmpty ||
         cityId == 0;
   }
 

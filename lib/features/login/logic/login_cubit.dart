@@ -28,14 +28,15 @@ class LoginCubit extends Cubit<LoginStates> {
         emit(const LoginStates.emptyInput());
         return;
       }
-
+      // Trim spaces from username
+      final trimmedUsername = param.text.trim();
       final response = await _loginRepo.login(LoginRequest(
-        username: param.text,
+        username: trimmedUsername,
         password: password.text,
         deviceId: await getUniqueDeviceId(),
       ));
       response.when(success: (response) {
-        AppUtilities().username = param.text;
+        AppUtilities().username = trimmedUsername;
         AppUtilities().password = password.text;
         param.clear();
         password.clear();

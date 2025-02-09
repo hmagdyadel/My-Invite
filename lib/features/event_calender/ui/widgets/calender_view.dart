@@ -160,8 +160,16 @@ class CalenderView extends StatelessWidget {
     return events.where((event) {
       final eventFrom = DateTime.parse(event.eventFrom ?? "");
       final eventTo = DateTime.parse(event.eventTo ?? "");
-      // Check if day falls within event period (including start and end dates)
-      return day.isAfter(eventFrom.subtract(const Duration(days: 1))) && day.isBefore(eventTo.add(const Duration(days: 1)));
+
+      // Convert day to start of day for comparison
+      final compareDay = DateTime(day.year, day.month, day.day);
+      final compareEventFrom = DateTime(eventFrom.year, eventFrom.month, eventFrom.day);
+      final compareEventTo = DateTime(eventTo.year, eventTo.month, eventTo.day);
+
+      // Check if day is equal to event date (for single-day events) or falls within range
+      return compareDay.isAtSameMomentAs(compareEventFrom) ||
+          compareDay.isAtSameMomentAs(compareEventTo) ||
+          (compareDay.isAfter(compareEventFrom) && compareDay.isBefore(compareEventTo));
     }).toList();
   }
 

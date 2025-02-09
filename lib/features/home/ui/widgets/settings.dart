@@ -1,5 +1,6 @@
 import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
+import 'package:app/core/widgets/go_button.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,7 +17,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
+class _SettingsScreenState extends State<SettingsScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
 
@@ -48,19 +50,56 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     await _controller.forward();
     if (!mounted) return;
 
-     AppUtilities().setLocality(newCode);
+    AppUtilities().setLocality(newCode);
     if (!mounted) return;
 
     await _controller.reverse();
   }
 
   Future<void> _handleLogout() async {
-    try {
-      context.pushNamedAndRemoveUntil(Routes.loginScreen, predicate: false);
-      await AppUtilities().clearData();
-    } catch (e) {
-      debugPrint('Logout error: $e');
-    }
+    await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: whiteTextColor,
+        title: NormalText(
+          text: 'logout_confirmation_title'.tr(),
+          color: navBarBackground,
+          fontSize: 20,
+          align: TextAlign.start,
+        ),
+        content: NormalText(
+          text: 'logout_confirmation_message'.tr(),
+          color: navBarBackground,
+          fontSize: 16,
+          align: TextAlign.start,
+        ),
+        actions: [
+          GoButton(
+            fun: () => context.pop(),
+            titleKey: 'cancel'.tr(),
+            textColor: whiteTextColor,
+            fontSize: 16,
+            btColor: Colors.red,
+            w: 100,
+          ),
+          GoButton(
+            fun: () async {
+              try {
+                context.pushNamedAndRemoveUntil(Routes.loginScreen,
+                    predicate: false);
+                await AppUtilities().clearData();
+              } catch (e) {
+                debugPrint('Logout error: $e');
+              }
+            },
+            titleKey: 'logout'.tr(),
+            textColor: whiteTextColor,
+            fontSize: 16,
+            w: 120,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -100,7 +139,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
-  Widget _buildSettingsOption({required BuildContext context, required Widget child}) {
+  Widget _buildSettingsOption(
+      {required BuildContext context, required Widget child}) {
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
@@ -164,8 +204,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   ),
                 ),
               ),
-        Transform.rotate(
-          angle: context.locale.languageCode == 'en' ? 0 : 3.14,
+              Transform.rotate(
+                angle: context.locale.languageCode == 'en' ? 0 : 3.14,
                 child: Icon(
                   Icons.logout,
                   color: Colors.white,
