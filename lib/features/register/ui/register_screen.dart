@@ -136,6 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           buildTextFieldSection(context, "email", "email_hint", context.read<RegisterCubit>().emailController, Icons.email_outlined),
           buildTextFieldSection(context, "phone", "phone_no_hint", context.read<RegisterCubit>().phoneController, Icons.phone),
           buildPasswordSection(context),
+          buildConfirmPasswordSection(context),
           buildAddressSection(context),
           buildGenderSection(context),
           SizedBox(height: edge * 2),
@@ -174,6 +175,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "password",
       "password_hint",
       context.read<RegisterCubit>().passwordController,
+      Icons.password,
+      formatter: [],
+    );
+  }
+
+  Widget buildConfirmPasswordSection(BuildContext context) {
+    return buildTextFieldSection(
+      context,
+      "confirm_password",
+      "confirm_password_hint",
+      context.read<RegisterCubit>().confirmPasswordController,
       Icons.password,
       formatter: [],
     );

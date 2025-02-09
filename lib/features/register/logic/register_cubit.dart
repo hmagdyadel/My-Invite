@@ -13,6 +13,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
   // Text controllers for the fields
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -24,11 +25,24 @@ class RegisterCubit extends Cubit<RegisterStates> {
     return emailRegex.hasMatch(email);
   }
 
-  // Validate if the given phone number contains only numeric characters
+
+  // Validate if the given phone number contains only numeric characters and is at least 6 digits long
   bool isValidPhoneNumber(String phoneNumber) {
-    final phoneRegex = RegExp(r'^\d+$');
+    final phoneRegex = RegExp(r'^\d{6,}$'); // At least 6 digits
     return phoneRegex.hasMatch(phoneNumber);
   }
+
+  // Validate if the password is at least 6 characters long
+  bool isValidPassword(String password) {
+    return password.length >= 6;
+  }
+
+  // Validate if the first name or last name contains only alphabetic characters
+  bool isValidName(String name) {
+    final nameRegex = RegExp(r'^[a-zA-Z]+$'); // Only alphabetic characters
+    return nameRegex.hasMatch(name);
+  }
+
 
   // Register function
   Future<void> register({required int cityId, required bool isMale}) async {
@@ -39,11 +53,12 @@ class RegisterCubit extends Cubit<RegisterStates> {
       emit(const RegisterStates.emptyInput());
       return;
     }
-
-    // Validate email and phone number
-    if (!_isEmailAndPhoneValid()) {
-      return; // Error messages are already emitted
-    }
+    // Perform all validations
+    if (!_isEmailValid()) return;
+    if (!_isPhoneValid()) return;
+    if (!_isPasswordValid()) return;
+    if (!_arePasswordsMatching()) return;
+    if (!_areNamesValid()) return;
 
     // Trim spaces from username
     final trimmedUsername = usernameController.text.trim();
@@ -86,19 +101,63 @@ class RegisterCubit extends Cubit<RegisterStates> {
         passwordController.text.isEmpty ||
         phoneController.text.isEmpty ||
         firstNameController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty ||
         lastNameController.text.isEmpty ||
         trimmedUsername.isEmpty ||
         cityId == 0;
   }
 
-  // Helper function to validate email and phone
-  bool _isEmailAndPhoneValid() {
+  // Validate email
+  bool _isEmailValid() {
     if (!isValidEmail(emailController.text)) {
       emit(RegisterStates.error(message: "invalid_email".tr()));
       return false;
     }
-    if (!isValidPhoneNumber(phoneController.text)) {
-      emit(RegisterStates.error(message: "invalid_phone".tr()));
+    return true;
+  }
+// Validate if the given phone number contains only numeric characters and is at least 6 digits long
+  bool _isPhoneValid() {
+    final phoneRegex = RegExp(r'^\d+$'); // Only numeric characters
+    final minLength = 6;
+
+    if (!phoneRegex.hasMatch(phoneController.text)) {
+      emit(RegisterStates.error(message: "phone_number_invalid_format".tr()));
+      return false;
+    }
+
+    if (phoneController.text.length < minLength) {
+      emit(RegisterStates.error(message: "phone_number_too_short".tr()));
+      return false;
+    }
+
+    return true;
+  }
+
+  // Validate password length
+  bool _isPasswordValid() {
+    if (!isValidPassword(passwordController.text)) {
+      emit(RegisterStates.error(message: "password_too_short".tr()));
+      return false;
+    }
+    return true;
+  }
+  // Validate if passwords match
+  bool _arePasswordsMatching() {
+    if (passwordController.text != confirmPasswordController.text) {
+      emit(RegisterStates.error(message: "passwords_do_not_match".tr()));
+      return false;
+    }
+    return true;
+  }
+
+  // Validate first name and last name
+  bool _areNamesValid() {
+    if (!isValidName(firstNameController.text)) {
+      emit(RegisterStates.error(message: "invalid_first_name".tr()));
+      return false;
+    }
+    if (!isValidName(lastNameController.text)) {
+      emit(RegisterStates.error(message: "invalid_last_name".tr()));
       return false;
     }
     return true;

@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
             foregroundColor: Colors.white,
             leading: GestureDetector(
               onTap: () {
-                context.pop();
+                context.pushNamedAndRemoveUntil(Routes.onBoardingScreen, predicate: false);
               },
               child: Padding(
                 padding: const EdgeInsets.all(6),

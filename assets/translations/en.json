@@ -247,7 +247,7 @@
   "scanned_before": "Already Scanned",
   "username_hint": "Please enter your username",
   "password_hint": "Please enter your password",
-  "enter_required_fields":  "Please fill in all required fields.",
+  "enter_required_fields": "Please fill in all required fields.",
   "failed_to_get_profile": "Failed to get profile data",
   "first_name_hint": "Please enter your first name",
   "last_name_hint": "Please enter your last name",
@@ -256,7 +256,6 @@
   "username_in_english": "Username in English",
   "register_error": "Failed to register, please try again later",
   "invalid_email": "Invalid email address.",
-  "invalid_phone": "Phone number must contain only numbers.",
   "username_exists_error": "This username already exists, please try again with another username",
   "unauthorized_error": "Unable to access the system. Please verify your username and password, then attempt to log in again.",
   "unexpected_error": "An unexpected error occurred, please try again later.",
@@ -304,5 +303,13 @@
   "already_checked_in": "You have already checked in to this event",
   "must_check_in_first": "You must check in before checking out",
   "logout_confirmation_title": "Logout Confirmation",
-  "logout_confirmation_message": "Are you sure you want to logout?"
+  "logout_confirmation_message": "Are you sure you want to logout?",
+  "confirm_password": "Confirm Password",
+  "confirm_password_hint": "Please confirm your password",
+  "password_too_short": "Password must be at least 6 characters long.",
+  "passwords_do_not_match": "Passwords do not match.",
+  "invalid_first_name": "First name should only contain alphabetic characters.",
+  "invalid_last_name": "Last name should only contain alphabetic characters.",
+  "phone_number_invalid_format": "Phone number must contain only numbers.",
+  "phone_number_too_short": "Phone number must be at least 6 digits long."
 }
