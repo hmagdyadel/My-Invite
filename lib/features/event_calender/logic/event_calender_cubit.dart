@@ -45,6 +45,8 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     response.when(
       success: (response) {
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
+        // Fetch events again after successful reservation
+        getEventsCalendar();
       },
       failure: (error) {
         if (error.contains(" on the same day")) {
