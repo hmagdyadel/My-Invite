@@ -36,10 +36,10 @@ Future handleForegroundMessages() async {
     }
   });
   messaging.getToken().then((onValue){
-    print("getToken $onValue");
+    debugPrint("getToken $onValue");
   }).onError((error,trace){
     messaging.getAPNSToken().then((onValue){
-      print("apnsToken $onValue");
+      debugPrint("apnsToken $onValue");
     });
   });
 }
