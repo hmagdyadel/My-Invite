@@ -61,10 +61,12 @@ class AppRouter {
           MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (_) => getIt<RegisterCubit>(), // RegisterCubit for handling registration
+                create: (_) => getIt<
+                    RegisterCubit>(), // RegisterCubit for handling registration
               ),
               BlocProvider(
-                create: (_) => getIt<LocationCubit>(), // LocationCubit for handling location
+                create: (_) => getIt<
+                    LocationCubit>(), // LocationCubit for handling location
               ),
             ],
             child: const RegisterScreen(),
@@ -79,7 +81,8 @@ class AppRouter {
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<HomeCubit>(),
-            child: const HomeScreen(), // RegisterCubit for handling registration
+            child:
+                const HomeScreen(), // RegisterCubit for handling registration
           ),
         );
 
@@ -155,11 +158,13 @@ class AppRouter {
         );
 
       case Routes.clientGuestDetailsScreen:
-        final clientMessagesStatusDetails = arguments as ClientMessagesStatusDetails;
+        final clientMessagesStatusDetails =
+            arguments as ClientMessagesStatusDetails;
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<ClientEventsCubit>(),
-            child: ClientGuestDetailsScreen(clientMessagesStatusDetails: clientMessagesStatusDetails),
+            child: ClientGuestDetailsScreen(
+                clientMessagesStatusDetails: clientMessagesStatusDetails),
           ),
         );
 
@@ -195,7 +200,8 @@ class AppRouter {
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<ClientStatisticsCubit>(),
-            child: ClientMessageStatus(eventId: eventId, type: type, title: title),
+            child:
+                ClientMessageStatus(eventId: eventId, type: type, title: title),
           ),
         );
       case Routes.sentCardsServicesScreen:
@@ -207,13 +213,15 @@ class AppRouter {
           ),
         );
       default:
-        return _buildRoute(
-          Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
-          ),
-        );
+        return _buildRoute(const SplashScreen());
+
+      //   _buildRoute(
+      //   Scaffold(
+      //     body: Center(
+      //       child: Text('No route defined for ${settings.name}'),
+      //     ),
+      //   ),
+      // );
     }
   }
 

@@ -43,7 +43,8 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
                   loading: () {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (Navigator.canPop(context)) return;
-                      animatedLoaderWithTitle(context: context, title: "wait".tr());
+                      animatedLoaderWithTitle(
+                          context: context, title: "wait".tr());
                     });
                     return const SizedBox.shrink();
                   },
@@ -103,16 +104,19 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
     return const SizedBox.shrink();
   }
 
-
   Widget _handleError(BuildContext context, String error) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (error.contains("Scanned 1 of 1")) {
-        context.showErrorToast("scanned_before".tr());
-      } else {
-        context.showErrorToast(error);
-      }
+      AudioService().playAudio(
+          src: 'sounds/audFailure.mp3',
+          onComplete: () {
+            if (error.contains("Scanned 1 of 1")) {
+              context.showErrorToast("scanned_before".tr());
+            } else {
+              context.showErrorToast(error);
+            }
 
-      context.read<QrCodeScannerCubit>().reloadPage();
+            context.read<QrCodeScannerCubit>().reloadPage();
+          });
     });
     return const SizedBox.shrink();
   }
@@ -129,7 +133,8 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding: WidgetStateProperty.all<EdgeInsets>( EdgeInsets.all(edge*0.7)),
+        padding:
+            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
         minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40)),
       ),
       onPressed: () {

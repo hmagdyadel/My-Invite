@@ -62,13 +62,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
       // Navigate to the determined route
       if (mounted) {
-        context.pushReplacementNamed(nextRoute);
+        context.pushNamedAndRemoveUntil(nextRoute, predicate: false);
       }
     } catch (e) {
       debugPrint('Error during initialization: $e');
       // In case of any error, default to onboarding
       if (mounted) {
-        context.pushReplacementNamed(Routes.onBoardingScreen);
+        context.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
+            predicate: false);
       }
     }
   }
