@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import '../routing/routes.dart';
-import '../services/navigation_service.dart';
-import '../services/notification_service.dart';
+import 'navigation_service.dart';
+import 'notification_service.dart';
 
 class FirebaseMessagingHandler {
   static final FirebaseMessagingHandler _instance = FirebaseMessagingHandler._internal();
