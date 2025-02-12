@@ -1,9 +1,9 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
+import '../../../core/widgets/loader.dart';
 import 'widgets/client_event_item.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -60,7 +60,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () =>  Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
@@ -78,7 +78,7 @@ class _ClientEventsScreenState extends State<ClientEventsScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.white),
+                              child: Loader(color: whiteTextColor),
                             ),
                           );
                         }

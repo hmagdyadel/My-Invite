@@ -1,9 +1,9 @@
 import 'package:app/core/theming/colors.dart';
+import 'package:app/core/widgets/loader.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'widgets/event_check_dialog_box.dart';
 import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,9 +62,9 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
             successCheck: (success) => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
+            loadingCheckOut: () => const Center(child: Loader(color: whiteTextColor)),
+            loadingCheckIn: () => const Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
@@ -82,7 +82,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.white),
+                              child: Loader(color: whiteTextColor),
                             ),
                           );
                         }

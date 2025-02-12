@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/theming/colors.dart';
+import '../../../../../core/widgets/loader.dart';
 import '../../../../../core/widgets/public_appbar.dart';
 import '../../../../../core/widgets/subtitle_text.dart';
 import '../../../data/models/client_messages_statistics_response.dart';
@@ -29,7 +29,7 @@ class ClientMessagesStatisticsScreen extends StatelessWidget {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
             successFetchData: (success) {
               final ClientMessagesStatisticsResponse events = success;
 

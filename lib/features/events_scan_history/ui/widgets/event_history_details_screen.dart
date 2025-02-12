@@ -1,7 +1,7 @@
+import '../../../../core/widgets/loader.dart';
 import 'event_details_item.dart';
 import 'scan_details_header.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,8 @@ class EventHistoryDetailsScreen extends StatefulWidget {
   const EventHistoryDetailsScreen({super.key, required this.event});
 
   @override
-  State<EventHistoryDetailsScreen> createState() => _EventHistoryDetailsScreenState();
+  State<EventHistoryDetailsScreen> createState() =>
+      _EventHistoryDetailsScreenState();
 }
 
 class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
@@ -48,18 +49,24 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
         "scan_history".tr(),
       ),
       body: BlocBuilder<GatekeeperEventsCubit, ScanHistoryStates>(
-        buildWhen: (previous, current) => current is EmptyInputScanHistory || current is LoadingScanHistory || current is SuccessScanHistory || current is ErrorScanHistory,
-        bloc: context.read<GatekeeperEventsCubit>()..getEventDetails(widget.event?.id.toString() ?? "0"),
+        buildWhen: (previous, current) =>
+            current is EmptyInputScanHistory ||
+            current is LoadingScanHistory ||
+            current is SuccessScanHistory ||
+            current is ErrorScanHistory,
+        bloc: context.read<GatekeeperEventsCubit>()
+          ..getEventDetails(widget.event?.id.toString() ?? "0"),
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
             errorCheck: (error) => const SizedBox.shrink(),
             successCheck: (success) => const SizedBox.shrink(),
-            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckOut: () => Center(child: Loader(color: whiteTextColor)),
+            loadingCheckIn: () =>
+                const Center(child: Loader(color: whiteTextColor)),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
@@ -69,7 +76,8 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
               return ListView.builder(
                 controller: _scrollController,
                 padding: EdgeInsets.symmetric(vertical: edge),
-                itemCount: events.length + (isLoadingMore ? 2 : 1), // +2 for header and loader
+                itemCount: events.length + (isLoadingMore ? 2 : 1),
+                // +2 for header and loader
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return ScanDetailsHeader(event: widget.event);
@@ -78,7 +86,7 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
                     return const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Center(
-                        child: CupertinoActivityIndicator(color: Colors.white),
+                        child: Loader(color: whiteTextColor),
                       ),
                     );
                   }
@@ -95,10 +103,12 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
       final cubit = context.read<GatekeeperEventsCubit>();
       if (cubit.hasMoreDetails) {
-        cubit.getEventDetails(widget.event?.id.toString() ?? "0", isNextPage: true);
+        cubit.getEventDetails(widget.event?.id.toString() ?? "0",
+            isNextPage: true);
       }
     }
   }
