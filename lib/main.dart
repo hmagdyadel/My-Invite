@@ -12,16 +12,15 @@ import 'core/services/notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-// }
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
 
 Future handleForegroundMessages() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  // Request permissions first
-  NotificationSettings settings = await messaging.requestPermission(
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -30,54 +29,29 @@ Future handleForegroundMessages() async {
     provisional: false,
     sound: true,
   );
-
-  debugPrint("iOS notification permissions status: ${settings.authorizationStatus}");
-
-  if (Platform.isIOS) {
-    // Add retry logic for APNS token
-    int maxRetries = 3;
-    String? apnsToken;
-
-    for (int i = 0; i < maxRetries; i++) {
-      // Wait a bit before trying
-      await Future.delayed(Duration(seconds: 2));
-
-      apnsToken = await messaging.getAPNSToken();
-      debugPrint("Attempt ${i + 1}: APNS Token: $apnsToken");
-
-      if (apnsToken != null) {
-        break;
-      }
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    if (message.notification != null) {
+      NotificationService().showInstantNotification(body: message.notification!.body ?? "", title: message.notification!.title ?? "");
     }
-
-    if (apnsToken == null) {
-      debugPrint("Failed to get APNS token after $maxRetries attempts");
-      return;
-    }
-  }
-
-  try {
-    String? token = await messaging.getToken();
-    debugPrint("FCM Token: $token");
-  } catch (error) {
-    debugPrint("Error getting FCM token: $error");
-  }
+  });
+  messaging.getToken().then((onValue){
+    debugPrint("getToken $onValue");
+  }).onError((error,trace){
+    messaging.getAPNSToken().then((onValue){
+      debugPrint("apnsToken $onValue");
+    });
+  });
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase first
   await Firebase.initializeApp();
 
-  // Initialize notifications
-  await NotificationService().init();
-
-  // Handle messages setup
-  await handleForegroundMessages();
-
-  // Initialize localization
   await EasyLocalization.ensureInitialized();
+  await NotificationService().init();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  handleForegroundMessages();
 
   setupGetIt();
   runApp(MultiBlocProvider(
