@@ -1,8 +1,7 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../core/widgets/loader.dart';
 import '../data/models/city_response.dart';
 import '../data/models/country_response.dart';
 import '../logic/location_cubit.dart';
@@ -53,12 +52,12 @@ class GatekeeperLocationSelector extends StatelessWidget {
   }
 
   Widget _buildCountryDropdown(
-      BuildContext context,
-      List<CountryResponse> countries,
-      CountryResponse? selectedCountry,
-      bool isLoading,
-      String? error,
-      ) {
+    BuildContext context,
+    List<CountryResponse> countries,
+    CountryResponse? selectedCountry,
+    bool isLoading,
+    String? error,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -67,38 +66,38 @@ class GatekeeperLocationSelector extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: error != null
           ? Center(
-        child: NormalText(
-          text: error,
-          color: Colors.red,
-          fontSize: 12,
-        ),
-      )
+              child: NormalText(
+                text: error,
+                color: Colors.red,
+                fontSize: 12,
+              ),
+            )
           : isLoading
-          ? const SizedBox(
-        height: 48,
-        child: Center(
-          child: CupertinoActivityIndicator(color: Colors.white),
-        ),
-      )
-          : _buildDropdown(
-        context: context,
-        items: countries,
-        selectedValue: selectedCountry,
-        onChanged: (CountryResponse? value) {
-          if (value != null) onCountryChange(value);
-        },
-        hintText: "select_country",
-      ),
+              ? SizedBox(
+                  height: 48,
+                  child: Center(
+                    child: Loader(color: whiteTextColor),
+                  ),
+                )
+              : _buildDropdown(
+                  context: context,
+                  items: countries,
+                  selectedValue: selectedCountry,
+                  onChanged: (CountryResponse? value) {
+                    if (value != null) onCountryChange(value);
+                  },
+                  hintText: "select_country",
+                ),
     );
   }
 
   Widget _buildCityDropdown(
-      BuildContext context,
-      List<CityResponse> cities,
-      CityResponse? selectedCity,
-      bool isLoading,
-      String? error,
-      ) {
+    BuildContext context,
+    List<CityResponse> cities,
+    CityResponse? selectedCity,
+    bool isLoading,
+    String? error,
+  ) {
     final locationCubit = context.read<LocationCubit>();
     final bool isEnabled = locationCubit.selectedCountry != null;
 
@@ -111,34 +110,34 @@ class GatekeeperLocationSelector extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: error != null
           ? Center(
-        child: NormalText(
-          text: error,
-          color: Colors.red,
-          fontSize: 12,
-        ),
-      )
+              child: NormalText(
+                text: error,
+                color: Colors.red,
+                fontSize: 12,
+              ),
+            )
           : isLoading
-          ? const Center(
-        child: CupertinoActivityIndicator(color: Colors.white),
-      )
-          : _buildDropdown(
-        context: context,
-        items: cities,
-        selectedValue: selectedCity,
-        onChanged: isEnabled
-            ? (CityResponse? value) {
-          if (value != null) {
-            context.read<LocationCubit>().setSelectedCity(value);
-            onCityChange(value);
-          }
-        }
-            : null,
-        hintText: "select_city",
-      ),
+              ? const Center(
+                  child: Loader(color: whiteTextColor),
+                )
+              : _buildDropdown(
+                  context: context,
+                  items: cities,
+                  selectedValue: selectedCity,
+                  onChanged: isEnabled
+                      ? (CityResponse? value) {
+                          if (value != null) {
+                            context
+                                .read<LocationCubit>()
+                                .setSelectedCity(value);
+                            onCityChange(value);
+                          }
+                        }
+                      : null,
+                  hintText: "select_city",
+                ),
     );
   }
-
-
 
   Widget _buildDropdown<T>({
     required BuildContext context,

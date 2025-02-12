@@ -32,16 +32,16 @@
 		<false/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs camera access to scan QR codes and take pictures</string>
+	<string>My Invite needs to access camera to scan QR codes and take your picture for confirm attendance</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open</string>
+	<string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs microphone access to record videos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs photo gallery access select pictures</string>
+	<string>My Invite needs to access microphone for confirm attendance</string>
 	<key>NSRemoteNotificationUsageDescription</key>
-	<string>We need to send you notifications for important updates and reminders</string>
+	<string>My Invite needs to access your notifications for important updates and reminders</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>

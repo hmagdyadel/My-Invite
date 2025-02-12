@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/dimensions/dimensions.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theming/colors.dart';
+import '../../../../../core/widgets/loader.dart';
 import '../../../../../core/widgets/normal_text.dart';
 import '../../../../../core/widgets/public_appbar.dart';
 import '../../../../../core/widgets/subtitle_text.dart';
@@ -124,7 +125,7 @@ class _ClientMessageStatusState extends State<ClientMessageStatus> {
                     initial: () => const SizedBox.shrink(),
                     successFetchData: (response) => const SizedBox.shrink(),
                     loading: () => const Center(
-                        child: CupertinoActivityIndicator(color: Colors.white)),
+                        child: Loader(color: whiteTextColor)),
                     emptyInput: () =>
                         _buildCenteredMessage("no_available_events".tr()),
                     error: (error) => _buildCenteredMessage(error),

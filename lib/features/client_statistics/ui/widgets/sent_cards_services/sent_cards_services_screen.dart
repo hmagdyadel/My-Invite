@@ -1,7 +1,7 @@
 import 'package:app/core/helpers/extensions.dart';
+import '../../../../../core/widgets/loader.dart';
 import 'sent_cards_services_chart.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +34,7 @@ class SentCardsServicesScreen extends StatelessWidget {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () =>  Center(child: Loader(color: whiteTextColor)),
             successFetchData: (success) {
               final SentCardsServicesResponse events = success;
               return Column(

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/loader.dart';
 import '../../../../core/widgets/public_appbar.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/client_event_response.dart';
@@ -60,7 +60,7 @@ class _ClientEventDetailsScreenState extends State<ClientEventDetailsScreen> {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () =>  Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
@@ -77,7 +77,7 @@ class _ClientEventDetailsScreenState extends State<ClientEventDetailsScreen> {
                     return const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Center(
-                        child: CupertinoActivityIndicator(color: Colors.white),
+                        child: Loader(color: whiteTextColor),
                       ),
                     );
                   }

@@ -1,12 +1,12 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/dimensions/dimensions.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/colors.dart';
+import '../../../core/widgets/loader.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../../../core/widgets/subtitle_text.dart';
 import '../../client_events/data/models/client_event_response.dart';
@@ -59,7 +59,7 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
             successFetchData: (success) => Container(),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
@@ -78,7 +78,7 @@ class _ClientStatisticsScreenState extends State<ClientStatisticsScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.white),
+                              child: Loader(color: whiteTextColor),
                             ),
                           );
                         }

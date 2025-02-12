@@ -2,11 +2,11 @@ import 'package:app/core/dimensions/dimensions.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/theming/colors.dart';
+import '../../../../../core/widgets/loader.dart';
 import '../../../../../core/widgets/normal_text.dart';
 import '../../../../../core/widgets/public_appbar.dart';
 import '../../../../../core/widgets/subtitle_text.dart';
@@ -35,8 +35,8 @@ class ClientConfirmationServicesScreen extends StatelessWidget {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(
-                child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () =>  Center(
+                child: Loader(color: whiteTextColor)),
             successFetchData: (success) {
               final ClientConfirmationServiceResponse events = success;
               return Column(

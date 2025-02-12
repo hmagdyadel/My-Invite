@@ -1,9 +1,9 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
+import '../../../core/widgets/loader.dart';
 import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,11 +61,11 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
             initial: () => const SizedBox.shrink(),
             errorCheck: (error) => const SizedBox.shrink(),
             successCheck: (success) => const SizedBox.shrink(),
-            loadingCheckOut: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-            loadingCheckIn: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loadingCheckOut: () =>  Center(child: Loader(color: whiteTextColor)),
+            loadingCheckIn: () => const Center(child: Loader(color: whiteTextColor)),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
@@ -84,7 +84,7 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
                           return const Padding(
                             padding: EdgeInsets.all(16.0),
                             child: Center(
-                              child: CupertinoActivityIndicator(color: Colors.white),
+                              child: Loader(color: whiteTextColor),
                             ),
                           );
                         }

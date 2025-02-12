@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/dependency_injection.dart';
-
+import 'core/helpers/firebase_messaging_handler.dart';
+import 'core/routing/routes.dart';
 import 'core/services/notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
@@ -15,70 +15,60 @@ import 'my_invite.dart';
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-}
+  debugPrint('Handling background message: ${message.messageId}');
 
-Future handleForegroundMessages() async {
-
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (message.notification != null) {
-      NotificationService().showInstantNotification(body: message.notification!.body ?? "", title: message.notification!.title ?? "");
-    }
-  });
-  messaging.getToken().then((onValue){
-    debugPrint("getToken $onValue");
-  }).onError((error,trace){
-    messaging.getAPNSToken().then((onValue){
-      debugPrint("apnsToken $onValue");
-    });
-  });
+  // Set the pending route for when the app is launched
+  FirebaseMessagingHandler.pendingNavigationRoute = Routes.eventsCalendar;
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  // Initialize core services
+  await _initializeCoreServices();
 
+  // Initialize localization
   await EasyLocalization.ensureInitialized();
-  await NotificationService().init();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  handleForegroundMessages();
 
+  // Set up dependency injection
   setupGetIt();
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => getIt<EventCalenderCubit>(),
-      ),
-    ],
-    child: EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
-      saveLocale: true,
-      startLocale: Locale(Platform.localeName.split('_')[0]),
-      path: 'assets/translations',
-      fallbackLocale: Locale(Platform.localeName.split('_')[0]),
-      child: const MyApp(),
-    ),
-  ));
+
+  runApp(const MyAppWrapper());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+Future<void> _initializeCoreServices() async {
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Set up background message handler
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Initialize notification service
+  await NotificationService().init();
+
+  // Initialize Firebase Messaging handler
+  await FirebaseMessagingHandler().initialize();
+}
+
+class MyAppWrapper extends StatelessWidget {
+  const MyAppWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MyInvite();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<EventCalenderCubit>(),
+        ),
+      ],
+      child: EasyLocalization(
+        supportedLocales: const [Locale('en'), Locale('ar')],
+        saveLocale: true,
+        startLocale: Locale(Platform.localeName.split('_')[0]),
+        path: 'assets/translations',
+        fallbackLocale: Locale(Platform.localeName.split('_')[0]),
+        child: const MyInvite(),
+      ),
+    );
   }
 }

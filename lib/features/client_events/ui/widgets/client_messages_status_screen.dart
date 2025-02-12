@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/loader.dart';
 import '../../../../core/widgets/public_appbar.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../../../core/widgets/text_field_with_icon.dart';
@@ -110,7 +110,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                 Expanded(
                   child: state.when(
                     initial: () => const SizedBox.shrink(),
-                    loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+                    loading: () => const Center(child: Loader(color: whiteTextColor)),
                     emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
                     error: (error) => _buildCenteredMessage(error),
                     success: (response, isLoadingMore) {
@@ -130,7 +130,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                             return const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Center(
-                                child: CupertinoActivityIndicator(color: Colors.white),
+                                child: Loader(color: whiteTextColor),
                               ),
                             );
                           }
