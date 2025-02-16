@@ -40,9 +40,10 @@
 	<key>NSRemoteNotificationUsageDescription</key>
 	<string>My Invite needs to access your notifications for important updates and reminders</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
-	<true/>
+
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
