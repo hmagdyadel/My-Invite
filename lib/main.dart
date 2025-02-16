@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/dependency_injection.dart';
-import 'core/helpers/firebase_messaging_handler.dart';
+import 'core/services/firebase_messaging_handler.dart';
 import 'core/routing/routes.dart';
 import 'core/services/notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';

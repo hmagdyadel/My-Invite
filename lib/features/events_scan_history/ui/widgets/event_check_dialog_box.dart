@@ -148,10 +148,10 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     setState(() => _isProcessing = true);
 
     try {
-      if (!_isWithinEventTimeWindow(widget.event)) {
-        _showOutsideTimeWindowError(context);
-        return;
-      }
+      // if (!_isWithinEventTimeWindow(widget.event)) {
+      //   _showOutsideTimeWindowError(context);
+      //   return;
+      // }
 
       final position = await _getValidatedPosition(context);
       if (position == null) return;
