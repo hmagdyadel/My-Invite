@@ -1,6 +1,7 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:camera/camera.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/theming/colors.dart';
@@ -14,7 +15,7 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraController? controller;  // Make nullable
+  CameraController? controller; // Make nullable
   bool initialized = false;
   bool isTakingPicture = false;
   List<CameraDescription> cameras = [];
@@ -32,7 +33,7 @@ class _CameraScreenState extends State<CameraScreen> {
         selectedCameraIndex = cameraIndex;
       } else {
         selectedCameraIndex = cameras.indexWhere(
-              (camera) => camera.lensDirection == CameraLensDirection.front,
+          (camera) => camera.lensDirection == CameraLensDirection.front,
         );
         if (selectedCameraIndex == -1) selectedCameraIndex = 0;
       }
@@ -78,12 +79,24 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
+    // Lock orientation to portrait
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _initializeCameraController();
   }
 
   @override
   void dispose() {
-    controller?.dispose();  // Safe disposal with null check
+    // Restore orientation preferences
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    controller?.dispose(); // Safe disposal with null check
     super.dispose();
   }
 
@@ -94,77 +107,86 @@ class _CameraScreenState extends State<CameraScreen> {
         context,
         "cameraScreenTitle".tr(),
       ),
-      body: initialized && controller != null  // Add null check
+      body: initialized && controller != null // Add null check
           ? Stack(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: RotatedBox(
-              quarterTurns: controller!.description.sensorOrientation == 270 ? 1 : 3,
-              child: CameraPreview(controller!),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Switch Camera Button
-                  if (cameras.length > 1)
-                    FloatingActionButton(
-                      heroTag: 'switchCamera',
-                      backgroundColor: navBarBackground,
-                      onPressed: initialized ? _switchCamera : null,
-                      child: const Icon(
-                        Icons.flip_camera_ios_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  // Take Picture Button
-                  FloatingActionButton(
-                    heroTag: 'takePhoto',
-                    backgroundColor: navBarBackground,
-                    onPressed: isTakingPicture
-                        ? null
-                        : () async {
-                      setState(() {
-                        isTakingPicture = true;
-                      });
-
-                      try {
-                        final XFile file = await controller!.takePicture();
-                        Navigator.pop(context, file);
-                      } catch (e) {
-                        _handleCameraError(e, message: "photoCaptureFailed".tr());
-                      } finally {
-                        setState(() {
-                          isTakingPicture = false;
-                        });
-                      }
-                    },
-                    child: isTakingPicture
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Icon(Icons.camera, color: Colors.white),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: RotatedBox(
+                    quarterTurns: _getQuarterTurns(), // Adjust rotation based on platform
+                    child: CameraPreview(controller!),
                   ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 32.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Switch Camera Button
+                        if (cameras.length > 1)
+                          FloatingActionButton(
+                            heroTag: 'switchCamera',
+                            backgroundColor: navBarBackground,
+                            onPressed: initialized ? _switchCamera : null,
+                            child: const Icon(
+                              Icons.flip_camera_ios_rounded,
+                              color: Colors.white,
+                            ),
+                          ),
+                        // Take Picture Button
+                        FloatingActionButton(
+                          heroTag: 'takePhoto',
+                          backgroundColor: navBarBackground,
+                          onPressed: isTakingPicture
+                              ? null
+                              : () async {
+                                  setState(() {
+                                    isTakingPicture = true;
+                                  });
+
+                                  try {
+                                    final XFile file = await controller!.takePicture();
+                                    Navigator.pop(context, file);
+                                  } catch (e) {
+                                    _handleCameraError(e, message: "photoCaptureFailed".tr());
+                                  } finally {
+                                    setState(() {
+                                      isTakingPicture = false;
+                                    });
+                                  }
+                                },
+                          child: isTakingPicture ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.camera, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 20),
+                  Text("cameraLoading".tr(), style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ),
-          ),
-        ],
-      )
-          : Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: 20),
-            Text("cameraLoading".tr(), style: const TextStyle(fontSize: 16)),
-          ],
-        ),
-      ),
     );
+  }
+
+  int _getQuarterTurns() {
+    if (controller == null) return 0;
+
+    // Adjust rotation based on platform and sensor orientation
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return 1; // Rotate 90 degrees for iOS
+    } else {
+      return controller!.description.sensorOrientation == 270 ? 1 : 3;
+    }
   }
 }
