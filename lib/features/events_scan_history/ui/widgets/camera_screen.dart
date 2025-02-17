@@ -50,7 +50,7 @@ class _CameraScreenState extends State<CameraScreen> {
       );
 
       await controller!.initialize();
-      await controller!.lockCaptureOrientation(DeviceOrientation.portraitDown);
+      //await controller!.lockCaptureOrientation(DeviceOrientation.);
 
       if (!mounted) return;
       setState(() {
@@ -79,23 +79,13 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-    // Lock orientation to portrait
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+
     _initializeCameraController();
   }
 
   @override
   void dispose() {
-    // Restore orientation preferences
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+
     controller?.dispose(); // Safe disposal with null check
     super.dispose();
   }
@@ -113,10 +103,8 @@ class _CameraScreenState extends State<CameraScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: RotatedBox(
-                    quarterTurns: _getQuarterTurns(), // Adjust rotation based on platform
-                    child: CameraPreview(controller!),
-                  ),
+                  child:  CameraPreview(controller!),
+
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
