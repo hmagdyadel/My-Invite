@@ -1,70 +1,95 @@
 import 'package:flutter/material.dart';
-import '../../features/event_calender/data/models/calender_events.dart';
-import '../helpers/time_zone.dart';
-import 'new_notification_service.dart';
-import 'notification_service.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-/// A class responsible for scheduling notifications for calendar events.
-/// This class interacts with the [NotificationService] to schedule notifications
-/// at specific times or for specific events.
-class NotificationScheduler {
-  /// Schedules a test notification at a specific date and time.
-  ///
-  /// Parameters:
-  /// - `dateTime`: The date and time at which the notification should be scheduled.
-  ///
-  /// This method is primarily used for testing notification functionality.
-  Future<void> scheduleNotificationsAtSpecificTime(DateTime dateTime) async {
-    try {
-      // Initialize the timezone database
-      await TimeZone().initializeTimeZone();
+import '../../features/event_calender/data/models/calender_events.dart';
+import 'new_notification_service.dart';
 
-      // Schedule a test notification using the NotificationService
-      await NewNotificationService().scheduleEventNotifications(
-        eventId: 160, // Test event ID
-        eventStart: tz.TZDateTime.from(dateTime, tz.local), // Convert to timezone-aware datetime
-        eventTitle: 'Test Local Notification', // Test event title
+class NotificationScheduler {
+  static final NotificationScheduler _instance = NotificationScheduler._internal();
+  factory NotificationScheduler() => _instance;
+  NotificationScheduler._internal();
+
+  Future<void> scheduleNotifications({required CalenderEventsResponse event}) async {
+    try {
+      if (event.id == null || event.eventFrom == null || event.eventTitle == null) {
+        debugPrint('Invalid event data for notifications');
+        return;
+      }
+
+      // Parse the event start time
+      DateTime eventStart = DateTime.parse(event.eventFrom!);
+
+      // Get the user's local timezone
+      final location = tz.local;
+
+      // Set notification time to 8 AM on respective days
+      final eventDay8AM = tz.TZDateTime(
+        location,
+        eventStart.year,
+        eventStart.month,
+        eventStart.day,
+        8, // 8 AM
+        0,
+        0,
       );
-    } catch (e) {
-      // Log any errors that occur during scheduling
-      debugPrint('Error: $e');
+
+      // Schedule for event day (8 AM)
+      await NewNotificationService().scheduleEventNotifications(
+        eventId: event.id!,
+        eventStart: eventDay8AM,
+        eventTitle: event.eventTitle!,
+      );
+
+      debugPrint('Scheduled notifications for event: ${event.eventTitle}');
+      debugPrint('Event day notification at: $eventDay8AM');
+
+      // Schedule for 5 days before (8 AM)
+      final fiveDaysBefore = eventDay8AM.subtract(const Duration(days: 5));
+      if (fiveDaysBefore.isAfter(DateTime.now())) {
+        debugPrint('Scheduling 5-day reminder for: $fiveDaysBefore');
+        await NewNotificationService().scheduleEventNotifications(
+          eventId: event.id! + 1000, // Unique ID for 5-day notification
+          eventStart: fiveDaysBefore,
+          eventTitle: event.eventTitle!,
+        );
+      }
+
+      // Schedule for 2 days before (8 AM)
+      final twoDaysBefore = eventDay8AM.subtract(const Duration(days: 2));
+      if (twoDaysBefore.isAfter(DateTime.now())) {
+        debugPrint('Scheduling 2-day reminder for: $twoDaysBefore');
+        await NewNotificationService().scheduleEventNotifications(
+          eventId: event.id! + 2000, // Unique ID for 2-day notification
+          eventStart: twoDaysBefore,
+          eventTitle: event.eventTitle!,
+        );
+      }
+
+    } catch (e, stackTrace) {
+      debugPrint('Error scheduling notifications: $e');
+      debugPrint('Stack trace: $stackTrace');
     }
   }
 
-
-
-  /// Schedules notifications for a calendar event.
-  ///
-  /// Parameters:
-  /// - `event`: The calendar event for which notifications should be scheduled.
-  ///
-  /// This method schedules a notification for the event's start time.
-  /// Notifications are only scheduled if the user has allowed notifications in the app settings.
-  Future<void> scheduleNotifications({required CalenderEventsResponse event}) async {
-    // // Check if notifications are allowed in the app settings
-    // bool notificationsAllowed = AppUtilities().notifications;
-    // if (notificationsAllowed == false) return; // Exit if notifications are not allowed
-
+  Future<void> scheduleNotificationsAtSpecificTime(DateTime dateTime) async {
     try {
-      // Initialize the timezone database
-      await TimeZone().initializeTimeZone();
+      final location = tz.local;
+      final scheduledTime = tz.TZDateTime.from(dateTime, location);
 
-      // Parse the event start time from the event data
-      DateTime eventStart = DateTime.parse(event.eventFrom ?? "");
-
-      // Convert the event start time to a timezone-aware datetime
-      final tzEventStart = tz.TZDateTime.from(eventStart, tz.local);
-
-      // Schedule a notification for the event's start time
       await NewNotificationService().scheduleEventNotifications(
-        eventId: event.id!, // Event ID
-        eventStart: tzEventStart, // Scheduled time
-        eventTitle: event.eventTitle ?? "Event Due", // Event title
+        eventId: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        eventStart: scheduledTime,
+        eventTitle: 'Test Notification',
       );
+
+      debugPrint('Test notification scheduled for: $scheduledTime');
     } catch (e) {
-      // Log any errors that occur during scheduling
-      debugPrint('Error: $e');
+      debugPrint('Error scheduling test notification: $e');
     }
+  }
+
+  // Helper method to check if a notification time is valid
+  bool isValidNotificationTime(DateTime notificationTime) {
+    return notificationTime.isAfter(DateTime.now());
   }
 }

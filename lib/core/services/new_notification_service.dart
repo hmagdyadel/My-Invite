@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 
 class NewNotificationService {
@@ -17,13 +18,14 @@ class NewNotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
+    tz.initializeTimeZones();
     // iOS Initialization Settings
     final DarwinInitializationSettings initializationSettingsDarwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
       onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
-        print('Received iOS local notification: $title');
+        debugPrint('Received iOS local notification: $title');
       },
     );
 
@@ -42,7 +44,7 @@ class NewNotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         if (response.payload != null) {
-          print('Notification payload: ${response.payload}');
+          debugPrint('Notification payload: ${response.payload}');
           if (response.actionId == 'accept') {
             _handleAcceptAction(response.payload);
           } else if (response.actionId == 'cancel') {
@@ -65,10 +67,10 @@ class NewNotificationService {
       'id759',
       importance: Importance.max,
       priority: Priority.high,
-      actions: [
-        AndroidNotificationAction('accept', 'Accept'), // Match action ID with backend
-        AndroidNotificationAction('cancel', 'Cancel'), // Match action ID with backend
-      ],
+      // actions: [
+      //   AndroidNotificationAction('accept', 'Accept'), // Match action ID with backend
+      //   AndroidNotificationAction('cancel', 'Cancel'), // Match action ID with backend
+      // ],
     );
 
     const NotificationDetails platformChannelSpecifics =
@@ -114,7 +116,7 @@ class NewNotificationService {
       payload: payload,
     )
         .onError((error,trace){
-      print("error is ${error.toString()}");
+      debugPrint("error is ${error.toString()}");
     });
   }
 
@@ -238,6 +240,12 @@ debugPrint(eventDay8AM.toString());
       // Log any errors that occur during scheduling
       debugPrint('Notification scheduling error: $e');
     }
+  }
+
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async {
+    final List<PendingNotificationRequest> pendingNotifications =
+    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotifications;
   }
 }
 

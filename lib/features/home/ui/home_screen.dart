@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   int selectedScreen = 0;
 
@@ -40,24 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
       try {
         //await _firebaseMessaging.subscribeToTopic(topic);
       } catch (e) {
-        print("error is ${e.toString()}");
+        debugPrint("error is ${e.toString()}");
       }
       FirebaseMessaging.instance.getToken().then((onValue){
         debugPrint("fcm-token is $onValue");
       });
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print("Notification body onMessage: ${message.notification?.toMap().toString()}");
+        debugPrint("Notification body onMessage: ${message.notification?.toMap().toString()}");
 
         if (!mounted) return; // Early return if the widget is not mounted
 
-        final data = message.data;
+        final notification = message.notification;
 
         NewNotificationService().showNotificationWithActions(
-          id: 1, // Unique ID for the notification
-          title: "New Exam Notification",
-          body: "You have an exam question waiting.",
-          payload: data.toString(),
+          id:message.messageId.hashCode, // Unique ID for the notification
+          title: notification?.title.toString()??"",
+          body: notification?.body.toString()??"",
+          payload: message.data.toString(),
         );
       });
 

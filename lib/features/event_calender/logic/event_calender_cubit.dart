@@ -1,6 +1,9 @@
+import 'package:app/core/helpers/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter/material.dart';
+import '../../../core/services/navigation_service.dart';
+import '../../../core/services/notification_scheduler.dart';
 import '../data/models/calender_events.dart';
 import '../data/repo/event_calender_repo.dart';
 import 'event_calender_states.dart';
@@ -43,7 +46,8 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     emit(const EventCalenderStates.reservationLoading());
     final response = await _eventCalenderRepo.reserveEvent(eventId);
     response.when(
-      success: (response) {
+      success: (response) async {
+        await scheduleNotifications();
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
         // Fetch events again after successful reservation
         getEventsCalendar();
@@ -55,6 +59,19 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
         emit(EventCalenderStates.errorReservation(message: error.toString()));
       },
     );
+  }
+
+  Future<void> scheduleNotifications() async {
+    NavigationService.navigatorKey.currentContext?.showSuccessToast("event_reserved_text".tr());
+    if (calenderEventsResponse.id != null) {
+      debugPrint("Scheduling notifications for event: ${calenderEventsResponse.eventTitle}");
+
+      await NotificationScheduler().scheduleNotifications(event: calenderEventsResponse);
+
+      debugPrint("Notifications scheduled successfully");
+    } else {
+      debugPrint("Failed to schedule notification");
+    }
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -75,11 +92,5 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
     }).toList();
   }
 
-// Future<void> reserveEvent(CalenderEventsResponse event) async {
-//   emit(const EventCalenderStates.reservationLoading());
-//   // Implement your reservation logic here
-//   // Similar to old reserveEvent method
-//   emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
-//   getEventsCalendar(); // Refresh events after reservation
-// }
+
 }

@@ -1,9 +1,7 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:camera/camera.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/public_appbar.dart';
 
@@ -167,14 +165,14 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  int _getQuarterTurns() {
-    if (controller == null) return 0;
-
-    // Adjust rotation based on platform and sensor orientation
-    if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return 1; // Rotate 90 degrees for iOS
-    } else {
-      return controller!.description.sensorOrientation == 270 ? 1 : 3;
-    }
-  }
+  // int _getQuarterTurns() {
+  //   if (controller == null) return 0;
+  //
+  //   // Adjust rotation based on platform and sensor orientation
+  //   if (defaultTargetPlatform == TargetPlatform.iOS) {
+  //     return 1; // Rotate 90 degrees for iOS
+  //   } else {
+  //     return controller!.description.sensorOrientation == 270 ? 1 : 3;
+  //   }
+  // }
 }
