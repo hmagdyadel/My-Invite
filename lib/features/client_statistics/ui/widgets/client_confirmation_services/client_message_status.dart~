@@ -1,32 +1,39 @@
 import 'dart:async';
 
 import 'package:app/core/helpers/extensions.dart';
-import 'package:app/core/widgets/normal_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/dimensions/dimensions.dart';
-import '../../../../core/routing/routes.dart';
-import '../../../../core/theming/colors.dart';
-import '../../../../core/widgets/public_appbar.dart';
-import '../../../../core/widgets/subtitle_text.dart';
-import '../../../../core/widgets/text_field_with_icon.dart';
-import '../../logic/client_events_cubit.dart';
-import '../../logic/client_events_states.dart';
-import 'client_messages_status_item.dart';
+import '../../../../../core/dimensions/dimensions.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theming/colors.dart';
+import '../../../../../core/widgets/normal_text.dart';
+import '../../../../../core/widgets/public_appbar.dart';
+import '../../../../../core/widgets/subtitle_text.dart';
+import '../../../../../core/widgets/text_field_with_icon.dart';
+import '../../../../client_events/ui/widgets/client_messages_status_item.dart';
+import '../../../data/models/guest_type_list.dart';
+import '../../../logic/client_statistics_cubit.dart';
+import '../../../logic/client_statistics_states.dart';
 
-class ClientMessagesStatusScreen extends StatefulWidget {
+class ClientMessageStatus extends StatefulWidget {
   final String eventId;
+  final GuestListType type;
+  final String title;
 
-  const ClientMessagesStatusScreen({super.key, required this.eventId});
+  const ClientMessageStatus(
+      {super.key,
+      required this.eventId,
+      required this.type,
+      required this.title});
 
   @override
-  State<ClientMessagesStatusScreen> createState() => _ClientMessagesStatusScreenState();
+  State<ClientMessageStatus> createState() => _ClientMessageStatusState();
 }
 
-class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen> {
+class _ClientMessageStatusState extends State<ClientMessageStatus> {
   final _scrollController = ScrollController();
   Timer? _debounceTimer;
 
@@ -46,7 +53,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
   }
 
   void _setupSearchListener() {
-    final cubit = context.read<ClientEventsCubit>();
+    final cubit = context.read<ClientStatisticsCubit>();
     cubit.searchController.addListener(() {
       // Cancel any existing timer
       _debounceTimer?.cancel();
@@ -61,11 +68,12 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
             cubit.searchMessageStatus(
               eventId: widget.eventId,
               searchQuery: searchQuery,
+              type: widget.type,
             );
           } else {
             // If search is empty, return to normal list
             cubit.clearSearch();
-            cubit.getClientMessagesStatus(widget.eventId);
+            cubit.getClientMessagesStatus(widget.eventId, widget.type);
           }
         }
       });
@@ -73,10 +81,12 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
-      final cubit = context.read<ClientEventsCubit>();
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
+      final cubit = context.read<ClientStatisticsCubit>();
       if (cubit.hasMoreMessages) {
-        cubit.getClientMessagesStatus(widget.eventId, isNextPage: true);
+        cubit.getClientMessagesStatus(widget.eventId, widget.type,
+            isNextPage: true);
       }
     }
   }
@@ -91,18 +101,20 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
         backgroundColor: bgColor,
         appBar: publicAppBar(
           context,
-          "message_status".tr(),
+          widget.title,
         ),
-        body: BlocBuilder<ClientEventsCubit, ClientEventsStates>(
+        body: BlocBuilder<ClientStatisticsCubit, ClientStatisticsStates>(
           buildWhen: (previous, current) => current != previous,
-          bloc: context.read<ClientEventsCubit>()..getClientMessagesStatus(widget.eventId),
+          bloc: context.read<ClientStatisticsCubit>()
+            ..getClientMessagesStatus(widget.eventId, widget.type),
           builder: (context, state) {
             // Always show search field at top with content below
             return Column(
               children: [
                 // Search field always visible
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: edge, vertical: edge),
                   child: searchField(),
                 ),
 
@@ -110,19 +122,24 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                 Expanded(
                   child: state.when(
                     initial: () => const SizedBox.shrink(),
-                    loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
-                    emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
+                    successFetchData: (response) => const SizedBox.shrink(),
+                    loading: () => const Center(
+                        child: CupertinoActivityIndicator(color: Colors.white)),
+                    emptyInput: () =>
+                        _buildCenteredMessage("no_available_events".tr()),
                     error: (error) => _buildCenteredMessage(error),
                     success: (response, isLoadingMore) {
                       final events = response.clientMessagesDetailsList ?? [];
 
                       if (events.isEmpty) {
-                        return _buildCenteredMessage("no_available_events".tr());
+                        return _buildCenteredMessage(
+                            "no_available_events".tr());
                       }
 
                       return ListView.builder(
                         controller: _scrollController,
-                        padding: EdgeInsets.zero, // Remove padding since search field is outside
+                        padding: EdgeInsets.zero,
+                        // Remove padding since search field is outside
                         itemCount: events.length + (isLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
                           // Show loading indicator at the bottom
@@ -130,7 +147,8 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                             return const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Center(
-                                child: CupertinoActivityIndicator(color: Colors.white),
+                                child: CupertinoActivityIndicator(
+                                    color: Colors.white),
                               ),
                             );
                           }
@@ -138,7 +156,8 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
                           // Show event items
                           return GestureDetector(
                             onTap: () {
-                              context.pushNamed(Routes.clientGuestDetailsScreen, arguments: events[index]);
+                              context.pushNamed(Routes.clientGuestDetailsScreen,
+                                  arguments: events[index]);
                             },
                             child: ClientMessagesStatusItem(
                               clientMessagesStatusDetails: events[index],
@@ -158,7 +177,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
   }
 
   Widget searchField() {
-    final cubit = context.read<ClientEventsCubit>();
+    final cubit = context.read<ClientStatisticsCubit>();
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -191,7 +210,7 @@ class _ClientMessagesStatusScreenState extends State<ClientMessagesStatusScreen>
             onPressed: () {
               _debounceTimer?.cancel(); // Cancel any pending search
               cubit.clearSearch();
-              cubit.getClientMessagesStatus(widget.eventId);
+              cubit.getClientMessagesStatus(widget.eventId, widget.type);
             },
             child: NormalText(
               text: "clear".tr(),

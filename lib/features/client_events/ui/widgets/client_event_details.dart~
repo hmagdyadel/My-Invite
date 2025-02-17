@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/loader.dart';
 import '../../../../core/widgets/public_appbar.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/client_event_response.dart';
@@ -60,7 +61,7 @@ class _ClientEventDetailsScreenState extends State<ClientEventDetailsScreen> {
             initial: () => const SizedBox.shrink(),
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
-            loading: () => const Center(child: CupertinoActivityIndicator(color: Colors.white)),
+            loading: () =>  Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.eventDetailsList ?? [];
               if (events.isEmpty) {
@@ -70,17 +71,14 @@ class _ClientEventDetailsScreenState extends State<ClientEventDetailsScreen> {
               return ListView.builder(
                 controller: _scrollController,
                 padding: EdgeInsets.symmetric(vertical: edge),
-                itemCount: events.length + (isLoadingMore ? 2 : 1),
+                itemCount: events.length + (isLoadingMore ? 1 : 0),
                 itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Container(color: Colors.white,width: 100,height: 100,child: _buildCenteredMessage("no_available_events".tr()),);
-                  }
                   // Show loading indicator at the bottom
-                  if (index == events.length + 1 && isLoadingMore) {
+                  if (isLoadingMore && index == events.length) {
                     return const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Center(
-                        child: CupertinoActivityIndicator(color: Colors.white),
+                        child: Loader(color: whiteTextColor),
                       ),
                     );
                   }
