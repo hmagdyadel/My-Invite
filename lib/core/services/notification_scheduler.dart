@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../features/event_calender/data/models/calender_events.dart';
 import '../helpers/time_zone.dart';
+import 'new_notification_service.dart';
 import 'notification_service.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -20,7 +21,7 @@ class NotificationScheduler {
       await TimeZone().initializeTimeZone();
 
       // Schedule a test notification using the NotificationService
-      await NotificationService().scheduleEventNotifications(
+      await NewNotificationService().scheduleEventNotifications(
         eventId: 160, // Test event ID
         eventStart: tz.TZDateTime.from(dateTime, tz.local), // Convert to timezone-aware datetime
         eventTitle: 'Test Local Notification', // Test event title
@@ -30,6 +31,8 @@ class NotificationScheduler {
       debugPrint('Error: $e');
     }
   }
+
+
 
   /// Schedules notifications for a calendar event.
   ///
@@ -54,7 +57,7 @@ class NotificationScheduler {
       final tzEventStart = tz.TZDateTime.from(eventStart, tz.local);
 
       // Schedule a notification for the event's start time
-      await NotificationService().scheduleEventNotifications(
+      await NewNotificationService().scheduleEventNotifications(
         eventId: event.id!, // Event ID
         eventStart: tzEventStart, // Scheduled time
         eventTitle: event.eventTitle ?? "Event Due", // Event title

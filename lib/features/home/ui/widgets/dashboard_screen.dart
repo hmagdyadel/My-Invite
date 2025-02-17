@@ -1,5 +1,6 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
+import 'package:app/core/services/new_notification_service.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -117,7 +118,12 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
         icon: Icons.info,
         gradient: containerGradient,
         onTap: () async {
-          listPendingNotifications();
+
+          //listPendingNotifications();
+          NewNotificationService().showNotification(
+              id: 5, title: 'sdsfdsdf',
+            body: "Sdfsfsfd"
+          );
         },
       ),
     ];
@@ -135,42 +141,40 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
   }
 
   void testNotificationScheduling() async {
-    await permission.Permission.notification.request();
-    await permission.Permission.scheduleExactAlarm.request();
+
     DateTime selectedTime = DateTime.now().add(const Duration(days: 6)); // For testing purposes
-    NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
+    //NotificationScheduler().scheduleNotificationsAtSpecificTime(selectedTime);
   }
 
-  Future<void> listPendingNotifications() async {
-    try {
-      // Check permissions first
-      final notificationStatus = await permission.Permission.notification.status;
-      final alarmStatus = await permission.Permission.scheduleExactAlarm.status;
-
-      debugPrint('Notification permission status: $notificationStatus');
-      debugPrint('Exact alarm permission status: $alarmStatus');
-
-      final List<PendingNotificationRequest> pendingNotifications =
-      await NotificationService().getPendingNotifications();
-
-      debugPrint('Retrieved pending notifications. Count: ${pendingNotifications.length}');
-
-      if (pendingNotifications.isEmpty) {
-        debugPrint("No pending notifications found.");
-        return;
-      }
-
-      for (var notification in pendingNotifications) {
-        debugPrint("----------------------------------------");
-        debugPrint("Notification ID: ${notification.id}");
-        debugPrint("Title: ${notification.title}");
-        debugPrint("Body: ${notification.body}");
-        debugPrint("Payload: ${notification.payload}");
-      }
-    } catch (e) {
-      debugPrint('Error checking notifications: $e');
-    }
-  }
+  // Future<void> listPendingNotifications() async {
+  //   try {
+  //     // Check permissions first
+  //     final notificationStatus = await permission.Permission.notification.status;
+  //     final alarmStatus = await permission.Permission.scheduleExactAlarm.status;
+  //
+  //     debugPrint('Notification permission status: $notificationStatus');
+  //     debugPrint('Exact alarm permission status: $alarmStatus');
+  //
+  //     //final List<PendingNotificationRequest> pendingNotifications =await NotificationService().getPendingNotifications();
+  //
+  //    // debugPrint('Retrieved pending notifications. Count: ${pendingNotifications.length}');
+  //
+  //     if (pendingNotifications.isEmpty) {
+  //       debugPrint("No pending notifications found.");
+  //       return;
+  //     }
+  //
+  //     for (var notification in pendingNotifications) {
+  //       debugPrint("----------------------------------------");
+  //       debugPrint("Notification ID: ${notification.id}");
+  //       debugPrint("Title: ${notification.title}");
+  //       debugPrint("Body: ${notification.body}");
+  //       debugPrint("Payload: ${notification.payload}");
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error checking notifications: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

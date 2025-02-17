@@ -57,10 +57,15 @@ class EventCalenderScreen extends StatelessWidget {
             reservationLoading: () => initialCalender(context),
             reservationSuccess: (message) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
+                debugPrint("will to schedule notification");
+
                 if(context.read<EventCalenderCubit>().calenderEventsResponse.id != null) {
-                  NotificationScheduler().scheduleNotifications(event: context
-                      .read<EventCalenderCubit>()
-                      .calenderEventsResponse);
+                  debugPrint("will to schedule notification${context.read<EventCalenderCubit>().calenderEventsResponse.id}");
+                  // NotificationScheduler().scheduleNotifications(event: context
+                  //     .read<EventCalenderCubit>()
+                  //     .calenderEventsResponse);
+                  debugPrint("succeeded to schedule notification");
+
                 }
                 else{
                   debugPrint("Failed to schedule notification");
