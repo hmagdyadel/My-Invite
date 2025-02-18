@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/core/helpers/extensions.dart';
 import 'package:camera/camera.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -83,7 +85,6 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-
     controller?.dispose(); // Safe disposal with null check
     super.dispose();
   }
@@ -99,10 +100,17 @@ class _CameraScreenState extends State<CameraScreen> {
           ? Stack(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child:  CameraPreview(controller!),
-
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  child: Platform.isIOS
+                      ? CameraPreview(controller!)
+                      : RotatedBox(
+                    quarterTurns: 3, // Rotate 90 degrees
+                    child: AspectRatio(
+                      aspectRatio: controller!.value.aspectRatio,
+                      child: CameraPreview(controller!),
+                    ),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -164,15 +172,4 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
     );
   }
-
-  // int _getQuarterTurns() {
-  //   if (controller == null) return 0;
-  //
-  //   // Adjust rotation based on platform and sensor orientation
-  //   if (defaultTargetPlatform == TargetPlatform.iOS) {
-  //     return 1; // Rotate 90 degrees for iOS
-  //   } else {
-  //     return controller!.description.sensorOrientation == 270 ? 1 : 3;
-  //   }
-  // }
 }
