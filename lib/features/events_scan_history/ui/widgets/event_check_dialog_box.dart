@@ -38,6 +38,8 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   }
 
   Future<void> _markAsCheckedIn(String eventId) async {
+    await AppUtilities.instance.setSavedString("event_id", eventId);
+
     await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, true);
   }
 
@@ -124,7 +126,6 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
           fun: () {
             if (shouldDisableCheckIn) {
               context.showErrorToast("already_checked_in".tr());
-
             } else if (shouldDisableCheckOut) {
               context.showErrorToast("must_check_in_first".tr());
             } else if (!_isProcessing) {
@@ -148,6 +149,8 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     setState(() => _isProcessing = true);
 
     try {
+      // if you want to test check in come here
+      // this is will disable the check of time
       if (!_isWithinEventTimeWindow(widget.event)) {
         _showOutsideTimeWindowError(context);
         return;

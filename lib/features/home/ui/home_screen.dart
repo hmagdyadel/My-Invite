@@ -2,6 +2,7 @@ import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
 import 'package:app/core/services/new_notification_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,17 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setFirebase());
-
   }
+
   void setFirebase() async {
     try {
-
       try {
         //await _firebaseMessaging.subscribeToTopic(topic);
       } catch (e) {
         debugPrint("error is ${e.toString()}");
       }
-      FirebaseMessaging.instance.getToken().then((onValue){
+      FirebaseMessaging.instance.getToken().then((onValue) {
         debugPrint("fcm-token is $onValue");
       });
 
@@ -54,22 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
         final notification = message.notification;
 
         NewNotificationService().showNotificationWithActions(
-          id:message.messageId.hashCode, // Unique ID for the notification
-          title: notification?.title.toString()??"",
-          body: notification?.body.toString()??"",
+          id: message.messageId.hashCode, // Unique ID for the notification
+          title: notification?.title.toString() ?? "",
+          body: notification?.body.toString() ?? "",
           payload: message.data.toString(),
         );
       });
-
-
-
     } catch (e) {
       if (mounted) {
         context.showErrorToast('Failed to subscribe to topic. Please try again.');
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       shape: const CircleBorder(side: BorderSide(color: bgColor, width: 3)),
       onPressed: () async {
-        context.pushNamed(Routes.qrCodeScreen);
+        String eventId = await AppUtilities.instance.getSavedString("event_id", "");
+        // Check if user has checked in
+        final hasCheckedIn = await AppUtilities.instance.getSavedBool('event_check_in_status_$eventId', false);
+        if (hasCheckedIn) {
+          context.pushNamed(Routes.qrCodeScreen);
+        } else {
+          context.showErrorToast("must_check_in_first".tr());
+        }
       },
       child: const Icon(
         Icons.qr_code,
