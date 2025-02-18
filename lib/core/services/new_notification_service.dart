@@ -99,10 +99,7 @@ class NewNotificationService {
       'id759',
       importance: Importance.max,
       priority: Priority.high,
-      actions: [
-        AndroidNotificationAction('accept', 'Accept'), // Match action ID with backend
-        AndroidNotificationAction('cancel', 'Cancel'), // Match action ID with backend
-      ],
+
     );
 
     const NotificationDetails platformChannelSpecifics =
