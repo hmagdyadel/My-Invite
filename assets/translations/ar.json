@@ -300,7 +300,7 @@
   "no_available_details": "لا يوجد تفاصيل متاحة",
   "already_reserved_an_event": "لقد قمت بحجز فعالية بالفعل في نفس اليوم.",
   "already_checked_in": "لقد قمت بتسجيل الدخول إلى هذا الحدث بالفعل",
-  "must_check_in_first": "يجب عليك تسجيل الدخول أولاً قبل تسجيل الخروج",
+  "must_check_in_first": "يجب عليك تسجيل الدخول للمناسبة أولاً ",
   "logout_confirmation_title": "تأكيد تسجيل الخروج",
   "logout_confirmation_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "confirm_password": "تأكيد كلمة المرور",

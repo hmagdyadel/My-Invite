@@ -301,7 +301,7 @@
   "no_available_details": "No available details",
   "already_reserved_an_event": "You have already reserved an event on the same day.",
   "already_checked_in": "You have already checked in to this event",
-  "must_check_in_first": "You must check in before checking out",
+  "must_check_in_first": "You must check in firstly",
   "logout_confirmation_title": "Logout Confirmation",
   "logout_confirmation_message": "Are you sure you want to logout?",
   "confirm_password": "Confirm Password",
