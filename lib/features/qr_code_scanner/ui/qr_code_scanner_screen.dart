@@ -1,4 +1,3 @@
-import 'package:app/core/dimensions/dimensions.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/public_appbar.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
@@ -10,7 +9,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:app/core/helpers/extensions.dart';
 import '../../../core/services/audio_service.dart';
 import '../../../core/theming/colors.dart';
-import '../../../core/widgets/loaders.dart';
 import '../data/models/scan_response.dart';
 import '../logic/qr_code_scanner_states.dart';
 
@@ -40,14 +38,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
               builder: (context, current) {
                 return current.when(
                   initial: () => _scannerView(context, cubit),
-                  loading: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (Navigator.canPop(context)) return;
-                      animatedLoaderWithTitle(
-                          context: context, title: "wait".tr());
-                    });
-                    return const SizedBox.shrink();
-                  },
+                  loading: () => _scannerView(context, cubit),
                   emptyInput: () => const SizedBox.shrink(),
                   success: (response) => _handleSuccess(context, response),
                   error: (error) => _handleError(context, error),
@@ -85,39 +76,53 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
 
   Widget _handleSuccess(BuildContext context, ScanResponse response) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Start playing audio immediately
       AudioService().playAudio(
         src: 'sounds/audSuccess.mp3',
-        onComplete: () {
-          _showColoredAlert(
-            context: context,
-            title: "qr_verified".tr(),
-            message: response.message ?? "",
-            correct: true,
-            color: Colors.grey.shade200,
-            onClose: () {
-              context.read<QrCodeScannerCubit>().reloadPage();
-            },
-          );
+      );
+
+      // Show the dialog
+      _showColoredAlert(
+        context: context,
+        title: "qr_verified".tr(),
+        message: response.message ?? "",
+        correct: true,
+        color: Colors.grey.shade200,
+        onClose: () {
+          context.read<QrCodeScannerCubit>().reloadPage();
         },
       );
+
+      // Automatically close the dialog after 1500ms
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        Navigator.of(context).pop(); // Close the dialog
+        context.read<QrCodeScannerCubit>().reloadPage();
+      });
     });
+
     return const SizedBox.shrink();
   }
 
   Widget _handleError(BuildContext context, String error) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Start playing audio immediately
       AudioService().playAudio(
-          src: 'sounds/audFailure.mp3',
-          onComplete: () {
-            if (error.contains("Scanned 1 of 1")) {
-              context.showErrorToast("scanned_before".tr());
-            } else {
-              context.showErrorToast(error);
-            }
+        src: 'sounds/audFailure.mp3',
+      );
 
-            context.read<QrCodeScannerCubit>().reloadPage();
-          });
+      // Show the error toast
+      if (error.contains("Scanned 1 of 1")) {
+        context.showErrorToast("scanned_before".tr());
+      } else {
+        context.showErrorToast(error);
+      }
+
+      // Automatically reload after 1500ms
+      Future.delayed(const Duration(milliseconds: 500), () {
+        context.read<QrCodeScannerCubit>().reloadPage();
+      });
     });
+
     return const SizedBox.shrink();
   }
 
@@ -129,24 +134,24 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
     required Color color,
     required VoidCallback onClose,
   }) {
-    Widget okButton = TextButton(
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
-        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding:
-            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
-        minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40)),
-      ),
-      onPressed: () {
-        context.pop();
-        onClose();
-      },
-      child: const SubTitleText(
-        text: "Continue",
-        color: Colors.white,
-        fontSize: 16,
-      ),
-    );
+    // Widget okButton = TextButton(
+    //   style: ButtonStyle(
+    //     backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+    //     foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    //     padding:
+    //         WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+    //     minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40)),
+    //   ),
+    //   onPressed: () {
+    //     context.pop();
+    //     onClose();
+    //   },
+    //   child: const SubTitleText(
+    //     text: "Continue",
+    //     color: Colors.white,
+    //     fontSize: 16,
+    //   ),
+    // );
 
     AlertDialog alert = AlertDialog(
       backgroundColor: color,
@@ -178,7 +183,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         fontSize: 16,
         color: Colors.grey.shade900,
       ),
-      actions: [okButton],
+     // actions: [okButton],
     );
 
     showDialog(

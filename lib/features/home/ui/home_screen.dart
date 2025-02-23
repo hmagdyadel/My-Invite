@@ -2,7 +2,6 @@ import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
 import 'package:app/core/services/new_notification_service.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,14 +95,17 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: primaryColor,
       shape: const CircleBorder(side: BorderSide(color: bgColor, width: 3)),
       onPressed: () async {
-        String eventId = await AppUtilities.instance.getSavedString("event_id", "");
-        // Check if user has checked in
-        final hasCheckedIn = await AppUtilities.instance.getSavedBool('event_check_in_status_$eventId', false);
-        if (hasCheckedIn) {
+
+        /// if you want to prevent user to scan the qr code until he has checked in
+
+        // String eventId = await AppUtilities.instance.getSavedString("event_id", "");
+        // // Check if user has checked in
+        // final hasCheckedIn = await AppUtilities.instance.getSavedBool('event_check_in_status_$eventId', false);
+        // if (hasCheckedIn) {
           context.pushNamed(Routes.qrCodeScreen);
-        } else {
-          context.showErrorToast("must_check_in_first".tr());
-        }
+        // } else {
+        //   context.showErrorToast("must_check_in_first".tr());
+        // }
       },
       child: const Icon(
         Icons.qr_code,
