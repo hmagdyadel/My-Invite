@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         nextRoute = Routes.onBoardingScreen;
       } else {
         try {
-          final expirationDate = DateTime.parse(expirationStr);
+          final expirationDate = DateTime.parse(expirationStr).subtract(const Duration(hours: 10));
           final now = DateTime.now();
 
           // If expiration date is in the future, go to home
