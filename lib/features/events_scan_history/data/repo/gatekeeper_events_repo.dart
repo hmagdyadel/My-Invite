@@ -90,10 +90,10 @@ class GatekeeperEventsRepo {
       debugPrint('success response: $response');
       return ApiResult.success(response);
     } on DioException catch (dioError) {
-      debugPrint('success response: ${dioError.response!.data}');
+      debugPrint('dio exception: ${dioError.response!.data}');
       return ApiResult.failure("some_error".tr());
     } catch (error) {
-      debugPrint('success response: ${error.toString()}');
+      debugPrint('catch error: ${error.toString()}');
       return ApiResult.failure(error.toString());
     }
   }

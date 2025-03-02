@@ -33,36 +33,45 @@ class NotificationScheduler {
         0,
       );
 
-      // Schedule for event day (8 AM)
-      await NewNotificationService().scheduleEventNotifications(
-        eventId: event.id!,
-        eventStart: eventDay8AM,
-        eventTitle: event.eventTitle!,
-      );
+      // Check if event day is in the future before scheduling
+      if (eventDay8AM.isAfter(tz.TZDateTime.now(location))) {
+        // Schedule for event day (8 AM)
+        await NewNotificationService().scheduleEventNotifications(
+          eventId: event.id!,
+          eventStart: eventDay8AM,
+          eventTitle: event.eventTitle!,
+        );
 
-      debugPrint('Scheduled notifications for event: ${event.eventTitle}');
-      debugPrint('Event day notification at: $eventDay8AM');
+        debugPrint('Scheduled notifications for event: ${event.eventTitle}');
+        debugPrint('Event day notification at: $eventDay8AM');
+      } else {
+        debugPrint('Skipping event day notification for ${event.eventTitle} - date is in the past: $eventDay8AM');
+      }
 
       // Schedule for 5 days before (8 AM)
       final fiveDaysBefore = eventDay8AM.subtract(const Duration(days: 5));
-      if (fiveDaysBefore.isAfter(DateTime.now())) {
+      if (fiveDaysBefore.isAfter(tz.TZDateTime.now(location))) {
         debugPrint('Scheduling 5-day reminder for: $fiveDaysBefore');
         await NewNotificationService().scheduleEventNotifications(
           eventId: event.id! + 1000, // Unique ID for 5-day notification
           eventStart: fiveDaysBefore,
-          eventTitle: event.eventTitle!,
+          eventTitle: '${event.eventTitle!} (5 days reminder)',
         );
+      } else {
+        debugPrint('Skipping 5-day reminder for ${event.eventTitle} - date is in the past: $fiveDaysBefore');
       }
 
       // Schedule for 2 days before (8 AM)
       final twoDaysBefore = eventDay8AM.subtract(const Duration(days: 2));
-      if (twoDaysBefore.isAfter(DateTime.now())) {
+      if (twoDaysBefore.isAfter(tz.TZDateTime.now(location))) {
         debugPrint('Scheduling 2-day reminder for: $twoDaysBefore');
         await NewNotificationService().scheduleEventNotifications(
           eventId: event.id! + 2000, // Unique ID for 2-day notification
           eventStart: twoDaysBefore,
-          eventTitle: event.eventTitle!,
+          eventTitle: '${event.eventTitle!} (2 days reminder)',
         );
+      } else {
+        debugPrint('Skipping 2-day reminder for ${event.eventTitle} - date is in the past: $twoDaysBefore');
       }
 
     } catch (e, stackTrace) {
@@ -76,13 +85,18 @@ class NotificationScheduler {
       final location = tz.local;
       final scheduledTime = tz.TZDateTime.from(dateTime, location);
 
-      await NewNotificationService().scheduleEventNotifications(
-        eventId: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        eventStart: scheduledTime,
-        eventTitle: 'Test Notification',
-      );
+      // Check if the time is in the future
+      if (scheduledTime.isAfter(tz.TZDateTime.now(location))) {
+        await NewNotificationService().scheduleEventNotifications(
+          eventId: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          eventStart: scheduledTime,
+          eventTitle: 'Test Notification',
+        );
 
-      debugPrint('Test notification scheduled for: $scheduledTime');
+        debugPrint('Test notification scheduled for: $scheduledTime');
+      } else {
+        debugPrint('Cannot schedule test notification - date is in the past: $scheduledTime');
+      }
     } catch (e) {
       debugPrint('Error scheduling test notification: $e');
     }
