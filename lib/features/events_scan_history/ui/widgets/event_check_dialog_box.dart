@@ -74,6 +74,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
         const Icon(Icons.check_circle, color: primaryColor, size: 60),
         const SizedBox(height: 12),
         SubTitleText(
+          //Todo I want to show the message of check in or check out
           text: "event_check".tr(),
           color: Colors.grey.shade900,
           fontSize: 20,
@@ -83,10 +84,18 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   }
 
   Widget _buildDialogContent() {
-    return NormalText(
-      text: "event_check_hint".tr(),
-      fontSize: 16,
-      color: Colors.grey.shade900,
+    return FutureBuilder<bool>(
+      future: _hasCheckedIn(widget.event.id.toString()),
+      builder: (context, snapshot) {
+        final bool hasCheckedIn = snapshot.data ?? false;
+        final String hintKey = hasCheckedIn ? "event_check_out_hint" : "event_check_in_hint";
+
+        return NormalText(
+          text: hintKey.tr(),
+          fontSize: 16,
+          color: Colors.grey.shade900,
+        );
+      },
     );
   }
 
