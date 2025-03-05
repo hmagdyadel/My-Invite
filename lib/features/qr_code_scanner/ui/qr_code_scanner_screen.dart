@@ -187,7 +187,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         fontSize: 16,
         color: Colors.grey.shade900,
       ),
-      actions: correct ? null : [okButton],
+      actions:  [okButton],
     );
 
     showDialog(
