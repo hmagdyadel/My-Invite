@@ -1,18 +1,38 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../features/events_scan_history/data/models/gatekeeper_events_response.dart';
 
 List<String> months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
+// Simpler approach without DateFormat parsing
 String getDateInWords(String date) {
-  // Parse the input date string into a DateTime object
-  final inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-  final DateTime dt = inputDateFormat.parse(date, true).toLocal();
+  if (date.isEmpty) {
+    return "";
+  }
 
-  // Use the DateFormat class for a cleaner approach to getting the month name
-  final formattedDate = DateFormat('MMM d, y').format(dt);
+  try {
+    // Split the date string manually to avoid parsing issues
+    List<String> parts = date.split('T')[0].split('-');
+    if (parts.length != 3) {
+      return "";
+    }
 
-  return formattedDate;
+    int year = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int day = int.parse(parts[2]);
+
+    // Month names
+    List<String> monthNames = [
+      "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    return "${monthNames[month]} $day, $year";
+  } catch (e) {
+    debugPrint("Manual date format error: $e");
+    return "";
+  }
 }
 
 String getDateAndTime(String date) {

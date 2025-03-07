@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/constants/public_methods.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/gatekeeper_events_response.dart';
 

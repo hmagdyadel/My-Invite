@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:app/core/helpers/extensions.dart';
+import '../../../core/dimensions/dimensions.dart';
 import '../../../core/services/audio_service.dart';
 import '../../../core/theming/colors.dart';
 import '../data/models/scan_response.dart';
@@ -110,17 +111,21 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         src: 'sounds/audFailure.mp3',
       );
 
-      // Show the error toast
-      if (error.contains("Scanned 1 of 1")) {
-        context.showErrorToast("scanned_before".tr());
-      } else {
-        context.showErrorToast(error);
-      }
-
-      // Automatically reload after 1500ms
-      Future.delayed(const Duration(milliseconds: 500), () {
-        context.read<QrCodeScannerCubit>().reloadPage();
-      });
+      // Show the dialog
+      _showColoredAlert(
+        context: context,
+        title: "error".tr(),
+        message: error.contains("Scanned 1 of 1")
+            ? "scanned_before".tr()
+            : error.contains("Event is out dated")
+                ? "event_outdated".tr()
+                : error,
+        correct: false,
+        color: Colors.grey.shade200,
+        onClose: () {
+          context.read<QrCodeScannerCubit>().reloadPage();
+        },
+      );
     });
 
     return const SizedBox.shrink();
@@ -134,24 +139,23 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
     required Color color,
     required VoidCallback onClose,
   }) {
-    // Widget okButton = TextButton(
-    //   style: ButtonStyle(
-    //     backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
-    //     foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-    //     padding:
-    //         WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
-    //     minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40)),
-    //   ),
-    //   onPressed: () {
-    //     context.pop();
-    //     onClose();
-    //   },
-    //   child: const SubTitleText(
-    //     text: "Continue",
-    //     color: Colors.white,
-    //     fontSize: 16,
-    //   ),
-    // );
+    Widget okButton = TextButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        minimumSize: WidgetStateProperty.all<Size>(Size(110, 40)),
+      ),
+      onPressed: () {
+        context.pop();
+        onClose();
+      },
+      child: SubTitleText(
+        text: "continue".tr(),
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    );
 
     AlertDialog alert = AlertDialog(
       backgroundColor: color,
@@ -183,7 +187,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         fontSize: 16,
         color: Colors.grey.shade900,
       ),
-     // actions: [okButton],
+      actions:  [okButton],
     );
 
     showDialog(

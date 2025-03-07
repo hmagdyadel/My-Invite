@@ -291,7 +291,7 @@
   "photoCaptureFailed": "Failed to capture the photo. Please try again.",
   "unexpectedError": "An unexpected error occurred.",
   "can_not_check_in_or_out": "You cannot check in or out because the event date is not today.",
-  "location_is_not_set_correctly": "Your location isn't correct , please content system administrator",
+  "location_is_not_set_correctly": "Your location is not set correctly. Please contact our IT support team to update your location details in your profile.",
   "clear": "Clear",
   "see_details": "See Details",
   "notification_title": "Event Reminder",
@@ -312,9 +312,5 @@
   "invalid_last_name": "Last name should only contain alphabetic characters.",
   "phone_number_invalid_format": "Phone number must contain only numbers.",
   "phone_number_too_short": "Phone number must be at least 6 digits long.",
-  "correct": "Correct",
-  "event_outdated": "This event is outdated",
-  "event_check_in_hint": "Would you like to check in to the event?",
-  "event_check_out_hint": "Would you like to check out of the event?",
-  "continue": "Continue"
+  "correct": "Correct"
 }
