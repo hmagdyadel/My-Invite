@@ -70,42 +70,43 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
               if (events.isEmpty) {
                 return _buildCenteredMessage("no_available_events".tr());
               }
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.symmetric(vertical: edge),
-                      itemCount: events.length + (isLoadingMore ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == events.length && isLoadingMore) {
-                          return const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Center(
-                              child: Loader(color: whiteTextColor),
-                            ),
-                          );
-                        }
-                        return GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext dialogContext) {
-                                  return BlocProvider.value(
-                                    value: context.read<GatekeeperEventsCubit>(),
-                                    child: EventCheckDialogBox(
-                                      event: events[index],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: ScanHistoryItem(event: events[index]));
-                      },
-                    ),
-                  ),
-                ],
-              );
+              return ScanHistoryItem(event: events[0]);
+              // return Column(
+              //   children: [
+              //     Expanded(
+              //       child: ListView.builder(
+              //         controller: _scrollController,
+              //         padding: EdgeInsets.symmetric(vertical: edge),
+              //         itemCount: events.length + (isLoadingMore ? 1 : 0),
+              //         itemBuilder: (context, index) {
+              //           if (index == events.length && isLoadingMore) {
+              //             return const Padding(
+              //               padding: EdgeInsets.all(16.0),
+              //               child: Center(
+              //                 child: Loader(color: whiteTextColor),
+              //               ),
+              //             );
+              //           }
+              //           return GestureDetector(
+              //               onTap: () {
+              //                 showDialog(
+              //                   context: context,
+              //                   builder: (BuildContext dialogContext) {
+              //                     return BlocProvider.value(
+              //                       value: context.read<GatekeeperEventsCubit>(),
+              //                       child: EventCheckDialogBox(
+              //                         event: events[index],
+              //                       ),
+              //                     );
+              //                   },
+              //                 );
+              //               },
+              //               child: ScanHistoryItem(event: events[index]));
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // );
             },
           );
         },
