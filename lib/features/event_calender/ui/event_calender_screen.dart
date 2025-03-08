@@ -60,7 +60,11 @@ class EventCalenderScreen extends StatelessWidget {
             },
             error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.showErrorToast(error);
+                if(error.contains("Can not assign to more than one event")) {
+                  context.showErrorToast("assign_one_event_only_in_the_same_day".tr());
+                }else {
+                  context.showErrorToast(error);
+                }
               });
               return initialCalender(context);
             },

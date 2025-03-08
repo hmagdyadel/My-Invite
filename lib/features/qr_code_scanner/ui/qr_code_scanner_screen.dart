@@ -119,7 +119,9 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
             ? "scanned_before".tr()
             : error.contains("Event is out dated")
                 ? "event_outdated".tr()
-                : error,
+                : error.contains("Event is not assigned to you")
+                    ? "event_is_not_assigned_to_you".tr()
+                    : error,
         correct: false,
         color: Colors.grey.shade200,
         onClose: () {
@@ -143,7 +145,8 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        padding:
+            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
         minimumSize: WidgetStateProperty.all<Size>(Size(110, 40)),
       ),
       onPressed: () {
@@ -187,7 +190,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         fontSize: 16,
         color: Colors.grey.shade900,
       ),
-      actions:  [okButton],
+      actions: [okButton],
     );
 
     showDialog(
