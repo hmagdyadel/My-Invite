@@ -31,6 +31,7 @@ class MyInvite extends StatelessWidget {
           }
         },
         child: MaterialApp(
+          theme: ThemeData(useMaterial3: true),
           debugShowCheckedModeBanner: false,
           title: 'My Invite',
           onGenerateRoute: AppRouter().generateRoute,

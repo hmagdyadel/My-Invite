@@ -53,10 +53,15 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
         getEventsCalendar();
       },
       failure: (error) {
-        if (error.contains(" on the same day")) {
+        debugPrint("Error: $error");
+        if (error.contains("Can not assign")) {
           emit(EventCalenderStates.errorReservation(message: "already_reserved_an_event".tr()));
+        }else {
+          emit(EventCalenderStates.errorReservation(message: error.toString()));
         }
-        emit(EventCalenderStates.errorReservation(message: error.toString()));
+       Future.delayed(const Duration(seconds: 3), () {
+         getEventsCalendar();
+       });
       },
     );
   }
