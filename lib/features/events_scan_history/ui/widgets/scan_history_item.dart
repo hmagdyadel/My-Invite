@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../core/constants/public_methods.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/gatekeeper_events_response.dart';
 
@@ -157,9 +156,46 @@ class ScanHistoryItem extends StatelessWidget {
   }
 
   Column eventDateAndTime(BuildContext context) {
+    // Use direct formatting for dates - fallback approach
+    String eventFromDisplay = "N/A";
+    String eventToDisplay = "N/A";
+
+    if (event?.eventFrom != null && event!.eventFrom!.isNotEmpty) {
+      String dateStr = event!.eventFrom!;
+      // Direct string manipulation approach as fallback
+      if (dateStr.length >= 10) {
+        String datePart = dateStr.substring(0, 10);
+        List<String> parts = datePart.split('-');
+        if (parts.length == 3) {
+          int month = int.tryParse(parts[1]) ?? 0;
+          List<String> monthNames = [
+            "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+          ];
+          eventFromDisplay = "${monthNames[month]} ${parts[2]}, ${parts[0]}";
+        }
+      }
+    }
+
+    if (event?.eventTo != null && event!.eventTo!.isNotEmpty) {
+      String dateStr = event!.eventTo!;
+      // Direct string manipulation approach as fallback
+      if (dateStr.length >= 10) {
+        String datePart = dateStr.substring(0, 10);
+        List<String> parts = datePart.split('-');
+        if (parts.length == 3) {
+          int month = int.tryParse(parts[1]) ?? 0;
+          List<String> monthNames = [
+            "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+          ];
+          eventToDisplay = "${monthNames[month]} ${parts[2]}, ${parts[0]}";
+        }
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: edge * 0.5,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,18 +204,25 @@ class ScanHistoryItem extends StatelessWidget {
             NormalText(text: 'end_time'.tr(), color: Colors.white),
           ],
         ),
+        SizedBox(height: edge * 0.5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            NormalText(text: getDateInWords(event?.eventFrom ?? ""), color: Colors.white),
-            Expanded(
-              child: Icon(
-                Icons.arrow_right_alt,
-                color: Colors.white,
-              ),
+            NormalText(
+              text: eventFromDisplay,
+              color: Colors.white,
             ),
-            NormalText(text: getDateInWords(event?.eventTo ?? ""), color: Colors.white),
+            Icon(
+              Icons.arrow_right_alt,
+              color: Colors.white,
+            ),
+            NormalText(
+              text: eventToDisplay,
+              color: Colors.white,
+            ),
           ],
         ),
+        SizedBox(height: edge * 0.5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -193,7 +236,10 @@ class ScanHistoryItem extends StatelessWidget {
                 const SizedBox(
                   width: 4,
                 ),
-                NormalText(text: event?.attendanceTime ?? "", color: Colors.white),
+                NormalText(
+                  text: event?.attendanceTime ?? "",
+                  color: Colors.white,
+                ),
               ],
             ),
             Row(
@@ -206,7 +252,10 @@ class ScanHistoryItem extends StatelessWidget {
                 const SizedBox(
                   width: 4,
                 ),
-                NormalText(text: event?.leaveTime ?? "", color: Colors.white),
+                NormalText(
+                  text: event?.leaveTime ?? "",
+                  color: Colors.white,
+                ),
               ],
             ),
           ],
@@ -296,7 +345,9 @@ class ScanHistoryItem extends StatelessWidget {
       context.showErrorToast("location_not_available".tr());
       return;
     }
+
     String googleUrl = event?.gmapCode ?? "https://maps.google.com";
+    //print("Google URL: $googleUrl");
     try {
       await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.platformDefault);
     } catch (e) {

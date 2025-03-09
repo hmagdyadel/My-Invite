@@ -55,7 +55,6 @@ class EventCalenderScreen extends StatelessWidget {
             },
             reservationLoading: () => initialCalender(context),
             reservationSuccess: (message) {
-
               return initialCalender(context);
             },
             error: (error) {

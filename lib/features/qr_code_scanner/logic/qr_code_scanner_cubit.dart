@@ -58,9 +58,9 @@ class QrCodeScannerCubit extends Cubit<QrCodeScannerStates> {
           stopScan = false;
 
           if (error == "scan_error_max_limit") {
-            emit(QrCodeScannerStates.error(message: "scan_error_max_limit".tr()));
+            emit(QrCodeScannerStates.error(message: "scan_error_scanned_before".tr()));
           } else if (error == "scan_error_scanned_before") {
-            emit(QrCodeScannerStates.error(message: "some_error".tr()));
+            emit(QrCodeScannerStates.error(message: "scan_error_scanned_before".tr()));
           } else {
             emit(QrCodeScannerStates.error(message: error.toString()));
           }

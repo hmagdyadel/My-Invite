@@ -299,7 +299,7 @@
   "event_two_days_reminder": "Event {} is coming up in 2 days",
   "event_today_reminder": "Your event {} is today",
   "no_available_details": "No available details",
-  "already_reserved_an_event": "You have already reserved an event on the same day.",
+  "already_reserved_an_event": "You can not reserve more than one event at the same day",
   "already_checked_in": "You have already checked in to this event",
   "must_check_in_first": "You must check in firstly",
   "logout_confirmation_title": "Logout Confirmation",
@@ -312,5 +312,11 @@
   "invalid_last_name": "Last name should only contain alphabetic characters.",
   "phone_number_invalid_format": "Phone number must contain only numbers.",
   "phone_number_too_short": "Phone number must be at least 6 digits long.",
-  "correct": "Correct"
+  "correct": "Correct",
+  "event_outdated": "This event is outdated",
+  "event_check_in_hint": "Would you like to check in to the event?",
+  "event_check_out_hint": "Would you like to check out of the event?",
+  "event_is_not_assigned_to_you": "This event is not assigned to you",
+  "assign_one_event_only_in_the_same_day": "You can only assign one event in the same day",
+  "continue": "Continue"
 }

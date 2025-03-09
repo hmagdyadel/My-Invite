@@ -24,9 +24,8 @@ class NewNotificationService {
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
-      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
-        debugPrint('Received iOS local notification: $title');
-      },
+
+      // Change to false - we'll request it in checkAndRequestNotificationPermissions
     );
 
     // Android Initialization Settings
