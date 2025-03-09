@@ -55,16 +55,11 @@ class EventCalenderScreen extends StatelessWidget {
             },
             reservationLoading: () => initialCalender(context),
             reservationSuccess: (message) {
-
               return initialCalender(context);
             },
             error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                if(error.contains("Can not assign to more than one event")) {
-                  context.showErrorToast("assign_one_event_only_in_the_same_day".tr());
-                }else {
-                  context.showErrorToast(error);
-                }
+                context.showErrorToast(error);
               });
               return initialCalender(context);
             },

@@ -27,7 +27,7 @@ class NormalText extends StatelessWidget {
             color: color ?? Colors.black,
             fontWeight: FontWeight.w400,
             fontSize: fontSize ?? 16,
-            fontFamily: fontFamily ?? "Almarai",
+            fontFamily: "SFPro",
             decoration: decoration ?? TextDecoration.none,
             decorationColor: color),
         textAlign: align ?? TextAlign.center,

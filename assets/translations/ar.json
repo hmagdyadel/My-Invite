@@ -299,7 +299,7 @@
   "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
   "event_today_reminder": "حدثك {} اليوم",
   "no_available_details": "لا يوجد تفاصيل متاحة",
-  "already_reserved_an_event": "لقد قمت بحجز مناسبة بالفعل في نفس اليوم.",
+  "already_reserved_an_event": "لا يمكنك حجز أكثر من مناسبة في نفس اليوم.",
   "already_checked_in": "لقد قمت بتسجيل الدخول إلى هذا الحدث بالفعل",
   "must_check_in_first": "يجب عليك تسجيل الدخول للمناسبة أولاً ",
   "logout_confirmation_title": "تأكيد تسجيل الخروج",
@@ -314,7 +314,7 @@
   "phone_number_too_short": "رقم الهاتف يجب أن يكون على الأقل 6 أرقام.",
   "correct": "صحيح",
   "event_outdated": "الحدث قديم",
-  "event_is_not_assigned_to_you": "هذه المناسبة ليست لك",
+  "event_is_not_assigned_to_you": "هذه المناسبة ليست مخصصة لك",
   "assign_one_event_only_in_the_same_day": "لا يمكنك حجز اكثر من مناسبة في نفس اليوم",
   "continue": "استمرار"
 }

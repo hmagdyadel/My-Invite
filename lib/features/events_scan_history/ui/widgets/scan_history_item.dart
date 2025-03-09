@@ -345,7 +345,9 @@ class ScanHistoryItem extends StatelessWidget {
       context.showErrorToast("location_not_available".tr());
       return;
     }
+
     String googleUrl = event?.gmapCode ?? "https://maps.google.com";
+    //print("Google URL: $googleUrl");
     try {
       await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.platformDefault);
     } catch (e) {

@@ -11,6 +11,8 @@ import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
 
 Future<void> main() async {
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
