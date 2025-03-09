@@ -1,13 +1,13 @@
 import 'package:app/core/theming/colors.dart';
 import 'package:app/core/widgets/loader.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
+import '../../../core/dimensions/dimensions.dart';
 import 'widgets/event_check_dialog_box.dart';
 import 'widgets/scan_history_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/dimensions/dimensions.dart';
 import '../../../core/widgets/public_appbar.dart';
 import '../logic/gatekeeper_events_cubit.dart';
 import '../logic/scan_history_states.dart';
@@ -70,43 +70,43 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
               if (events.isEmpty) {
                 return _buildCenteredMessage("no_available_events".tr());
               }
-              return ScanHistoryItem(event: events[0]);
-              // return Column(
-              //   children: [
-              //     Expanded(
-              //       child: ListView.builder(
-              //         controller: _scrollController,
-              //         padding: EdgeInsets.symmetric(vertical: edge),
-              //         itemCount: events.length + (isLoadingMore ? 1 : 0),
-              //         itemBuilder: (context, index) {
-              //           if (index == events.length && isLoadingMore) {
-              //             return const Padding(
-              //               padding: EdgeInsets.all(16.0),
-              //               child: Center(
-              //                 child: Loader(color: whiteTextColor),
-              //               ),
-              //             );
-              //           }
-              //           return GestureDetector(
-              //               onTap: () {
-              //                 showDialog(
-              //                   context: context,
-              //                   builder: (BuildContext dialogContext) {
-              //                     return BlocProvider.value(
-              //                       value: context.read<GatekeeperEventsCubit>(),
-              //                       child: EventCheckDialogBox(
-              //                         event: events[index],
-              //                       ),
-              //                     );
-              //                   },
-              //                 );
-              //               },
-              //               child: ScanHistoryItem(event: events[index]));
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // );
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.symmetric(vertical: edge),
+                      itemCount: events.length + (isLoadingMore ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == events.length && isLoadingMore) {
+                          return const Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Center(
+                              child: Loader(color: whiteTextColor),
+                            ),
+                          );
+                        }
+                        return GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext dialogContext) {
+                                  return BlocProvider.value(
+                                    value: context.read<GatekeeperEventsCubit>(),
+                                    child: EventCheckDialogBox(
+                                      event: events[index],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: ScanHistoryItem(event: events[index]));
+                      },
+                    ),
+                  ),
+                ],
+              );
             },
           );
         },

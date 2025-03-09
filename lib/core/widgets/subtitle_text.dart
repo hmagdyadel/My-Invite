@@ -26,7 +26,7 @@ class SubTitleText extends StatelessWidget {
           color: color ?? Colors.black,
           fontWeight: FontWeight.w700,
           fontSize: fontSize ?? 24,
-          fontFamily: fontFamily ?? "SFPro",
+         // fontFamily: fontFamily ?? "SFPro",
           decoration: decoration ?? TextDecoration.none,
           decorationColor: Colors.white),
       textAlign: align ?? TextAlign.center,
