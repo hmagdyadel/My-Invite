@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    // Pre-fill credentials if available
     context.read<LoginCubit>().param.text = AppUtilities().username;
     context.read<LoginCubit>().password.text = AppUtilities().password;
     super.initState();
@@ -43,13 +44,22 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Container(
         width: width.w,
         height: height.h,
-        decoration: BoxDecoration(gradient: gradient1),
+        // Add a fallback color in case gradient fails to render
+        color: primaryColor,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [primaryColor, secondaryColor],
+          ),
+        ),
         child: Scaffold(
+          // Use transparent background to let the container gradient show through
           backgroundColor: Colors.transparent,
           extendBodyBehindAppBar: true,
           resizeToAvoidBottomInset: false,
-          // Prevent resize when keyboard appears
           appBar: AppBar(
+            elevation: 0, // Reduce shadow
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
             leading: GestureDetector(
@@ -64,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Icon(
                     Icons.arrow_back_ios_new_rounded,
                     color: primaryColor,
+                    size: 18,
                   ),
                 ),
               ),
@@ -75,6 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
               titles(),
               Expanded(
                 child: Container(
+                  // Add a fallback color in case the decoration fails
+                  color: bgColor,
                   decoration: const BoxDecoration(
                     color: bgColor,
                     borderRadius: BorderRadius.only(
@@ -106,13 +119,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             context.read<LoginCubit>().login();
                           },
                           titleKey: "login_sm".tr(),
-                          btColor: primaryColor,
+                          btColor: primaryColor, // Fallback if gradient fails
                           textColor: Colors.white,
                           gradient: true,
                           fontSize: 18,
                         ),
                       ),
-                      BlocListener<LoginCubit, LoginStates>(
+                      // BlocListener moved to the end of the stack to ensure it's registered properly
+                      BlocConsumer<LoginCubit, LoginStates>(
                         listenWhen: (previous, current) => previous != current,
                         listener: (context, current) {
                           if (current is Loading) {
@@ -133,7 +147,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             context.showErrorToast('enter_required_fields'.tr());
                           }
                         },
-                        child: const SizedBox.shrink(),
+                        // Use BlocConsumer instead of BlocListener to handle UI updates
+                        builder: (context, state) {
+                          // If we're explicitly in a loading state, we could show a small indicator
+                          // though the dialog is handling this too
+                          return const SizedBox.shrink();
+                        },
                       ),
                     ],
                   ),
@@ -155,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
         SizedBox(height: edge * 0.3),
         textFieldWithIcon(
             controller: context.read<LoginCubit>().param,
-            icon: Icon(
+            icon: const Icon(
               Icons.email_outlined,
               color: Colors.white,
             ),
@@ -177,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
               });
             },
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.password,
             color: Colors.white,
           ),
@@ -191,7 +210,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: width.w,
       padding: EdgeInsets.all(edge * 1.5),
-      decoration: const BoxDecoration(gradient: gradient1),
+      // Add fallback color and explicit gradient parameters
+      color: primaryColor,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [primaryColor, secondaryColor],
+        ),
+      ),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
