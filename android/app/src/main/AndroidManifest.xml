@@ -10,7 +10,7 @@
         android:label="My Invite"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-        <meta-data android:name="flutter.renderer" android:value="skia"/>
+<!--        <meta-data android:name="flutter.renderer" android:value="skia"/>-->
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
             <intent-filter>
