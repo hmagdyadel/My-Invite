@@ -35,12 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void setFirebase() async {
+
     try {
-      try {
-        //await _firebaseMessaging.subscribeToTopic(topic);
-      } catch (e) {
-        debugPrint("error is ${e.toString()}");
+      NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        debugPrint('User granted permission');
       }
+
       FirebaseMessaging.instance.getToken().then((onValue) {
         debugPrint("fcm-token is $onValue");
       });
