@@ -30,7 +30,7 @@ import '../../features/home/ui/widgets/event_instructions_screen.dart';
 import '../../features/home/ui/widgets/profile_screen.dart';
 import '../../features/location/logic/location_cubit.dart';
 import '../../features/login/logic/login_cubit.dart';
-import '../../features/login/ui/login_screen.dart';
+import '../../features/login/login_screen2.dart';
 import '../../features/qr_code_scanner/ui/qr_code_scanner_screen.dart';
 import '../../features/register/logic/register_cubit.dart';
 import '../../features/register/ui/register_screen.dart';
@@ -52,7 +52,7 @@ class AppRouter {
         return _buildRoute(
           BlocProvider(
             create: (_) => getIt<LoginCubit>(),
-            child: const LoginScreen(),
+            child: const LoginScreen2(),
           ),
         );
 

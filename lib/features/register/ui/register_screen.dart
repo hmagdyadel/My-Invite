@@ -93,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget buildRegistrationForm(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(edge * 1.5),
@@ -117,7 +118,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             focusNode: focusNodes['firstName']!,
             conditions: {
               "invalid_first_name": (text) =>
-              text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
+                  text.isNotEmpty &&
+                  context.read<RegisterCubit>().isValidName(text),
             },
             conditionMessages: {
               "invalid_first_name": "invalid_first_name",
@@ -132,7 +134,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             focusNode: focusNodes['lastName']!,
             conditions: {
               "invalid_last_name": (text) =>
-              text.isNotEmpty && context.read<RegisterCubit>().isValidName(text),
+                  text.isNotEmpty &&
+                  context.read<RegisterCubit>().isValidName(text),
             },
             conditionMessages: {
               "invalid_last_name": "invalid_last_name",
@@ -162,7 +165,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             focusNode: focusNodes['email']!,
             conditions: {
               "invalid_email": (text) =>
-              text.isNotEmpty && context.read<RegisterCubit>().isValidEmail(text),
+                  text.isNotEmpty &&
+                  context.read<RegisterCubit>().isValidEmail(text),
             },
             conditionMessages: {
               "invalid_email": "invalid_email",
@@ -177,9 +181,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             focusNode: focusNodes['phone']!,
             conditions: {
               "phone_number_invalid_format": (text) =>
-              text.isNotEmpty && context.read<RegisterCubit>().isValidPhoneFormat(text),
+                  text.isNotEmpty &&
+                  context.read<RegisterCubit>().isValidPhoneFormat(text),
               "phone_number_too_short": (text) =>
-              text.isNotEmpty && text.length >= 6,
+                  text.isNotEmpty && text.length >= 6,
             },
             conditionMessages: {
               "phone_number_invalid_format": "phone_number_invalid_format",
@@ -196,9 +201,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget buildFlexibleSpace(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: gradient1),
+      decoration: BoxDecoration(
+        //gradient: gradient1,
+        color: primaryColor,
+      ),
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(edge),
@@ -243,18 +252,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
   Widget buildTextFieldWithConditions(
-      BuildContext context, {
-        required String labelKey,
-        required String hintKey,
-        required TextEditingController controller,
-        required IconData icon,
-        List<TextInputFormatter>? formatter,
-        required FocusNode focusNode,
-        required Map<String, bool Function(String)> conditions,
-        required Map<String, String> conditionMessages,
-      }) {
+    BuildContext context, {
+    required String labelKey,
+    required String hintKey,
+    required TextEditingController controller,
+    required IconData icon,
+    List<TextInputFormatter>? formatter,
+    required FocusNode focusNode,
+    required Map<String, bool Function(String)> conditions,
+    required Map<String, String> conditionMessages,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -278,8 +286,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           valueListenable: controller,
           builder: (context, TextEditingValue value, _) {
             final text = value.text;
-            final showConditionRow =
-                focusNode.hasFocus || text.isNotEmpty; // Show row if focused or has input
+            final showConditionRow = focusNode.hasFocus ||
+                text.isNotEmpty; // Show row if focused or has input
 
             if (showConditionRow) {
               return Column(
@@ -305,7 +313,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ],
                       ),
-                    ] else if (focusNode.hasFocus && text.isNotEmpty && entry.value(text)) ...[
+                    ] else if (focusNode.hasFocus &&
+                        text.isNotEmpty &&
+                        entry.value(text)) ...[
                       // Show green row for valid conditions while focused
                       Row(
                         children: [
@@ -329,14 +339,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               );
             } else {
-              return const SizedBox.shrink(); // Hide all rows when not focused and valid
+              return const SizedBox
+                  .shrink(); // Hide all rows when not focused and valid
             }
           },
         ),
       ],
     );
   }
-
 
   Widget buildPasswordSection(BuildContext context) {
     return buildTextFieldWithConditions(
@@ -347,8 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       icon: Icons.password,
       focusNode: focusNodes['password']!,
       conditions: {
-        "password_too_short": (text) =>
-        text.isNotEmpty && text.length >= 6,
+        "password_too_short": (text) => text.isNotEmpty && text.length >= 6,
       },
       conditionMessages: {
         "password_too_short": "password_too_short",
@@ -366,7 +375,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       focusNode: focusNodes['confirmPassword']!,
       conditions: {
         "passwords_do_not_match": (text) =>
-        text.isNotEmpty && text == context.read<RegisterCubit>().passwordController.text,
+            text.isNotEmpty &&
+            text == context.read<RegisterCubit>().passwordController.text,
       },
       conditionMessages: {
         "passwords_do_not_match": "passwords_do_not_match",
@@ -417,13 +427,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget buildGenderButton(
-      BuildContext context, IconData icon, String genderKey, bool isMaleGender) {
+  Widget buildGenderButton(BuildContext context, IconData icon,
+      String genderKey, bool isMaleGender) {
     return TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: isMale == isMaleGender
-            ? primaryColor
-            : Colors.white.withAlpha(5),
+        foregroundColor:
+            isMale == isMaleGender ? primaryColor : Colors.white.withAlpha(5),
       ),
       onPressed: () {
         setState(() {
@@ -460,15 +469,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           fun: () {
             if (context.read<RegisterCubit>().state is! Loading) {
               context.read<RegisterCubit>().register(
-                cityId: context.read<LocationCubit>().selectedCity?.id ?? 0,
-                isMale: isMale,
-              );
+                    cityId: context.read<LocationCubit>().selectedCity?.id ?? 0,
+                    isMale: isMale,
+                  );
             }
           },
           titleKey: "register_sm".tr(),
           btColor: primaryColor,
           textColor: Colors.white,
-          gradient: true,
+          gradient: false,
           fontSize: 18,
         ),
         BlocListener<RegisterCubit, RegisterStates>(

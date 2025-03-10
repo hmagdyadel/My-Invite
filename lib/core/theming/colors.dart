@@ -7,7 +7,7 @@ const Color navBarBackground = Color(0xff181c2f);
 const Color primaryColor = Color(0xff2175F1);
 const Color secondaryColor = Color(0xff6D42F4);
 const Color whiteSmokeColor = Color(0xffF5F5F5);
-const Color greenColor = Color(0xf535818f);
+const Color greenColor = Color(0xff35818f);
 const Color errorColor = Color(0xFFB00020);
 const Color whiteTextColor = Color(0xFFFFFFFF);
 

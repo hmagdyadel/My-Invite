@@ -29,10 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // Pre-fill credentials if available
-    context.read<LoginCubit>().param.text = AppUtilities().username;
-    context.read<LoginCubit>().password.text = AppUtilities().password;
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<LoginCubit>().param.text = AppUtilities().username;
+      context.read<LoginCubit>().password.text = AppUtilities().password;
+    });
+
   }
 
   @override
@@ -89,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 titles(),
                 Expanded(
                   child: Container(
-                    // Add a fallback color in case the decoration fails
 
                     decoration: const BoxDecoration(
                       color: bgColor,
