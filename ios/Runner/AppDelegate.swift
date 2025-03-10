@@ -1,6 +1,8 @@
-import Flutter
-import UIKit
-import flutter_local_notifications
+// import Flutter
+// import UIKit
+// import flutter_local_notifications
+// import Firebase
+// import FirebaseMessaging
 // @main
 // @objc class AppDelegate: FlutterAppDelegate {
 //   override func application(
@@ -11,19 +13,49 @@ import flutter_local_notifications
 //     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
 //   }
 // }
+
+
+import Flutter
+import UIKit
+import flutter_local_notifications
+import Firebase
+import FirebaseMessaging
+
 @main
-@objc class AppDelegate: FlutterAppDelegate {
+@objc class AppDelegate: FlutterAppDelegate, MessagingDelegate {
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-  FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
+    FirebaseApp.configure()
+    Messaging.messaging().delegate = self
+
+    FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
       GeneratedPluginRegistrant.register(with: registry)
     }
+
     if #available(iOS 10.0, *) {
-          UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
-        }
+      UNUserNotificationCenter.current().delegate = self
+    }
+
+    application.registerForRemoteNotifications()
+
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  // Handle receiving FCM token
+  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    debugPrint("Firebase registration token: \(String(describing: fcmToken))")
+  }
+
+  // This method handles receiving notifications when app is in foreground
+  override func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+  ) {
+    // Show notification in foreground
+    completionHandler([[.alert, .sound, .badge]])
   }
 }
