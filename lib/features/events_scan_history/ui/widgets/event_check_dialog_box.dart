@@ -30,6 +30,7 @@ class EventCheckDialogBox extends StatefulWidget {
 
 class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   bool _isProcessing = false;
+  String? _initialHintText;
   static const String _checkInStatusKey = 'event_check_in_status_';
 
   Future<bool> _hasCheckedIn(String eventId) async {
@@ -74,7 +75,6 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
         const Icon(Icons.check_circle, color: primaryColor, size: 60),
         const SizedBox(height: 12),
         SubTitleText(
-          //Todo I want to show the message of check in or check out
           text: "event_check".tr(),
           color: Colors.grey.shade900,
           fontSize: 20,
@@ -87,11 +87,14 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     return FutureBuilder<bool>(
       future: _hasCheckedIn(widget.event.id.toString()),
       builder: (context, snapshot) {
-        final bool hasCheckedIn = snapshot.data ?? false;
-        final String hintKey = hasCheckedIn ? "event_check_out_hint" : "event_check_in_hint";
+        // If initial hint text hasn't been set yet, determine it based on check-in status
+        if (_initialHintText == null) {
+          final bool hasCheckedIn = snapshot.data ?? false;
+          _initialHintText = hasCheckedIn ? "event_check_out_hint".tr() : "event_check_in_hint".tr();
+        }
 
         return NormalText(
-          text: hintKey.tr(),
+          text: _initialHintText.toString(),
           fontSize: 16,
           color: Colors.grey.shade900,
         );
