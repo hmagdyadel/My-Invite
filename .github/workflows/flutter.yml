@@ -20,22 +20,18 @@ jobs:
       - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Eclipse Temurin distribution
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Install Flutter Version 3.27.1
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1' # Use required Flutter version
+          flutter-version: '3.27.1'
 
       - name: Install Dependencies
         run: flutter pub get
 
-      # Find the gradlew file
-      - name: Find Gradle Wrapper
-        run: find . -name "gradlew"
-
-      # 👉 Create the key.properties file
+      # Create the key.properties file
       - name: Create key.properties
         run: |
           echo "storeFile=../app/keystore.jks" > android/key.properties
@@ -43,19 +39,24 @@ jobs:
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
 
-      # 👉 Decode Keystore
+      # Decode Keystore
       - name: Decode Keystore
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
 
-      # Skip the Gradle permission step for now - we'll determine correct path first
-      # - name: Make Gradle executable
-      #   run: chmod +x android/gradlew
+      # Generate Gradle wrapper if it doesn't exist
+      - name: Generate Gradle wrapper
+        run: |
+          cd android
+          if [ ! -f ./gradlew ]; then
+            gradle wrapper
+          fi
+          chmod +x ./gradlew
 
-      # 👉 Build the Signed APK - Flutter handles Gradle execution
+      # Build the Signed APK
       - name: Build APK
         run: flutter build apk --release
 
-      # 👉 Upload the APK artifact for download
+      # Upload the APK artifact for download
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
