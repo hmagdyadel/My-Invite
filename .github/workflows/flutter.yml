@@ -31,6 +31,10 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      # Find the gradlew file
+      - name: Find Gradle Wrapper
+        run: find . -name "gradlew"
+
       # 👉 Create the key.properties file
       - name: Create key.properties
         run: |
@@ -43,11 +47,11 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
 
-      # 👉 Ensure Gradle permissions
-      - name: Make Gradle executable
-        run: chmod +x android/gradlew
+      # Skip the Gradle permission step for now - we'll determine correct path first
+      # - name: Make Gradle executable
+      #   run: chmod +x android/gradlew
 
-      # 👉 Build the Signed APK
+      # 👉 Build the Signed APK - Flutter handles Gradle execution
       - name: Build APK
         run: flutter build apk --release
 
