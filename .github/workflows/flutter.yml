@@ -34,18 +34,18 @@ jobs:
       # 👉 Create the key.properties file
       - name: Create key.properties
         run: |
-          echo "storeFile=keystore.jks" > android/key.properties
+          echo "storeFile=../app/keystore.jks" > android/key.properties
           echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
 
-      # 👉 Decode Keystore File from GitHub Secrets
+      # 👉 Decode Keystore
       - name: Decode Keystore
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
 
       # 👉 Ensure Gradle permissions
       - name: Make Gradle executable
-        run: chmod +x gradlew
+        run: chmod +x android/gradlew
 
       # 👉 Build the Signed APK
       - name: Build APK
