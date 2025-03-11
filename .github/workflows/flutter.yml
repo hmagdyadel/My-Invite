@@ -20,21 +20,38 @@ jobs:
       - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Use the Eclipse Temurin distribution
+          distribution: 'temurin' # Eclipse Temurin distribution
           java-version: '17'
 
       - name: Install Flutter Version 3.27.1
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1' # Use the required Flutter version
+          flutter-version: '3.27.1' # Use required Flutter version
 
       - name: Install Dependencies
         run: flutter pub get
 
+      # 👉 Create the key.properties file
+      - name: Create key.properties
+        run: |
+          echo "storeFile=keystore.jks" > android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+
+      # 👉 Decode Keystore File from GitHub Secrets
+      - name: Decode Keystore
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      # 👉 Ensure Gradle permissions
+      - name: Make Gradle executable
+        run: chmod +x gradlew
+
+      # 👉 Build the Signed APK
       - name: Build APK
         run: flutter build apk --release
 
-
+      # 👉 Upload the APK artifact for download
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
