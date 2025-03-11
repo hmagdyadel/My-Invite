@@ -73,6 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.transparent,
+
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -100,9 +101,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(curvyRadius * 1.5),
-          topRight: Radius.circular(curvyRadius * 1.5),
+        borderRadius:  BorderRadius.only(
+          topLeft: Radius.circular(edge),
+          topRight: Radius.circular(edge),
         ),
       ),
       child: Column(
@@ -205,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget buildFlexibleSpace(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //gradient: gradient1,
+        gradient: gradient1,
         color: primaryColor,
       ),
       child: SafeArea(
@@ -477,7 +478,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           titleKey: "register_sm".tr(),
           btColor: primaryColor,
           textColor: Colors.white,
-          gradient: false,
+          gradient: true,
           fontSize: 18,
         ),
         BlocListener<RegisterCubit, RegisterStates>(
