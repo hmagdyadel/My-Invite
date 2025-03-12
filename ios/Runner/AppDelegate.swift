@@ -1,61 +1,40 @@
-// import Flutter
-// import UIKit
-// import flutter_local_notifications
-// import Firebase
-// import FirebaseMessaging
-// @main
-// @objc class AppDelegate: FlutterAppDelegate {
-//   override func application(
-//     _ application: UIApplication,
-//     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-//   ) -> Bool {
-//     GeneratedPluginRegistrant.register(with: self)
-//     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-//   }
-// }
-
-
-import Flutter
 import UIKit
-import flutter_local_notifications
+import Flutter
 import Firebase
 import FirebaseMessaging
 
-@main
-@objc class AppDelegate: FlutterAppDelegate, MessagingDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    FirebaseApp.configure()
-    Messaging.messaging().delegate = self
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
 
-    FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
-      GeneratedPluginRegistrant.register(with: registry)
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        FirebaseApp.configure()
+
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
+
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
-    if #available(iOS 10.0, *) {
-      UNUserNotificationCenter.current().delegate = self
+    // Register device token with FCM
+    override func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        Messaging.messaging().apnsToken = deviceToken
     }
+}
 
-    application.registerForRemoteNotifications()
-
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-
-  // Handle receiving FCM token
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    debugPrint("Firebase registration token: \(String(describing: fcmToken))")
-  }
-
-  // This method handles receiving notifications when app is in foreground
-  override func userNotificationCenter(
-    _ center: UNUserNotificationCenter,
-    willPresent notification: UNNotification,
-    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-  ) {
-    // Show notification in foreground
-    completionHandler([[.alert, .sound, .badge]])
-  }
+// Handle notifications when the app is in the foreground
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // This method will be called when a notification is delivered while the app is in foreground
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound, .badge])
+    }
 }
