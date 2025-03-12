@@ -1,3 +1,4 @@
+import 'package:app/core/dimensions/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,19 +31,22 @@ Widget textFieldWithIcon({
           icon,
           const SizedBox(width: 6),
           Expanded(
-            child: TextFormField(
-              inputFormatters: formatter ?? [],
-              controller: controller,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              keyboardType: inputType,
-              textAlignVertical: TextAlignVertical.top,
-              obscureText: obscureText,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: TextStyle(color: Colors.white.withAlpha(128), fontSize: 14),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero
+            child: SizedBox(
+              width: width,
+              child: TextFormField(
+                inputFormatters: formatter ?? [],
+                controller: controller,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                keyboardType: inputType,
+                textAlignVertical: TextAlignVertical.top,
+                obscureText: obscureText,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: TextStyle(color: Colors.white.withAlpha(128), fontSize: 14),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.zero
+                ),
               ),
             ),
           ),

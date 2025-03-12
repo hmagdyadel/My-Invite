@@ -23,7 +23,7 @@ class LoginScreen2 extends StatefulWidget {
   State<LoginScreen2> createState() => _LoginScreen2State();
 }
 
-class _LoginScreen2State extends State<LoginScreen2> {
+class _LoginScreen2State extends State<LoginScreen2> with WidgetsBindingObserver {
   bool hidePassword = true;
 
   @override
@@ -36,6 +36,13 @@ class _LoginScreen2State extends State<LoginScreen2> {
         loginCubit.password.text = AppUtilities().password;
       }
     });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
