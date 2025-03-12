@@ -4,7 +4,6 @@ import 'package:app/core/theming/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/helpers/app_utilities.dart';
 import '../../core/routing/routes.dart';
@@ -41,40 +40,43 @@ class _LoginScreen2State extends State<LoginScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primaryColor,
-      appBar: AppBar(
-        elevation: 0, // Reduce shadow
-        backgroundColor: Colors.transparent,
-        // foregroundColor: Colors.white,
-        leading: GestureDetector(
-          onTap: () {
-            context.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
-                predicate: false);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(6),
-            child: CircleAvatar(
-              backgroundColor: Colors.grey[100],
-              radius: 15,
-              child: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: primaryColor,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: primaryColor,
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: edge),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge * 2),
+              child: Row(
+                children: [
+                  // Back button
+                  GestureDetector(
+                    onTap: () {
+                      context.pushNamedAndRemoveUntil(Routes.onBoardingScreen, predicate: false);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[100],
+                      radius: 20,
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: primaryColor,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             buildTitles(),
-            Container(
+            // Remaining screen with bgColor
+            Expanded(
+              child: Container(
                 width: double.infinity,
-                height: height.h * 0.7,
-                padding: EdgeInsets.all(edge),
                 decoration: const BoxDecoration(
                   color: bgColor,
                   borderRadius: BorderRadius.only(
@@ -82,91 +84,91 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     topRight: Radius.circular(16),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: edge ),
-                    SubTitleText(
-                        text: "username".tr(),
-                        color: Colors.white,
-                        fontSize: 16),
-                    SizedBox(height: edge * 0.3),
-                    textFieldWithIcon(
-                        controller: context.read<LoginCubit>().param,
-                        icon: const Icon(
-                          Icons.email_outlined,
-                          color: Colors.white,
-                        ),
-                        hint: "username_hint".tr()),
-                    SizedBox(height: edge),
-                    SubTitleText(
-                        text: "password".tr(),
-                        color: Colors.white,
-                        fontSize: 16),
-                    SizedBox(height: edge * 0.3),
-                    textFieldWithIcon(
-                      controller: context.read<LoginCubit>().password,
-                      obscureText: hidePassword,
-                      suffix: IconButton(
-                        icon: Icon(
-                          hidePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off_rounded,
-                          color: hidePassword ? Colors.white : primaryColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            hidePassword = !hidePassword;
-                          });
-                        },
-                      ),
-                      icon: const Icon(
-                        Icons.password,
-                        color: Colors.white,
-                      ),
-                      hint: "password_hint".tr(),
-                    ),
-                    SizedBox(height: edge * 7),
-                    GoButton(
-                      fun: () {
-                        context.read<LoginCubit>().login();
-                      },
-                      titleKey: "login_sm".tr(),
-                      btColor: primaryColor,
-                      // Fallback if gradient fails
-                      textColor: Colors.white,
-                      gradient: false,
-                      fontSize: 18,
-                    ),
-                    BlocListener<LoginCubit, LoginStates>(
-                      listenWhen: (previous, current) => previous != current,
-                      listener: (context, current) {
-                        if (current is Loading) {
-                          animatedLoaderWithTitle(
-                              context: context, title: "logging_in".tr());
-                        } else if (current is Error) {
-                          popDialog(context);
-                          context.showErrorToast(current.message);
-                        } else if (current is Success) {
-                          popDialog(context);
-                          context.pushNamedAndRemoveUntil(Routes.homeScreen,
-                              predicate: false);
-                          AudioService().playAudio(
-                              src: 'sounds/audSuccess.mp3',
-                              onComplete: () {
-                                debugPrint('audio played');
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(edge),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: edge),
+                        SubTitleText(text: "username".tr(), color: Colors.white, fontSize: 16),
+                        SizedBox(height: edge * 0.3),
+                        textFieldWithIcon(
+                            controller: context.read<LoginCubit>().param,
+                            icon: const Icon(
+                              Icons.email_outlined,
+                              color: Colors.white,
+                            ),
+                            hint: "username_hint".tr()),
+                        SizedBox(height: edge),
+                        SubTitleText(text: "password".tr(), color: Colors.white, fontSize: 16),
+                        SizedBox(height: edge * 0.3),
+                        textFieldWithIcon(
+                          controller: context.read<LoginCubit>().password,
+                          obscureText: hidePassword,
+                          suffix: IconButton(
+                            icon: Icon(
+                              hidePassword ? Icons.visibility : Icons.visibility_off_rounded,
+                              color: hidePassword ? Colors.white : primaryColor,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                hidePassword = !hidePassword;
                               });
-                        } else if (current is EmptyInput) {
-                          popDialog(context);
-                          context.showErrorToast('enter_required_fields'.tr());
-                        }
-                      },
-                      // Use BlocConsumer instead of BlocListener to handle UI updates
-                      child: const SizedBox.shrink(),
+                            },
+                          ),
+                          icon: const Icon(
+                            Icons.password,
+                            color: Colors.white,
+                          ),
+                          hint: "password_hint".tr(),
+                        ),
+                        SizedBox(height: edge * 2),
+                        BlocListener<LoginCubit, LoginStates>(
+                          listenWhen: (previous, current) => previous != current,
+                          listener: (context, current) {
+                            if (current is Loading) {
+                              animatedLoaderWithTitle(context: context, title: "logging_in".tr());
+                            } else if (current is Error) {
+                              popDialog(context);
+                              context.showErrorToast(current.message);
+                            } else if (current is Success) {
+                              popDialog(context);
+                              context.pushNamedAndRemoveUntil(Routes.homeScreen, predicate: false);
+                              AudioService().playAudio(
+                                  src: 'sounds/audSuccess.mp3',
+                                  onComplete: () {
+                                    debugPrint('audio played');
+                                  });
+                            } else if (current is EmptyInput) {
+                              popDialog(context);
+                              context.showErrorToast('enter_required_fields'.tr());
+                            }
+                          },
+                          child: const SizedBox.shrink(),
+                        ),
+                      ],
                     ),
-                  ],
-                ))
+                  ),
+                ),
+              ),
+            ),
           ],
+        ),
+        // Bottom navigation bar with login button
+        bottomNavigationBar: Container(
+          color: bgColor,
+          padding: EdgeInsets.symmetric(horizontal: edge, vertical: edge * 2),
+          child: GoButton(
+            fun: () {
+              context.read<LoginCubit>().login();
+            },
+            titleKey: "login_sm".tr(),
+            btColor: primaryColor,
+            textColor: Colors.white,
+            gradient: true,
+            fontSize: 18,
+          ),
         ),
       ),
     );
@@ -176,7 +178,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
     return Padding(
       padding: EdgeInsets.all(edge),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(height: edge * 2),
         SubTitleText(
           text: "login_sm".tr(),
           color: Colors.white,
@@ -188,7 +189,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
           fontSize: 16,
           align: TextAlign.start,
         ),
-        SizedBox(height: edge * 2),
+        SizedBox(height: edge),
       ]),
     );
   }
