@@ -1,19 +1,24 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'core/di/dependency_injection.dart';
 import 'core/services/new_notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+
+
 Future<void> main() async {
-
-
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
@@ -21,16 +26,9 @@ Future<void> main() async {
   // Add this to your app initialization
   await NewNotificationService().init();
   tz.initializeTimeZones();
-
-
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupGetIt();
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-  String appName = packageInfo.appName;
-  String packageName = packageInfo.packageName;
-  String version = packageInfo.version;
-  String buildNumber = packageInfo.buildNumber;
-  debugPrint('appName: $appName, packageName: $packageName, version: $version, buildNumber: $buildNumber');
   runApp(const MyAppWrapper());
 }
 
