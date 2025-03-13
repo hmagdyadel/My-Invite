@@ -20,8 +20,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
   await Firebase.initializeApp();
   if (Platform.isIOS) {
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -30,6 +28,10 @@ Future<void> main() async {
       sound: true,
     );
   }
+  await EasyLocalization.ensureInitialized();
+
+
+  // Add this to your app initialization
   await NewNotificationService().init();
   tz.initializeTimeZones();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
