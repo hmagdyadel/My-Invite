@@ -20,9 +20,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
 
-  await Firebase.initializeApp();
+
   // Add this to your app initialization
   await NewNotificationService().init();
   tz.initializeTimeZones();
