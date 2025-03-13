@@ -23,7 +23,13 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
 
   await Firebase.initializeApp();
-  // Add this to your app initialization
+  if (Platform.isIOS) {
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
   await NewNotificationService().init();
   tz.initializeTimeZones();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
