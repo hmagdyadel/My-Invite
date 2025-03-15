@@ -89,6 +89,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Padding(
                     padding: EdgeInsets.all(edge),
                     child: Column(

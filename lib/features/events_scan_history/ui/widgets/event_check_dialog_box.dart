@@ -163,10 +163,10 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     try {
       // if you want to test check in come here
       // this is will disable the check of time
-      if (!_isWithinEventTimeWindow(widget.event)) {
-        _showOutsideTimeWindowError(context, isCheckIn);
-        return;
-      }
+      // if (!_isWithinEventTimeWindow(widget.event)) {
+      //   _showOutsideTimeWindowError(context, isCheckIn);
+      //   return;
+      // }
 
       final position = await _getValidatedPosition(context);
       if (position == null) return;
