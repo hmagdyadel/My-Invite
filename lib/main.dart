@@ -19,27 +19,27 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
-  // Catch Flutter errors
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-    // Show error screen
-    runApp(ErrorDisplayScreen(
-      errorMessage: details.exception.toString(),
-      stackTrace: details.stack.toString(),
-    ));
-  };
+  // // Catch Flutter errors
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   FlutterError.presentError(details);
+  //   // Show error screen
+  //   runApp(ErrorDisplayScreen(
+  //     errorMessage: details.exception.toString(),
+  //     stackTrace: details.stack.toString(),
+  //   ));
+  // };
 
-  // Catch asynchronous errors
-  PlatformDispatcher.instance.onError = (error, stack) {
-    // Show error screen
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      runApp(ErrorDisplayScreen(
-        errorMessage: error.toString(),
-        stackTrace: stack.toString(),
-      ));
-    });
-    return true;
-  };
+  // // Catch asynchronous errors
+  // PlatformDispatcher.instance.onError = (error, stack) {
+  //   // Show error screen
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     runApp(ErrorDisplayScreen(
+  //       errorMessage: error.toString(),
+  //       stackTrace: stack.toString(),
+  //     ));
+  //   });
+  //   return true;
+  // };
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
