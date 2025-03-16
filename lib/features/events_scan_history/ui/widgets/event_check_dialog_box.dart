@@ -228,7 +228,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     );
 
     if (image != null && mounted) {
-      context.showSuccessToast("captureSuccess".tr());
+      //context.showSuccessToast("captureSuccess".tr());
       context.read<GatekeeperEventsCubit>().eventCheckIn(
             widget.event.id.toString(),
             position,
@@ -278,8 +278,10 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
       if (Platform.isIOS) context.pop();
       context.showSuccessToast("check_in_successful".tr());
     } else if (response.contains("Out")) {
+      //context.pop();
       context.showSuccessToast("check_out_successful".tr());
     } else {
+      context.pop();
       context.showSuccessToast(response);
     }
   }
