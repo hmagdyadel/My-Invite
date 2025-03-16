@@ -49,8 +49,10 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
       success: (response) async {
         await scheduleNotifications();
         emit(const EventCalenderStates.reservationSuccess("Event reserved successfully"));
-        // Fetch events again after successful reservation
-        getEventsCalendar();
+        // Delay fetching events to prevent the "no events" message from showing immediately
+        Future.delayed(const Duration(seconds: 3), () {
+          getEventsCalendar();
+        });
       },
       failure: (error) {
         debugPrint("Error: $error");

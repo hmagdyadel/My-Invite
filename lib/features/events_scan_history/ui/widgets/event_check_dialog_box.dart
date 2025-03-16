@@ -164,7 +164,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
       // if you want to test check in come here
       // this is will disable the check of time
       // if (!_isWithinEventTimeWindow(widget.event)) {
-      //   _showOutsideTimeWindowError(context);
+      //   _showOutsideTimeWindowError(context, isCheckIn);
       //   return;
       // }
 
@@ -195,9 +195,12 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     return now.isAfter(startWindow) && now.isBefore(endWindow) || now.isAtSameMomentAs(startWindow) || now.isAtSameMomentAs(endWindow);
   }
 
-  void _showOutsideTimeWindowError(BuildContext context) {
+  void _showOutsideTimeWindowError(BuildContext context,bool isCheckIn) {
     context.pop();
-    context.showSuccessToast("can_not_check_in_or_out".tr());
+    final String message = isCheckIn
+        ? "checking_not_validated".tr()
+        : "checkout_not_validated".tr();
+    context.showSuccessToast(message);
   }
 
   Future<Position?> _getValidatedPosition(BuildContext context) async {
@@ -273,9 +276,9 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   void _handleSuccessResponse(BuildContext context, String response) {
     if (response.contains("In")) {
       if (Platform.isIOS) context.pop();
-      context.showSuccessToast("checkInSuccess".tr());
+      context.showSuccessToast("check_in_successful".tr());
     } else if (response.contains("Out")) {
-      context.showSuccessToast("checkOutSuccess".tr());
+      context.showSuccessToast("check_out_successful".tr());
     } else {
       context.showSuccessToast(response);
     }

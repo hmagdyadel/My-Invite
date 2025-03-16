@@ -23,7 +23,7 @@ class LoginScreen2 extends StatefulWidget {
   State<LoginScreen2> createState() => _LoginScreen2State();
 }
 
-class _LoginScreen2State extends State<LoginScreen2> with WidgetsBindingObserver {
+class _LoginScreen2State extends State<LoginScreen2> {
   bool hidePassword = true;
 
   @override
@@ -36,17 +36,14 @@ class _LoginScreen2State extends State<LoginScreen2> with WidgetsBindingObserver
         loginCubit.password.text = AppUtilities().password;
       }
     });
-    WidgetsBinding.instance.addObserver(this);
+
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    // Force a runtime error
+    // throw throwException("Forced Runtime Error for Testing!");
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -92,6 +89,7 @@ class _LoginScreen2State extends State<LoginScreen2> with WidgetsBindingObserver
                   ),
                 ),
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Padding(
                     padding: EdgeInsets.all(edge),
                     child: Column(

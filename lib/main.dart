@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'core/di/dependency_injection.dart';
 import 'core/services/new_notification_service.dart';
+import 'error_screen.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
 
@@ -16,20 +18,40 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
-
-
 Future<void> main() async {
+  // Catch Flutter errors
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    // Show error screen
+    runApp(ErrorDisplayScreen(
+      errorMessage: details.exception.toString(),
+      stackTrace: details.stack.toString(),
+    ));
+  };
+
+  // Catch asynchronous errors
+  PlatformDispatcher.instance.onError = (error, stack) {
+    // Show error screen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      runApp(ErrorDisplayScreen(
+        errorMessage: error.toString(),
+        stackTrace: stack.toString(),
+      ));
+    });
+    return true;
+  };
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   if (Platform.isIOS) {
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
   }
   await EasyLocalization.ensureInitialized();
-
 
   // Add this to your app initialization
   await NewNotificationService().init();
