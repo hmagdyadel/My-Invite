@@ -59,17 +59,17 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       body: cubit.stopScan
           ? Container(color: Colors.black)
           : BlocBuilder<QrCodeScannerCubit, QrCodeScannerStates>(
-        buildWhen: (previous, current) => previous != current,
-        builder: (context, current) {
-          return current.when(
-            initial: () => _scannerView(context, cubit),
-            loading: () => _scannerView(context, cubit),
-            emptyInput: () => const SizedBox.shrink(),
-            success: (response) => _handleSuccess(context, response),
-            error: (error) => _handleError(context, error),
-          );
-        },
-      ),
+              buildWhen: (previous, current) => previous != current,
+              builder: (context, current) {
+                return current.when(
+                  initial: () => _scannerView(context, cubit),
+                  loading: () => _scannerView(context, cubit),
+                  emptyInput: () => const SizedBox.shrink(),
+                  success: (response) => _handleSuccess(context, response),
+                  error: (error) => _handleError(context, error),
+                );
+              },
+            ),
     );
   }
 
@@ -129,24 +129,18 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         color: Colors.grey.shade200,
         onClose: () {
           if (!mounted || _isDisposed) return;
-          try {
-            context.read<QrCodeScannerCubit>().reloadPage();
-          } catch (e) {
-            debugPrint('Error reloading page: $e');
-          }
+          Future.delayed(const Duration(milliseconds: 200), () {
+            // Delay the reset
+            if (!mounted || _isDisposed) return;
+            try {
+              context.read<QrCodeScannerCubit>().reloadPage();
+            } catch (e) {
+              debugPrint('Error reloading page: $e');
+            }
+          });
         },
       );
 
-      // Automatically close the dialog after 1500ms
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        if (!mounted || _isDisposed) return;
-        try {
-          Navigator.of(context).pop(); // Close the dialog
-          context.read<QrCodeScannerCubit>().reloadPage();
-        } catch (e) {
-          debugPrint('Error during auto-close: $e');
-        }
-      });
     });
 
     return const SizedBox.shrink();
@@ -174,10 +168,10 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         message: error.contains("Scanned 1 of 1")
             ? "scanned_before".tr()
             : error.contains("Event is out dated")
-            ? "event_outdated".tr()
-            : error.contains("Event is not assigned to you")
-            ? "event_is_not_assigned_to_you".tr()
-            : error,
+                ? "event_outdated".tr()
+                : error.contains("Event is not assigned to you")
+                    ? "event_is_not_assigned_to_you".tr()
+                    : error,
         correct: false,
         color: Colors.grey.shade200,
         onClose: () {
@@ -208,8 +202,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding:
-        WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
         minimumSize: WidgetStateProperty.all<Size>(const Size(110, 40)),
       ),
       onPressed: () {
@@ -234,15 +227,15 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         children: [
           correct
               ? const Icon(
-            Icons.check_circle,
-            color: primaryColor,
-            size: 60,
-          )
+                  Icons.check_circle,
+                  color: primaryColor,
+                  size: 60,
+                )
               : const Icon(
-            Icons.cancel,
-            color: Colors.red,
-            size: 60,
-          ),
+                  Icons.cancel,
+                  color: Colors.red,
+                  size: 60,
+                ),
           const SizedBox(
             height: 12,
           ),
