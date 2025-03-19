@@ -129,15 +129,15 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         color: Colors.grey.shade200,
         onClose: () {
           if (!mounted || _isDisposed) return;
-          Future.delayed(const Duration(milliseconds: 200), () {
+          //Future.delayed(const Duration(milliseconds: 200), () {
             // Delay the reset
-            if (!mounted || _isDisposed) return;
+           // if (!mounted || _isDisposed) return;
             try {
               context.read<QrCodeScannerCubit>().reloadPage();
             } catch (e) {
               debugPrint('Error reloading page: $e');
             }
-          });
+         // });
         },
       );
 

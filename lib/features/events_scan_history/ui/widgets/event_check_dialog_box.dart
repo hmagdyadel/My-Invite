@@ -30,23 +30,22 @@ class EventCheckDialogBox extends StatefulWidget {
 
 class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   bool _isProcessing = false;
-  String? _initialHintText;
-  static const String _checkInStatusKey = 'event_check_in_status_';
+ // static const String _checkInStatusKey = 'event_check_in_status_';
 
-  Future<bool> _hasCheckedIn(String eventId) async {
-    final status = await AppUtilities.instance.getSavedBool(_checkInStatusKey + eventId, false);
-    return status;
-  }
+  // Future<bool> _hasCheckedIn(String eventId) async {
+  //   final status = await AppUtilities.instance.getSavedBool(_checkInStatusKey + eventId, false);
+  //   return status;
+  // }
 
-  Future<void> _markAsCheckedIn(String eventId) async {
-    await AppUtilities.instance.setSavedString("event_id", eventId);
-
-    await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, true);
-  }
-
-  Future<void> _markAsCheckedOut(String eventId) async {
-    await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, false);
-  }
+  // Future<void> _markAsCheckedIn(String eventId) async {
+  //   await AppUtilities.instance.setSavedString("event_id", eventId);
+  //
+  //   await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, true);
+  // }
+  //
+  // Future<void> _markAsCheckedOut(String eventId) async {
+  //   await AppUtilities.instance.setSavedBool(_checkInStatusKey + eventId, false);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +71,19 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   Widget _buildDialogTitle() {
     return Column(
       children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.close, color: Colors.black,size: 30,),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ),
         const Icon(Icons.check_circle, color: primaryColor, size: 60),
         const SizedBox(height: 12),
         SubTitleText(
@@ -85,16 +97,16 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
 
   Widget _buildDialogContent() {
     return FutureBuilder<bool>(
-      future: _hasCheckedIn(widget.event.id.toString()),
+      future: context.read<GatekeeperEventsCubit>().hasCheckedIn(widget.event.id.toString()),
       builder: (context, snapshot) {
-        // If initial hint text hasn't been set yet, determine it based on check-in status
-        if (_initialHintText == null) {
-          final bool hasCheckedIn = snapshot.data ?? false;
-          _initialHintText = hasCheckedIn ? "event_check_out_hint".tr() : "event_check_in_hint".tr();
-        }
+        // Set hint text based on current check-in status each time
+        final bool hasCheckedIn = snapshot.data ?? false;
+        final String hintText = hasCheckedIn
+            ? "event_check_out_hint".tr()
+            : "event_check_in_hint".tr();
 
         return NormalText(
-          text: _initialHintText.toString(),
+          text: hintText,
           fontSize: 16,
           color: Colors.grey.shade900,
         );
@@ -106,15 +118,20 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildCheckButton(
-          context: context,
-          isCheckIn: true,
-          state: state,
+        Expanded(
+          child: _buildCheckButton(
+            context: context,
+            isCheckIn: true,
+            state: state,
+          ),
         ),
-        _buildCheckButton(
-          context: context,
-          isCheckIn: false,
-          state: state,
+        SizedBox(width: 10),
+        Expanded(
+          child: _buildCheckButton(
+            context: context,
+            isCheckIn: false,
+            state: state,
+          ),
         ),
       ],
     );
@@ -128,7 +145,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
     final bool isLoading = isCheckIn ? state is LoadingCheckIn : state is LoadingCheckOut;
 
     return FutureBuilder<bool>(
-      future: _hasCheckedIn(widget.event.id.toString()),
+      future: context.read<GatekeeperEventsCubit>().hasCheckedIn(widget.event.id.toString()),
       builder: (context, snapshot) {
         final bool hasCheckedIn = snapshot.data ?? false;
         final bool shouldDisableCheckIn = isCheckIn && hasCheckedIn;
@@ -149,7 +166,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
           btColor: isCheckIn ? primaryColor : Colors.red,
           loading: isLoading,
           loaderColor: Colors.white,
-          w: 110,
+         // w: 110,
         );
       },
     );
@@ -213,7 +230,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
   }
 
   Future<void> _processCheckIn(BuildContext context, Position position) async {
-    final hasCheckedIn = await _hasCheckedIn(widget.event.id.toString());
+    final hasCheckedIn = await context.read<GatekeeperEventsCubit>().hasCheckedIn(widget.event.id.toString());
     if (hasCheckedIn) {
       if (mounted) {
         context.showErrorToast("already_checked_in".tr());
@@ -234,12 +251,13 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
             position,
             image,
           );
-      await _markAsCheckedIn(widget.event.id.toString());
+     // await _markAsCheckedIn(widget.event.id.toString());
+
     }
   }
 
   Future<void> _processCheckOut(BuildContext context, Position position) async {
-    final hasCheckedIn = await _hasCheckedIn(widget.event.id.toString());
+    final hasCheckedIn = await context.read<GatekeeperEventsCubit>().hasCheckedIn(widget.event.id.toString());
     if (!hasCheckedIn) {
       if (mounted) {
         context.showErrorToast("must_check_in_first".tr());
@@ -253,7 +271,7 @@ class _EventCheckDialogBoxState extends State<EventCheckDialogBox> {
           widget.event.id.toString(),
           position,
         );
-    await _markAsCheckedOut(widget.event.id.toString());
+   // await _markAsCheckedOut(widget.event.id.toString());
   }
 
   void _handleStateChanges(BuildContext context, ScanHistoryStates state) {
