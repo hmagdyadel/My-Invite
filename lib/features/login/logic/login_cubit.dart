@@ -47,6 +47,8 @@ class LoginCubit extends Cubit<LoginStates> {
           emit(LoginStates.error(message: 'unauthorized_error'.tr()));
         } else if (error == 'unexpected_error') {
           emit(LoginStates.error(message: 'unexpected_error'.tr()));
+        } else if (error == "account_not_approved") {
+          emit(LoginStates.error(message: "account_not_approved".tr()));
         } else {
           emit(LoginStates.error(message: "login_error".tr()));
         }

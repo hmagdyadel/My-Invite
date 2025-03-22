@@ -275,7 +275,7 @@
   "scan_error_scanned_before": "لقد قمت بمسح هذه الدعوة من قبل",
   "scan_failed": "فشل في مسح الباركود",
   "logout": "تسجيل الخروج",
-  "no_available_events": "لا يوجد حفلات متاحة",
+  "no_available_events": "لا توجد مناسبات متاحة للحجز",
   "event_not_attended": "لم يتم حضور هذه المناسبة حتى الآن",
   "event_check": "تأكيد تسجيل الدخول او الخروج",
   "event_check_in_hint": "هل تريد تسجيل الدخول إلى المناسبة؟",
@@ -313,6 +313,7 @@
   "correct": "صحيح",
   "event_outdated": "الحدث قديم",
   "event_is_not_assigned_to_you": "هذه المناسبة ليست مخصصة لك",
+  "event_is_not_yet_started": "هذه المناسبة لم تبدء بعد",
   "assign_one_event_only_in_the_same_day": "لقد قمت بحجز مناسبة بالفعل في نفس اليوم.",
   "continue": "استمرار"
 }

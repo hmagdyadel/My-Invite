@@ -25,28 +25,54 @@ class LoginRepo {
 
     } on DioException catch (e) {
       debugPrint('DioError: ${e.message}');
+      debugPrint('DioError response: ${e.response}');
+      debugPrint('DioError response data: ${e.response?.data}');
+      debugPrint('DioError response data type: ${e.response?.data.runtimeType}');
 
-      // If DioError has a response (e.g., HTTP error with details)
+      // If DioError has a response
       if (e.response != null) {
-        final errorResponse = e.response?.data;
-
-        if (errorResponse is Map<String, dynamic>) {
+        // Check if response data is a string first
+        if (e.response?.data is String) {
+          final errorMsg = e.response?.data.toString() ?? "";
+          if (errorMsg.toLowerCase().contains("account not approved")) {
+            return ApiResult.failure("account_not_approved");
+          }
+        }
+        // Try to handle as JSON object if it's not a string
+        else if (e.response?.data is Map<String, dynamic>) {
+          final errorResponse = e.response?.data;
           final errorTitle = errorResponse['title'];
 
-          // Check specifically for "Unauthorized" in the title
           if (errorTitle == "Unauthorized") {
             return ApiResult.failure("unauthorized_error");
+          } else if (errorTitle != null &&
+              errorTitle.toString().toLowerCase().contains("account not approved")) {
+            return ApiResult.failure("account_not_approved");
           }
-
-          // Return the error title or fallback to login_error
           return ApiResult.failure(errorTitle ?? "login_error");
         }
 
-        // Fallback for unexpected error format
-        return ApiResult.failure("unexpected_error");
+        // Check response statusMessage
+        final statusMessage = e.response?.statusMessage;
+        if (statusMessage != null &&
+            statusMessage.toLowerCase().contains("account not approved")) {
+          return ApiResult.failure("account_not_approved");
+        }
+
+        // Check DioException message
+        final errorMessage = e.message ?? "";
+        if (errorMessage.toLowerCase().contains("account not approved")) {
+          return ApiResult.failure("account_not_approved");
+        }
       }
 
-      // Handle DioError without a response
+      // Handle specific status codes
+      if (e.response?.statusCode == 400) {
+        // For HTTP 400 Bad Request, try to extract message from logs
+        return ApiResult.failure("account_not_approved");
+      }
+
+      // Fallback for other cases
       return ApiResult.failure("network_error");
     } catch (error) {
       // Handle any other errors not related to Dio

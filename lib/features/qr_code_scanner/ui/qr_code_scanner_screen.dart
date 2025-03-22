@@ -83,12 +83,14 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         MobileScanner(
           controller: _scannerController,
           onDetect: (capture) async {
-            if (_isDisposed || cubit.stopScan) return; // Skip if already scanning or disposed
+            if (_isDisposed || cubit.stopScan)
+              return; // Skip if already scanning or disposed
 
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
-              if (barcode.rawValue != null && cubit.isValidBase64(barcode.rawValue!)) {
+              if (barcode.rawValue != null &&
+                  cubit.isValidBase64(barcode.rawValue!)) {
                 debugPrint('Barcode found! ${barcode.rawValue}');
                 await cubit.scanQrCode(barcode.rawValue!);
               } else {
@@ -130,17 +132,16 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         onClose: () {
           if (!mounted || _isDisposed) return;
           //Future.delayed(const Duration(milliseconds: 200), () {
-            // Delay the reset
-           // if (!mounted || _isDisposed) return;
-            try {
-              context.read<QrCodeScannerCubit>().reloadPage();
-            } catch (e) {
-              debugPrint('Error reloading page: $e');
-            }
-         // });
+          // Delay the reset
+          // if (!mounted || _isDisposed) return;
+          try {
+            context.read<QrCodeScannerCubit>().reloadPage();
+          } catch (e) {
+            debugPrint('Error reloading page: $e');
+          }
+          // });
         },
       );
-
     });
 
     return const SizedBox.shrink();
@@ -171,7 +172,9 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
                 ? "event_outdated".tr()
                 : error.contains("Event is not assigned to you")
                     ? "event_is_not_assigned_to_you".tr()
-                    : error,
+                    : error.contains("Event is not yet started")
+                        ? "event_is_not_yet_started".tr()
+                        : error,
         correct: false,
         color: Colors.grey.shade200,
         onClose: () {
@@ -202,7 +205,8 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        padding:
+            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
         minimumSize: WidgetStateProperty.all<Size>(const Size(110, 40)),
       ),
       onPressed: () {
