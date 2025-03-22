@@ -35,38 +35,69 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void setFirebase() async {
-
     try {
       NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
         alert: true,
         badge: true,
         sound: true,
       );
+
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('User granted permission');
+
+        // Get the token and handle refreshes
+        String? token = await FirebaseMessaging.instance.getToken();
+        debugPrint("FCM Token: $token");
+
+        // Save token to your backend here
+        // sendTokenToBackend(token);
+
+        // Handle token refresh
+        FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+          debugPrint("New FCM token: $newToken");
+          // Update token on your backend here
+        });
       }
 
-      FirebaseMessaging.instance.getToken().then((onValue) {
-        debugPrint("fcm-token is $onValue");
-      });
-
+      // Set up message handlers
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        debugPrint("Notification body onMessage: ${message.notification?.toMap().toString()}");
+        debugPrint("FCM MESSAGE RECEIVED!");
+        debugPrint("Message ID: ${message.messageId}");
+        debugPrint("Notification: ${message.notification?.title}, ${message.notification?.body}");
+        debugPrint("Data: ${message.data}");
+        debugPrint("Foreground message received: ${message.notification?.title}");
 
-        if (!mounted) return; // Early return if the widget is not mounted
+        if (!mounted) return;
 
         final notification = message.notification;
-
-        NewNotificationService().showNotificationWithActions(
-          id: message.messageId.hashCode, // Unique ID for the notification
-          title: notification?.title.toString() ?? "",
-          body: notification?.body.toString() ?? "",
-          payload: message.data.toString(),
-        );
+        if (notification != null) {
+          NewNotificationService().showNotificationWithActions(
+            id: message.messageId.hashCode,
+            title: notification.title ?? "",
+            body: notification.body ?? "",
+            payload: message.data.toString(),
+          );
+        }
       });
+
+      // Check for initial message (app opened from terminated state)
+      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+        if (message != null) {
+          debugPrint("App opened from terminated state with message: ${message.messageId}");
+          // Handle the initial message - perhaps navigate to a specific screen
+        }
+      });
+
+      // Handle message when app is in background but opened
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        debugPrint("App opened from background state with message: ${message.messageId}");
+        // Handle the message - perhaps navigate to a specific screen
+      });
+
     } catch (e) {
+      debugPrint("FCM setup error: $e");
       if (mounted) {
-        context.showErrorToast('Failed to subscribe to topic. Please try again.');
+        context.showErrorToast('Failed to set up notifications. Please try again.');
       }
     }
   }

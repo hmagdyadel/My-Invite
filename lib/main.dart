@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +42,8 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  String? fcmToken = await FirebaseMessaging.instance.getToken();
+  debugPrint("FCM Token: $fcmToken");
   if (Platform.isIOS) {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
@@ -48,6 +51,10 @@ Future<void> main() async {
       badge: true,
       sound: true,
     );
+  }
+  if (kDebugMode) {
+    FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
+    debugPrint("Firebase Messaging initialized in debug mode");
   }
   await EasyLocalization.ensureInitialized();
 
