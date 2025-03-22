@@ -21,15 +21,39 @@ class QrCodeScannerScreen extends StatefulWidget {
 }
 
 class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
+  MobileScannerController? _scannerController;
+  bool _isDisposed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scannerController = MobileScannerController();
+  }
+
   @override
   void dispose() {
-    context.read<QrCodeScannerCubit>().dispose();
+    _isDisposed = true;
+    // Safely dispose of scanner controller
+    _scannerController?.dispose();
+    _scannerController = null;
+
+    // Only call the cubit's dispose if it exists and the context is still valid
+    if (mounted) {
+      try {
+        final cubit = context.read<QrCodeScannerCubit>();
+        cubit.dispose();
+      } catch (e) {
+        debugPrint('Error disposing QR code scanner cubit: $e');
+      }
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<QrCodeScannerCubit>();
+    // Use BlocProvider.of instead of context.read to safely access cubit
+    final cubit = BlocProvider.of<QrCodeScannerCubit>(context, listen: false);
+
     return Scaffold(
       backgroundColor: bgColor,
       body: cubit.stopScan
@@ -50,15 +74,21 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
   }
 
   Widget _scannerView(BuildContext context, QrCodeScannerCubit cubit) {
+    if (_scannerController == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Stack(
       children: [
         MobileScanner(
+          controller: _scannerController,
           onDetect: (capture) async {
-            if (cubit.stopScan) return; // Skip if already scanning
+            if (_isDisposed || cubit.stopScan) return; // Skip if already scanning or disposed
+
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
-              if (cubit.isValidBase64(barcode.rawValue ?? "")) {
+              if (barcode.rawValue != null && cubit.isValidBase64(barcode.rawValue!)) {
                 debugPrint('Barcode found! ${barcode.rawValue}');
                 await cubit.scanQrCode(barcode.rawValue!);
               } else {
@@ -76,11 +106,19 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
   }
 
   Widget _handleSuccess(BuildContext context, ScanResponse response) {
+    if (!mounted || _isDisposed) return const SizedBox.shrink();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _isDisposed) return;
+
       // Start playing audio immediately
-      AudioService().playAudio(
-        src: 'sounds/audSuccess.mp3',
-      );
+      try {
+        AudioService().playAudio(
+          src: 'sounds/audSuccess.mp3',
+        );
+      } catch (e) {
+        debugPrint('Error playing audio: $e');
+      }
 
       // Show the dialog
       _showColoredAlert(
@@ -90,26 +128,38 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         correct: true,
         color: Colors.grey.shade200,
         onClose: () {
-          context.read<QrCodeScannerCubit>().reloadPage();
+          if (!mounted || _isDisposed) return;
+          //Future.delayed(const Duration(milliseconds: 200), () {
+            // Delay the reset
+           // if (!mounted || _isDisposed) return;
+            try {
+              context.read<QrCodeScannerCubit>().reloadPage();
+            } catch (e) {
+              debugPrint('Error reloading page: $e');
+            }
+         // });
         },
       );
 
-      // Automatically close the dialog after 1500ms
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        Navigator.of(context).pop(); // Close the dialog
-        context.read<QrCodeScannerCubit>().reloadPage();
-      });
     });
 
     return const SizedBox.shrink();
   }
 
   Widget _handleError(BuildContext context, String error) {
+    if (!mounted || _isDisposed) return const SizedBox.shrink();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _isDisposed) return;
+
       // Start playing audio immediately
-      AudioService().playAudio(
-        src: 'sounds/audFailure.mp3',
-      );
+      try {
+        AudioService().playAudio(
+          src: 'sounds/audFailure.mp3',
+        );
+      } catch (e) {
+        debugPrint('Error playing audio: $e');
+      }
 
       // Show the dialog
       _showColoredAlert(
@@ -125,7 +175,12 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         correct: false,
         color: Colors.grey.shade200,
         onClose: () {
-          context.read<QrCodeScannerCubit>().reloadPage();
+          if (!mounted || _isDisposed) return;
+          try {
+            context.read<QrCodeScannerCubit>().reloadPage();
+          } catch (e) {
+            debugPrint('Error reloading page: $e');
+          }
         },
       );
     });
@@ -141,17 +196,23 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
     required Color color,
     required VoidCallback onClose,
   }) {
+    if (!mounted || _isDisposed) return;
+
     Widget okButton = TextButton(
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-        padding:
-            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
-        minimumSize: WidgetStateProperty.all<Size>(Size(110, 40)),
+        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        minimumSize: WidgetStateProperty.all<Size>(const Size(110, 40)),
       ),
       onPressed: () {
-        context.pop();
-        onClose();
+        if (!mounted || _isDisposed) return;
+        try {
+          context.pop();
+          onClose();
+        } catch (e) {
+          debugPrint('Error during dialog close: $e');
+        }
       },
       child: SubTitleText(
         text: "continue".tr(),
@@ -193,11 +254,16 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       actions: [okButton],
     );
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } catch (e) {
+      debugPrint('Error showing dialog: $e');
+    }
   }
 }

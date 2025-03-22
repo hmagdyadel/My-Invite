@@ -105,7 +105,8 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: Platform.isIOS
                       ? CameraPreview(controller!)
                       : RotatedBox(
-                    quarterTurns: cameras[selectedCameraIndex].lensDirection == CameraLensDirection.front ? 3 : 1,
+                    quarterTurns: 0,
+                   // quarterTurns: cameras[selectedCameraIndex].lensDirection == CameraLensDirection.front ? 0 : 0,
                     child: AspectRatio(
                       aspectRatio: controller!.value.aspectRatio,
                       child: CameraPreview(controller!),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../core/helpers/app_utilities.dart';
 import '../../../core/services/notification_scheduler.dart';
 import '../../event_calender/data/models/calender_events.dart';
 import '../data/models/gatekeeper_events_response.dart';
@@ -13,6 +14,8 @@ import 'scan_history_states.dart';
 class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   final GatekeeperEventsRepo _gatekeeperEventsRepo;
 
+
+  static const String _checkInStatusKey = 'event_check_in_status_';
   // For Gatekeeper Events Pagination
   final List<EventsList> _events = [];
   int _currentPageEvents = 0; // Changed to start from 0 like old code
@@ -168,7 +171,9 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   void eventCheckOut(String eventId, Position position) async {
     emit(const ScanHistoryStates.loadingCheckOut());
     final response = await _gatekeeperEventsRepo.eventCheckOut(eventId, position);
-    response.when(success: (response) {
+    response.when(success: (response) async{
+      // Only mark as checked out AFTER successful API call
+      await markAsCheckedOut(eventId);
       emit(ScanHistoryStates.successCheck(response));
     }, failure: (error) {
       debugPrint(' in error: $error');
@@ -192,7 +197,9 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
   void eventCheckIn(String eventId, Position position, XFile? profileImage) async {
     emit(const ScanHistoryStates.loadingCheckIn());
     final response = await _gatekeeperEventsRepo.eventCheckIn(eventId, position, profileImage);
-    response.when(success: (response) {
+    response.when(success: (response) async{
+      // Only mark as checked in AFTER successful API call
+      await markAsCheckedIn(eventId);
       debugPrint('in success $response');
       emit(ScanHistoryStates.successCheck(response));
     }, failure: (error) {
@@ -205,6 +212,21 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
     });
   }
 
+  /// Mark event as checked in (moved from widget)
+  Future<void> markAsCheckedIn(String eventId) async {
+    await AppUtilities().setSavedString("event_id", eventId);
+    await AppUtilities().setSavedBool(_checkInStatusKey + eventId, true);
+  }
+
+  /// Mark event as checked out (moved from widget)
+  Future<void> markAsCheckedOut(String eventId) async {
+    await AppUtilities().setSavedBool(_checkInStatusKey + eventId, false);
+  }
+  /// Check if an event has been checked in
+  Future<bool> hasCheckedIn(String eventId) async {
+    final status = await AppUtilities().getSavedBool(_checkInStatusKey + eventId, false);
+    return status;
+  }
 // Add this property at the top of the class with other properties
   final Set<String> _scheduledEventIds = {};
 
