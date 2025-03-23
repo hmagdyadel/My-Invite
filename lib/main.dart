@@ -41,6 +41,8 @@ Future<void> main() async {
   // };
 
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await Firebase.initializeApp();
   String? fcmToken = await FirebaseMessaging.instance.getToken();
   debugPrint("FCM Token: $fcmToken");
@@ -61,7 +63,6 @@ Future<void> main() async {
   // Add this to your app initialization
   await NewNotificationService().init();
   tz.initializeTimeZones();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   setupGetIt();
 
   runApp(const MyAppWrapper());
