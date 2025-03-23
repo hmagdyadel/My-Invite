@@ -2,7 +2,7 @@
 import UIKit
 import Flutter
 import Firebase
-import flutter_local_notifications
+import FirebaseMessaging
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
