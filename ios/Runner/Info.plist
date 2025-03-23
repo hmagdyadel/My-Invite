@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>My Invite</string>
+	<string>My Invite Test</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +24,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -33,6 +35,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>My Invite needs to access camera to scan QR codes and take your picture for confirm attendance</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -41,9 +45,6 @@
 	<string>My Invite needs to access your notifications for important updates and reminders</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
-
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -51,8 +52,6 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>FirebaseMessagingAutoInitEnabled</key>
-     <false/>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIStatusBarHidden</key>
