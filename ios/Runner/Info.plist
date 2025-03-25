@@ -23,15 +23,15 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
-	<true/>
-	<key>FirebaseMessagingAutoInitEnabled</key>
 	<false/>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>My Invite needs to access camera to scan QR codes and take your picture for confirm attendance</string>
@@ -43,6 +43,8 @@
 	<string>My Invite needs to access microphone for confirm attendance</string>
 	<key>NSRemoteNotificationUsageDescription</key>
 	<string>My Invite needs to access your notifications for important updates and reminders</string>
+	<key>aps-environment</key>
+    <string>development</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

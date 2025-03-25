@@ -1,8 +1,7 @@
 import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
-import 'package:app/core/services/new_notification_service.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../logic/home_cubit.dart';

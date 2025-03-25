@@ -83,9 +83,9 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         MobileScanner(
           controller: _scannerController,
           onDetect: (capture) async {
-            if (_isDisposed || cubit.stopScan)
+            if (_isDisposed || cubit.stopScan){
               return; // Skip if already scanning or disposed
-
+          }
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
