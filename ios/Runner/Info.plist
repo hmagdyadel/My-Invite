@@ -28,22 +28,15 @@
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>My Invite needs to access camera to scan QR codes and take your picture for confirm attendance</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>My Invite needs to access microphone for confirm attendance</string>
-	<key>NSRemoteNotificationUsageDescription</key>
-	<string>My Invite needs to access your notifications for important updates and reminders</string>
+    <string>My Invite needs microphone access to verify attendance with audio</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -54,8 +47,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>UIStatusBarHidden</key>
-	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -71,3 +62,4 @@
 	<false/>
 </dict>
 </plist>
+
