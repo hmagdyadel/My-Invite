@@ -4,10 +4,13 @@ import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../data/models/gatekeeper_events_response.dart';
+import '../../logic/gatekeeper_events_cubit.dart';
+import 'delete_gatekeeper_event.dart';
 
 class ScanHistoryItem extends StatelessWidget {
   final EventsList? event;
@@ -32,7 +35,7 @@ class ScanHistoryItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: edge * 0.5,
               children: [
-                eventCodeAndTitle(),
+                eventCodeAndTitle(context),
                 eventLocation(context),
                 greyDivider(),
                 eventDateAndTime(context),
@@ -82,11 +85,17 @@ class ScanHistoryItem extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 16,
               ),
-             event?.totalAllocated == null ? NormalText(text: "0", color: Colors.white, fontSize: 16,) : NormalText(
-                text: event?.totalAllocated.toString() ?? "0",
-                color: Colors.white,
-                fontSize: 16,
-              ),
+              event?.totalAllocated == null
+                  ? NormalText(
+                      text: "0",
+                      color: Colors.white,
+                      fontSize: 16,
+                    )
+                  : NormalText(
+                      text: event?.totalAllocated.toString() ?? "0",
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
             ],
           ),
           Column(
@@ -113,7 +122,11 @@ class ScanHistoryItem extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: [NormalText(text: "contact".tr(), color: Colors.white), SizedBox(width: edge * 0.6), Expanded(child: Divider())],
+          children: [
+            NormalText(text: "contact".tr(), color: Colors.white),
+            SizedBox(width: edge * 0.6),
+            Expanded(child: Divider())
+          ],
         ),
         Row(
           children: [
@@ -169,8 +182,19 @@ class ScanHistoryItem extends StatelessWidget {
         if (parts.length == 3) {
           int month = int.tryParse(parts[1]) ?? 0;
           List<String> monthNames = [
-            "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            "",
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
           ];
           eventFromDisplay = "${monthNames[month]} ${parts[2]}, ${parts[0]}";
         }
@@ -186,8 +210,19 @@ class ScanHistoryItem extends StatelessWidget {
         if (parts.length == 3) {
           int month = int.tryParse(parts[1]) ?? 0;
           List<String> monthNames = [
-            "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            "",
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
           ];
           eventToDisplay = "${monthNames[month]} ${parts[2]}, ${parts[0]}";
         }
@@ -312,15 +347,45 @@ class ScanHistoryItem extends StatelessWidget {
     );
   }
 
-  Column eventCodeAndTitle() {
+  Column eventCodeAndTitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: edge * 0.5,
       children: [
-        SubTitleText(
-          text: event?.eventCode ?? "",
-          color: Colors.white,
-          fontSize: 16,
+        Row(
+          children: [
+            Expanded(
+              child: SubTitleText(
+                text: event?.eventCode ?? "",
+                color: Colors.white,
+                fontSize: 16,
+                align: TextAlign.start,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext dialogContext) {
+                    return BlocProvider.value(
+                      value: context.read<GatekeeperEventsCubit>(),
+                      child: DeleteGatekeeperEventDialogBox(
+                        event: event!,
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: navBarBackground,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Icon(Icons.delete, color: Colors.white),
+              ),
+            )
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

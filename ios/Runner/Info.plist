@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>My Invite Test</string>
+	<string>My Invite</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -43,8 +43,6 @@
 	<string>My Invite needs to access microphone for confirm attendance</string>
 	<key>NSRemoteNotificationUsageDescription</key>
 	<string>My Invite needs to access your notifications for important updates and reminders</string>
-	<key>aps-environment</key>
-    <string>development</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

@@ -212,6 +212,31 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
     });
   }
 
+  void deleteEvent(String eventId,) async {
+    emit(const ScanHistoryStates.loadingDeleteEvent());
+    final response = await _gatekeeperEventsRepo.deleteEvent(eventId);
+    response.when(success: (response) async{
+      getGatekeeperEvents();
+      emit(ScanHistoryStates.successDeleteEvent(response));
+    }, failure: (error) {
+      debugPrint(' in error: $error');
+      if (error == "not_yet_checked") {
+        debugPrint('Emitting errorCheck with message: ${"not_yet_checked".tr()}');
+        emit(
+          ScanHistoryStates.errorCheck(
+            message: "not_yet_checked".tr(),
+          ),
+        );
+      } else {
+        emit(
+          ScanHistoryStates.errorDeleteEvent(
+            message: error.toString(),
+          ),
+        );
+      }
+    });
+  }
+
   /// Mark event as checked in (moved from widget)
   Future<void> markAsCheckedIn(String eventId) async {
     await AppUtilities().setSavedString("event_id", eventId);

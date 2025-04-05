@@ -1,9 +1,11 @@
 import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/services/new_notification_service.dart';
 import '../logic/home_cubit.dart';
 import '../logic/home_states.dart';
 import 'widgets/dashboard_screen.dart';
@@ -29,11 +31,80 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) => setFirebase());
   }
 
 
+  void setFirebase() async {
+    try {
+      NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
 
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        debugPrint('User granted permission');
+
+        try {
+          // Get the token and handle refreshes
+          String? token = await FirebaseMessaging.instance.getToken();
+          debugPrint("FCM Token: $token");
+        } catch (e) {
+          debugPrint("Error getting APNs token: $e");
+        }
+
+
+        // Save token to your backend here
+        // sendTokenToBackend(token);
+
+        // Handle token refresh
+        FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+          debugPrint("New FCM token: $newToken");
+          // Update token on your backend here
+        });
+      }
+
+      // Set up message handlers
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        debugPrint("FCM MESSAGE RECEIVED!");
+        debugPrint("Message ID: ${message.messageId}");
+        debugPrint("Notification: ${message.notification?.title}, ${message.notification?.body}");
+        debugPrint("Data: ${message.data}");
+        debugPrint("Foreground message received: ${message.notification?.title}");
+
+
+
+        final notification = message.notification;
+        if (notification != null) {
+          NewNotificationService().showNotificationWithActions(
+            id: message.messageId.hashCode,
+            title: notification.title ?? "",
+            body: notification.body ?? "",
+            payload: message.data.toString(),
+          );
+        }
+      });
+
+      // Check for initial message (app opened from terminated state)
+      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+        if (message != null) {
+          debugPrint("App opened from terminated state with message: ${message.messageId}");
+          // Handle the initial message - perhaps navigate to a specific screen
+        }
+      });
+
+      // Handle message when app is in background but opened
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        debugPrint("App opened from background state with message: ${message.messageId}");
+        // Handle the message - perhaps navigate to a specific screen
+      });
+
+    } catch (e) {
+      debugPrint("FCM setup error: $e");
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeStates>(

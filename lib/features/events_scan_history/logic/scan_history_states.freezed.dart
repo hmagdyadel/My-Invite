@@ -21,12 +21,15 @@ mixin _$ScanHistoryStates<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,12 +37,15 @@ mixin _$ScanHistoryStates<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,12 +53,15 @@ mixin _$ScanHistoryStates<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,12 +70,15 @@ mixin _$ScanHistoryStates<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -74,12 +86,15 @@ mixin _$ScanHistoryStates<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,12 +102,15 @@ mixin _$ScanHistoryStates<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -164,12 +182,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return initial();
   }
@@ -180,12 +201,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return initial?.call();
   }
@@ -196,12 +220,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -216,12 +243,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return initial(this);
   }
@@ -232,12 +262,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return initial?.call(this);
   }
@@ -248,12 +281,15 @@ class _$InitialImpl<T> implements _Initial<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -313,12 +349,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return loading();
   }
@@ -329,12 +368,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return loading?.call();
   }
@@ -345,12 +387,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -365,12 +410,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return loading(this);
   }
@@ -381,12 +429,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return loading?.call(this);
   }
@@ -397,12 +448,15 @@ class _$LoadingScanHistoryImpl<T> implements LoadingScanHistory<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -460,12 +514,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return loadingCheckIn();
   }
@@ -476,12 +533,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return loadingCheckIn?.call();
   }
@@ -492,12 +552,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loadingCheckIn != null) {
@@ -512,12 +575,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return loadingCheckIn(this);
   }
@@ -528,12 +594,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return loadingCheckIn?.call(this);
   }
@@ -544,12 +613,15 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loadingCheckIn != null) {
@@ -561,6 +633,173 @@ class _$LoadingCheckInImpl<T> implements LoadingCheckIn<T> {
 
 abstract class LoadingCheckIn<T> implements ScanHistoryStates<T> {
   const factory LoadingCheckIn() = _$LoadingCheckInImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$LoadingDeleteEventImplCopyWith<T, $Res> {
+  factory _$$LoadingDeleteEventImplCopyWith(_$LoadingDeleteEventImpl<T> value,
+          $Res Function(_$LoadingDeleteEventImpl<T>) then) =
+      __$$LoadingDeleteEventImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$LoadingDeleteEventImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res,
+        _$LoadingDeleteEventImpl<T>>
+    implements _$$LoadingDeleteEventImplCopyWith<T, $Res> {
+  __$$LoadingDeleteEventImplCopyWithImpl(_$LoadingDeleteEventImpl<T> _value,
+      $Res Function(_$LoadingDeleteEventImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadingDeleteEventImpl<T> implements LoadingDeleteEvent<T> {
+  const _$LoadingDeleteEventImpl();
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.loadingDeleteEvent()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingDeleteEventImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
+    required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
+  }) {
+    return loadingDeleteEvent();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
+    TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
+  }) {
+    return loadingDeleteEvent?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
+    TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (loadingDeleteEvent != null) {
+      return loadingDeleteEvent();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
+  }) {
+    return loadingDeleteEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+  }) {
+    return loadingDeleteEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (loadingDeleteEvent != null) {
+      return loadingDeleteEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadingDeleteEvent<T> implements ScanHistoryStates<T> {
+  const factory LoadingDeleteEvent() = _$LoadingDeleteEventImpl<T>;
 }
 
 /// @nodoc
@@ -607,12 +846,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return loadingCheckOut();
   }
@@ -623,12 +865,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return loadingCheckOut?.call();
   }
@@ -639,12 +884,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loadingCheckOut != null) {
@@ -659,12 +907,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return loadingCheckOut(this);
   }
@@ -675,12 +926,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return loadingCheckOut?.call(this);
   }
@@ -691,12 +945,15 @@ class _$LoadingCheckOutImpl<T> implements LoadingCheckOut<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (loadingCheckOut != null) {
@@ -758,12 +1015,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return emptyInput();
   }
@@ -774,12 +1034,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return emptyInput?.call();
   }
@@ -790,12 +1053,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -810,12 +1076,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return emptyInput(this);
   }
@@ -826,12 +1095,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return emptyInput?.call(this);
   }
@@ -842,12 +1114,15 @@ class _$EmptyInputScanHistoryImpl<T> implements EmptyInputScanHistory<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (emptyInput != null) {
@@ -945,12 +1220,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return success(response, isLoadingMore);
   }
@@ -961,12 +1239,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return success?.call(response, isLoadingMore);
   }
@@ -977,12 +1258,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -997,12 +1281,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return success(this);
   }
@@ -1013,12 +1300,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return success?.call(this);
   }
@@ -1029,12 +1319,15 @@ class _$SuccessScanHistoryImpl<T> implements SuccessScanHistory<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -1130,12 +1423,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return error(message);
   }
@@ -1146,12 +1442,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return error?.call(message);
   }
@@ -1162,12 +1461,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1182,12 +1484,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return error(this);
   }
@@ -1198,12 +1503,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return error?.call(this);
   }
@@ -1214,12 +1522,15 @@ class _$ErrorScanHistoryImpl<T> implements ErrorScanHistory<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1315,12 +1626,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return successCheck(data);
   }
@@ -1331,12 +1645,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return successCheck?.call(data);
   }
@@ -1347,12 +1664,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (successCheck != null) {
@@ -1367,12 +1687,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return successCheck(this);
   }
@@ -1383,12 +1706,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return successCheck?.call(this);
   }
@@ -1399,12 +1725,15 @@ class _$SuccessCheckImpl<T> implements SuccessCheck<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (successCheck != null) {
@@ -1424,6 +1753,209 @@ abstract class SuccessCheck<T> implements ScanHistoryStates<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessCheckImplCopyWith<T, _$SuccessCheckImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SuccessDeleteEventImplCopyWith<T, $Res> {
+  factory _$$SuccessDeleteEventImplCopyWith(_$SuccessDeleteEventImpl<T> value,
+          $Res Function(_$SuccessDeleteEventImpl<T>) then) =
+      __$$SuccessDeleteEventImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({T data});
+}
+
+/// @nodoc
+class __$$SuccessDeleteEventImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res,
+        _$SuccessDeleteEventImpl<T>>
+    implements _$$SuccessDeleteEventImplCopyWith<T, $Res> {
+  __$$SuccessDeleteEventImplCopyWithImpl(_$SuccessDeleteEventImpl<T> _value,
+      $Res Function(_$SuccessDeleteEventImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$SuccessDeleteEventImpl<T>(
+      freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessDeleteEventImpl<T> implements SuccessDeleteEvent<T> {
+  const _$SuccessDeleteEventImpl(this.data);
+
+  @override
+  final T data;
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.successDeleteEvent(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessDeleteEventImpl<T> &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessDeleteEventImplCopyWith<T, _$SuccessDeleteEventImpl<T>>
+      get copyWith => __$$SuccessDeleteEventImplCopyWithImpl<T,
+          _$SuccessDeleteEventImpl<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
+    required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
+  }) {
+    return successDeleteEvent(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
+    TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
+  }) {
+    return successDeleteEvent?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
+    TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (successDeleteEvent != null) {
+      return successDeleteEvent(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
+  }) {
+    return successDeleteEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+  }) {
+    return successDeleteEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (successDeleteEvent != null) {
+      return successDeleteEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SuccessDeleteEvent<T> implements ScanHistoryStates<T> {
+  const factory SuccessDeleteEvent(final T data) = _$SuccessDeleteEventImpl<T>;
+
+  T get data;
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SuccessDeleteEventImplCopyWith<T, _$SuccessDeleteEventImpl<T>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1497,12 +2029,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
     required TResult Function() loadingCheckOut,
     required TResult Function() emptyInput,
     required TResult Function(T response, bool isLoadingMore) success,
     required TResult Function(String message) error,
     required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
     required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
   }) {
     return errorCheck(message);
   }
@@ -1513,12 +2048,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
     TResult? Function()? loadingCheckOut,
     TResult? Function()? emptyInput,
     TResult? Function(T response, bool isLoadingMore)? success,
     TResult? Function(String message)? error,
     TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
     TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
   }) {
     return errorCheck?.call(message);
   }
@@ -1529,12 +2067,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
     TResult Function()? loadingCheckOut,
     TResult Function()? emptyInput,
     TResult Function(T response, bool isLoadingMore)? success,
     TResult Function(String message)? error,
     TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
     TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (errorCheck != null) {
@@ -1549,12 +2090,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     required TResult Function(_Initial<T> value) initial,
     required TResult Function(LoadingScanHistory<T> value) loading,
     required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
     required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
     required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
     required TResult Function(SuccessScanHistory<T> value) success,
     required TResult Function(ErrorScanHistory<T> value) error,
     required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
     required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
   }) {
     return errorCheck(this);
   }
@@ -1565,12 +2109,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     TResult? Function(_Initial<T> value)? initial,
     TResult? Function(LoadingScanHistory<T> value)? loading,
     TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult? Function(SuccessScanHistory<T> value)? success,
     TResult? Function(ErrorScanHistory<T> value)? error,
     TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
   }) {
     return errorCheck?.call(this);
   }
@@ -1581,12 +2128,15 @@ class _$ErrorCheckImpl<T> implements ErrorCheck<T> {
     TResult Function(_Initial<T> value)? initial,
     TResult Function(LoadingScanHistory<T> value)? loading,
     TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
     TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
     TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
     TResult Function(SuccessScanHistory<T> value)? success,
     TResult Function(ErrorScanHistory<T> value)? error,
     TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
     TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
     required TResult orElse(),
   }) {
     if (errorCheck != null) {
@@ -1606,5 +2156,207 @@ abstract class ErrorCheck<T> implements ScanHistoryStates<T> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorCheckImplCopyWith<T, _$ErrorCheckImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ErrorDeleteEventImplCopyWith<T, $Res> {
+  factory _$$ErrorDeleteEventImplCopyWith(_$ErrorDeleteEventImpl<T> value,
+          $Res Function(_$ErrorDeleteEventImpl<T>) then) =
+      __$$ErrorDeleteEventImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ErrorDeleteEventImplCopyWithImpl<T, $Res>
+    extends _$ScanHistoryStatesCopyWithImpl<T, $Res, _$ErrorDeleteEventImpl<T>>
+    implements _$$ErrorDeleteEventImplCopyWith<T, $Res> {
+  __$$ErrorDeleteEventImplCopyWithImpl(_$ErrorDeleteEventImpl<T> _value,
+      $Res Function(_$ErrorDeleteEventImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorDeleteEventImpl<T>(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorDeleteEventImpl<T> implements ErrorDeleteEvent<T> {
+  const _$ErrorDeleteEventImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ScanHistoryStates<$T>.errorDeleteEvent(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorDeleteEventImpl<T> &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorDeleteEventImplCopyWith<T, _$ErrorDeleteEventImpl<T>> get copyWith =>
+      __$$ErrorDeleteEventImplCopyWithImpl<T, _$ErrorDeleteEventImpl<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingCheckIn,
+    required TResult Function() loadingDeleteEvent,
+    required TResult Function() loadingCheckOut,
+    required TResult Function() emptyInput,
+    required TResult Function(T response, bool isLoadingMore) success,
+    required TResult Function(String message) error,
+    required TResult Function(T data) successCheck,
+    required TResult Function(T data) successDeleteEvent,
+    required TResult Function(String message) errorCheck,
+    required TResult Function(String message) errorDeleteEvent,
+  }) {
+    return errorDeleteEvent(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingCheckIn,
+    TResult? Function()? loadingDeleteEvent,
+    TResult? Function()? loadingCheckOut,
+    TResult? Function()? emptyInput,
+    TResult? Function(T response, bool isLoadingMore)? success,
+    TResult? Function(String message)? error,
+    TResult? Function(T data)? successCheck,
+    TResult? Function(T data)? successDeleteEvent,
+    TResult? Function(String message)? errorCheck,
+    TResult? Function(String message)? errorDeleteEvent,
+  }) {
+    return errorDeleteEvent?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingCheckIn,
+    TResult Function()? loadingDeleteEvent,
+    TResult Function()? loadingCheckOut,
+    TResult Function()? emptyInput,
+    TResult Function(T response, bool isLoadingMore)? success,
+    TResult Function(String message)? error,
+    TResult Function(T data)? successCheck,
+    TResult Function(T data)? successDeleteEvent,
+    TResult Function(String message)? errorCheck,
+    TResult Function(String message)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (errorDeleteEvent != null) {
+      return errorDeleteEvent(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial<T> value) initial,
+    required TResult Function(LoadingScanHistory<T> value) loading,
+    required TResult Function(LoadingCheckIn<T> value) loadingCheckIn,
+    required TResult Function(LoadingDeleteEvent<T> value) loadingDeleteEvent,
+    required TResult Function(LoadingCheckOut<T> value) loadingCheckOut,
+    required TResult Function(EmptyInputScanHistory<T> value) emptyInput,
+    required TResult Function(SuccessScanHistory<T> value) success,
+    required TResult Function(ErrorScanHistory<T> value) error,
+    required TResult Function(SuccessCheck<T> value) successCheck,
+    required TResult Function(SuccessDeleteEvent<T> value) successDeleteEvent,
+    required TResult Function(ErrorCheck<T> value) errorCheck,
+    required TResult Function(ErrorDeleteEvent<T> value) errorDeleteEvent,
+  }) {
+    return errorDeleteEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial<T> value)? initial,
+    TResult? Function(LoadingScanHistory<T> value)? loading,
+    TResult? Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult? Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult? Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult? Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult? Function(SuccessScanHistory<T> value)? success,
+    TResult? Function(ErrorScanHistory<T> value)? error,
+    TResult? Function(SuccessCheck<T> value)? successCheck,
+    TResult? Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult? Function(ErrorCheck<T> value)? errorCheck,
+    TResult? Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+  }) {
+    return errorDeleteEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial<T> value)? initial,
+    TResult Function(LoadingScanHistory<T> value)? loading,
+    TResult Function(LoadingCheckIn<T> value)? loadingCheckIn,
+    TResult Function(LoadingDeleteEvent<T> value)? loadingDeleteEvent,
+    TResult Function(LoadingCheckOut<T> value)? loadingCheckOut,
+    TResult Function(EmptyInputScanHistory<T> value)? emptyInput,
+    TResult Function(SuccessScanHistory<T> value)? success,
+    TResult Function(ErrorScanHistory<T> value)? error,
+    TResult Function(SuccessCheck<T> value)? successCheck,
+    TResult Function(SuccessDeleteEvent<T> value)? successDeleteEvent,
+    TResult Function(ErrorCheck<T> value)? errorCheck,
+    TResult Function(ErrorDeleteEvent<T> value)? errorDeleteEvent,
+    required TResult orElse(),
+  }) {
+    if (errorDeleteEvent != null) {
+      return errorDeleteEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ErrorDeleteEvent<T> implements ScanHistoryStates<T> {
+  const factory ErrorDeleteEvent({required final String message}) =
+      _$ErrorDeleteEventImpl<T>;
+
+  String get message;
+
+  /// Create a copy of ScanHistoryStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ErrorDeleteEventImplCopyWith<T, _$ErrorDeleteEventImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

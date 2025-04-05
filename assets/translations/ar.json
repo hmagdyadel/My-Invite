@@ -1,30 +1,46 @@
 {
   "loginOrRegister": "تسجيل الدخول أو التسجيل للمتابعة",
+
+
   "login": "تسجيل الدخول إلى الحساب",
-  "register": "إنشاء حساب",
   "login_sm": "تسجيل الدخول",
   "login_dt": "قم بتسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور لمتابعة التطبيق",
+
+
+
+
+  "register": "إنشاء حساب",
   "register_sm": "تسجيل",
   "register_dt": "قم بالتسجيل كحارس بوابة عن طريق ملء النموذج أدناه",
+
+
   "email": "البريد الإلكترونى",
   "password": "كلمة المرور",
   "name": "الاسم",
   "address": "العنوان",
   "city": "المدينة",
+
+
   "search": "بحث",
+  "changeLanguage": "تغيير اللغة",
+
   "dashboard": "الصفحة الرئيسية",
   "welcomeBack": "مرحبًا بعودتك",
   "hello": "مرحبًا",
   "settings": "الإعدادات",
-  "changeLanguage": "تغيير اللغة",
   "events": "المناسبات الخاصة بي",
   "profile": "حسابى",
   "events_calendar": "تقويم المناسبات",
   "scan_history": "تقرير المسح",
+
+
   "confirm": "تأكيد",
-  "serve_in_event_dialog_body": "هل أنت متأكد أنك تريد حجز هذه المناسبة؟",
   "yes": "نعم",
   "no": "لا",
+
+  
+  "serve_in_event_dialog_body": "هل أنت متأكد أنك تريد حجز هذه المناسبة؟",
+
   "scanned": "عدد من حضروا",
   "allocated": "مجموع الضيوف",
   "pending": "قيد الإنتظار",
@@ -160,7 +176,7 @@
   "contact": "بيانات التواصل",
   "attendance_info": "بيانات الحضور",
   "show_message_status": "بيانات الرسائل",
-  "cancel": "إلغاء",
+  "cancel": "تراجع",
   "message_status": "بيانات الرسائل",
   "inv_status": "حالة رسالة التاكيد",
   "qr_status": "حالة الدعوة",
@@ -293,9 +309,9 @@
   "clear": "مسح",
   "see_details": "رؤية التفاصيل",
   "notification_title": "تذكير بالمناسبة",
-  "event_five_days_reminder": "حدث {} سيبدأ خلال 5 أيام",
-  "event_two_days_reminder": "حدث {} سيبدأ خلال يومين",
-  "event_today_reminder": "حدثك {} اليوم",
+  "event_five_days_reminder": "تذكير {} سيبدأ خلال 5 أيام",
+  "event_two_days_reminder": "تذكير {} سيبدأ خلال يومين",
+  "event_today_reminder": "تذكير {} اليوم",
   "no_available_details": "لا يوجد تفاصيل متاحة",
   "already_reserved_an_event": "لقد قمت بحجز مناسبة بالفعل في نفس اليوم",
   "already_checked_in": "لقد قمت بتسجيل الدخول إلى هذا الحدث بالفعل",
@@ -315,6 +331,11 @@
   "event_is_not_assigned_to_you": "هذه المناسبة ليست مخصصة لك",
   "event_is_not_yet_started": "هذه المناسبة لم تبدء بعد",
   "assign_one_event_only_in_the_same_day": "لقد قمت بحجز مناسبة بالفعل في نفس اليوم.",
+  "delete_gatekeeper_event_title": "حذف المناسبة",
+  "delete_gatekeeper_event_message": "هل أنت متأكد أنك تريد حذف هذه المناسبة \"{} \" ؟",
+  "delete_event_successfully": "تم حذف المناسبة بنجاح",
+  "delete_event_failed": "فشل في حذف المناسبة. حاول مرة اخرى",
+  "delete": "حذف",
   "continue": "استمرار"
 }
 

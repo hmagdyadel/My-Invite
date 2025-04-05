@@ -36,7 +36,8 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
       final cubit = context.read<GatekeeperEventsCubit>();
       if (cubit.hasMoreEvents) {
         cubit.getGatekeeperEvents(isNextPage: true);
@@ -53,7 +54,11 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
         "events".tr(),
       ),
       body: BlocBuilder<GatekeeperEventsCubit, ScanHistoryStates>(
-        buildWhen: (previous, current) => current is EmptyInputScanHistory || current is LoadingScanHistory || current is SuccessScanHistory || current is ErrorScanHistory,
+        buildWhen: (previous, current) =>
+            current is EmptyInputScanHistory ||
+            current is LoadingScanHistory ||
+            current is SuccessScanHistory ||
+            current is ErrorScanHistory,
         bloc: context.read<GatekeeperEventsCubit>()..getGatekeeperEvents(),
         builder: (context, current) {
           return current.when(
@@ -63,8 +68,10 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
             emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
             error: (error) => _buildCenteredMessage(error),
             loading: () => const Center(child: Loader(color: whiteTextColor)),
-            loadingCheckOut: () => const Center(child: Loader(color: whiteTextColor)),
-            loadingCheckIn: () => const Center(child: Loader(color: whiteTextColor)),
+            loadingCheckOut: () =>
+                const Center(child: Loader(color: whiteTextColor)),
+            loadingCheckIn: () =>
+                const Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
@@ -93,7 +100,8 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                                 context: context,
                                 builder: (BuildContext dialogContext) {
                                   return BlocProvider.value(
-                                    value: context.read<GatekeeperEventsCubit>(),
+                                    value:
+                                        context.read<GatekeeperEventsCubit>(),
                                     child: EventCheckDialogBox(
                                       event: events[index],
                                     ),
@@ -108,6 +116,9 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                 ],
               );
             },
+            loadingDeleteEvent: () => const SizedBox.shrink(),
+            successDeleteEvent: (success) => const SizedBox.shrink(),
+            errorDeleteEvent: (error) => const SizedBox.shrink(),
           );
         },
       ),

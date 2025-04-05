@@ -16,6 +16,7 @@ class ApiConstants {
   static const String scanEndpoint = 'scan';
   static const String scanHistoryEndpoint = 'scanhistory';
   static const String checkinEndpoint = 'events/checkin';
+  static const String deleteEventEndpoint = 'events/UnassignFromEvent';
   static const String checkoutEndpoint = 'events/checkout';
   static const String locationsEndpoint = 'Events/Locations';
   static const String countriesEndpoint = 'Events/GetCountries';

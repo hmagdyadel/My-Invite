@@ -91,6 +91,12 @@ abstract class ApiService {
     @Body() FormData formData,
   );
 
+  @GET(ApiConstants.deleteEventEndpoint)
+  Future<String> deleteEvent(
+      @Header('Authorization') String token,
+      @Query('eventId') String eventId,
+      );
+
   @GET(ApiConstants.calendarEventsEndpoint)
   Future<List<CalenderEventsResponse>> getEventsCalendar(
     @Header('Authorization') String token,

@@ -8,7 +8,6 @@ import 'core/dimensions/dimensions.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 import 'core/services/navigation_service.dart';
-//import 'core/widgets/no_internet_widget.dart';
 
 class MyInvite extends StatelessWidget {
   const MyInvite({super.key});
