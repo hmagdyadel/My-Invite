@@ -68,7 +68,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required String newTopic,
   }) async {
     // Subscribe to general topic
-    await msg.subscribeToTopic("all");
+    await msg.subscribeToTopic(newTopic);
     debugPrint("Subscribed to topic: all ✅");
 
     // If already subscribed to the correct topic, do nothing
@@ -79,7 +79,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
     // Unsubscribe from old topic if it exists
     if (currentTopic.isNotEmpty) {
-      await msg.unsubscribeFromTopic(currentTopic);
+      await msg.unsubscribeFromTopic(newTopic);
       debugPrint("Unsubscribed from previous topic: $currentTopic ❌");
     }
 
