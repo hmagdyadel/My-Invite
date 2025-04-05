@@ -30,13 +30,13 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>My Invite needs to access camera to scan QR codes and take your picture for confirm attendance</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>My Invite needs to access the location to get your location for confirm attendance</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>My Invite needs to access your location to confirm attendance and provide location-based features.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>My Invite needs microphone access to verify attendance with audio</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>My Invite needs to access the location to get your location for confirm attendance</string>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
