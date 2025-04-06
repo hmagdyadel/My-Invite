@@ -338,6 +338,8 @@
   "assign_one_event_only_in_the_same_day": "You can only assign one event in the same day",
   "delete_gatekeeper_event_title": "Delete Event",
   "delete_gatekeeper_event_message": "Are you sure you want to delete this event \" {} \" ?",
+  "delete_event_successfully": "Event deleted successfully",
+  "delete_event_failed": "Failed to delete event. Please try again",
   "delete": "Delete",
   "continue": "Continue"
 }
