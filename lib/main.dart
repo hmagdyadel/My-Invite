@@ -81,6 +81,16 @@ class MyAppWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get device language code (e.g., 'en', 'ar', 'fr')
+    String deviceLanguage = Platform.localeName.split('_')[0];
+    // Check if device language is supported, default to 'en' if not
+    debugPrint('deviceLanguage: $deviceLanguage');
+    Locale initialLocale = const Locale('ar');
+    if (deviceLanguage == 'ar' || deviceLanguage == 'en') {
+      debugPrint('deviceLanguage: $deviceLanguage');
+      initialLocale = Locale(deviceLanguage);
+    }
+    debugPrint("initialLocale : $initialLocale");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -90,9 +100,9 @@ class MyAppWrapper extends StatelessWidget {
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],
         saveLocale: true,
-        startLocale: Locale(Platform.localeName.split('_')[0]),
+        startLocale: initialLocale,
         path: 'assets/translations',
-        fallbackLocale: Locale(Platform.localeName.split('_')[0]),
+        fallbackLocale: Locale('ar'),
         child: const MyInvite(),
       ),
     );

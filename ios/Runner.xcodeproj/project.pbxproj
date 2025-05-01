@@ -507,8 +507,9 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 3GB6P37624;
 				ENABLE_BITCODE = NO;
+				FLUTTER_BUILD_NAME = 2.0.1;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "My Invite Test";
+				INFOPLIST_KEY_CFBundleDisplayName = "My Invite";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -700,8 +701,9 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 3GB6P37624;
 				ENABLE_BITCODE = NO;
+				FLUTTER_BUILD_NAME = 2.0.1;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "My Invite Test";
+				INFOPLIST_KEY_CFBundleDisplayName = "My Invite";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -733,8 +735,9 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 3GB6P37624;
 				ENABLE_BITCODE = NO;
+				FLUTTER_BUILD_NAME = 2.0.1;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "My Invite Test";
+				INFOPLIST_KEY_CFBundleDisplayName = "My Invite";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
