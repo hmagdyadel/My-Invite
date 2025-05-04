@@ -11,6 +11,8 @@ import 'core/di/dependency_injection.dart';
 import 'core/services/new_notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
 import 'my_invite.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -65,6 +67,9 @@ Future<void> main() async {
   tz.initializeTimeZones();
   setupGetIt();
 
+  final info = await PackageInfo.fromPlatform();
+  print('App name: ${info.appName}');
+  print('Package name: ${info.packageName}');
   runApp(const MyAppWrapper());
 }
 
