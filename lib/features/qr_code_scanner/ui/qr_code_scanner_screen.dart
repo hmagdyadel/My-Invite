@@ -54,22 +54,25 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
     // Use BlocProvider.of instead of context.read to safely access cubit
     final cubit = BlocProvider.of<QrCodeScannerCubit>(context, listen: false);
 
-    return Scaffold(
-      backgroundColor: bgColor,
-      body: cubit.stopScan
-          ? Container(color: Colors.black)
-          : BlocBuilder<QrCodeScannerCubit, QrCodeScannerStates>(
-              buildWhen: (previous, current) => previous != current,
-              builder: (context, current) {
-                return current.when(
-                  initial: () => _scannerView(context, cubit),
-                  loading: () => _scannerView(context, cubit),
-                  emptyInput: () => const SizedBox.shrink(),
-                  success: (response) => _handleSuccess(context, response),
-                  error: (error) => _handleError(context, error),
-                );
-              },
-            ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: bgColor,
+        body: cubit.stopScan
+            ? Container(color: Colors.black)
+            : BlocBuilder<QrCodeScannerCubit, QrCodeScannerStates>(
+                buildWhen: (previous, current) => previous != current,
+                builder: (context, current) {
+                  return current.when(
+                    initial: () => _scannerView(context, cubit),
+                    loading: () => _scannerView(context, cubit),
+                    emptyInput: () => const SizedBox.shrink(),
+                    success: (response) => _handleSuccess(context, response),
+                    error: (error) => _handleError(context, error),
+                  );
+                },
+              ),
+      ),
     );
   }
 
@@ -83,9 +86,9 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         MobileScanner(
           controller: _scannerController,
           onDetect: (capture) async {
-            if (_isDisposed || cubit.stopScan)
+            if (_isDisposed || cubit.stopScan){
               return; // Skip if already scanning or disposed
-
+          }
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
@@ -136,6 +139,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
           // if (!mounted || _isDisposed) return;
           try {
             context.read<QrCodeScannerCubit>().reloadPage();
+            _scannerController?.start();
           } catch (e) {
             debugPrint('Error reloading page: $e');
           }
@@ -181,6 +185,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
           if (!mounted || _isDisposed) return;
           try {
             context.read<QrCodeScannerCubit>().reloadPage();
+            _scannerController?.start();
           } catch (e) {
             debugPrint('Error reloading page: $e');
           }

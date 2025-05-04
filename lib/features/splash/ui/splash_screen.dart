@@ -22,54 +22,45 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initialization() async {
     try {
-      // Initialize app utilities
+      debugPrint("Starting initialization...");
       await AppUtilities().initialize();
+      debugPrint("AppUtilities initialized");
 
-      // Remove native splash screen
       FlutterNativeSplash.remove();
+      debugPrint("Splash removed");
 
-      if (!mounted) return;
+      if (!mounted) {
+        debugPrint("Widget not mounted");
+        return;
+      }
 
-      // Get expiration date from login data
       final expirationStr = AppUtilities().loginData.expiration;
+      debugPrint("Expiration string: $expirationStr");
 
-      // Determine which screen to navigate to
       String nextRoute;
-
       if (expirationStr == null) {
-        // If no expiration date exists, go to onboarding
         nextRoute = Routes.onBoardingScreen;
+        debugPrint("No expiration, going to onboarding");
       } else {
         try {
           final expirationDate = DateTime.parse(expirationStr).subtract(const Duration(hours: 10));
           final now = DateTime.now();
-
-          // If expiration date is in the future, go to home
-          // If expired or in the past, go to onboarding
-          nextRoute = expirationDate.isAfter(now)
-              ? Routes.homeScreen
-              : Routes.onBoardingScreen;
-
-          debugPrint('Expiration date: $expirationDate');
-          debugPrint('Current date: $now');
-          debugPrint('Navigating to: $nextRoute');
+          nextRoute = expirationDate.isAfter(now) ? Routes.homeScreen : Routes.onBoardingScreen;
+          debugPrint("Expiration: $expirationDate, Now: $now, Route: $nextRoute");
         } catch (e) {
-          debugPrint('Error parsing expiration date: $e');
-          // If there's an error parsing the date, default to onboarding
+          debugPrint("Date parsing error: $e");
           nextRoute = Routes.onBoardingScreen;
         }
       }
 
-      // Navigate to the determined route
+      debugPrint("Navigating to $nextRoute");
       if (mounted) {
         context.pushNamedAndRemoveUntil(nextRoute, predicate: false);
       }
     } catch (e) {
-      debugPrint('Error during initialization: $e');
-      // In case of any error, default to onboarding
+      debugPrint("Initialization error: $e");
       if (mounted) {
-        context.pushNamedAndRemoveUntil(Routes.onBoardingScreen,
-            predicate: false);
+        context.pushNamedAndRemoveUntil(Routes.onBoardingScreen, predicate: false);
       }
     }
   }

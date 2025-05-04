@@ -61,6 +61,9 @@ class _EventHistoryDetailsScreenState extends State<EventHistoryDetailsScreen> {
             initial: () => const SizedBox.shrink(),
             errorCheck: (error) => const SizedBox.shrink(),
             successCheck: (success) => const SizedBox.shrink(),
+            loadingDeleteEvent: () => const SizedBox.shrink(),
+            successDeleteEvent: (success) => const SizedBox.shrink(),
+            errorDeleteEvent: (error) => const SizedBox.shrink(),
             loadingCheckOut: () => Center(child: Loader(color: whiteTextColor)),
             loadingCheckIn: () =>
                 const Center(child: Loader(color: whiteTextColor)),

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,8 +45,17 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await Firebase.initializeApp();
-  String? fcmToken = await FirebaseMessaging.instance.getToken();
-  debugPrint("FCM Token: $fcmToken");
+
+  // try {
+  //   String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+  //   debugPrint("APNs Token: $apnsToken");
+  //   String? fcmToken = await FirebaseMessaging.instance.getToken();
+  //
+  //   debugPrint("FCM Token: $fcmToken");
+  // } catch (e) {
+  //   debugPrint("Error getting APNs token: $e");
+  // }
+
   if (Platform.isIOS) {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
@@ -56,10 +64,10 @@ Future<void> main() async {
       sound: true,
     );
   }
-  if (kDebugMode) {
-    FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
-    debugPrint("Firebase Messaging initialized in debug mode");
-  }
+  // if (kDebugMode) {
+  //   FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
+  //   debugPrint("Firebase Messaging initialized in debug mode");
+  // }
   await EasyLocalization.ensureInitialized();
 
   // Add this to your app initialization
@@ -78,6 +86,16 @@ class MyAppWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get device language code (e.g., 'en', 'ar', 'fr')
+    String deviceLanguage = Platform.localeName.split('_')[0];
+    // Check if device language is supported, default to 'en' if not
+    debugPrint('deviceLanguage: $deviceLanguage');
+    Locale initialLocale = const Locale('ar');
+    if (deviceLanguage == 'ar' || deviceLanguage == 'en') {
+      debugPrint('deviceLanguage: $deviceLanguage');
+      initialLocale = Locale(deviceLanguage);
+    }
+    debugPrint("initialLocale : $initialLocale");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -87,9 +105,9 @@ class MyAppWrapper extends StatelessWidget {
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],
         saveLocale: true,
-        startLocale: Locale(Platform.localeName.split('_')[0]),
+        startLocale: initialLocale,
         path: 'assets/translations',
-        fallbackLocale: Locale(Platform.localeName.split('_')[0]),
+        fallbackLocale: Locale('ar'),
         child: const MyInvite(),
       ),
     );

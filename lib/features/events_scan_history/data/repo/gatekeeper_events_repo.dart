@@ -66,6 +66,28 @@ class GatekeeperEventsRepo {
     }
   }
 
+  Future<ApiResult<String>> deleteEvent(String eventId) async {
+    try {
+      log(AppUtilities().serverToken);
+      var response = await _apiService.deleteEvent(
+        AppUtilities().serverToken,
+        eventId,
+      );
+      return ApiResult.success(response);
+    } on DioException catch (dioError) {
+      if (dioError.response != null && dioError.response?.data != null && dioError.response!.data.toString().contains("This gatekeeper didn't check IN yet to this event")) {
+        debugPrint('Invalid response: ${dioError.response!.data}');
+        return ApiResult.failure("not_yet_checked");
+      }
+      debugPrint(' response: ${dioError.response!.data}');
+
+      return ApiResult.failure("some_error".tr());
+    } catch (error) {
+      debugPrint(' some error: ${error.toString()}');
+      return ApiResult.failure(error.toString());
+    }
+  }
+
   Future<ApiResult<String>> eventCheckIn(
     String eventId,
     Position position,

@@ -1,30 +1,47 @@
 {
   "loginOrRegister": "Login or Register to Continue",
+
+
   "login": "Login To Account",
-  "register": "Create An Account",
   "login_sm": "Login",
   "login_dt": "Login using email and password to continue with app",
+
+
+
+
+  "register": "Create An Account",
   "register_sm": "Register",
   "register_dt": "Register as gatekeeper by filling in the below form",
+
+
   "email": "Email",
   "password": "Password",
   "name": "Name",
   "address": "Address",
   "city": "City",
+
+
   "search": "Search",
+  "changeLanguage": "Change Language",
+
+
   "dashboard": "Dashboard",
   "welcomeBack": "Welcome Back",
   "settings": "Settings",
-  "changeLanguage": "Change Language",
   "hello": "Hello",
   "events": "My Events",
   "profile": "Profile",
   "events_calendar": "Events Calendar",
   "scan_history": "Scan History",
+
+
   "confirm": "Confirm",
-  "serve_in_event_dialog_body": "Are you sure you want to reserve this event?",
   "yes": "Yes",
   "no": "No",
+
+
+  "serve_in_event_dialog_body": "Are you sure you want to reserve this event?",
+
   "scanned": "Scanned",
   "allocated": "Allocated",
   "pending": "Pending",
@@ -319,5 +336,10 @@
   "event_is_not_assigned_to_you": "This event is not assigned to you",
   "event_is_not_yet_started": "This event is not yet started",
   "assign_one_event_only_in_the_same_day": "You can only assign one event in the same day",
+  "delete_gatekeeper_event_title": "Delete Event",
+  "delete_gatekeeper_event_message": "Are you sure you want to delete this event \" {} \" ?",
+  "delete_event_successfully": "Event deleted successfully",
+  "delete_event_failed": "Failed to delete event. Please try again",
+  "delete": "Delete",
   "continue": "Continue"
 }

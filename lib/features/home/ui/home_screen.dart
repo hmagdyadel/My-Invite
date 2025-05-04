@@ -1,10 +1,11 @@
 import 'package:app/core/helpers/app_utilities.dart';
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
-import 'package:app/core/services/new_notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/services/new_notification_service.dart';
 import '../logic/home_cubit.dart';
 import '../logic/home_states.dart';
 import 'widgets/dashboard_screen.dart';
@@ -30,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) => setFirebase());
   }
+
 
   void setFirebase() async {
     try {
@@ -45,9 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('User granted permission');
 
-        // Get the token and handle refreshes
-        String? token = await FirebaseMessaging.instance.getToken();
-        debugPrint("FCM Token: $token");
+        try {
+          // Get the token and handle refreshes
+          String? token = await FirebaseMessaging.instance.getToken();
+          debugPrint("FCM Token: $token");
+        } catch (e) {
+          debugPrint("Error getting APNs token: $e");
+        }
+
 
         // Save token to your backend here
         // sendTokenToBackend(token);
@@ -67,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         debugPrint("Data: ${message.data}");
         debugPrint("Foreground message received: ${message.notification?.title}");
 
-        if (!mounted) return;
+
 
         final notification = message.notification;
         if (notification != null) {
@@ -96,12 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     } catch (e) {
       debugPrint("FCM setup error: $e");
-      if (mounted) {
-        context.showErrorToast('Failed to set up notifications. Please try again.');
-      }
+
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeStates>(

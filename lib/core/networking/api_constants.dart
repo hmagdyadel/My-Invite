@@ -1,9 +1,9 @@
 class ApiConstants {
 
 
-  //static const String apiBaseUrl = "https://api.myinvite.me/";
+  static const String apiBaseUrl = "https://api.myinvite.me/";
 
-  static const String apiBaseUrl = "https://api-uat.myinvite.me/";
+  //static const String apiBaseUrl = "https://api-uat.myinvite.me/";
 
   static const String registerEndpoint = 'auth/register';
   static const String loginEndpoint = 'auth';
@@ -16,6 +16,7 @@ class ApiConstants {
   static const String scanEndpoint = 'scan';
   static const String scanHistoryEndpoint = 'scanhistory';
   static const String checkinEndpoint = 'events/checkin';
+  static const String deleteEventEndpoint = 'events/UnassignFromEvent';
   static const String checkoutEndpoint = 'events/checkout';
   static const String locationsEndpoint = 'Events/Locations';
   static const String countriesEndpoint = 'Events/GetCountries';
