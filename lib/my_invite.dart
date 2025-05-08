@@ -23,7 +23,7 @@ class MyInvite extends StatelessWidget {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) {
           final NavigatorState navigator =
-              NavigationService.navigatorKey.currentState!;
+          NavigationService.navigatorKey.currentState!;
           if (navigator.canPop()) {
             navigator.pop(result);
           } else {
@@ -41,66 +41,66 @@ class MyInvite extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           navigatorKey: NavigationService.navigatorKey,
-            builder: (context, widget) {
-              return FutureBuilder<bool>(
-                future: InternetConnectionChecker.instance.hasConnection,
-                builder: (context, initialSnapshot) {
-                  // If we're still checking the initial connection, show the regular app
-                  if (!initialSnapshot.hasData) {
+          builder: (context, widget) {
+            return FutureBuilder<bool>(
+              future: InternetConnectionChecker.instance.hasConnection,
+              builder: (context, initialSnapshot) {
+                // If we're still checking the initial connection, show the regular app
+                if (!initialSnapshot.hasData) {
+                  return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaler: TextScaler.noScaling,
+                    ),
+                    child: widget!,
+                  );
+                }
+
+                return StreamBuilder<InternetConnectionStatus>(
+                  stream: InternetConnectionChecker.instance.onStatusChange,
+                  initialData: initialSnapshot.data == true ? InternetConnectionStatus.connected : InternetConnectionStatus.disconnected,
+                  builder: (context, snapshot) {
+                    final isConnected = snapshot.data == InternetConnectionStatus.connected;
+
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(
                         textScaler: TextScaler.noScaling,
                       ),
-                      child: widget!,
-                    );
-                  }
-
-                  return StreamBuilder<InternetConnectionStatus>(
-                    stream: InternetConnectionChecker.instance.onStatusChange,
-                    initialData: initialSnapshot.data == true ? InternetConnectionStatus.connected : InternetConnectionStatus.disconnected,
-                    builder: (context, snapshot) {
-                      final isConnected = snapshot.data == InternetConnectionStatus.connected;
-
-                      return MediaQuery(
-                        data: MediaQuery.of(context).copyWith(
-                          textScaler: TextScaler.noScaling,
-                        ),
-                        child: Scaffold(
-                          // backgroundColor: Colors.yellow,
-                          body: Column(
-                            children: [
-                              if (!isConnected)
-                                Container(
-                                  //  padding: EdgeInsets.only(top: edge * 2.4, bottom: edge * 0.5),
-                                  decoration: BoxDecoration(
-                                    color: errorColor.withAlpha(180),
-                                    //borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  width: width.w,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(height:  edge * 2.4),
-                                      SubTitleText(
-                                        text: 'no_internet'.tr(),
-                                        align: TextAlign.center,
-                                        fontSize: 14,
-                                        color: whiteSmokeColor,
-                                      ),
-                                      SizedBox(height:  edge * 0.5),
-
-                                    ],
-                                  ),
+                      child: Scaffold(
+                        // backgroundColor: Colors.yellow,
+                        body: Column(
+                          children: [
+                            if (!isConnected)
+                              Container(
+                                //  padding: EdgeInsets.only(top: edge * 2.4, bottom: edge * 0.5),
+                                decoration: BoxDecoration(
+                                  color: errorColor.withAlpha(180),
+                                  //borderRadius: BorderRadius.circular(50),
                                 ),
-                              Expanded(child: widget!),
-                            ],
-                          ),
+                                width: width.w,
+                                child: Column(
+                                  children: [
+                                    SizedBox(height:  edge * 2.4),
+                                    SubTitleText(
+                                      text: 'no_internet'.tr(),
+                                      align: TextAlign.center,
+                                      fontSize: 14,
+                                      color: whiteSmokeColor,
+                                    ),
+                                    SizedBox(height:  edge * 0.5),
+
+                                  ],
+                                ),
+                              ),
+                            Expanded(child: widget!),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
         ),
       ),
     );
