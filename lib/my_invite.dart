@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/core/helpers/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +81,7 @@ class MyInvite extends StatelessWidget {
                                 width: width.w,
                                 child: Column(
                                   children: [
-                                    SizedBox(height:  edge * 2.4),
+                                 Platform.isIOS?SizedBox(height:  edge * 2.6):   SizedBox(height:  edge * 2.4),
                                     SubTitleText(
                                       text: 'no_internet'.tr(),
                                       align: TextAlign.center,
