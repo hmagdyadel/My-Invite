@@ -36,10 +36,19 @@ String getDateInWords(String date) {
 }
 
 String getDateAndTime(String date) {
-
   try {
-    var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-    DateTime dt = inputDateFormat.parse(date, true).toLocal();
+    // Handle the ISO format including milliseconds
+    DateTime dt;
+
+    // Check if the date string contains milliseconds
+    if (date.contains('.')) {
+      // Parse with milliseconds
+      dt = DateTime.parse(date).toLocal();
+    } else {
+      // Parse without milliseconds
+      var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+      dt = inputDateFormat.parse(date, true).toLocal();
+    }
 
     // List of month names
     List<String> months = [
@@ -58,8 +67,9 @@ String getDateAndTime(String date) {
 
     return '${months[dt.month - 1]} ${dt.day}, ${dt.year} at $hour:$minutes $period';
   } catch (e) {
-    // Fallback in case of parsing errors
-    return 'Invalid date format';
+    // Return error message or empty string
+    debugPrint('Error parsing date: $e');
+    return '';
   }
 }
 
