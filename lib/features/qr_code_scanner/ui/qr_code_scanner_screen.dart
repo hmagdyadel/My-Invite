@@ -23,6 +23,8 @@ class QrCodeScannerScreen extends StatefulWidget {
 class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
   MobileScannerController? _scannerController;
   bool _isDisposed = false;
+  bool _isProcessing = false;
+
 
   @override
   void initState() {
@@ -86,9 +88,10 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         MobileScanner(
           controller: _scannerController,
           onDetect: (capture) async {
-            if (_isDisposed || cubit.stopScan){
+            if (_isDisposed || cubit.stopScan|| _isProcessing){
               return; // Skip if already scanning or disposed
           }
+            _isProcessing = true;
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
@@ -96,6 +99,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
                   cubit.isValidBase64(barcode.rawValue!)) {
                 debugPrint('Barcode found! ${barcode.rawValue}');
                 await cubit.scanQrCode(barcode.rawValue!);
+                break; // stop after first valid scan
               } else {
                 debugPrint('Not valid barcode ${barcode.rawValue}');
               }
@@ -140,6 +144,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
           try {
             context.read<QrCodeScannerCubit>().reloadPage();
             _scannerController?.start();
+            _isProcessing = false; // Then reset _isProcessing after dialog close
           } catch (e) {
             debugPrint('Error reloading page: $e');
           }

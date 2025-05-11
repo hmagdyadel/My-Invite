@@ -36,10 +36,31 @@ String getDateInWords(String date) {
 }
 
 String getDateAndTime(String date) {
-  var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-  DateTime dt = inputDateFormat.parse(date, true).toLocal();
 
-  return '${months[dt.month - 1]} ${dt.day}, ${dt.year} at ${dt.hour}:${dt.minute}';
+  try {
+    var inputDateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    DateTime dt = inputDateFormat.parse(date, true).toLocal();
+
+    // List of month names
+    List<String> months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    // Format minutes with leading zero if needed
+    String minutes = dt.minute.toString().padLeft(2, '0');
+
+    // Format hours (ensure 12-hour format with AM/PM)
+    int hour = dt.hour;
+    String period = hour >= 12 ? "PM" : "AM";
+    hour = hour > 12 ? hour - 12 : hour;
+    hour = hour == 0 ? 12 : hour; // Convert 0 to 12 for 12 AM
+
+    return '${months[dt.month - 1]} ${dt.day}, ${dt.year} at $hour:$minutes $period';
+  } catch (e) {
+    // Fallback in case of parsing errors
+    return 'Invalid date format';
+  }
 }
 
 DateTime getDateTimeFromString(String dateString) {
