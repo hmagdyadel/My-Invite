@@ -25,7 +25,7 @@ class MyInvite extends StatelessWidget {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) {
           final NavigatorState navigator =
-          NavigationService.navigatorKey.currentState!;
+              NavigationService.navigatorKey.currentState!;
           if (navigator.canPop()) {
             navigator.pop(result);
           } else {
@@ -59,9 +59,12 @@ class MyInvite extends StatelessWidget {
 
                 return StreamBuilder<InternetConnectionStatus>(
                   stream: InternetConnectionChecker.instance.onStatusChange,
-                  initialData: initialSnapshot.data == true ? InternetConnectionStatus.connected : InternetConnectionStatus.disconnected,
+                  initialData: initialSnapshot.data == true
+                      ? InternetConnectionStatus.connected
+                      : InternetConnectionStatus.disconnected,
                   builder: (context, snapshot) {
-                    final isConnected = snapshot.data == InternetConnectionStatus.connected;
+                    final isConnected =
+                        snapshot.data == InternetConnectionStatus.connected;
 
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(
@@ -81,15 +84,16 @@ class MyInvite extends StatelessWidget {
                                 width: width.w,
                                 child: Column(
                                   children: [
-                                 Platform.isIOS?SizedBox(height:  edge * 2.6):   SizedBox(height:  edge * 2.4),
+                                    Platform.isIOS
+                                        ? SizedBox(height: edge * 2.6)
+                                        : SizedBox(height: edge * 2.4),
                                     SubTitleText(
                                       text: 'no_internet'.tr(),
                                       align: TextAlign.center,
                                       fontSize: 14,
                                       color: whiteSmokeColor,
                                     ),
-                                    SizedBox(height:  edge * 0.5),
-
+                                    SizedBox(height: edge * 0.5),
                                   ],
                                 ),
                               ),
