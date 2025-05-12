@@ -10,6 +10,7 @@ import 'package:app/core/helpers/extensions.dart';
 import '../../../core/dimensions/dimensions.dart';
 import '../../../core/services/audio_service.dart';
 import '../../../core/theming/colors.dart';
+import '../../../core/widgets/loader.dart';
 import '../data/models/scan_response.dart';
 import '../logic/qr_code_scanner_states.dart';
 
@@ -23,7 +24,7 @@ class QrCodeScannerScreen extends StatefulWidget {
 class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
   MobileScannerController? _scannerController;
   bool _isDisposed = false;
-  bool _isProcessing = false;
+  // bool _isProcessing = false;
 
 
   @override
@@ -63,17 +64,17 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         body: cubit.stopScan
             ? Container(color: Colors.black)
             : BlocBuilder<QrCodeScannerCubit, QrCodeScannerStates>(
-                buildWhen: (previous, current) => previous != current,
-                builder: (context, current) {
-                  return current.when(
-                    initial: () => _scannerView(context, cubit),
-                    loading: () => _scannerView(context, cubit),
-                    emptyInput: () => const SizedBox.shrink(),
-                    success: (response) => _handleSuccess(context, response),
-                    error: (error) => _handleError(context, error),
-                  );
-                },
-              ),
+          buildWhen: (previous, current) => previous != current,
+          builder: (context, current) {
+            return current.when(
+              initial: () => _scannerView(context, cubit),
+              loading: () =>  Center(child: Loader(color: whiteTextColor)),
+              emptyInput: () => const SizedBox.shrink(),
+              success: (response) => _handleSuccess(context, response),
+              error: (error) => _handleError(context, error),
+            );
+          },
+        ),
       ),
     );
   }
@@ -88,10 +89,10 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         MobileScanner(
           controller: _scannerController,
           onDetect: (capture) async {
-            if (_isDisposed || cubit.stopScan|| _isProcessing){
+            if (_isDisposed || cubit.stopScan){
               return; // Skip if already scanning or disposed
-          }
-            _isProcessing = true;
+            }
+            // _isProcessing = true;
             cubit.scanStartTime = DateTime.now().toString();
             final List<Barcode> barcodes = capture.barcodes;
             for (final barcode in barcodes) {
@@ -144,7 +145,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
           try {
             context.read<QrCodeScannerCubit>().reloadPage();
             _scannerController?.start();
-            _isProcessing = false; // Then reset _isProcessing after dialog close
+            //  _isProcessing = false; // Then reset _isProcessing after dialog close
           } catch (e) {
             debugPrint('Error reloading page: $e');
           }
@@ -178,12 +179,12 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         message: error.contains("Scanned 1 of 1")
             ? "scanned_before".tr()
             : error.contains("Event is out dated")
-                ? "event_outdated".tr()
-                : error.contains("Event is not assigned to you")
-                    ? "event_is_not_assigned_to_you".tr()
-                    : error.contains("Event is not yet started")
-                        ? "event_is_not_yet_started".tr()
-                        : error,
+            ? "event_outdated".tr()
+            : error.contains("Event is not assigned to you")
+            ? "event_is_not_assigned_to_you".tr()
+            : error.contains("Event is not yet started")
+            ? "event_is_not_yet_started".tr()
+            : error,
         correct: false,
         color: Colors.grey.shade200,
         onClose: () {
@@ -216,7 +217,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
         foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
         padding:
-            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
+        WidgetStateProperty.all<EdgeInsets>(EdgeInsets.all(edge * 0.7)),
         minimumSize: WidgetStateProperty.all<Size>(const Size(110, 40)),
       ),
       onPressed: () {
@@ -241,15 +242,15 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
         children: [
           correct
               ? const Icon(
-                  Icons.check_circle,
-                  color: primaryColor,
-                  size: 60,
-                )
+            Icons.check_circle,
+            color: primaryColor,
+            size: 60,
+          )
               : const Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                  size: 60,
-                ),
+            Icons.cancel,
+            color: Colors.red,
+            size: 60,
+          ),
           const SizedBox(
             height: 12,
           ),

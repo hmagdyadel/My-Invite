@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/theming/colors.dart';
+import '../../../../core/widgets/loader.dart';
 import '../../../../core/widgets/normal_text.dart';
 import '../../../../core/widgets/subtitle_text.dart';
 import '../../data/models/profile_response.dart';
@@ -28,12 +29,7 @@ class ProfileScreen extends StatelessWidget {
             error: (error) => _buildErrorState(context, error),
             emptyInput: () => _buildEmptyState(context),
             initial: () => const SizedBox.shrink(),
-            loading: () => const Center(
-              child: CupertinoActivityIndicator(
-                color: Colors.white,
-                radius: 30,
-              ),
-            ),
+            loading: () => const Center(child: Loader(color: whiteTextColor)),
             success: (response) => _buildSuccessState(response),
           );
         },
@@ -41,25 +37,14 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-
-
   Widget _buildErrorState(BuildContext context, String error) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          NormalText(
-            text: '${"unexpected_error".tr()}:',
-            color: Colors.redAccent,
-          ),
-          ElevatedButton(
-            onPressed: () {
-             // context.read<HomeCubit>().getProfileData();
-            },
-            child: NormalText(
-              text: 'Retry'.tr(),
-              color: Colors.white,
-            ),
+          SubTitleText(
+            text: error.contains("Failed host lookup") ? "no_internet".tr() : "unexpected_error".tr(),
+            color: Colors.white,
           ),
         ],
       ),
@@ -141,7 +126,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-
   Widget _infoRow(String label, String? value, {bool showDivider = true}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,11 +149,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-
   String _getDateInWords(String date) {
-    List<String> months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+    List<String> months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     DateTime dt = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(date, true).toLocal();
     return '${months[dt.month - 1]} ${dt.day}, ${dt.year}';
   }

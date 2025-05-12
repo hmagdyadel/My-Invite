@@ -59,7 +59,11 @@ class EventCalenderScreen extends StatelessWidget {
             },
             error: (error) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.showErrorToast(error);
+                if (error.contains("Failed host lookup")) {
+                  context.showErrorToast("no_internet".tr());
+                }else{
+                  context.showErrorToast(error);
+                }
               });
               return initialCalender(context);
             },
