@@ -291,7 +291,7 @@
   "event_instructions_end": "Sincerely,\nMyInvite Management",
   "scan_error_max_limit": "Maximum scan limit exceeded",
   "scan_error_scanned_before": "You have already scanned this code",
-  "scan_failed": "Scan Failed",
+  "scan_failed": "Scan QR Code Failed",
   "logout": "Logout",
   "no_available_events": "No available events",
   "event_not_attended": "This event has not been attended yet",

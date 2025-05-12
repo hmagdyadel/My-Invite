@@ -289,7 +289,7 @@
   "event_instructions_end": "تـحــياتـنـا\nإدارة ماي انڤايت",
   "scan_error_max_limit": "تم تجاوز الحد الأقصى لعدد المسحات",
   "scan_error_scanned_before": "لقد قمت بمسح هذه الدعوة من قبل",
-  "scan_failed": "فشل في مسح الباركود",
+  "scan_failed": "فشل في مسح الدعوة",
   "logout": "تسجيل الخروج",
   "no_available_events": "لا توجد مناسبات متاحة للحجز",
   "event_not_attended": "لم يتم حضور هذه المناسبة حتى الآن",
