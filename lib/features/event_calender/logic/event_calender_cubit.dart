@@ -38,7 +38,14 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
           focusedDay: DateTime.now(),
         ));
       },
-      failure: (error) => emit(EventCalenderStates.error(message: error.toString())),
+      failure: (error) {
+        if(error=="location_is_not_set_correctly"){
+          emit(EventCalenderStates.error(message: "location_is_not_set_correctly".tr()));
+          return;
+        }else {
+          emit(EventCalenderStates.error(message: error.toString()));
+        }
+      },
     );
   }
 
@@ -58,7 +65,8 @@ class EventCalenderCubit extends Cubit<EventCalenderStates> {
         debugPrint("Error: $error");
         if (error.contains("Can not assign")) {
           emit(EventCalenderStates.errorReservation(message: "already_reserved_an_event".tr()));
-        }else {
+        }
+        else {
           emit(EventCalenderStates.errorReservation(message: error.toString()));
         }
        Future.delayed(const Duration(seconds: 3), () {

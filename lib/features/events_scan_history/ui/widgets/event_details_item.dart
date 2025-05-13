@@ -59,6 +59,7 @@ class EventDetailsItem extends StatelessWidget {
 
   Widget nameAndTime() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: SubTitleText(
