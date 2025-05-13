@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/helpers/app_utilities.dart';
-import '../../../core/services/notification_scheduler.dart';
-import '../../event_calender/data/models/calender_events.dart';
 import '../data/models/gatekeeper_events_response.dart';
 import '../data/models/event_details_response.dart';
 import '../data/repo/gatekeeper_events_repo.dart';
@@ -84,7 +82,7 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
             _events.addAll(data.entityList!);
 
             // Schedule notifications for new events
-            _scheduleNotificationsForEvents(data.entityList!);
+       //     _scheduleNotificationsForEvents(data.entityList!);
 
             emit(ScanHistoryStates.success(
               GatekeeperEventsResponse(
@@ -253,61 +251,61 @@ class GatekeeperEventsCubit extends Cubit<ScanHistoryStates> {
     return status;
   }
 // Add this property at the top of the class with other properties
-  final Set<String> _scheduledEventIds = {};
+ // final Set<String> _scheduledEventIds = {};
 
-  /// Schedule notifications for events that haven't been scheduled yet
-  Future<void> _scheduleNotificationsForEvents(List<EventsList> events) async {
-    final notificationScheduler = NotificationScheduler();
+  // /// Schedule notifications for events that haven't been scheduled yet
+  // Future<void> _scheduleNotificationsForEvents(List<EventsList> events) async {
+  //   final notificationScheduler = NotificationScheduler();
+  //
+  //   for (final event in events) {
+  //     if (event.id != null && !_scheduledEventIds.contains(event.id.toString())) {
+  //       try {
+  //         debugPrint("Scheduling notifications for event: ${event.eventTitle}");
+  //
+  //         // Convert EventsList to the format expected by NotificationScheduler
+  //         await notificationScheduler.scheduleNotifications(
+  //           event: _convertToCalendarEvent(event),
+  //         );
+  //
+  //         // Mark this event as scheduled
+  //         _scheduledEventIds.add(event.id.toString());
+  //
+  //         debugPrint("Notifications scheduled successfully for event ID: ${event.id}");
+  //       } catch (e) {
+  //         debugPrint("Failed to schedule notification for event ID: ${event.id}, error: $e");
+  //       }
+  //     }
+  //   }
+  // }
 
-    for (final event in events) {
-      if (event.id != null && !_scheduledEventIds.contains(event.id.toString())) {
-        try {
-          debugPrint("Scheduling notifications for event: ${event.eventTitle}");
+  // /// Convert EventsList to CalenderEventsResponse format
+  // CalenderEventsResponse _convertToCalendarEvent(EventsList event) {
+  //   return CalenderEventsResponse(
+  //     id: event.id,
+  //     eventTitle: event.eventTitle,
+  //     eventFrom: event.eventFrom,
+  //     eventTo: event.eventTo,
+  //     // Add other required fields as needed
+  //   );
+  // }
 
-          // Convert EventsList to the format expected by NotificationScheduler
-          await notificationScheduler.scheduleNotifications(
-            event: _convertToCalendarEvent(event),
-          );
-
-          // Mark this event as scheduled
-          _scheduledEventIds.add(event.id.toString());
-
-          debugPrint("Notifications scheduled successfully for event ID: ${event.id}");
-        } catch (e) {
-          debugPrint("Failed to schedule notification for event ID: ${event.id}, error: $e");
-        }
-      }
-    }
-  }
-
-  /// Convert EventsList to CalenderEventsResponse format
-  CalenderEventsResponse _convertToCalendarEvent(EventsList event) {
-    return CalenderEventsResponse(
-      id: event.id,
-      eventTitle: event.eventTitle,
-      eventFrom: event.eventFrom,
-      eventTo: event.eventTo,
-      // Add other required fields as needed
-    );
-  }
-
-  // Add this method to the class
-  Future<void> scheduleNotificationForEvent(EventsList event) async {
-    if (event.id != null) {
-      try {
-        debugPrint("Manually scheduling notifications for event: ${event.eventTitle}");
-
-        final notificationScheduler = NotificationScheduler();
-        await notificationScheduler.scheduleNotifications(
-          event: _convertToCalendarEvent(event),
-        );
-
-        _scheduledEventIds.add(event.id.toString());
-
-        debugPrint("Notifications manually scheduled successfully for event ID: ${event.id}");
-      } catch (e) {
-        debugPrint("Failed to manually schedule notification for event ID: ${event.id}, error: $e");
-      }
-    }
-  }
+  // // Add this method to the class
+  // Future<void> scheduleNotificationForEvent(EventsList event) async {
+  //   if (event.id != null) {
+  //     try {
+  //       debugPrint("Manually scheduling notifications for event: ${event.eventTitle}");
+  //
+  //       final notificationScheduler = NotificationScheduler();
+  //       await notificationScheduler.scheduleNotifications(
+  //         event: _convertToCalendarEvent(event),
+  //       );
+  //
+  //       _scheduledEventIds.add(event.id.toString());
+  //
+  //       debugPrint("Notifications manually scheduled successfully for event ID: ${event.id}");
+  //     } catch (e) {
+  //       debugPrint("Failed to manually schedule notification for event ID: ${event.id}, error: $e");
+  //     }
+  //   }
+  // }
 }
