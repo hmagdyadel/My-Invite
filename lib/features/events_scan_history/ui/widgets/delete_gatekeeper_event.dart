@@ -48,7 +48,7 @@ class _EventCheckDialogBoxState extends State<DeleteGatekeeperEventDialogBox> {
     return AlertDialog(
       backgroundColor: Colors.grey.shade200,
       title: _buildDialogTitle(),
-      content: _buildDialogContent(widget.event.eventTitle ?? ""),
+      content: _buildDialogContent(widget.event.systemEventTitle ?? ""),
       actions: [
         _buildActionButtons(context, state),
       ],
