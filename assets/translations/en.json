@@ -340,6 +340,7 @@
   "delete_gatekeeper_event_message": "Are you sure you want to delete this event \" {} \" ?",
   "delete_event_successfully": "Event deleted successfully",
   "delete_event_failed": "Failed to delete event. Please try again",
+  "no_available_scan_history": "No scan reports available",
   "delete": "Delete",
   "continue": "Continue"
 }
