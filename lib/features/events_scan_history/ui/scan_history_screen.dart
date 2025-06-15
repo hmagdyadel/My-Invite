@@ -66,13 +66,13 @@ class _ScanHistoryScreenState extends State<ScanHistoryScreen> {
             errorDeleteEvent: (error) => const SizedBox.shrink(),
             loadingCheckOut: () =>  Center(child: Loader(color: whiteTextColor)),
             loadingCheckIn: () => const Center(child: Loader(color: whiteTextColor)),
-            emptyInput: () => _buildCenteredMessage("no_available_events".tr()),
+            emptyInput: () => _buildCenteredMessage("no_available_scan_history".tr()),
             error: (error) => _buildCenteredMessage(error),
             loading: () => const Center(child: Loader(color: whiteTextColor)),
             success: (response, isLoadingMore) {
               final events = response.entityList ?? [];
               if (events.isEmpty) {
-                return _buildCenteredMessage("no_available_events".tr());
+                return _buildCenteredMessage("no_available_scan_history".tr());
               }
 
               return Column(

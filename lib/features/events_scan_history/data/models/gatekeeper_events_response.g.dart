@@ -23,7 +23,7 @@ Map<String, dynamic> _$GatekeeperEventsResponseToJson(
     };
 
 EventsList _$EventsListFromJson(Map<String, dynamic> json) => EventsList(
-      systemEventTitle: json['systemEventTitle'] as String?,
+      eventTitle: json['eventTitle'] as String?,
       eventFrom: json['eventFrom'] as String?,
       eventTo: json['eventTo'] as String?,
       eventVenue: json['eventVenue'] as String?,
@@ -41,7 +41,7 @@ EventsList _$EventsListFromJson(Map<String, dynamic> json) => EventsList(
 
 Map<String, dynamic> _$EventsListToJson(EventsList instance) =>
     <String, dynamic>{
-      'systemEventTitle': instance.systemEventTitle,
+      'eventTitle': instance.eventTitle,
       'eventFrom': instance.eventFrom,
       'eventTo': instance.eventTo,
       'eventVenue': instance.eventVenue,

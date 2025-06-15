@@ -17,7 +17,7 @@ class GatekeeperEventsResponse {
 
 @JsonSerializable()
 class EventsList {
-  final String? systemEventTitle;
+  final String? eventTitle;
   final String? eventFrom;
   final String? eventTo;
   final String? eventVenue;
@@ -33,7 +33,7 @@ class EventsList {
   final String? attendanceTime;
 
   EventsList({
-    this.systemEventTitle,
+    this.eventTitle,
     this.eventFrom,
     this.eventTo,
     this.eventVenue,

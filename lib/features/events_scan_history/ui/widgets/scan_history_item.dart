@@ -392,7 +392,7 @@ class ScanHistoryItem extends StatelessWidget {
           children: [
             Expanded(
               child: SubTitleText(
-                text: event?.systemEventTitle ?? "",
+                text: event?.eventTitle ?? "",
                 color: Colors.white,
                 fontSize: 16,
                 align: TextAlign.start,
