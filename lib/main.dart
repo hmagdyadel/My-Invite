@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +10,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'core/di/dependency_injection.dart';
 import 'core/services/new_notification_service.dart';
 import 'features/event_calender/logic/event_calender_cubit.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'my_invite.dart';
 
 
@@ -45,15 +47,14 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  // try {
-  //   String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-  //   debugPrint("APNs Token: $apnsToken");
-  //   String? fcmToken = await FirebaseMessaging.instance.getToken();
-  //
-  //   debugPrint("FCM Token: $fcmToken");
-  // } catch (e) {
-  //   debugPrint("Error getting APNs token: $e");
-  // }
+  // 💥 Forward Flutter framework errors to Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  // 💥 Catch any Dart async errors (outside Flutter widget tree)
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   if (Platform.isIOS) {
     await FirebaseMessaging.instance
@@ -63,10 +64,7 @@ Future<void> main() async {
       sound: true,
     );
   }
-  // if (kDebugMode) {
-  //   FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
-  //   debugPrint("Firebase Messaging initialized in debug mode");
-  // }
+
   await EasyLocalization.ensureInitialized();
 
   // Add this to your app initialization

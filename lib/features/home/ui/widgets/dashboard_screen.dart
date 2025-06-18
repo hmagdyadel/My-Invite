@@ -1,17 +1,13 @@
 import 'package:app/core/helpers/extensions.dart';
 import 'package:app/core/routing/routes.dart';
-//import 'package:app/core/services/new_notification_service.dart';
 import 'package:app/core/widgets/normal_text.dart';
 import 'package:app/core/widgets/subtitle_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 
 import '../../../../core/dimensions/dimensions.dart';
 import '../../../../core/helpers/app_utilities.dart';
 
-//import '../../../../core/services/notification_scheduler.dart';
 import '../../../../core/theming/colors.dart';
 import '../../data/models/dashboard_action.dart';
 
