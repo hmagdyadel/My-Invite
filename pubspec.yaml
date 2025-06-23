@@ -4,7 +4,7 @@ description: "A new Flutter project."
 publish_to: 'none'
 
 #version: 2.0.4+1  # for android only
-version: 2.0.3+67  # for android only
+version: 2.0.3+68  # for android only
 
 environment:
   sdk: ^3.6.0
@@ -27,7 +27,7 @@ dependencies:
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.4
   dio: ^5.7.0
-  easy_localization: ^3.0.7
+  easy_localization: ^3.0.7+1
   flutter_screenutil: ^5.9.3
   get_it: ^8.0.3
   device_info_plus: ^11.2.0
