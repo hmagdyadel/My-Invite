@@ -15,13 +15,12 @@ class AppUtilities {
     return _instance;
   }
 
-  AppUtilities._internal() {
-    _getSavedData();
-  }
+  AppUtilities._internal();
 
   Future<void> initialize() async {
     await _getSavedData();
   }
+
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
 
@@ -54,6 +53,7 @@ class AppUtilities {
   }
 
   String? _subscriptionTopic;
+
   String get subscriptionTopic => _subscriptionTopic ?? '';
 
   set subscriptionTopic(String value) {
@@ -62,6 +62,7 @@ class AppUtilities {
   }
 
   bool? _notifications;
+
   bool get notifications => _notifications ?? false;
 
   set notifications(bool value) {
@@ -70,6 +71,7 @@ class AppUtilities {
   }
 
   String? _password;
+
   String get password => _password ?? '';
 
   set password(String value) {
@@ -78,7 +80,6 @@ class AppUtilities {
   }
 
   Future<void> clearData() async {
-
     _storage.delete(key: "serverToken");
     _storage.delete(key: "userData");
   }
@@ -120,12 +121,17 @@ class AppUtilities {
   }
 
 
-
-
   Future<String> getSavedString(String key, String defaultVal) async {
-    final value = await _storage.read(key: key);
-    return value ?? defaultVal;
+    try {
+      final value = await _storage.read(key: key);
+      return value ?? defaultVal;
+    } catch (e) {
+      debugPrint("Decryption failed for [$key]: $e");
+      await _storage.delete(key: key); // Optional: remove corrupted value
+      return defaultVal;
+    }
   }
+
   Future<bool> getSavedBool(String key, bool defaultVal) async {
     final value = await _storage.read(key: key);
     return value == 'true' ? true : defaultVal;
